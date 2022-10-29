@@ -7,6 +7,7 @@ import {Counter} from './components/Counter';
 import {Decrement} from "./components/Decrement";
 
 import './custom.css'
+import {Profile} from "./components/Profile";
 
 export default class App extends Component {
     static displayName = App.name;
@@ -18,7 +19,7 @@ export default class App extends Component {
                 <Route path='/counter' component={Counter}/>
                 <Route path='/fetch-data' component={FetchData}/>
                 <Route path='/decrement' component={Decrement}/>
-
+                <Route path='/profile' component={Profile} />
             </Layout>
         );
     }
