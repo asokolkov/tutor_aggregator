@@ -3,7 +3,7 @@ import {Avatar, Box, Flex, Heading, Button, VStack} from '@chakra-ui/react'
 export const SearchCardInfo = (props: SearchCardInfoProps) => {
     const {name, imgSrc, job, occupation, rating} = props;
     return (
-        <Flex width={'30%'} direction={'column'} align={'center'} height={'100%'} background={'white'} padding={'20px'}
+        <Flex width={'100%'} direction={'column'} align={'center'} height={'100%'} background={'white'} padding={'20px'}
               borderRadius={'5px'} borderWidth={'1px'} justifyContent={'space-between'}>
             <Avatar name={name} showBorder={true}
                     src={imgSrc}
