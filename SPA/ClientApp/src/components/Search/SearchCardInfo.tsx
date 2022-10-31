@@ -1,4 +1,4 @@
-import {Avatar, Box, Flex, Heading, Button} from '@chakra-ui/react'
+import {Avatar, Box, Flex, Heading, Button, VStack} from '@chakra-ui/react'
 
 export const SearchCardInfo = (props: SearchCardInfoProps) => {
     const {name, imgSrc, job, occupation, rating} = props;
@@ -8,16 +8,18 @@ export const SearchCardInfo = (props: SearchCardInfoProps) => {
             <Avatar name={name} showBorder={true}
                     src={imgSrc}
                     size='2xl'/>
-            <Heading as='h4' size='xl'>{name}</Heading>
-            <Box>
-                {job}
-            </Box>
-            <Box>
-                {occupation}
-            </Box>
-            <Box>
-                {rating.average}
-            </Box>
+            <VStack>
+                <Heading as='h4' size='xl' textAlign={'center'}>{name}</Heading>
+                <Box>
+                    {job}
+                </Box>
+                <Box>
+                    {occupation}
+                </Box>
+                <Box>
+                    {rating.average}
+                </Box>
+            </VStack>
             <Button colorScheme={"teal"}>Посмотреть профиль</Button>
         </Flex>
     );

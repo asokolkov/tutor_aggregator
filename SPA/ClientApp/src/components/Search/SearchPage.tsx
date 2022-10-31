@@ -14,21 +14,48 @@ import {
     VStack,
     Heading,
     Button,
+    CircularProgress,
 } from "@chakra-ui/react";
 import Theme from '../../theme/index'
 import {SearchCardInfo} from "./SearchCardInfo";
 import {SelectOptions} from "./SelectOptions";
+import {useEffect, useState} from "react";
 
 export const SearchPage = () => {
+    const [error, setError] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [items, setItems] = useState([]);
+
+    useEffect(() => {
+        fetch("./api/tutors")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    setIsLoaded(true);
+                    setItems(result['items']);
+                },
+                (error) => {
+                    setIsLoaded(true);
+                    setError(error);
+                }
+            )
+    }, [])
+
+
+    if (!isLoaded) return (
+        <Flex align={'center'} justify={'center'}>
+            <CircularProgress isIndeterminate color='teal' size={'100px'} value={25} thickness='12px'/>
+        </Flex>
+    )
     return (
         <ChakraProvider theme={Theme}>
-            <Flex background="gray.50" height={'100vh'} direction={'column'}>
+            <Flex background={'gray.50'} height={'100vh'} direction={'column'}>
                 <Heading as='h3' size='xl' margin={'3% 3% 0 3%'}>
                     Поиск наставника
                 </Heading>
                 <VStack divider={<StackDivider borderColor='gray.200'/>} background={'white'}
                         borderRadius={'5px'} borderWidth={'1px'} margin={'3%'}>
-                    <HStack margin={'20px'} spacing={15} width={'90%'} align={'flex-end'} >
+                    <HStack margin={'20px'} spacing={15} width={'90%'} align={'flex-end'}>
                         <FormControl>
                             <FormLabel></FormLabel>
                             <Input type='search' placeholder='Найти наставника'/>
@@ -66,13 +93,12 @@ export const SearchPage = () => {
                 </VStack>
                 <VStack>
                     <HStack align={'flex-start'} justify={'space-around'}>
-                        <SearchCardInfo name={'Егоров Павел Владимирович'} imgSrc={''} job={'Старший преподаватель'}
-                                        occupation={'Матмех УрФУ'}
-                                        rating={{count: 25, average: 4.7}}></SearchCardInfo>
-                        <SearchCardInfo name={'Михаил'} imgSrc={''} job={'Бэкенд-разработчик'} occupation={'СКБ Контур'}
-                                        rating={{count: 15, average: 4.77}}></SearchCardInfo>
-                        <SearchCardInfo name={'Анастасия'} imgSrc={''} job={'Фронтенд-разработчик'} occupation={'Яндекс'}
-                                        rating={{count: 5, average: 4.6}}></SearchCardInfo>
+                        {
+                            items.map(item => (<SearchCardInfo name={item.firstName + ' ' + item.lastName} imgSrc={item.avatar}
+                                                            job={'Тут будет место работы'}
+                                                            occupation={'Тут будет род деятельности'}
+                                                            rating={{count: 25, average: item.rating}}></SearchCardInfo>))
+                        }
                     </HStack>
                 </VStack>
             </Flex>
