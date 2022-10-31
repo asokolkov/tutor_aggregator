@@ -15,6 +15,7 @@ import {
     Heading,
     Button,
     CircularProgress,
+    Grid,
 } from "@chakra-ui/react";
 import Theme from '../../theme/index'
 import {SearchCardInfo} from "./SearchCardInfo";
@@ -49,7 +50,7 @@ export const SearchPage = () => {
     )
     return (
         <ChakraProvider theme={Theme}>
-            <Flex background={'gray.50'} height={'100vh'} direction={'column'}>
+            <Flex background={'gray.50'} height={'200vh'} direction={'column'}>
                 <Heading as='h3' size='xl' margin={'3% 3% 0 3%'}>
                     Поиск наставника
                 </Heading>
@@ -92,14 +93,16 @@ export const SearchPage = () => {
                     </HStack>
                 </VStack>
                 <VStack>
-                    <HStack align={'flex-start'} justify={'space-around'}>
+                    <Grid templateColumns='repeat(3, 300px)' gap={6}>
                         {
-                            items.map(item => (<SearchCardInfo name={item.firstName + ' ' + item.lastName} imgSrc={item.avatar}
-                                                            job={'Тут будет место работы'}
-                                                            occupation={'Тут будет род деятельности'}
-                                                            rating={{count: 25, average: item.rating}}></SearchCardInfo>))
+                            items.map(item => (
+                                <SearchCardInfo name={item.firstName + ' ' + item.lastName} imgSrc={item.avatar}
+                                                job={'Тут будет место работы'}
+                                                occupation={'Тут будет род деятельности'}
+                                                rating={{count: 25, average: item.rating}}></SearchCardInfo>))
+
                         }
-                    </HStack>
+                    </Grid>
                 </VStack>
             </Flex>
         </ChakraProvider>
