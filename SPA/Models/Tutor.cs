@@ -8,7 +8,9 @@ public sealed class Tutor
         string location,
         string requirements,
         double rating,
-        Uri avatar)
+        Uri avatar,
+        string jobPlace,
+        string jobPost)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -16,6 +18,8 @@ public sealed class Tutor
         Requirements = requirements;
         Rating = rating;
         Avatar = avatar;
+        JobPlace = jobPlace;
+        JobPost = jobPost;
     }
 
     public string FirstName { get; }
@@ -31,6 +35,10 @@ public sealed class Tutor
     public double Rating { get; }
 
     public Uri Avatar { get; }
+
+    public string JobPlace { get; }
+    
+    public string JobPost { get; }
 
     public IReadOnlyCollection<string> Subjects { get; set; } = Array.Empty<string>();
 
