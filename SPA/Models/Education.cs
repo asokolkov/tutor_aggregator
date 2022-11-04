@@ -2,16 +2,15 @@
 
 public sealed class Education
 {
-    public Education(string description, int beginYear, int graduationYear)
+    public Education()
     {
-        Description = description;
-        BeginYear = beginYear;
-        GraduationYear = graduationYear;
     }
+    
+    public int Id { get; set; }
 
-    public string Description { get; }
+    public string Description { get; set; }
     
-    public int BeginYear { get; }
+    public int BeginYear { get; set; }
     
-    public int GraduationYear { get; }
+    public int GraduationYear { get; set; }
 }

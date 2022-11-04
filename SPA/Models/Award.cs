@@ -2,12 +2,13 @@
 
 public sealed class Award
 {
-    public Award(string description, int year)
+    public Award()
     {
-        Description = description;
-        Year = year;
     }
+
+    public int Id { get; set; }
     
-    public string Description { get; }
-    public int Year { get; }
+    public string Description { get; set; }
+    
+    public int Year { get; set; }
 }

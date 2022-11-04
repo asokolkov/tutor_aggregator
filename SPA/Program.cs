@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using SPA.Data;
 using SPA.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);

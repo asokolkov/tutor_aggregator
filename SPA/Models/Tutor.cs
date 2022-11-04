@@ -1,50 +1,41 @@
-﻿namespace SPA.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SPA.Models;
 
 public sealed class Tutor
 {
-    public Tutor(
-        string firstName,
-        string lastName,
-        string location,
-        string requirements,
-        double rating,
-        Uri avatar,
-        string jobPlace,
-        string jobPost)
+    public Tutor()
     {
-        FirstName = firstName;
-        LastName = lastName;
-        Location = location;
-        Requirements = requirements;
-        Rating = rating;
-        Avatar = avatar;
-        JobPlace = jobPlace;
-        JobPost = jobPost;
     }
 
-    public string FirstName { get; }
+    public int Id { get; set; }
 
-    public string LastName { get; }
+    [Required]
+    public string FirstName { get; set; }
 
-    public string MiddleName { get; }
+    [Required]
+    public string LastName { get; set; }
 
-    public string Location { get; }
+    [Required]
+    public string MiddleName { get; set; }
 
-    public string Requirements { get; }
+    public string Location { get; set; }
+
+    public string Requirements { get; set; }
     
-    public double Rating { get; }
+    public double Rating { get; set; }
 
-    public Uri Avatar { get; }
+    public Uri Avatar { get; set; }
 
-    public string JobPlace { get; }
+    public string JobPlace { get; set; }
     
-    public string JobPost { get; }
+    public string JobPost { get; set; }
 
-    public IReadOnlyCollection<string> Subjects { get; set; } = Array.Empty<string>();
+    public List<string> Subjects { get; set; }
 
-    public IReadOnlyCollection<Contact> Contacts { get; set; } = Array.Empty<Contact>();
+    public List<Contact> Contacts { get; set; }
 
-    public IReadOnlyCollection<Education> Educations { get; set; } = Array.Empty<Education>();
+    public List<Education> Educations { get; set; }
 
-    public IReadOnlyCollection<Award> Awards { get; set; } = Array.Empty<Award>();
+    public List<Award> Awards { get; set; }
 }
