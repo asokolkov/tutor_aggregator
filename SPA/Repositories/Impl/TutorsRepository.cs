@@ -18,9 +18,9 @@ internal class TutorsRepository : ICrudRepository<Tutor>
         throw new NotImplementedException();
     }
 
-    public Task<Page<Tutor>> Get(long page, long size)
+    public async Task<Page<Tutor>> Get(long page, long size)
     {
-        var tutors = applicationContext.Tutors.ToList();
-        return Task.FromResult(new Page<Tutor>(tutors, tutors.Count));
+        var tutors = await applicationContext.Tutors.ToListAsync();
+        return new Page<Tutor>(tutors, tutors.Count);
     }
 }
