@@ -2,9 +2,7 @@
 
 public sealed class Contact
 {
-    public int Id { get; set; }
-    
-    public ContactType Type { get; set; }
-    
-    public string Value { get; set; }
+    public int Id { get; init; }
+    public ContactType Type { get; init; }
+    public string Value { get; init; }
 }

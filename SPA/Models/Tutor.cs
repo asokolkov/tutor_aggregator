@@ -4,38 +4,25 @@ namespace SPA.Models;
 
 public sealed class Tutor
 {
+    public int Id { get; init; }
+    [Required]
+    public string FirstName { get; init; }
+    [Required]
+    public string LastName { get; init; }
+    [Required]
+    public string MiddleName { get; init; }
+    public string Location { get; init; }
+    public string Requirements { get; init; }
+    public double Rating { get; init; }
+    public Uri Avatar { get; init; }
+    public string JobPlace { get; init; }
+    public string JobPost { get; init; }
+    public List<string> Subjects { get; init; }
+    public List<Contact> Contacts { get; init; }
+    public List<Education> Educations { get; init; }
+    public List<Award> Awards { get; init; }
+    
     public Tutor()
     {
     }
-
-    public int Id { get; set; }
-
-    [Required]
-    public string FirstName { get; set; }
-
-    [Required]
-    public string LastName { get; set; }
-
-    [Required]
-    public string MiddleName { get; set; }
-
-    public string Location { get; set; }
-
-    public string Requirements { get; set; }
-    
-    public double Rating { get; set; }
-
-    public Uri Avatar { get; set; }
-
-    public string JobPlace { get; set; }
-    
-    public string JobPost { get; set; }
-
-    public List<string> Subjects { get; set; }
-
-    public List<Contact> Contacts { get; set; }
-
-    public List<Education> Educations { get; set; }
-
-    public List<Award> Awards { get; set; }
 }

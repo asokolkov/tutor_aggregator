@@ -2,15 +2,12 @@
 
 public sealed class Education
 {
+    public int Id { get; init; }
+    public string Description { get; init; }
+    public int BeginYear { get; init; }
+    public int GraduationYear { get; init; }
+    
     public Education()
     {
     }
-    
-    public int Id { get; set; }
-
-    public string Description { get; set; }
-    
-    public int BeginYear { get; set; }
-    
-    public int GraduationYear { get; set; }
 }
