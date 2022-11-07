@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.EntityFrameworkCore;
 using SPA.Data;
 namespace SPA.Repositories.Impl;
 
@@ -6,16 +7,16 @@ using Models;
 
 internal class TutorsRepository : ICrudRepository<Tutor>
 {
-    private readonly ApplicationContext applicationContext;
+    private readonly ApplicationContext context;
     
-    public TutorsRepository(ApplicationContext applicationContext)
+    public TutorsRepository(ApplicationContext context)
     {
-        this.applicationContext = applicationContext;
+        this.context = context;
     }
     
     public async Task<Page<Tutor>> Get()
     {
-        var tutors = await applicationContext.Tutors.ToListAsync();
+        var tutors = await context.Tutors.ToListAsync();
         return new Page<Tutor>(tutors, tutors.Count);
     }
     
@@ -23,7 +24,7 @@ internal class TutorsRepository : ICrudRepository<Tutor>
     {
         const int pageSize = 100; // ?
 
-        var tutors = await applicationContext.Tutors
+        var tutors = await context.Tutors
             .Skip((int)page * pageSize)
             .Take((int)size)
             .ToListAsync();
@@ -32,18 +33,18 @@ internal class TutorsRepository : ICrudRepository<Tutor>
 
     public async Task<Tutor> Get(int id)
     {
-        return await applicationContext.Tutors.FindAsync(id);
+        return await context.Tutors.FindAsync(id);
     }
 
     public async void Update(Tutor tutor)
     {
-        applicationContext.Tutors.Update(tutor);
-        await applicationContext.SaveChangesAsync();
+        context.Tutors.Update(tutor);
+        await context.SaveChangesAsync();
     }
 
     public async void Insert(Tutor tutor)
     {
-        await applicationContext.Tutors.AddAsync(tutor);
-        await applicationContext.SaveChangesAsync();
+        await context.Tutors.AddAsync(tutor);
+        await context.SaveChangesAsync();
     }
 }

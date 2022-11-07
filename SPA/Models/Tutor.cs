@@ -6,7 +6,7 @@ namespace SPA.Models;
 public sealed class Tutor
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
+    public int Id { get; init; }
 
     [Required] public string FirstName { get; init; }
 
