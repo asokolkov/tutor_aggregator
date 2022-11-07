@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SPA.Data;
 namespace SPA.Repositories.Impl;
 
@@ -36,11 +35,9 @@ internal class TutorsRepository : ICrudRepository<Tutor>
         return await applicationContext.Tutors.FindAsync(id);
     }
 
-    public async void Update(int id, JsonPatchDocument document)
+    public async void Update(Tutor tutor)
     {
-        var tutor = await applicationContext.Tutors.FindAsync(id);
-        if (tutor == null) return;
-        document.ApplyTo(tutor);
+        applicationContext.Tutors.Update(tutor);
         await applicationContext.SaveChangesAsync();
     }
 
