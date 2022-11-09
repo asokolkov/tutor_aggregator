@@ -13,6 +13,10 @@ internal static class ServiceCollectionExtensions
     public static IServiceCollection SetUpServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<ICrudRepository<Tutor>, TutorsRepository>();
+        services.AddScoped<ICrudRepository<Award>, AwardsRepository>();
+        services.AddScoped<ICrudRepository<Contact>, ContactsRepository>();
+        services.AddScoped<ICrudRepository<Education>, EducationsRepository>();
+        
         var connectionString = configuration.GetConnectionString("Postgres");
         services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(connectionString));
         services.AddMediatR(typeof(Program));

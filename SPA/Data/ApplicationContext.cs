@@ -4,7 +4,7 @@ namespace SPA.Data;
 
 using Microsoft.EntityFrameworkCore;
 
-internal sealed class ApplicationContext : DbContext
+public sealed class ApplicationContext : DbContext
 {
     public DbSet<Tutor> Tutors { get; set; }
     public DbSet<Award> Awards { get; set; }
