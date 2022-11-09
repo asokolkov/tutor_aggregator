@@ -9,10 +9,10 @@ public class PostgresRepository<T> : ICrudRepository<T> where T : class
     private readonly ApplicationContext context;
     private readonly DbSet<T> table;
 
-    protected PostgresRepository(ApplicationContext context, DbSet<T> table)
+    public PostgresRepository(ApplicationContext context)
     {
         this.context = context;
-        this.table = table;
+        table = context.Set<T>();
     }
 
     public async Task<Page<T>> Get()

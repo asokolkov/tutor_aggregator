@@ -5,7 +5,7 @@ namespace SPA.Repositories.Impl;
 
 internal class ContactsRepository : PostgresRepository<Contact>
 {
-    public ContactsRepository(ApplicationContext context) : base(context, context.Contacts)
+    public ContactsRepository(ApplicationContext context) : base(context)
     {
     }
 }

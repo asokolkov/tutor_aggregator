@@ -5,7 +5,7 @@ namespace SPA.Repositories.Impl;
 
 internal class EducationsRepository : PostgresRepository<Education>
 {
-    public EducationsRepository(ApplicationContext context) : base(context, context.Educations)
+    public EducationsRepository(ApplicationContext context) : base(context)
     {
     }
 }
