@@ -4,44 +4,44 @@ namespace SPA.Repositories.Impl;
 
 using Models;
 
-internal class TutorsRepository : ICrudRepository<Tutor>
+internal class AwardsRepository : ICrudRepository<Award>
 {
     private readonly ApplicationContext context;
     
-    public TutorsRepository(ApplicationContext context)
+    public AwardsRepository(ApplicationContext context)
     {
         this.context = context;
     }
     
-    public async Task<Page<Tutor>> Get()
+    public async Task<Page<Award>> Get()
     {
-        var tutors = await context.Tutors.ToListAsync();
-        return new Page<Tutor>(tutors, tutors.Count);
+        var awards = await context.Awards.ToListAsync();
+        return new Page<Award>(awards, awards.Count);
     }
     
-    public async Task<Page<Tutor>> Get(long page, long size)
+    public async Task<Page<Award>> Get(long page, long size)
     {
         const int pageSize = 100; // ?
 
-        var tutors = await context.Tutors
+        var awards = await context.Awards
             .Skip((int)page * pageSize)
             .Take((int)size)
             .ToListAsync();
-        return new Page<Tutor>(tutors, tutors.Count);
+        return new Page<Award>(awards, awards.Count);
     }
 
-    public async Task<Tutor> Get(int id)
+    public async Task<Award> Get(int id)
     {
-        return await context.Tutors.FindAsync(id);
+        return await context.Awards.FindAsync(id);
     }
 
-    public async void Update(Tutor tutor)
+    public async void Update(Award award)
     {
         await using var transaction = await context.Database.BeginTransactionAsync();
         await transaction.CreateSavepointAsync("BeforeUpdate");
         try
         {
-            context.Tutors.Update(tutor);
+            context.Awards.Update(award);
             await context.SaveChangesAsync();
             await transaction.CommitAsync();
         }
@@ -51,13 +51,13 @@ internal class TutorsRepository : ICrudRepository<Tutor>
         }
     }
 
-    public async void Insert(Tutor tutor)
+    public async void Insert(Award award)
     {
         await using var transaction = await context.Database.BeginTransactionAsync();
         await transaction.CreateSavepointAsync("BeforeInsert");
         try
         {
-            await context.Tutors.AddAsync(tutor);
+            await context.Awards.AddAsync(award);
             await context.SaveChangesAsync();
         }
         catch (Exception)

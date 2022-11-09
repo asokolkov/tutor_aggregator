@@ -4,44 +4,44 @@ namespace SPA.Repositories.Impl;
 
 using Models;
 
-internal class TutorsRepository : ICrudRepository<Tutor>
+internal class ContactsRepository : ICrudRepository<Contact>
 {
     private readonly ApplicationContext context;
     
-    public TutorsRepository(ApplicationContext context)
+    public ContactsRepository(ApplicationContext context)
     {
         this.context = context;
     }
     
-    public async Task<Page<Tutor>> Get()
+    public async Task<Page<Contact>> Get()
     {
-        var tutors = await context.Tutors.ToListAsync();
-        return new Page<Tutor>(tutors, tutors.Count);
+        var contacts = await context.Contacts.ToListAsync();
+        return new Page<Contact>(contacts, contacts.Count);
     }
     
-    public async Task<Page<Tutor>> Get(long page, long size)
+    public async Task<Page<Contact>> Get(long page, long size)
     {
         const int pageSize = 100; // ?
 
-        var tutors = await context.Tutors
+        var contacts = await context.Contacts
             .Skip((int)page * pageSize)
             .Take((int)size)
             .ToListAsync();
-        return new Page<Tutor>(tutors, tutors.Count);
+        return new Page<Contact>(contacts, contacts.Count);
     }
 
-    public async Task<Tutor> Get(int id)
+    public async Task<Contact> Get(int id)
     {
-        return await context.Tutors.FindAsync(id);
+        return await context.Contacts.FindAsync(id);
     }
 
-    public async void Update(Tutor tutor)
+    public async void Update(Contact contact)
     {
         await using var transaction = await context.Database.BeginTransactionAsync();
         await transaction.CreateSavepointAsync("BeforeUpdate");
         try
         {
-            context.Tutors.Update(tutor);
+            context.Contacts.Update(contact);
             await context.SaveChangesAsync();
             await transaction.CommitAsync();
         }
@@ -51,13 +51,13 @@ internal class TutorsRepository : ICrudRepository<Tutor>
         }
     }
 
-    public async void Insert(Tutor tutor)
+    public async void Insert(Contact contact)
     {
         await using var transaction = await context.Database.BeginTransactionAsync();
         await transaction.CreateSavepointAsync("BeforeInsert");
         try
         {
-            await context.Tutors.AddAsync(tutor);
+            await context.Contacts.AddAsync(contact);
             await context.SaveChangesAsync();
         }
         catch (Exception)

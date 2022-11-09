@@ -4,44 +4,44 @@ namespace SPA.Repositories.Impl;
 
 using Models;
 
-internal class TutorsRepository : ICrudRepository<Tutor>
+internal class EducationsRepository : ICrudRepository<Education>
 {
     private readonly ApplicationContext context;
     
-    public TutorsRepository(ApplicationContext context)
+    public EducationsRepository(ApplicationContext context)
     {
         this.context = context;
     }
     
-    public async Task<Page<Tutor>> Get()
+    public async Task<Page<Education>> Get()
     {
-        var tutors = await context.Tutors.ToListAsync();
-        return new Page<Tutor>(tutors, tutors.Count);
+        var educations = await context.Educations.ToListAsync();
+        return new Page<Education>(educations, educations.Count);
     }
     
-    public async Task<Page<Tutor>> Get(long page, long size)
+    public async Task<Page<Education>> Get(long page, long size)
     {
         const int pageSize = 100; // ?
 
-        var tutors = await context.Tutors
+        var educations = await context.Educations
             .Skip((int)page * pageSize)
             .Take((int)size)
             .ToListAsync();
-        return new Page<Tutor>(tutors, tutors.Count);
+        return new Page<Education>(educations, educations.Count);
     }
 
-    public async Task<Tutor> Get(int id)
+    public async Task<Education> Get(int id)
     {
-        return await context.Tutors.FindAsync(id);
+        return await context.Educations.FindAsync(id);
     }
 
-    public async void Update(Tutor tutor)
+    public async void Update(Education education)
     {
         await using var transaction = await context.Database.BeginTransactionAsync();
         await transaction.CreateSavepointAsync("BeforeUpdate");
         try
         {
-            context.Tutors.Update(tutor);
+            context.Educations.Update(education);
             await context.SaveChangesAsync();
             await transaction.CommitAsync();
         }
@@ -51,13 +51,13 @@ internal class TutorsRepository : ICrudRepository<Tutor>
         }
     }
 
-    public async void Insert(Tutor tutor)
+    public async void Insert(Education education)
     {
         await using var transaction = await context.Database.BeginTransactionAsync();
         await transaction.CreateSavepointAsync("BeforeInsert");
         try
         {
-            await context.Tutors.AddAsync(tutor);
+            await context.Educations.AddAsync(education);
             await context.SaveChangesAsync();
         }
         catch (Exception)

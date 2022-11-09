@@ -10,7 +10,7 @@ public interface ICrudRepository<T>
     
     Task<Page<T>> Get(long page, long size);
     
-    Task<Tutor> Get(int id);
+    Task<T> Get(int id);
     
     void Update(T element);
     
