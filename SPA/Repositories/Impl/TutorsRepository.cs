@@ -38,13 +38,32 @@ internal class TutorsRepository : ICrudRepository<Tutor>
 
     public async void Update(Tutor tutor)
     {
-        context.Tutors.Update(tutor);
-        await context.SaveChangesAsync();
+        await using var transaction = await context.Database.BeginTransactionAsync();
+        await transaction.CreateSavepointAsync("BeforeUpdate");
+        try
+        {
+            context.Tutors.Update(tutor);
+            await context.SaveChangesAsync();
+            await transaction.CommitAsync();
+        }
+        catch (Exception)
+        {
+            await transaction.RollbackToSavepointAsync("BeforeUpdate");
+        }
     }
 
     public async void Insert(Tutor tutor)
     {
-        await context.Tutors.AddAsync(tutor);
-        await context.SaveChangesAsync();
+        await using var transaction = await context.Database.BeginTransactionAsync();
+        await transaction.CreateSavepointAsync("BeforeInsert");
+        try
+        {
+            await context.Tutors.AddAsync(tutor);
+            await context.SaveChangesAsync();
+        }
+        catch (Exception)
+        {
+            await transaction.RollbackToSavepointAsync("v");
+        }
     }
 }
