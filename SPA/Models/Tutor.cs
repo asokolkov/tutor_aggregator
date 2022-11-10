@@ -26,13 +26,13 @@ public sealed class Tutor
 
     public string JobPost { get; init; }
 
-    public List<string> Subjects { get; init; }
+    public IReadOnlyCollection<string> Subjects { get; init; }
     
-    public List<Contact> Contacts { get; init; }
+    public IReadOnlyCollection<Contact> Contacts { get; init; }
     
-    public List<Education> Educations { get; init; }
+    public IReadOnlyCollection<Education> Educations { get; init; }
     
-    public List<Award> Awards { get; init; }
+    public IReadOnlyCollection<Award> Awards { get; init; }
 
     public Tutor()
     {
