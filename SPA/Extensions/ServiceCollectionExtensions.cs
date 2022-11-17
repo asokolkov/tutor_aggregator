@@ -12,9 +12,10 @@ internal static class ServiceCollectionExtensions
 {
     public static IServiceCollection SetUpServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<ICrudRepository<Tutor>, TutorsRepository>();
-        services.AddDbContext<ApplicationContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("Postgres")));
+        services.AddScoped(typeof(ICrudRepository<>), typeof(PostgresRepository<>));
+        
+        var connectionString = configuration.GetConnectionString("Postgres");
+        services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(connectionString));
         services.AddMediatR(typeof(Program));
         services.AddAutoMapper(opt => opt.AddProfile<V1Profile>());
         return services;

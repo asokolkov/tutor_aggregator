@@ -1,50 +1,43 @@
-﻿namespace SPA.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace SPA.Models;
 
 public sealed class Tutor
 {
-    public Tutor(
-        string firstName,
-        string lastName,
-        string location,
-        string requirements,
-        double rating,
-        Uri avatar,
-        string jobPlace,
-        string jobPost)
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; init; }
+
+    [Required] public string FirstName { get; init; }
+
+    [Required] public string LastName { get; init; }
+
+    [Required] public string MiddleName { get; init; }
+
+    [Required] public double Rating { get; init; }
+
+    public string Location { get; init; }
+
+    public string Requirements { get; init; }
+
+    public Uri Avatar { get; init; }
+
+    public string JobPlace { get; init; }
+
+    public string JobPost { get; init; }
+
+    public IReadOnlyCollection<string> Subjects { get; init; }
+    
+    public IReadOnlyCollection<Contact> Contacts { get; init; }
+    
+    public IReadOnlyCollection<Education> Educations { get; init; }
+    
+    public IReadOnlyCollection<Award> Awards { get; init; }
+
+    public Tutor()
     {
-        FirstName = firstName;
-        LastName = lastName;
-        Location = location;
-        Requirements = requirements;
-        Rating = rating;
-        Avatar = avatar;
-        JobPlace = jobPlace;
-        JobPost = jobPost;
+        Contacts = new List<Contact>();
+        Educations = new List<Education>();
+        Awards = new List<Award>();
     }
-
-    public string FirstName { get; }
-
-    public string LastName { get; }
-
-    public string MiddleName { get; }
-
-    public string Location { get; }
-
-    public string Requirements { get; }
-    
-    public double Rating { get; }
-
-    public Uri Avatar { get; }
-
-    public string JobPlace { get; }
-    
-    public string JobPost { get; }
-
-    public IReadOnlyCollection<string> Subjects { get; set; } = Array.Empty<string>();
-
-    public IReadOnlyCollection<Contact> Contacts { get; set; } = Array.Empty<Contact>();
-
-    public IReadOnlyCollection<Education> Educations { get; set; } = Array.Empty<Education>();
-
-    public IReadOnlyCollection<Award> Awards { get; set; } = Array.Empty<Award>();
 }

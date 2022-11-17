@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using SPA.Data;
 using SPA.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.SetUpServices(builder.Configuration);
+builder.Services.AddControllers().AddNewtonsoftJson();
 
 var app = builder.Build();
 

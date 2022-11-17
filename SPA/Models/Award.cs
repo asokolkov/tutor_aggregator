@@ -1,13 +1,17 @@
-﻿namespace SPA.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace SPA.Models;
 
 public sealed class Award
 {
-    public Award(string description, int year)
-    {
-        Description = description;
-        Year = year;
-    }
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; init; }
     
-    public string Description { get; }
-    public int Year { get; }
+    public string Description { get; init; }
+    
+    public int Year { get; init; }
+    
+    public Award()
+    {
+    }
 }

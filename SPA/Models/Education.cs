@@ -1,17 +1,19 @@
-﻿namespace SPA.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace SPA.Models;
 
 public sealed class Education
 {
-    public Education(string description, int beginYear, int graduationYear)
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; init; }
+    
+    public string Description { get; init; }
+    
+    public int BeginYear { get; init; }
+    
+    public int GraduationYear { get; init; }
+    
+    public Education()
     {
-        Description = description;
-        BeginYear = beginYear;
-        GraduationYear = graduationYear;
     }
-
-    public string Description { get; }
-    
-    public int BeginYear { get; }
-    
-    public int GraduationYear { get; }
 }
