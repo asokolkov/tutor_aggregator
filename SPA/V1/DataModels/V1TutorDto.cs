@@ -1,4 +1,6 @@
-﻿namespace SPA.V1.DataModels;
+﻿using SPA.Models;
+
+namespace SPA.V1.DataModels;
 
 using System.Text.Json.Serialization;
 
@@ -26,7 +28,7 @@ internal sealed class V1TutorDto
     public Uri Avatar { get; set; }
 
     [JsonPropertyName("subjects")]
-    public IReadOnlyCollection<string> Subjects { get; set; } = Array.Empty<string>();
+    public IReadOnlyCollection<Subject> Subjects { get; set; } = Array.Empty<Subject>();
 
     [JsonPropertyName("contacts")]
     public IReadOnlyCollection<V1ContactDto> Contacts { get; set; } = Array.Empty<V1ContactDto>();

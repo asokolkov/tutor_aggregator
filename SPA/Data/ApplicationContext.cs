@@ -10,6 +10,8 @@ public sealed class ApplicationContext : DbContext
     public DbSet<Award> Awards { get; set; }
     public DbSet<Contact> Contacts { get; set; }
     public DbSet<Education> Educations { get; set; }
+    public DbSet<Lesson> Lessons { get; set; }
+    public DbSet<Student> Students { get; set; }
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
     {

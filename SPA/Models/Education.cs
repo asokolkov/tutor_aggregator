@@ -12,8 +12,4 @@ public sealed class Education
     public int BeginYear { get; init; }
     
     public int GraduationYear { get; init; }
-    
-    public Education()
-    {
-    }
 }
