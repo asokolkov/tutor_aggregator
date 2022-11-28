@@ -16,7 +16,7 @@ internal sealed class V1TutorDto
     public string MiddleName { get; set; }
 
     [JsonPropertyName("location")]
-    public string Location { get; set; }
+    public Location Location { get; set; }
 
     [JsonPropertyName("requirements")]
     public string Requirements { get; set; }

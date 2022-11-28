@@ -16,15 +16,13 @@ public sealed class Tutor
 
     [Required] public double Rating { get; init; }
 
-    public string Location { get; init; }
-
     public string Requirements { get; init; }
 
     public Uri Avatar { get; init; }
+    
+    public Location Location { get; init; }
 
-    public string JobPlace { get; init; }
-
-    public string JobPost { get; init; }
+    public Job Job { get; init; }
 
     public IReadOnlyCollection<Subject> Subjects { get; init; } = new List<Subject>();
 
