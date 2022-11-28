@@ -12,6 +12,7 @@ public sealed class ApplicationContext : DbContext
     public DbSet<Education> Educations { get; set; }
     public DbSet<Lesson> Lessons { get; set; }
     public DbSet<Student> Students { get; set; }
+    public DbSet<Review> Reviews { get; set; }
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
     {

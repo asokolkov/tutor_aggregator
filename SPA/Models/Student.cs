@@ -19,4 +19,6 @@ public class Student
     public IReadOnlyCollection<Contact> Contacts { get; init; } = new List<Contact>();
 
     public IReadOnlyCollection<Lesson> Lessons { get; init; } = new List<Lesson>();
+    
+    public IReadOnlyCollection<Review> Reviews { get; init; } = new List<Review>();
 }

@@ -35,4 +35,6 @@ public sealed class Tutor
     public IReadOnlyCollection<Award> Awards { get; init; } = new List<Award>();
 
     public IReadOnlyCollection<Lesson> Lessons { get; init; } = new List<Lesson>();
+    
+    public IReadOnlyCollection<Review> Reviews { get; init; } = new List<Review>();
 }
