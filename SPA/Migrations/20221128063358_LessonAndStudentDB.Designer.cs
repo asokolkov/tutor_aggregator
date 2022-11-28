@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SPA.Data;
@@ -11,9 +12,10 @@ using SPA.Data;
 namespace SPA.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20221128063358_LessonAndStudentDB")]
+    partial class LessonAndStudentDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,51 +124,15 @@ namespace SPA.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("StudentId")
+                    b.Property<int>("StudentId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("TutorId")
+                    b.Property<int>("TutorId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
-
-                    b.HasIndex("TutorId");
 
                     b.ToTable("Lessons");
-                });
-
-            modelBuilder.Entity("SPA.Models.Review", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("ModificationTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<double>("Rating")
-                        .HasColumnType("double precision");
-
-                    b.Property<int?>("StudentId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("TutorId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
-
-                    b.HasIndex("TutorId");
-
-                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("SPA.Models.Student", b =>
@@ -286,28 +252,6 @@ namespace SPA.Migrations
                         .HasForeignKey("TutorId");
                 });
 
-            modelBuilder.Entity("SPA.Models.Lesson", b =>
-                {
-                    b.HasOne("SPA.Models.Student", null)
-                        .WithMany("Lessons")
-                        .HasForeignKey("StudentId");
-
-                    b.HasOne("SPA.Models.Tutor", null)
-                        .WithMany("Lessons")
-                        .HasForeignKey("TutorId");
-                });
-
-            modelBuilder.Entity("SPA.Models.Review", b =>
-                {
-                    b.HasOne("SPA.Models.Student", null)
-                        .WithMany("Reviews")
-                        .HasForeignKey("StudentId");
-
-                    b.HasOne("SPA.Models.Tutor", null)
-                        .WithMany("Reviews")
-                        .HasForeignKey("TutorId");
-                });
-
             modelBuilder.Entity("SPA.Models.Subject", b =>
                 {
                     b.HasOne("SPA.Models.Tutor", null)
@@ -318,10 +262,6 @@ namespace SPA.Migrations
             modelBuilder.Entity("SPA.Models.Student", b =>
                 {
                     b.Navigation("Contacts");
-
-                    b.Navigation("Lessons");
-
-                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("SPA.Models.Tutor", b =>
@@ -331,10 +271,6 @@ namespace SPA.Migrations
                     b.Navigation("Contacts");
 
                     b.Navigation("Educations");
-
-                    b.Navigation("Lessons");
-
-                    b.Navigation("Reviews");
 
                     b.Navigation("Subjects");
                 });
