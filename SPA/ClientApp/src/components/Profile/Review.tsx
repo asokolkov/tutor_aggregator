@@ -1,5 +1,5 @@
-import {Avatar, Text, HStack, Stack} from '@chakra-ui/react'
-import {ReviewStar} from './ReviewStar'
+import {Avatar, Text, HStack, Stack} from '@chakra-ui/react';
+import {ReviewStar} from './ReviewStar';
 
 export const Review = (props: ReviewProps) => {
     return (
@@ -17,12 +17,12 @@ export const Review = (props: ReviewProps) => {
 
             </Stack>
         </div>
-    )
-}
+    );
+};
 
 export type ReviewProps = {
     name: string,
     review: string,
     rating: number,
     avatar: string,
-}
+};

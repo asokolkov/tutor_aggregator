@@ -1,5 +1,5 @@
-import {ChakraProvider, Flex, HStack, VStack, Button} from '@chakra-ui/react'
-import Theme from '../../theme/index'
+import {ChakraProvider, Flex, HStack, VStack, Button} from '@chakra-ui/react';
+import Theme from '../../theme/index';
 import {ProfileInfo} from "./ProfileInfo";
 import {ReviewSection} from "./ReviewSection";
 
@@ -29,8 +29,7 @@ export const ProfilePage = () => {
 
             </Flex>
             <Flex>
-
             </Flex>
         </ChakraProvider>
-    )
-}
+    );
+};

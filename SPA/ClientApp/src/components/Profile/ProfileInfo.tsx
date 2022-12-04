@@ -25,8 +25,8 @@ export const ProfileInfo = (props: ProfileInfoProps) => {
                 </VStack>
 
             </Container>
-    )
-}
+    );
+};
 
 type ProfileInfoProps = {
     name: string,
@@ -37,5 +37,5 @@ type ProfileInfoProps = {
     rating: {
         count: number,
         average: number,
-    }
-}
+    },
+};
