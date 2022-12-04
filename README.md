@@ -10,9 +10,7 @@
 
    ```sh
    git clone https://git.66bit.ru/urfu2022/fiit/tutoraggregator
-   cd /tutoraggregator/SPA/ClientApp
-   npm install (--legacy-peer-deps в случае ошибки)
-   cd ..
+   cd /tutoraggregator/SPA
    dotnet run
    ```
 
