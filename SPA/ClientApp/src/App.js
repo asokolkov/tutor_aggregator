@@ -7,6 +7,8 @@ import './custom.css'
 import {ProfilePage} from "./components/Profile/ProfilePage";
 import {LoginPage} from "./components/Authorization/LoginPage";
 import {SignupPage} from "./components/Authorization/SignupPage";
+import {ForgotPasswordPage} from "./components/Authorization/ForgotPasswordPage";
+import {SignupOAuthPage} from "./components/Authorization/SignupOAuthPage";
 import {SearchPage} from "./components/Search/SearchPage";
 
 export default class App extends Component {
@@ -19,6 +21,8 @@ export default class App extends Component {
                 <Route path='/profile' component={ProfilePage} />
                 <Route path='/login' component={LoginPage} />
                 <Route path='/signup' component={SignupPage} />
+                <Route path='/forgot' component={ForgotPasswordPage} />
+                <Route path='/signup_oauth' component={SignupOAuthPage} />
                 <Route path='/search' component={SearchPage} />
             </Layout>
         );

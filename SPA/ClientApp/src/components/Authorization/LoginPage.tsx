@@ -1,7 +1,7 @@
 import { ChakraProvider, Box, Button, Checkbox, Flex, FormControl, FormLabel, Divider, Link, Heading, VStack, HStack, Input, Stack, Text} from '@chakra-ui/react'
 import Theme from '../../theme/index'
 import { PasswordField } from './PasswordField'
-import { OAuthButtons } from "./OAuthButtons";
+import { OAuthLoginButtons } from "./OAuthLoginButtons";
 
 export const LoginPage = () => {
     return (
@@ -15,7 +15,7 @@ export const LoginPage = () => {
                     </Stack>
                     <Box py={{base: '0', sm: '8'}} px={{base: '4', sm: '10'}} width={'40%'} bg='white' borderRadius={{base: 'none', sm: 'xl'}}>
                         <HStack justify="center">
-                            <OAuthButtons></OAuthButtons>
+                            <OAuthLoginButtons></OAuthLoginButtons>
                         </HStack>
                         <HStack margin={'10px'}>
                             <Divider />
@@ -35,7 +35,9 @@ export const LoginPage = () => {
                             <HStack justify="space-between">
                                 <Checkbox defaultChecked>Запомнить данные</Checkbox>
                                 <Button variant="link" colorScheme="blue" size="sm">
-                                    Забыли пароль?
+                                    <Link href='/forgot'>
+                                        Забыли пароль?
+                                    </Link>
                                 </Button>
                             </HStack>
                             <Stack spacing="6">
