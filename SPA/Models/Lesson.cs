@@ -11,7 +11,7 @@ public sealed class Lesson
     
     public bool Confirmed { get; init; }
     
-    public DateTime StartTime { get; init; }
+    public DateTimeOffset StartTime { get; init; }
     
-    public DateTime EndTime { get; init; }
+    public DateTimeOffset EndTime { get; init; }
 }
