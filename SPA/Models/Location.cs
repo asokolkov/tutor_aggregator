@@ -2,12 +2,12 @@
 
 namespace SPA.Models;
 
-public sealed class Award
+public sealed class Location
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; init; }
     
-    public string Description { get; init; }
+    public string City { get; init; }
     
-    public int Year { get; init; }
+    public string District { get; init; }
 }
