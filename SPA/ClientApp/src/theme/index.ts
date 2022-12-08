@@ -1,12 +1,12 @@
 import { extendTheme } from '@chakra-ui/react';
 
 // Global style overrides
-import Avatar from "./avatar";
+import Avatar from './avatar';
 
 const overrides = {
-    components: {
-        ...Avatar,
-    },
+  components: {
+    ...Avatar,
+  },
 };
 
 export default extendTheme(overrides);
