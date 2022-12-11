@@ -37,7 +37,7 @@ const Footer: React.FC = () => {
             />
           </ButtonGroup>
           <Text fontSize="sm" color="subtle">
-            &copy; {new Date().getFullYear()} Chakra UI Pro, Inc. All rights
+            &copy; {new Date().getFullYear()} Репетиторы, Inc. All rights
             reserved.
           </Text>
         </HStack>
