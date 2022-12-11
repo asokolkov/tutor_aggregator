@@ -5,7 +5,7 @@ namespace SPA.Models;
 public sealed class Lesson
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; init; }
+    public int Id { get; set; }
     
     public double Price { get; init; }
     

@@ -11,13 +11,13 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("api/subjects")]
-public sealed class V1SubjectsController : Controller
+[Route("api/lessons")]
+public sealed class V1LessonsController : Controller
 {
     private readonly IMediator mediator;
     private readonly IMapper mapper;
 
-    public V1SubjectsController(IMediator mediator, IMapper mapper)
+    public V1LessonsController(IMediator mediator, IMapper mapper)
     {
         this.mediator = mediator;
         this.mapper = mapper;
@@ -31,25 +31,25 @@ public sealed class V1SubjectsController : Controller
         if (size < 1)
             return BadRequest("Size must not be less than 1");
 
-        var getSubjectsQuery = new GetPageQuery<Subject>(page, size);
-        var subjects = await mediator.Send(getSubjectsQuery);
-        return Ok(mapper.Map<V1PageDto<V1SubjectDto>>(subjects));
+        var getLessonsQuery = new GetPageQuery<Lesson>(page, size);
+        var lessons = await mediator.Send(getLessonsQuery);
+        return Ok(mapper.Map<V1PageDto<V1LessonDto>>(lessons));
     }
     
     [HttpGet("{id:int}")]
     public async Task<IActionResult> Get(int id)
     {
-        var getSubjectQuery = new GetQuery<Subject>(id);
-        var subject = await mediator.Send(getSubjectQuery);
-        return Ok(mapper.Map<V1SubjectDto>(subject));
+        var getLessonQuery = new GetQuery<Lesson>(id);
+        var lesson = await mediator.Send(getLessonQuery);
+        return Ok(mapper.Map<V1LessonDto>(lesson));
     }
 
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update(int id, [FromBody] V1SubjectDto oldStudent)
+    public async Task<IActionResult> Update(int id, [FromBody] V1LessonDto oldStudent)
     {
-        var subject = mapper.Map<Subject>(oldStudent);
-        subject.Id = id;
-        var updateStudentQuery = new UpdateQuery<Subject>(subject);
-        return Ok(await mediator.Send(updateStudentQuery));
+        var lesson = mapper.Map<Lesson>(oldStudent);
+        lesson.Id = id;
+        var updateLessonQuery = new UpdateQuery<Lesson>(lesson);
+        return Ok(await mediator.Send(updateLessonQuery));
     }
 }

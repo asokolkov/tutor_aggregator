@@ -32,9 +32,9 @@ internal static class ServiceCollectionExtensions
         services.AddTransient<IRequestHandler<GetQuery<Tutor>, Tutor>, GetQueryHandler<Tutor>>();
         services.AddTransient<IRequestHandler<UpdateQuery<Tutor>, Tutor>, UpdateQueryHandler<Tutor>>();
         
-        services.AddTransient<IRequestHandler<GetPageQuery<Subject>, Page<Subject>>, GetPageQueryHandler<Subject>>();
-        services.AddTransient<IRequestHandler<GetQuery<Subject>, Subject>, GetQueryHandler<Subject>>();
-        services.AddTransient<IRequestHandler<UpdateQuery<Subject>, Subject>, UpdateQueryHandler<Subject>>();
+        services.AddTransient<IRequestHandler<GetPageQuery<Lesson>, Page<Lesson>>, GetPageQueryHandler<Lesson>>();
+        services.AddTransient<IRequestHandler<GetQuery<Lesson>, Lesson>, GetQueryHandler<Lesson>>();
+        services.AddTransient<IRequestHandler<UpdateQuery<Lesson>, Lesson>, UpdateQueryHandler<Lesson>>();
 
         
         return services;
