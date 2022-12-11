@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using SPA.Models;
 
 namespace SPA.V1.DataModels;
 
@@ -18,11 +17,11 @@ public sealed class V1StudentDto
     public Uri Avatar { get; init; }
 
     [JsonPropertyName("contacts")]
-    public ICollection<V1StudentContactDto> Contacts { get; init; }
+    public IReadOnlyCollection<V1StudentContactDto> Contacts { get; init; }
 
     [JsonPropertyName("lessons")]
-    public ICollection<V1LessonDto> Lessons { get; init; }
+    public IReadOnlyCollection<V1LessonDto> Lessons { get; init; }
     
     [JsonPropertyName("reviews")]
-    public ICollection<V1ReviewDto> Reviews { get; init; }
+    public IReadOnlyCollection<V1ReviewDto> Reviews { get; init; }
 }

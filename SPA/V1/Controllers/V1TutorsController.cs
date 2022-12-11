@@ -1,6 +1,6 @@
-﻿using SPA.Application.Queries.Get;
-using SPA.Application.Queries.GetPage;
-using SPA.Application.Queries.Update;
+﻿using SPA.Application.Tutors.Queries.GetTutor;
+using SPA.Application.Tutors.Queries.GetTutors;
+using SPA.Application.Tutors.Queries.UpdateTutor;
 using SPA.Models;
 
 namespace SPA.V1.Controllers;
@@ -23,7 +23,7 @@ public sealed class V1TutorsController : Controller
         this.mapper = mapper;
     }
 
-    [HttpGet("")]
+    [HttpGet]
     public async Task<IActionResult> GetPage([FromQuery] int page = 0, [FromQuery] int size = 30)
     {
         if (page < 0)
@@ -31,7 +31,7 @@ public sealed class V1TutorsController : Controller
         if (size < 1)
             return BadRequest("Size must not be less than 1");
 
-        var getTutorsQuery = new GetPageQuery<Tutor>(page, size);
+        var getTutorsQuery = new GetTutors(page, size);
         var tutors = await mediator.Send(getTutorsQuery);
         return Ok(mapper.Map<V1PageDto<V1TutorDto>>(tutors));
     }
@@ -39,17 +39,16 @@ public sealed class V1TutorsController : Controller
     [HttpGet("{id:int}")]
     public async Task<IActionResult> Get(int id)
     {
-        var getTutorQuery = new GetQuery<Tutor>(id);
+        var getTutorQuery = new GetTutor(id);
         var tutor = await mediator.Send(getTutorQuery);
         return Ok(mapper.Map<V1TutorDto>(tutor));
     }
 
-    [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update(int id, [FromBody] V1TutorDto old)
+    [HttpPut]
+    public async Task<IActionResult> Update([FromBody] V1TutorDto old)
     {
         var tutor = mapper.Map<Tutor>(old);
-        tutor.Id = id;
-        var updateStudentQuery = new UpdateQuery<Tutor>(tutor);
+        var updateStudentQuery = new UpdateTutor(tutor);
         return Ok(await mediator.Send(updateStudentQuery));
     }
 }

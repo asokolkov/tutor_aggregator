@@ -6,7 +6,7 @@ namespace SPA.Models;
 public class Student
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
+    public int Id { get; init; }
 
     public string FirstName { get; init; }
 

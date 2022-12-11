@@ -11,5 +11,5 @@ public sealed class Review
     
     public string Description { get; init; }
     
-    public DateTimeOffset ModificationTime { get; init; }
+    public DateTimeOffset UpdatedAt { get; init; }
 }
