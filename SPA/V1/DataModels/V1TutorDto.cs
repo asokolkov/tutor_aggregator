@@ -4,7 +4,7 @@ namespace SPA.V1.DataModels;
 
 using System.Text.Json.Serialization;
 
-internal sealed class V1TutorDto
+public sealed class V1TutorDto
 {
     [JsonPropertyName("firstName")]
     public string FirstName { get; init; }

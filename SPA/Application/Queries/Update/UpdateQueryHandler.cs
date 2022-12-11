@@ -8,7 +8,7 @@ namespace SPA.Application.Queries.Update;
 public class UpdateQueryHandler<T> : IRequestHandler<UpdateQuery<T>, T> 
 {
     private readonly ICrudRepository<T> repository;
-
+    
     public UpdateQueryHandler(ICrudRepository<T> repository)
     {
         this.repository = repository;

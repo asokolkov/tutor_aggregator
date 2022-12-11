@@ -9,7 +9,7 @@ namespace SPA.Application.Queries.GetPage;
 public class GetPageQueryHandler<T> : IRequestHandler<GetPageQuery<T>, Page<T>> 
 {
     private readonly ICrudRepository<T> repository;
-
+    
     public GetPageQueryHandler(ICrudRepository<T> repository)
     {
         this.repository = repository;

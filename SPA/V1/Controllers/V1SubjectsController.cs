@@ -11,13 +11,13 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("api/students")]
-public sealed class V1StudentsController : Controller
+[Route("api/subjects")]
+public sealed class V1SubjectsController : Controller
 {
     private readonly IMediator mediator;
     private readonly IMapper mapper;
 
-    public V1StudentsController(IMediator mediator, IMapper mapper)
+    public V1SubjectsController(IMediator mediator, IMapper mapper)
     {
         this.mediator = mediator;
         this.mapper = mapper;
@@ -31,25 +31,25 @@ public sealed class V1StudentsController : Controller
         if (size < 1)
             return BadRequest("Size must not be less than 1");
 
-        var getStudentsQuery = new GetPageQuery<Student>(page, size);
-        var students = await mediator.Send(getStudentsQuery);
-        return Ok(mapper.Map<V1PageDto<V1StudentDto>>(students));
+        var getSubjectsQuery = new GetPageQuery<Subject>(page, size);
+        var subjects = await mediator.Send(getSubjectsQuery);
+        return Ok(mapper.Map<V1PageDto<V1SubjectDto>>(subjects));
     }
     
     [HttpGet("{id:int}")]
     public async Task<IActionResult> Get(int id)
     {
-        var getStudentQuery = new GetQuery<Student>(id);
-        var student = await mediator.Send(getStudentQuery);
-        return Ok(mapper.Map<V1StudentDto>(student));
+        var getSubjectQuery = new GetQuery<Subject>(id);
+        var subject = await mediator.Send(getSubjectQuery);
+        return Ok(mapper.Map<V1SubjectDto>(subject));
     }
 
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update(int id, [FromBody] V1StudentDto oldStudent)
+    public async Task<IActionResult> Update(int id, [FromBody] V1SubjectDto oldStudent)
     {
-        var student = mapper.Map<Student>(oldStudent);
-        student.Id = id;
-        var updateStudentQuery = new UpdateQuery<Student>(student);
+        var subject = mapper.Map<Subject>(oldStudent);
+        subject.Id = id;
+        var updateStudentQuery = new UpdateQuery<Subject>(subject);
         return Ok(await mediator.Send(updateStudentQuery));
     }
 }

@@ -1,7 +1,4 @@
-﻿using System.Reflection;
-using SPA.Application.Queries;
-using SPA.Application.Queries.Add;
-using SPA.Application.Queries.Get;
+﻿using SPA.Application.Queries.Get;
 using SPA.Application.Queries.GetPage;
 using SPA.Application.Queries.Update;
 
@@ -26,11 +23,20 @@ internal static class ServiceCollectionExtensions
         
         services.AddAutoMapper(opt => opt.AddProfile<V1Profile>());
         services.AddMediatR(typeof(Program));
+        
         services.AddTransient<IRequestHandler<GetPageQuery<Student>, Page<Student>>, GetPageQueryHandler<Student>>();
         services.AddTransient<IRequestHandler<GetQuery<Student>, Student>, GetQueryHandler<Student>>();
-        services.AddTransient<IRequestHandler<AddQuery<Student>, Student>, AddQueryHandler<Student>>();
         services.AddTransient<IRequestHandler<UpdateQuery<Student>, Student>, UpdateQueryHandler<Student>>();
+        
+        services.AddTransient<IRequestHandler<GetPageQuery<Tutor>, Page<Tutor>>, GetPageQueryHandler<Tutor>>();
+        services.AddTransient<IRequestHandler<GetQuery<Tutor>, Tutor>, GetQueryHandler<Tutor>>();
+        services.AddTransient<IRequestHandler<UpdateQuery<Tutor>, Tutor>, UpdateQueryHandler<Tutor>>();
+        
+        services.AddTransient<IRequestHandler<GetPageQuery<Subject>, Page<Subject>>, GetPageQueryHandler<Subject>>();
+        services.AddTransient<IRequestHandler<GetQuery<Subject>, Subject>, GetQueryHandler<Subject>>();
+        services.AddTransient<IRequestHandler<UpdateQuery<Subject>, Subject>, UpdateQueryHandler<Subject>>();
 
+        
         return services;
     }
 }

@@ -8,7 +8,7 @@ namespace SPA.Application.Queries.Get;
 public class GetQueryHandler<T> : IRequestHandler<GetQuery<T>, T> 
 {
     private readonly ICrudRepository<T> repository;
-
+    
     public GetQueryHandler(ICrudRepository<T> repository)
     {
         this.repository = repository;

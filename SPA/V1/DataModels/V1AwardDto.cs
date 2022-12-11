@@ -2,7 +2,7 @@
 
 using System.Text.Json.Serialization;
 
-internal sealed class V1AwardDto
+public sealed class V1AwardDto
 {
     [JsonPropertyName("description")]
     public string Description { get; init; }
