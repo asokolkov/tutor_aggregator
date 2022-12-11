@@ -16,7 +16,7 @@ public class Student
     
     public Uri Avatar { get; init; }
 
-    public ICollection<Contact> Contacts { get; init; }
+    public ICollection<StudentContact> Contacts { get; init; }
 
     public ICollection<Lesson> Lessons { get; init; }
     

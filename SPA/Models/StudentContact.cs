@@ -2,10 +2,12 @@
 
 namespace SPA.Models;
 
-public sealed class Subject
+public sealed class StudentContact
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; init; }
     
-    public string Description { get; init; }
+    public ContactType Type { get; init; }
+    
+    public string Value { get; init; }
 }

@@ -9,7 +9,8 @@ internal sealed class V1Profile : Profile
     public V1Profile()
     {
         CreateMap<Award, V1AwardDto>();
-        CreateMap<Contact, V1ContactDto>();
+        CreateMap<TutorContact, V1TutorContactDto>();
+        CreateMap<StudentContact, V1StudentContactDto>();
         CreateMap<Education, V1EducationDto>();
         CreateMap<Job, V1JobDto>();
         CreateMap<Location, V1LocationDto>();

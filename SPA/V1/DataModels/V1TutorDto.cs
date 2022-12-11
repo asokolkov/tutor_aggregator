@@ -34,7 +34,7 @@ public sealed class V1TutorDto
     public IReadOnlyCollection<V1SubjectDto> Subjects { get; init; }
 
     [JsonPropertyName("contacts")]
-    public IReadOnlyCollection<V1ContactDto> Contacts { get; init; }
+    public IReadOnlyCollection<V1TutorContactDto> Contacts { get; init; }
 
     [JsonPropertyName("educations")]
     public IReadOnlyCollection<V1EducationDto> Educations { get; init; }

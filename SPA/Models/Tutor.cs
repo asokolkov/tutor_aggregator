@@ -26,7 +26,7 @@ public sealed class Tutor
 
     public ICollection<Subject> Subjects { get; init; }
 
-    public ICollection<Contact> Contacts { get; init; }
+    public ICollection<TutorContact> Contacts { get; init; }
 
     public ICollection<Education> Educations { get; init; }
 

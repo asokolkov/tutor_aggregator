@@ -1,10 +1,9 @@
 ﻿using System.Text.Json.Serialization;
+using SPA.Models;
 
 namespace SPA.V1.DataModels;
 
-using Models;
-
-public sealed class V1ContactDto
+public sealed class V1StudentContactDto
 {
     [JsonPropertyName("type")]
     public ContactType Type { get; init; }

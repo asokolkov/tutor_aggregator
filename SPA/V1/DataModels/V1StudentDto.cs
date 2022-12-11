@@ -18,7 +18,7 @@ public sealed class V1StudentDto
     public Uri Avatar { get; init; }
 
     [JsonPropertyName("contacts")]
-    public ICollection<V1ContactDto> Contacts { get; init; }
+    public ICollection<V1StudentContactDto> Contacts { get; init; }
 
     [JsonPropertyName("lessons")]
     public ICollection<V1LessonDto> Lessons { get; init; }
