@@ -37,7 +37,7 @@ public class PostgresRepository<T> : ICrudRepository<T> where T : class
         return await table.FindAsync(id);
     }
 
-    public async void Update(T element)
+    public async Task<T> Update(T element)
     {
         await using var transaction = await context.Database.BeginTransactionAsync();
         await transaction.CreateSavepointAsync("BeforeUpdate");
@@ -46,14 +46,16 @@ public class PostgresRepository<T> : ICrudRepository<T> where T : class
             table.Update(element);
             await context.SaveChangesAsync();
             await transaction.CommitAsync();
+            return element;
         }
         catch (Exception)
         {
             await transaction.RollbackToSavepointAsync("BeforeUpdate");
+            return default;
         }
     }
 
-    public async void Insert(T element)
+    public async Task<T> Insert(T element)
     {
         await using var transaction = await context.Database.BeginTransactionAsync();
         await transaction.CreateSavepointAsync("BeforeInsert");
@@ -61,10 +63,13 @@ public class PostgresRepository<T> : ICrudRepository<T> where T : class
         {
             await table.AddAsync(element);
             await context.SaveChangesAsync();
+            await transaction.CommitAsync();
+            return element;
         }
         catch (Exception)
         {
             await transaction.RollbackToSavepointAsync("BeforeInsert");
+            return default;
         }
     }
 }

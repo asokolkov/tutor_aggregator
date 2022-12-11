@@ -12,7 +12,7 @@ public interface ICrudRepository<T>
     
     Task<T> Get(int id);
     
-    void Update(T element);
+    Task<T> Update(T element);
     
-    void Insert(T tutor);
+    Task<T> Insert(T tutor);
 }

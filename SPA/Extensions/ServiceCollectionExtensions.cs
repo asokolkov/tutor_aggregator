@@ -1,7 +1,9 @@
 ﻿using System.Reflection;
 using SPA.Application.Queries;
+using SPA.Application.Queries.Add;
 using SPA.Application.Queries.Get;
 using SPA.Application.Queries.GetPage;
+using SPA.Application.Queries.Update;
 
 namespace SPA.Extensions;
 
@@ -26,7 +28,9 @@ internal static class ServiceCollectionExtensions
         services.AddMediatR(typeof(Program));
         services.AddTransient<IRequestHandler<GetPageQuery<Student>, Page<Student>>, GetPageQueryHandler<Student>>();
         services.AddTransient<IRequestHandler<GetQuery<Student>, Student>, GetQueryHandler<Student>>();
-        
+        services.AddTransient<IRequestHandler<AddQuery<Student>, Student>, AddQueryHandler<Student>>();
+        services.AddTransient<IRequestHandler<UpdateQuery<Student>, Student>, UpdateQueryHandler<Student>>();
+
         return services;
     }
 }

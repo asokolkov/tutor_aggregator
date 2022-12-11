@@ -2,7 +2,7 @@
 
 namespace SPA.V1.DataModels;
 
-internal sealed class V1LessonDto
+public sealed class V1LessonDto
 {
     [JsonPropertyName("price")]
     public double Price { get; init; }

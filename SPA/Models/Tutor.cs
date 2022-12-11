@@ -8,13 +8,13 @@ public sealed class Tutor
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; init; }
 
-    [Required] public string FirstName { get; init; }
+    public string FirstName { get; init; }
 
-    [Required] public string LastName { get; init; }
+    public string LastName { get; init; }
 
-    [Required] public string MiddleName { get; init; }
+    public string MiddleName { get; init; }
 
-    [Required] public double Rating { get; init; }
+    public double Rating { get; init; }
 
     public string Requirements { get; init; }
 

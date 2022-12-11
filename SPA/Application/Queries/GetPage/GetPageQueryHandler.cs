@@ -8,15 +8,15 @@ namespace SPA.Application.Queries.GetPage;
 [UsedImplicitly]
 public class GetPageQueryHandler<T> : IRequestHandler<GetPageQuery<T>, Page<T>> 
 {
-    private readonly ICrudRepository<T> tutorsRepository;
+    private readonly ICrudRepository<T> repository;
 
-    public GetPageQueryHandler(ICrudRepository<T> tutorsRepository)
+    public GetPageQueryHandler(ICrudRepository<T> repository)
     {
-        this.tutorsRepository = tutorsRepository;
+        this.repository = repository;
     }
 
     public async Task<Page<T>> Handle(GetPageQuery<T> request, CancellationToken cancellationToken)
     {
-        return await tutorsRepository.Get(request.PageNumber, request.PageSize);
+        return await repository.Get(request.PageNumber, request.PageSize);
     }
 }

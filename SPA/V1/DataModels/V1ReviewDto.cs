@@ -2,7 +2,7 @@
 
 namespace SPA.V1.DataModels;
 
-internal sealed class V1ReviewDto
+public sealed class V1ReviewDto
 {
     [JsonPropertyName("rating")]
     public double Rating { get; init; }

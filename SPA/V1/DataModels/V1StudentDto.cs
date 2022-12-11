@@ -3,7 +3,7 @@ using SPA.Models;
 
 namespace SPA.V1.DataModels;
 
-internal sealed class V1StudentDto
+public sealed class V1StudentDto
 {
     [JsonPropertyName("firstName")]
     public string FirstName { get; init; }

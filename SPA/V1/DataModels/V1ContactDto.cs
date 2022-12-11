@@ -4,7 +4,7 @@ namespace SPA.V1.DataModels;
 
 using Models;
 
-internal sealed class V1ContactDto
+public sealed class V1ContactDto
 {
     [JsonPropertyName("type")]
     public ContactType Type { get; init; }
