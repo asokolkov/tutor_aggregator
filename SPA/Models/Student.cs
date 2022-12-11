@@ -16,9 +16,9 @@ public class Student
     
     public Uri Avatar { get; init; }
 
-    public IReadOnlyCollection<Contact> Contacts { get; init; } = new List<Contact>();
+    public ICollection<Contact> Contacts { get; init; }
 
-    public IReadOnlyCollection<Lesson> Lessons { get; init; } = new List<Lesson>();
+    public ICollection<Lesson> Lessons { get; init; }
     
-    public IReadOnlyCollection<Review> Reviews { get; init; } = new List<Review>();
+    public ICollection<Review> Reviews { get; init; }
 }

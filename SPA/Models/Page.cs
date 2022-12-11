@@ -2,12 +2,12 @@
 
 public sealed class Page<T>
 {
-    public Page(IReadOnlyCollection<T> items, long totalCount)
+    public Page(ICollection<T> items, long totalCount)
     {
         Items = items;
         TotalCount = totalCount;
     }
     
-    public IReadOnlyCollection<T> Items { get; }
+    public ICollection<T> Items { get; }
     public long TotalCount { get; }
 }

@@ -7,8 +7,8 @@ using Models;
 internal sealed class V1ContactDto
 {
     [JsonPropertyName("type")]
-    public ContactType Type { get; set; }
+    public ContactType Type { get; init; }
 
     [JsonPropertyName("value")]
-    public string Value { get; set; }
+    public string Value { get; init; }
 }

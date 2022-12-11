@@ -7,45 +7,45 @@ using System.Text.Json.Serialization;
 internal sealed class V1TutorDto
 {
     [JsonPropertyName("firstName")]
-    public string FirstName { get; set; }
+    public string FirstName { get; init; }
 
     [JsonPropertyName("lastName")]
-    public string LastName { get; set; }
+    public string LastName { get; init; }
 
     [JsonPropertyName("middleName")]
-    public string MiddleName { get; set; }
+    public string MiddleName { get; init; }
 
     [JsonPropertyName("location")]
-    public Location Location { get; set; }
+    public Location Location { get; init; }
 
     [JsonPropertyName("requirements")]
-    public string Requirements { get; set; }
+    public string Requirements { get; init; }
 
     [JsonPropertyName("rating")]
-    public double Rating { get; set; }
+    public double Rating { get; init; }
 
     [JsonPropertyName("avatar")]
-    public Uri Avatar { get; set; }
+    public Uri Avatar { get; init; }
     
     [JsonPropertyName("job")]
-    public Job Job { get; set; }
+    public Job Job { get; init; }
 
     [JsonPropertyName("subjects")]
-    public IReadOnlyCollection<V1SubjectDto> Subjects { get; set; } = Array.Empty<V1SubjectDto>();
+    public IReadOnlyCollection<V1SubjectDto> Subjects { get; init; }
 
     [JsonPropertyName("contacts")]
-    public IReadOnlyCollection<V1ContactDto> Contacts { get; set; } = Array.Empty<V1ContactDto>();
+    public IReadOnlyCollection<V1ContactDto> Contacts { get; init; }
 
     [JsonPropertyName("educations")]
-    public IReadOnlyCollection<V1EducationDto> Educations { get; set; } = Array.Empty<V1EducationDto>();
+    public IReadOnlyCollection<V1EducationDto> Educations { get; init; }
 
     [JsonPropertyName("awards")]
-    public IReadOnlyCollection<V1AwardDto> Awards { get; set; } = Array.Empty<V1AwardDto>();
+    public IReadOnlyCollection<V1AwardDto> Awards { get; init; }
     
     [JsonPropertyName("lessons")]
-    public IReadOnlyCollection<V1LessonDto> Lessons { get; set; } = Array.Empty<V1LessonDto>();
+    public IReadOnlyCollection<V1LessonDto> Lessons { get; init; }
     
     [JsonPropertyName("reviews")]
-    public IReadOnlyCollection<V1ReviewDto> Reviews { get; set; } = Array.Empty<V1ReviewDto>();
+    public IReadOnlyCollection<V1ReviewDto> Reviews { get; init; }
 
 }

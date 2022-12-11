@@ -18,11 +18,11 @@ internal sealed class V1StudentDto
     public Uri Avatar { get; init; }
 
     [JsonPropertyName("contacts")]
-    public IReadOnlyCollection<V1ContactDto> Contacts { get; init; } = Array.Empty<V1ContactDto>();
+    public ICollection<V1ContactDto> Contacts { get; init; }
 
     [JsonPropertyName("lessons")]
-    public IReadOnlyCollection<V1LessonDto> Lessons { get; init; } = Array.Empty<V1LessonDto>();
+    public ICollection<V1LessonDto> Lessons { get; init; }
     
     [JsonPropertyName("reviews")]
-    public IReadOnlyCollection<V1ReviewDto> Reviews { get; init; } = Array.Empty<V1ReviewDto>();
+    public ICollection<V1ReviewDto> Reviews { get; init; }
 }
