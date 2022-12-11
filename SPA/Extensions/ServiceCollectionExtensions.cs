@@ -8,6 +8,7 @@ using SPA.Application.Students.Queries.UpdateTutor;
 using SPA.Application.Tutors.Queries.GetTutor;
 using SPA.Application.Tutors.Queries.GetTutors;
 using SPA.Application.Tutors.Queries.UpdateTutor;
+using SPA.V1.DataModels;
 
 namespace SPA.Extensions;
 
@@ -33,15 +34,15 @@ internal static class ServiceCollectionExtensions
 
         services.AddTransient<IRequestHandler<GetLessons, Page<Lesson>>, GetLessonsHandler>();
         services.AddTransient<IRequestHandler<GetLesson, Lesson>, GetLessonHandler>();
-        services.AddTransient<IRequestHandler<UpdateLesson, Lesson>, UpdateLessonHandler>();
+        services.AddTransient<IRequestHandler<UpdateLesson, V1LessonDto>, UpdateLessonHandler>();
         
         services.AddTransient<IRequestHandler<GetStudents, Page<Student>>, GetStudentsHandler>();
         services.AddTransient<IRequestHandler<GetStudent, Student>, GetStudentHandler>();
-        services.AddTransient<IRequestHandler<UpdateStudent, Student>, UpdateStudentHandler>();
+        services.AddTransient<IRequestHandler<UpdateStudent, V1StudentDto>, UpdateStudentHandler>();
         
         services.AddTransient<IRequestHandler<GetTutors, Page<Tutor>>, GetTutorsHandler>();
         services.AddTransient<IRequestHandler<GetTutor, Tutor>, GetTutorHandler>();
-        services.AddTransient<IRequestHandler<UpdateTutor, Tutor>, UpdateTutorHandler>();
+        services.AddTransient<IRequestHandler<UpdateTutor, V1TutorDto>, UpdateTutorHandler>();
 
         return services;
     }

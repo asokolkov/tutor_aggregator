@@ -1,13 +1,14 @@
 ﻿using MediatR;
 using SPA.Models;
+using SPA.V1.DataModels;
 
 namespace SPA.Application.Students.Queries.UpdateTutor;
 
-public class UpdateStudent : IRequest<Student>
+public class UpdateStudent : IRequest<V1StudentDto>
 {
-    public Student Element { get; }
+    public V1StudentDto Element { get; }
     
-    public UpdateStudent(Student element)
+    public UpdateStudent(V1StudentDto element)
     {
         Element = element;
     }

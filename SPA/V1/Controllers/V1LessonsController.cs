@@ -47,8 +47,7 @@ public sealed class V1LessonsController : Controller
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] V1LessonDto old)
     {
-        var lesson = mapper.Map<Lesson>(old);
-        var updateLessonQuery = new UpdateLesson(lesson);
+        var updateLessonQuery = new UpdateLesson(old);
         return Ok(await mediator.Send(updateLessonQuery));
     }
 }

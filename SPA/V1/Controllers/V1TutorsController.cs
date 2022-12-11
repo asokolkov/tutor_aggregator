@@ -47,8 +47,7 @@ public sealed class V1TutorsController : Controller
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] V1TutorDto old)
     {
-        var tutor = mapper.Map<Tutor>(old);
-        var updateStudentQuery = new UpdateTutor(tutor);
+        var updateStudentQuery = new UpdateTutor(old);
         return Ok(await mediator.Send(updateStudentQuery));
     }
 }
