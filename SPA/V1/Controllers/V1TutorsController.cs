@@ -1,4 +1,8 @@
-﻿namespace SPA.V1.Controllers;
+﻿using SPA.Application;
+using SPA.Application.Queries;
+using SPA.Models;
+
+namespace SPA.V1.Controllers;
 
 using Application.Tutors.Queries.GetTutors;
 using AutoMapper;
@@ -8,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 
 [ApiController]
-[Route("api/tutors")]
+[Route("api")]
 public sealed class V1TutorsController : Controller
 {
     private readonly IMediator mediator;
@@ -20,8 +24,8 @@ public sealed class V1TutorsController : Controller
         this.mapper = mapper;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] int page = 0, [FromQuery] int size = 30)
+    [HttpGet("tutors")]
+    public async Task<IActionResult> GetS([FromQuery] int page = 0, [FromQuery] int size = 30)
     {
         if (page < 0)
             return BadRequest("Page must not be less than 0");

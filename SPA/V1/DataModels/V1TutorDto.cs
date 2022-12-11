@@ -26,9 +26,12 @@ internal sealed class V1TutorDto
 
     [JsonPropertyName("avatar")]
     public Uri Avatar { get; set; }
+    
+    [JsonPropertyName("job")]
+    public Job Job { get; set; }
 
     [JsonPropertyName("subjects")]
-    public IReadOnlyCollection<Subject> Subjects { get; set; } = Array.Empty<Subject>();
+    public IReadOnlyCollection<V1SubjectDto> Subjects { get; set; } = Array.Empty<V1SubjectDto>();
 
     [JsonPropertyName("contacts")]
     public IReadOnlyCollection<V1ContactDto> Contacts { get; set; } = Array.Empty<V1ContactDto>();
@@ -38,4 +41,11 @@ internal sealed class V1TutorDto
 
     [JsonPropertyName("awards")]
     public IReadOnlyCollection<V1AwardDto> Awards { get; set; } = Array.Empty<V1AwardDto>();
+    
+    [JsonPropertyName("lessons")]
+    public IReadOnlyCollection<V1LessonDto> Lessons { get; set; } = Array.Empty<V1LessonDto>();
+    
+    [JsonPropertyName("reviews")]
+    public IReadOnlyCollection<V1ReviewDto> Reviews { get; set; } = Array.Empty<V1ReviewDto>();
+
 }
