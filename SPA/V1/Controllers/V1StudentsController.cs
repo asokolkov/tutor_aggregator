@@ -2,6 +2,7 @@
 using SPA.Application.Queries.GetPage;
 using SPA.Application.Queries.Update;
 using SPA.Models;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace SPA.V1.Controllers;
 
@@ -24,6 +25,7 @@ public sealed class V1StudentsController : Controller
     }
 
     [HttpGet("")]
+    [SwaggerResponse(200, "OK", typeof(V1PageDto<V1StudentDto>))]
     public async Task<IActionResult> GetPage([FromQuery] int page = 0, [FromQuery] int size = 30)
     {
         if (page < 0)
@@ -37,6 +39,7 @@ public sealed class V1StudentsController : Controller
     }
     
     [HttpGet("{id:int}")]
+    [SwaggerResponse(200, "OK", typeof(V1StudentDto))]
     public async Task<IActionResult> Get(int id)
     {
         var getStudentQuery = new GetQuery<Student>(id);
@@ -45,6 +48,7 @@ public sealed class V1StudentsController : Controller
     }
 
     [HttpPut("{id:int}")]
+    [SwaggerResponse(200, "OK", typeof(UpdateQuery<Student>))]
     public async Task<IActionResult> Update(int id, [FromBody] V1StudentDto oldStudent)
     {
         var student = mapper.Map<Student>(oldStudent);
