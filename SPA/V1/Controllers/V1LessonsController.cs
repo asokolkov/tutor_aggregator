@@ -48,7 +48,7 @@ public sealed class V1LessonsController : Controller
     }
 
     [HttpPut]
-    [SwaggerResponse(200, "OK", typeof(UpdateQuery<Lesson>))]
+    [SwaggerResponse(200, "OK", typeof(UpdateLesson))]
     public async Task<IActionResult> Update([FromBody] V1LessonDto old)
     {
         var updateLessonQuery = new UpdateLesson(old);
