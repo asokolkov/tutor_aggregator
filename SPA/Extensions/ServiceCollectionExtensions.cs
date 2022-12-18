@@ -1,6 +1,14 @@
-﻿using SPA.Application.Queries.Get;
-using SPA.Application.Queries.GetPage;
-using SPA.Application.Queries.Update;
+﻿using SPA.Application.Lessons.Queries.GetLesson;
+using SPA.Application.Lessons.Queries.GetLessons;
+using SPA.Application.Lessons.Queries.UpdateLesson;
+using SPA.Application.Students.Queries.GetStudent;
+using SPA.Application.Students.Queries.GetStudents;
+using SPA.Application.Students.Queries.GetTutors;
+using SPA.Application.Students.Queries.UpdateTutor;
+using SPA.Application.Tutors.Queries.GetTutor;
+using SPA.Application.Tutors.Queries.GetTutors;
+using SPA.Application.Tutors.Queries.UpdateTutor;
+using SPA.V1.DataModels;
 
 namespace SPA.Extensions;
 
@@ -23,20 +31,19 @@ internal static class ServiceCollectionExtensions
         
         services.AddAutoMapper(opt => opt.AddProfile<V1Profile>());
         services.AddMediatR(typeof(Program));
-        
-        services.AddTransient<IRequestHandler<GetPageQuery<Student>, Page<Student>>, GetPageQueryHandler<Student>>();
-        services.AddTransient<IRequestHandler<GetQuery<Student>, Student>, GetQueryHandler<Student>>();
-        services.AddTransient<IRequestHandler<UpdateQuery<Student>, Student>, UpdateQueryHandler<Student>>();
-        
-        services.AddTransient<IRequestHandler<GetPageQuery<Tutor>, Page<Tutor>>, GetPageQueryHandler<Tutor>>();
-        services.AddTransient<IRequestHandler<GetQuery<Tutor>, Tutor>, GetQueryHandler<Tutor>>();
-        services.AddTransient<IRequestHandler<UpdateQuery<Tutor>, Tutor>, UpdateQueryHandler<Tutor>>();
-        
-        services.AddTransient<IRequestHandler<GetPageQuery<Lesson>, Page<Lesson>>, GetPageQueryHandler<Lesson>>();
-        services.AddTransient<IRequestHandler<GetQuery<Lesson>, Lesson>, GetQueryHandler<Lesson>>();
-        services.AddTransient<IRequestHandler<UpdateQuery<Lesson>, Lesson>, UpdateQueryHandler<Lesson>>();
 
+        services.AddTransient<IRequestHandler<GetLessons, Page<Lesson>>, GetLessonsHandler>();
+        services.AddTransient<IRequestHandler<GetLesson, Lesson>, GetLessonHandler>();
+        services.AddTransient<IRequestHandler<UpdateLesson, V1LessonDto>, UpdateLessonHandler>();
         
+        services.AddTransient<IRequestHandler<GetStudents, Page<Student>>, GetStudentsHandler>();
+        services.AddTransient<IRequestHandler<GetStudent, Student>, GetStudentHandler>();
+        services.AddTransient<IRequestHandler<UpdateStudent, V1StudentDto>, UpdateStudentHandler>();
+        
+        services.AddTransient<IRequestHandler<GetTutors, Page<Tutor>>, GetTutorsHandler>();
+        services.AddTransient<IRequestHandler<GetTutor, Tutor>, GetTutorHandler>();
+        services.AddTransient<IRequestHandler<UpdateTutor, V1TutorDto>, UpdateTutorHandler>();
+
         return services;
     }
 }

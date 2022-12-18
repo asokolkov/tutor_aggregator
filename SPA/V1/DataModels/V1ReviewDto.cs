@@ -10,6 +10,6 @@ public sealed class V1ReviewDto
     [JsonPropertyName("description")]
     public string Description { get; init; }
     
-    [JsonPropertyName("modificationTime")]
-    public DateTimeOffset ModificationTime { get; init; }
+    [JsonPropertyName("updatedAt")]
+    public DateTimeOffset UpdatedAt { get; init; }
 }

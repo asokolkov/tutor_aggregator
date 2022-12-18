@@ -15,9 +15,6 @@ public sealed class V1TutorDto
     [JsonPropertyName("middleName")]
     public string MiddleName { get; init; }
 
-    [JsonPropertyName("location")]
-    public Location Location { get; init; }
-
     [JsonPropertyName("requirements")]
     public string Requirements { get; init; }
 
@@ -27,8 +24,11 @@ public sealed class V1TutorDto
     [JsonPropertyName("avatar")]
     public Uri Avatar { get; init; }
     
+    [JsonPropertyName("location")]
+    public V1LocationDto Location { get; init; }
+    
     [JsonPropertyName("job")]
-    public Job Job { get; init; }
+    public V1JobDto Job { get; init; }
 
     [JsonPropertyName("subjects")]
     public IReadOnlyCollection<V1SubjectDto> Subjects { get; init; }

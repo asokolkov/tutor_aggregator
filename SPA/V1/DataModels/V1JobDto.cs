@@ -2,7 +2,7 @@
 
 namespace SPA.V1.DataModels;
 
-internal sealed class V1JobDto
+public sealed class V1JobDto
 {
     [JsonPropertyName("place")]
     public string Place { get; init; }

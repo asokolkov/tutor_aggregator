@@ -1,6 +1,6 @@
-﻿using SPA.Application.Queries.Get;
-using SPA.Application.Queries.GetPage;
-using SPA.Application.Queries.Update;
+using SPA.Application.Students.Queries.GetStudent;
+using SPA.Application.Students.Queries.GetTutors;
+using SPA.Application.Students.Queries.UpdateTutor;
 using SPA.Models;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -24,7 +24,7 @@ public sealed class V1StudentsController : Controller
         this.mapper = mapper;
     }
 
-    [HttpGet("")]
+    [HttpGet]
     [SwaggerResponse(200, "OK", typeof(V1PageDto<V1StudentDto>))]
     public async Task<IActionResult> GetPage([FromQuery] int page = 0, [FromQuery] int size = 30)
     {
@@ -33,7 +33,7 @@ public sealed class V1StudentsController : Controller
         if (size < 1)
             return BadRequest("Size must not be less than 1");
 
-        var getStudentsQuery = new GetPageQuery<Student>(page, size);
+        var getStudentsQuery = new GetStudents(page, size);
         var students = await mediator.Send(getStudentsQuery);
         return Ok(mapper.Map<V1PageDto<V1StudentDto>>(students));
     }
@@ -42,18 +42,16 @@ public sealed class V1StudentsController : Controller
     [SwaggerResponse(200, "OK", typeof(V1StudentDto))]
     public async Task<IActionResult> Get(int id)
     {
-        var getStudentQuery = new GetQuery<Student>(id);
+        var getStudentQuery = new GetStudent(id);
         var student = await mediator.Send(getStudentQuery);
         return Ok(mapper.Map<V1StudentDto>(student));
     }
 
-    [HttpPut("{id:int}")]
+    [HttpPut]
     [SwaggerResponse(200, "OK", typeof(UpdateQuery<Student>))]
-    public async Task<IActionResult> Update(int id, [FromBody] V1StudentDto oldStudent)
+    public async Task<IActionResult> Update([FromBody] V1StudentDto old)
     {
-        var student = mapper.Map<Student>(oldStudent);
-        student.Id = id;
-        var updateStudentQuery = new UpdateQuery<Student>(student);
+        var updateStudentQuery = new UpdateStudent(old);
         return Ok(await mediator.Send(updateStudentQuery));
     }
 }

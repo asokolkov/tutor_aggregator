@@ -2,7 +2,7 @@
 
 using System.Text.Json.Serialization;
 
-internal sealed class V1PageDto<T>
+public sealed class V1PageDto<T>
 {
     public V1PageDto(ICollection<T> items, long totalCount)
     {
