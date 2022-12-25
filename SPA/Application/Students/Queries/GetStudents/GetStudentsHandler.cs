@@ -10,9 +10,9 @@ internal sealed class GetStudentsHandler : IRequestHandler<GetTutors.GetStudents
 {
     private readonly ICrudRepository<Student> repository;
 
-    public GetStudentsHandler(ICrudRepository<Student> tutorsRepository)
+    public GetStudentsHandler(ICrudRepository<Student> repository)
     {
-        this.repository = tutorsRepository;
+        this.repository = repository;
     }
 
     public async Task<Page<Student>> Handle(GetTutors.GetStudents request, CancellationToken cancellationToken)

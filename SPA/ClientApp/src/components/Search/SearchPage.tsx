@@ -29,7 +29,7 @@ export const SearchPage = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetch('./api/tutors')
+    fetch('./api/v1/tutors')
       .then((res) => res.json())
       .then(
         (result) => {

@@ -1,7 +1,6 @@
-using SPA.Application.Tutors.Queries.GetTutor;
+﻿using SPA.Application.Tutors.Queries.GetTutor;
 using SPA.Application.Tutors.Queries.GetTutors;
 using SPA.Application.Tutors.Queries.UpdateTutor;
-using SPA.Models;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace SPA.V1.Controllers;
@@ -12,7 +11,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("api/tutors")]
+[Route("api/v1/tutors")]
 public sealed class V1TutorsController : Controller
 {
     private readonly IMediator mediator;
