@@ -4,6 +4,9 @@ using SPA.Application.Lessons.Queries.UpdateLesson;
 using SPA.Application.Locations.Queries.GetLocation;
 using SPA.Application.Locations.Queries.GetLocations;
 using SPA.Application.Locations.Queries.UpdateLocation;
+using SPA.Application.Reviews.Queries.GetReview;
+using SPA.Application.Reviews.Queries.GetReviews;
+using SPA.Application.Reviews.Queries.UpdateReview;
 using SPA.Application.Students.Queries.GetStudent;
 using SPA.Application.Students.Queries.GetStudents;
 using SPA.Application.Students.Queries.GetTutors;
@@ -50,6 +53,10 @@ internal static class ServiceCollectionExtensions
         services.AddTransient<IRequestHandler<GetLocations, Page<Location>>, GetLocationsHandler>();
         services.AddTransient<IRequestHandler<GetLocation, Location>, GetLocationHandler>();
         services.AddTransient<IRequestHandler<UpdateLocation, V1LocationDto>, UpdateLocationHandler>();
+        
+        services.AddTransient<IRequestHandler<GetReviews, Page<Review>>, GetReviewsHandler>();
+        services.AddTransient<IRequestHandler<GetReview, Review>, GetReviewHandler>();
+        services.AddTransient<IRequestHandler<UpdateReview, V1ReviewDto>, UpdateReviewHandler>();
 
         return services;
     }

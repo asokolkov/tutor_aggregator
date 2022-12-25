@@ -32,25 +32,25 @@ public sealed class V1StudentsController : Controller
         if (size < 1)
             return BadRequest("Size must not be less than 1");
 
-        var getStudentsQuery = new GetStudents(page, size);
-        var students = await mediator.Send(getStudentsQuery);
-        return Ok(mapper.Map<V1PageDto<V1StudentDto>>(students));
+        var query = new GetStudents(page, size);
+        var modelsPage = await mediator.Send(query);
+        return Ok(mapper.Map<V1PageDto<V1StudentDto>>(modelsPage));
     }
     
     [HttpGet("{id:int}")]
     [SwaggerResponse(200, "OK", typeof(V1StudentDto))]
     public async Task<IActionResult> Get(int id)
     {
-        var getStudentQuery = new GetStudent(id);
-        var student = await mediator.Send(getStudentQuery);
-        return Ok(mapper.Map<V1StudentDto>(student));
+        var query = new GetStudent(id);
+        var model = await mediator.Send(query);
+        return Ok(mapper.Map<V1StudentDto>(model));
     }
 
     [HttpPut]
     [SwaggerResponse(200, "OK", typeof(UpdateStudent))]
     public async Task<IActionResult> Update([FromBody] V1StudentDto old)
     {
-        var updateStudentQuery = new UpdateStudent(old);
-        return Ok(await mediator.Send(updateStudentQuery));
+        var query = new UpdateStudent(old);
+        return Ok(await mediator.Send(query));
     }
 }

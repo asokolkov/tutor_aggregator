@@ -32,25 +32,25 @@ public sealed class V1LocationsController : Controller
         if (size < 1)
             return BadRequest("Size must not be less than 1");
 
-        var getLocationsQuery = new GetLocations(page, size);
-        var locations = await mediator.Send(getLocationsQuery);
-        return Ok(mapper.Map<V1PageDto<V1LocationDto>>(locations));
+        var query = new GetLocations(page, size);
+        var modelsPage = await mediator.Send(query);
+        return Ok(mapper.Map<V1PageDto<V1LocationDto>>(modelsPage));
     }
     
     [HttpGet("{id:int}")]
     [SwaggerResponse(200, "OK", typeof(V1LocationDto))]
     public async Task<IActionResult> Get(int id)
     {
-        var getLocationQuery = new GetLocation(id);
-        var location = await mediator.Send(getLocationQuery);
-        return Ok(mapper.Map<V1LocationDto>(location));
+        var query = new GetLocation(id);
+        var model = await mediator.Send(query);
+        return Ok(mapper.Map<V1LocationDto>(model));
     }
 
     [HttpPut]
     [SwaggerResponse(200, "OK", typeof(UpdateLocation))]
     public async Task<IActionResult> Update([FromBody] V1LocationDto old)
     {
-        var updateLocationQuery = new UpdateLocation(old);
-        return Ok(await mediator.Send(updateLocationQuery));
+        var query = new UpdateLocation(old);
+        return Ok(await mediator.Send(query));
     }
 }
