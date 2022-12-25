@@ -10,12 +10,20 @@ builder.Services.AddControllersWithViews();
 builder.Services.SetUpServices(builder.Configuration);
 builder.Services.AddControllers().AddNewtonsoftJson();
 
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 
 if (!app.Environment.IsDevelopment())
 {
     app.UseHsts();
+}
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
