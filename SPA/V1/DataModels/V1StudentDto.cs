@@ -4,6 +4,9 @@ namespace SPA.V1.DataModels;
 
 public sealed class V1StudentDto
 {
+    [JsonPropertyName("id")]
+    public string Id { get; init; }
+    
     [JsonPropertyName("firstName")]
     public string FirstName { get; init; }
 

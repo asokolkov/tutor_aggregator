@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace SPA.Models;
+﻿namespace SPA.Models;
 
 public sealed class Lesson
 {
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; init; }
     
     public double Price { get; init; }

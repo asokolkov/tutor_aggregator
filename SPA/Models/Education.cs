@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace SPA.Models;
+﻿namespace SPA.Models;
 
 public sealed class Education
 {
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; init; }
     
     public string Description { get; init; }

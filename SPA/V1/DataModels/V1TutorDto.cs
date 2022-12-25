@@ -6,6 +6,9 @@ using System.Text.Json.Serialization;
 
 public sealed class V1TutorDto
 {
+    [JsonPropertyName("id")]
+    public string Id { get; init; }
+    
     [JsonPropertyName("firstName")]
     public string FirstName { get; init; }
 

@@ -1,11 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace SPA.Models;
+﻿namespace SPA.Models;
 
 public sealed class Tutor
 {
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; init; }
 
     public string FirstName { get; init; }
