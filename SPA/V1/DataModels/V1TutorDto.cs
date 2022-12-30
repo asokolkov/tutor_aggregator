@@ -47,8 +47,7 @@ public sealed class V1TutorDto
     
     [JsonPropertyName("lessons")]
     public IReadOnlyCollection<V1LessonDto> Lessons { get; init; }
-    
-    [JsonPropertyName("reviews")]
-    public IReadOnlyCollection<V1ReviewDto> Reviews { get; init; }
 
+    [JsonPropertyName("reviews")] 
+    public IReadOnlyCollection<V1ReviewDto> Reviews { get; init; }
 }

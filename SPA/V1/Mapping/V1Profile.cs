@@ -14,12 +14,12 @@ internal sealed class V1Profile : Profile
         CreateMap<Education, V1EducationDto>();
         CreateMap<Job, V1JobDto>();
         CreateMap<Location, V1LocationDto>();
-        CreateMap<Review, V1ReviewDto>();
         CreateMap<Subject, V1SubjectDto>();
         
         CreateMap<Tutor, V1TutorDto>().ReverseMap();
         CreateMap<Student, V1StudentDto>().ReverseMap();
         CreateMap<Lesson, V1LessonDto>().ReverseMap();
+        CreateMap<Review, V1ReviewDto>();
         
         CreateMap<Page<Tutor>, V1PageDto<V1TutorDto>>().ReverseMap();
         CreateMap<Page<Student>, V1PageDto<V1StudentDto>>().ReverseMap();

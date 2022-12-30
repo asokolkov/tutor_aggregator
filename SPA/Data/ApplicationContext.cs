@@ -24,6 +24,12 @@ public sealed class ApplicationContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Tutor>().Navigation(e => e.Subjects).AutoInclude();
+        modelBuilder.Entity<Tutor>().Navigation(e => e.Contacts).AutoInclude();
+        modelBuilder.Entity<Tutor>().Navigation(e => e.Educations).AutoInclude();
+        modelBuilder.Entity<Tutor>().Navigation(e => e.Awards).AutoInclude();
+        modelBuilder.Entity<Student>().Navigation(e => e.Contacts).AutoInclude();
+        
         modelBuilder.UseSerialColumns();
     }
 }
