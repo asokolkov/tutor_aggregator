@@ -49,9 +49,10 @@ public sealed class V1TutorsController : Controller
 
     [HttpPut]
     [SwaggerResponse(200, "OK", typeof(UpdateTutorCommand))]
-    public async Task<IActionResult> Update([FromBody] Tutor old)
+    public async Task<IActionResult> Update([FromBody] V1TutorDto old)
     {
-        var query = new UpdateTutorCommand(old);
+        var model = mapper.Map<Tutor>(old);
+        var query = new UpdateTutorCommand(model);
         return Ok(await mediator.Send(query));
     }
 }

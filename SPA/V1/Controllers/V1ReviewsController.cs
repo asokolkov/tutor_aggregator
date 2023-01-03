@@ -64,9 +64,10 @@ public sealed class V1ReviewsController : Controller
 
     [HttpPut]
     [SwaggerResponse(200, "OK", typeof(UpdateReviewCommand))]
-    public async Task<IActionResult> Update([FromBody] Review old)
+    public async Task<IActionResult> Update([FromBody] V1ReviewDto old)
     {
-        var query = new UpdateReviewCommand(old);
+        var model = mapper.Map<Review>(old);
+        var query = new UpdateReviewCommand(model);
         return Ok(await mediator.Send(query));
     }
 }

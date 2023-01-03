@@ -49,9 +49,10 @@ public sealed class V1StudentsController : Controller
 
     [HttpPut]
     [SwaggerResponse(200, "OK", typeof(UpdateStudentCommand))]
-    public async Task<IActionResult> Update([FromBody] Student old)
+    public async Task<IActionResult> Update([FromBody] V1StudentDto old)
     {
-        var query = new UpdateStudentCommand(old);
+        var model = mapper.Map<Student>(old);
+        var query = new UpdateStudentCommand(model);
         return Ok(await mediator.Send(query));
     }
 }

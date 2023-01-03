@@ -49,9 +49,10 @@ public sealed class V1LocationsController : Controller
 
     [HttpPut]
     [SwaggerResponse(200, "OK", typeof(UpdateLocationCommand))]
-    public async Task<IActionResult> Update([FromBody] Location old)
+    public async Task<IActionResult> Update([FromBody] V1LocationDto old)
     {
-        var query = new UpdateLocationCommand(old);
+        var model = mapper.Map<Location>(old);
+        var query = new UpdateLocationCommand(model);
         return Ok(await mediator.Send(query));
     }
 }
