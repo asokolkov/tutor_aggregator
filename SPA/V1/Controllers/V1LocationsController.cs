@@ -1,6 +1,7 @@
-﻿using SPA.Application.Locations.Queries.GetLocation;
-using SPA.Application.Locations.Queries.GetLocations;
-using SPA.Application.Locations.Queries.UpdateLocation;
+﻿using SPA.Application.Locations.Commands.UpdateLocationCommand;
+using SPA.Application.Locations.Queries.GetLocationQuery;
+using SPA.Application.Locations.Queries.GetLocationsQuery;
+using SPA.Models;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace SPA.V1.Controllers;
@@ -32,7 +33,7 @@ public sealed class V1LocationsController : Controller
         if (size < 1)
             return BadRequest("Size must not be less than 1");
 
-        var query = new GetLocations(page, size);
+        var query = new GetLocationsQuery(page, size);
         var modelsPage = await mediator.Send(query);
         return Ok(mapper.Map<V1PageDto<V1LocationDto>>(modelsPage));
     }
@@ -41,16 +42,16 @@ public sealed class V1LocationsController : Controller
     [SwaggerResponse(200, "OK", typeof(V1LocationDto))]
     public async Task<IActionResult> Get(int id)
     {
-        var query = new GetLocation(id);
+        var query = new GetLocationQuery(id);
         var model = await mediator.Send(query);
         return Ok(mapper.Map<V1LocationDto>(model));
     }
 
     [HttpPut]
-    [SwaggerResponse(200, "OK", typeof(UpdateLocation))]
-    public async Task<IActionResult> Update([FromBody] V1LocationDto old)
+    [SwaggerResponse(200, "OK", typeof(UpdateLocationCommand))]
+    public async Task<IActionResult> Update([FromBody] Location old)
     {
-        var query = new UpdateLocation(old);
+        var query = new UpdateLocationCommand(old);
         return Ok(await mediator.Send(query));
     }
 }

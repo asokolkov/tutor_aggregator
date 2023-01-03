@@ -1,7 +1,5 @@
-﻿using SPA.Application.Reviews.Queries.GetReview;
-using SPA.Application.Reviews.Queries.GetReviews;
-using SPA.Application.Reviews.Queries.UpdateReview;
-using SPA.Application.Tutors.Queries.GetTutor;
+﻿using SPA.Application.Reviews.Commands.UpdateReviewCommand;
+using SPA.Application.Tutors.Queries.GetTutorQuery;
 using SPA.Models;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -48,7 +46,7 @@ public sealed class V1ReviewsController : Controller
         if (size < 1)
             return BadRequest("Size must not be less than 1");
         
-        var query = new GetTutor(id);
+        var query = new GetTutorQuery(id);
         var model = await mediator.Send(query);
         var slice = GetReviewsSlice(model.Reviews, page, size);
         return Ok(mapper.Map<List<V1ReviewDto>>(slice));
@@ -65,10 +63,10 @@ public sealed class V1ReviewsController : Controller
     }
 
     [HttpPut]
-    [SwaggerResponse(200, "OK", typeof(UpdateReview))]
-    public async Task<IActionResult> Update([FromBody] V1ReviewDto old)
+    [SwaggerResponse(200, "OK", typeof(UpdateReviewCommand))]
+    public async Task<IActionResult> Update([FromBody] Review old)
     {
-        var query = new UpdateReview(old);
+        var query = new UpdateReviewCommand(old);
         return Ok(await mediator.Send(query));
     }
 }

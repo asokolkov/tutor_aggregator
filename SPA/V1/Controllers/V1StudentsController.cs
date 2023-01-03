@@ -1,6 +1,7 @@
-﻿using SPA.Application.Students.Queries.GetStudent;
-using SPA.Application.Students.Queries.GetTutors;
-using SPA.Application.Students.Queries.UpdateTutor;
+﻿using SPA.Application.Students.Commands.UpdateStudentCommand;
+using SPA.Application.Students.Queries.GetStudentQuery;
+using SPA.Application.Students.Queries.GetStudentsQuery;
+using SPA.Models;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace SPA.V1.Controllers;
@@ -32,7 +33,7 @@ public sealed class V1StudentsController : Controller
         if (size < 1)
             return BadRequest("Size must not be less than 1");
 
-        var query = new GetStudents(page, size);
+        var query = new GetStudentsQuery(page, size);
         var modelsPage = await mediator.Send(query);
         return Ok(mapper.Map<V1PageDto<V1StudentDto>>(modelsPage));
     }
@@ -41,16 +42,16 @@ public sealed class V1StudentsController : Controller
     [SwaggerResponse(200, "OK", typeof(V1StudentDto))]
     public async Task<IActionResult> Get(int id)
     {
-        var query = new GetStudent(id);
+        var query = new GetStudentQuery(id);
         var model = await mediator.Send(query);
         return Ok(mapper.Map<V1StudentDto>(model));
     }
 
     [HttpPut]
-    [SwaggerResponse(200, "OK", typeof(UpdateStudent))]
-    public async Task<IActionResult> Update([FromBody] V1StudentDto old)
+    [SwaggerResponse(200, "OK", typeof(UpdateStudentCommand))]
+    public async Task<IActionResult> Update([FromBody] Student old)
     {
-        var query = new UpdateStudent(old);
+        var query = new UpdateStudentCommand(old);
         return Ok(await mediator.Send(query));
     }
 }

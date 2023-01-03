@@ -1,19 +1,15 @@
-﻿using SPA.Application.Lessons.Queries.GetLesson;
-using SPA.Application.Lessons.Queries.GetLessons;
-using SPA.Application.Lessons.Queries.UpdateLesson;
-using SPA.Application.Locations.Queries.GetLocation;
-using SPA.Application.Locations.Queries.GetLocations;
-using SPA.Application.Locations.Queries.UpdateLocation;
-using SPA.Application.Reviews.Queries.GetReview;
-using SPA.Application.Reviews.Queries.GetReviews;
-using SPA.Application.Reviews.Queries.UpdateReview;
-using SPA.Application.Students.Queries.GetStudent;
-using SPA.Application.Students.Queries.GetStudents;
-using SPA.Application.Students.Queries.GetTutors;
-using SPA.Application.Students.Queries.UpdateTutor;
-using SPA.Application.Tutors.Queries.GetTutor;
-using SPA.Application.Tutors.Queries.GetTutors;
-using SPA.Application.Tutors.Queries.UpdateTutor;
+﻿using SPA.Application.Locations.Commands.UpdateLocationCommand;
+using SPA.Application.Locations.Queries.GetLocationQuery;
+using SPA.Application.Locations.Queries.GetLocationsQuery;
+using SPA.Application.Reviews.Commands.UpdateReviewCommand;
+using SPA.Application.Reviews.Queries.GetReviewQuery;
+using SPA.Application.Reviews.Queries.GetReviewsQuery;
+using SPA.Application.Students.Commands.UpdateStudentCommand;
+using SPA.Application.Students.Queries.GetStudentQuery;
+using SPA.Application.Students.Queries.GetStudentsQuery;
+using SPA.Application.Tutors.Commands.UpdateTutorCommand;
+using SPA.Application.Tutors.Queries.GetTutorQuery;
+using SPA.Application.Tutors.Queries.GetTutorsQuery;
 using SPA.V1.DataModels;
 
 namespace SPA.Extensions;
@@ -37,26 +33,22 @@ internal static class ServiceCollectionExtensions
         
         services.AddAutoMapper(opt => opt.AddProfile<V1Profile>());
         services.AddMediatR(typeof(Program));
-
-        services.AddTransient<IRequestHandler<GetLessons, Page<Lesson>>, GetLessonsHandler>();
-        services.AddTransient<IRequestHandler<GetLesson, Lesson>, GetLessonHandler>();
-        services.AddTransient<IRequestHandler<UpdateLesson, V1LessonDto>, UpdateLessonHandler>();
         
-        services.AddTransient<IRequestHandler<GetStudents, Page<Student>>, GetStudentsHandler>();
-        services.AddTransient<IRequestHandler<GetStudent, Student>, GetStudentHandler>();
-        services.AddTransient<IRequestHandler<UpdateStudent, V1StudentDto>, UpdateStudentHandler>();
+        services.AddTransient<IRequestHandler<GetStudentsQuery, Page<Student>>, GetStudentsQueryHandler>();
+        services.AddTransient<IRequestHandler<GetStudentQuery, Student>, GetStudentQueryHandler>();
+        services.AddTransient<IRequestHandler<UpdateStudentCommand, Student>, UpdateStudentCommandHandler>();
         
-        services.AddTransient<IRequestHandler<GetTutors, Page<Tutor>>, GetTutorsHandler>();
-        services.AddTransient<IRequestHandler<GetTutor, Tutor>, GetTutorHandler>();
-        services.AddTransient<IRequestHandler<UpdateTutor, V1TutorDto>, UpdateTutorHandler>();
+        services.AddTransient<IRequestHandler<GetTutorsQuery, Page<Tutor>>, GetTutorsQueryHandler>();
+        services.AddTransient<IRequestHandler<GetTutorQuery, Tutor>, GetTutorQueryHandler>();
+        services.AddTransient<IRequestHandler<UpdateTutorCommand, Tutor>, UpdateTutorCommandHandler>();
         
-        services.AddTransient<IRequestHandler<GetLocations, Page<Location>>, GetLocationsHandler>();
-        services.AddTransient<IRequestHandler<GetLocation, Location>, GetLocationHandler>();
-        services.AddTransient<IRequestHandler<UpdateLocation, V1LocationDto>, UpdateLocationHandler>();
+        services.AddTransient<IRequestHandler<GetLocationsQuery, Page<Location>>, GetLocationsQueryHandler>();
+        services.AddTransient<IRequestHandler<GetLocationQuery, Location>, GetLocationQueryHandler>();
+        services.AddTransient<IRequestHandler<UpdateLocationCommand, Location>, UpdateLocationCommandHandler>();
         
-        services.AddTransient<IRequestHandler<GetReviews, Page<Review>>, GetReviewsHandler>();
-        services.AddTransient<IRequestHandler<GetReview, Review>, GetReviewHandler>();
-        services.AddTransient<IRequestHandler<UpdateReview, V1ReviewDto>, UpdateReviewHandler>();
+        services.AddTransient<IRequestHandler<GetReviewsQuery, Page<Review>>, GetReviewsQueryHandler>();
+        services.AddTransient<IRequestHandler<GetReviewQuery, Review>, GetReviewQueryHandler>();
+        services.AddTransient<IRequestHandler<UpdateReviewCommand, Review>, UpdateReviewCommandHandler>();
 
         return services;
     }
