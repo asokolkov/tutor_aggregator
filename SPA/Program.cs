@@ -1,14 +1,56 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SPA.Data;
 using SPA.Extensions;
+using SPA.Identity;
+using SPA.Identity.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 
 builder.Services.AddControllersWithViews();
 builder.Services.SetUpServices(builder.Configuration);
 builder.Services.AddControllers().AddNewtonsoftJson();
+
+/* Identity */
+builder.Services
+    .AddDbContext<ApplicationIdentityContext>(config =>
+    {
+        config.UseNpgsql(builder.Configuration.GetConnectionString("Identity"));
+    })
+    .AddIdentity<ApplicationUser, IdentityRole<Guid>>()
+    .AddEntityFrameworkStores<ApplicationIdentityContext>();
+
+builder.Services.AddAuthentication()
+    .AddCookie()
+    .AddGoogle(options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    })
+    .AddOAuth("Vk", options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:Vk:ClientId"];
+        options.ClientSecret = builder.Configuration["Authentication:Vk:ClientSecret"];
+        options.ClaimsIssuer = "Vk";
+        options.CallbackPath = new PathString("/signin-vk");
+        options.AuthorizationEndpoint = "https://oauth.vk.com/authorize";
+        options.TokenEndpoint = "https://oauth.vk.com/access_token";
+        options.Scope.Add("email");
+        options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "user_id");
+        options.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
+        options.SaveTokens = true;
+        options.Events = new OAuthEvents
+        {
+            OnCreatingTicket = context =>
+            {
+                context.RunClaimActions(context.TokenResponse.Response.RootElement);
+                return Task.CompletedTask;
+            }
+        };
+    });
 
 var app = builder.Build();
 
@@ -22,10 +64,11 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller}/{action=Index}/{id?}");
+app.UseAuthentication();
+app.UseAuthorization();
 
-app.MapFallbackToFile("index.html");
+app.UseEndpoints(configure => { configure.MapControllers(); });
+
+//app.MapFallbackToFile("index.html");
 
 app.Run();
