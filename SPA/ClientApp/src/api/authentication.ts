@@ -1,8 +1,8 @@
 ﻿import {V1LoginDto} from "./types";
-import {AiFillWallet} from "react-icons/all";
 
 const post = async (url: string, content: any) => {
     return await fetch(url, {
+        mode: 'no-cors',
         method: "POST",
         body: JSON.stringify(content),
         headers: {
@@ -12,8 +12,24 @@ const post = async (url: string, content: any) => {
     });
 }
 
+const get = async (url: string) => {
+    return await fetch(url, {
+        mode: 'no-cors',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+    });
+}
+
+export enum AuthenticationStatus {
+    Authenticated = "Authenticated",
+    Unauthenticated = "Unauthenticated",
+    NoInfo = "NoInfo"
+}
+
 export const login = async (loginDto: V1LoginDto) => {
-    const response = await post("/account/signin", loginDto)
+    const response = await post("/account/signin", loginDto);
     if (response.ok) {
         return AuthenticationStatus.Authenticated;
     }
@@ -24,7 +40,7 @@ export const login = async (loginDto: V1LoginDto) => {
 }
 
 export const loginViaExternalProvider = async (provider: string, returnUrl: string) => {
-    const response = await post(`/account/signin-external?provider=${provider}&returnUrl=${returnUrl}`, {})
+    const response = await get(`/account/signin-external?provider=${provider}&returnUrl=${returnUrl}`);
     if (response.ok) {
         return AuthenticationStatus.Authenticated;
     }
@@ -32,10 +48,4 @@ export const loginViaExternalProvider = async (provider: string, returnUrl: stri
         return AuthenticationStatus.Unauthenticated;
     }
     return AuthenticationStatus.NoInfo;
-}
-
-export enum AuthenticationStatus {
-    Authenticated = "Authenticated",
-    Unauthenticated = "Unauthenticated",
-    NoInfo = "NoInfo"
 }

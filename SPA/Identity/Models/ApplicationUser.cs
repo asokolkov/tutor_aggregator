@@ -12,4 +12,5 @@ public class ApplicationUser : IdentityUser<Guid>
     public string? LastName { get; set; }
     public string? Phone { get; set; }
     public AccountType? AccountType { get; set; }
+    public bool RegistrationCompleted { get; set; }
 }

@@ -13,7 +13,7 @@ export enum AccountType {
 
 export type V1LoginDto = {
     email: string,
-    passport: string,
+    password: string,
     rememberMe: boolean
 }
 

@@ -5,6 +5,7 @@ using SPA.Identity.Models;
 
 namespace SPA.V1.Controllers;
 
+using System.Security.Claims;
 using AutoMapper;
 using DataModels;
 
@@ -67,7 +68,7 @@ public class V1AccountController : ControllerBase
     }
 
     [AllowAnonymous]
-    [HttpPost("signin-external")]
+    [HttpGet("signin-external")]
     public IActionResult ExternalLoginAsync(string provider, string returnUrl)
     {
         var redirectUrl = Url.Action(nameof(ExternalLoginCallback), new { returnUrl });
@@ -90,7 +91,27 @@ public class V1AccountController : ControllerBase
             return Ok();
         }
 
-        return Unauthorized();
+        var email = info.Principal.FindFirst(ClaimTypes.Email)?.Value;
+        var user = await userManager.FindByNameAsync(email);
+
+        if (user is null)
+        {
+            user = new ApplicationUser
+            {
+                Email = email,
+                UserName = email,
+                FirstName = info.Principal.FindFirst(ClaimTypes.GivenName)?.Value,
+                LastName = info.Principal.FindFirst(ClaimTypes.Surname)?.Value,
+                EmailConfirmed = true,
+                RegistrationCompleted = false
+            };
+            await userManager.CreateAsync(user);
+        }
+
+        
+        await userManager.AddLoginAsync(user, info);
+
+        return Ok();
     }
 
     [AllowAnonymous]
