@@ -20,6 +20,7 @@ const get = async (url: string) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+    redirect: 'manual',
   });
 };
 
@@ -48,7 +49,7 @@ export const loginViaExternalProvider = async (
     `/account/signin-external?provider=${provider}&returnUrl=${returnUrl}`
   );
   if (response.ok) {
-    return AuthenticationStatus.Authenticated;
+    return response.url;
   }
   if (response.status === 401) {
     return AuthenticationStatus.Unauthenticated;
