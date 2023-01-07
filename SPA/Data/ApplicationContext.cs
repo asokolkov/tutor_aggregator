@@ -35,6 +35,8 @@ public sealed class ApplicationContext : DbContext
         modelBuilder.Entity<Student>().Navigation(e => e.Lessons).AutoInclude();
         modelBuilder.Entity<Student>().Navigation(e => e.Reviews).AutoInclude();
         
+        modelBuilder.Entity<Review>().Navigation(e => e.Student).AutoInclude();
+
         modelBuilder.UseSerialColumns();
     }
 }

@@ -19,7 +19,10 @@ internal sealed class V1Profile : Profile
         CreateMap<Tutor, V1TutorDto>().ReverseMap();
         CreateMap<Student, V1StudentDto>().ReverseMap();
         CreateMap<Lesson, V1LessonDto>().ReverseMap();
-        CreateMap<Review, V1ReviewDto>();
+        CreateMap<Review, V1ReviewDto>()
+            .ForMember(dest => dest.StudentId, opt => opt.MapFrom(src => src.Student.Id))
+            .ForMember(dest => dest.StudentAvatar, opt => opt.MapFrom(src => src.Student.Avatar));
+        CreateMap<ICollection<Review>, ICollection<V1LessonDto>>().ReverseMap();
         
         CreateMap<Page<Tutor>, V1PageDto<V1TutorDto>>().ReverseMap();
         CreateMap<Page<Student>, V1PageDto<V1StudentDto>>().ReverseMap();

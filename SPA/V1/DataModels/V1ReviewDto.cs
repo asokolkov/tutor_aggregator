@@ -15,4 +15,10 @@ public sealed class V1ReviewDto
     
     [JsonPropertyName("updatedAt")]
     public DateTimeOffset UpdatedAt { get; init; }
+    
+    [JsonPropertyName("studentId")]
+    public string StudentId { get; init; }
+    
+    [JsonPropertyName("studentAvatar")]
+    public Uri StudentAvatar { get; init; }
 }

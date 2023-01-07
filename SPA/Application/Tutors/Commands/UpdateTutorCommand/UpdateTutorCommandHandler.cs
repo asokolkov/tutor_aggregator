@@ -2,7 +2,6 @@
 using MediatR;
 using SPA.Models;
 using SPA.Repositories;
-using SPA.V1.DataModels;
 
 namespace SPA.Application.Tutors.Commands.UpdateTutorCommand;
 
