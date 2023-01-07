@@ -1,6 +1,6 @@
 ﻿namespace SPA.Models;
 
-public sealed class StudentContact
+public sealed class StudentContact : IEntity
 {
     public int Id { get; init; }
     

@@ -1,6 +1,6 @@
 ﻿namespace SPA.Models;
 
-public class Student
+public class Student : IEntity
 {
     public int Id { get; init; }
 

@@ -1,6 +1,6 @@
 ﻿namespace SPA.Models;
 
-public sealed class Job
+public sealed class Job : IEntity
 {
     public int Id { get; init; }
     

@@ -42,7 +42,6 @@
     <Folder Include="Application\Locations\Commands" />
     <Folder Include="Application\Reviews\Commands" />
     <Folder Include="Application\Students\Commands" />
-    <Folder Include="Application\Tutors\Commands" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

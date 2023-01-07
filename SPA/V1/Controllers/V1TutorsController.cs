@@ -1,4 +1,5 @@
-﻿using SPA.Application.Tutors.Commands.UpdateTutorCommand;
+﻿using SPA.Application.Tutors.Commands.GetReviewsCommand;
+using SPA.Application.Tutors.Commands.UpdateTutorCommand;
 using SPA.Application.Tutors.Queries.GetTutorQuery;
 using SPA.Application.Tutors.Queries.GetTutorsQuery;
 using SPA.Models;
@@ -45,6 +46,15 @@ public sealed class V1TutorsController : Controller
         var query = new GetTutorQuery(id);
         var model = await mediator.Send(query);
         return Ok(mapper.Map<V1TutorDto>(model));
+    }
+    
+    [HttpGet("{id:int}/reviews")]
+    [SwaggerResponse(200, "OK", typeof(V1ReviewDto))]
+    public async Task<IActionResult> GetReviews(int id, [FromQuery] int page = 0, [FromQuery] int size = 30)
+    {
+        var command = new GetReviewsCommand(id, page, size);
+        var model = await mediator.Send(command);
+        return Ok(mapper.Map<ICollection<V1ReviewDto>>(model.Items));
     }
 
     [HttpPut]

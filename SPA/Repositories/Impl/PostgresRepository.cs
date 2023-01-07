@@ -4,7 +4,7 @@ using SPA.Models;
 
 namespace SPA.Repositories.Impl;
 
-public class PostgresRepository<T> : ICrudRepository<T> where T : class
+public class PostgresRepository<T> : ICrudRepository<T> where T : class, IEntity
 {
     private readonly ApplicationContext context;
     private readonly DbSet<T> table;
@@ -15,17 +15,12 @@ public class PostgresRepository<T> : ICrudRepository<T> where T : class
         table = context.Set<T>();
     }
 
-    public async Task<Page<T>> Get()
-    {
-        var elements = await table.ToListAsync();
-        return new Page<T>(elements, elements.Count);
-    }
-    
     public async Task<Page<T>> Get(long page, long size)
     {
         const int pageSize = 100; // ?
 
         var elements = await table
+            .OrderBy(e => e.Id)
             .Skip((int)page * pageSize)
             .Take((int)size)
             .ToListAsync();
@@ -71,5 +66,23 @@ public class PostgresRepository<T> : ICrudRepository<T> where T : class
             await transaction.RollbackToSavepointAsync("BeforeInsert");
             return default;
         }
+    }
+    
+    public async Task<Page<Review>> GetTutorReviews(int id, long page, long size)
+    {
+        var tutor = await context.Tutors.FindAsync(id);
+
+        if (tutor == null)
+            return null;
+        
+        const int pageSize = 100; // ?
+
+        var reviews = tutor.Reviews
+            .OrderBy(e => e.Id)
+            .Skip((int)page * pageSize)
+            .Take((int)size)
+            .ToList();
+        
+        return new Page<Review>(reviews, reviews.Count);
     }
 }

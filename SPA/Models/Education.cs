@@ -1,6 +1,6 @@
 ﻿namespace SPA.Models;
 
-public sealed class Education
+public sealed class Education : IEntity
 {
     public int Id { get; init; }
     
