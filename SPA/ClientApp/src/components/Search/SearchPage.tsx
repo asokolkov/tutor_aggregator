@@ -24,7 +24,7 @@ import { useEffect, useState } from 'react';
 
 export const SearchPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [error, setError] = useState(null);
+  const [, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
 
@@ -57,8 +57,8 @@ export const SearchPage = () => {
     );
   return (
     <ChakraProvider theme={Theme}>
-      <Flex background={'gray.50'} height={'200vh'} direction={'column'}>
-        <Heading as="h3" size="xl" margin={'3% 3% 0 3%'}>
+      <Flex background={'white'} direction={'column'}>
+        <Heading as="h3" size="xl" margin={'0 3% 0 3%'}>
           Поиск наставника
         </Heading>
         <VStack
