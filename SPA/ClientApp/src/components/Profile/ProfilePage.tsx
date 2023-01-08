@@ -1,4 +1,4 @@
-import { ChakraProvider, Flex, HStack, VStack, Button } from '@chakra-ui/react';
+import { ChakraProvider, VStack } from '@chakra-ui/react';
 import Theme from '../../theme/index';
 import { ProfileInfo } from './ProfileInfo';
 import { ReviewSection } from './ReviewSection';
@@ -6,39 +6,30 @@ import { ReviewSection } from './ReviewSection';
 export const ProfilePage = () => {
   return (
     <ChakraProvider theme={Theme}>
-      <Flex background={'white'}>
-        <VStack margin={'20px'} width={'100%'}>
-          <HStack>
-            <ProfileInfo
-              name={'Егоров Павел Владимирович'}
-              description={
-                'Старший преподаватель УрФУ, департамент математики, механики и компьютерных наук'
-              }
-              location={'Екатеринбург, Свердловская область'}
-              occupation={'Высшая математика, компьютерные науки'}
-              rating={{ count: 74, average: 4.9 }}
-              avatar={''}
-            />
+      <VStack maxW={'100%'} spacing={'40px'}>
+        <ProfileInfo
+          name={'Егоров Павел Владимирович'}
+          description={
+            'Старший преподаватель УрФУ, департамент математики, механики и компьютерных наук'
+          }
+          location={'Екатеринбург, Свердловская область'}
+          occupation={'Высшая математика, компьютерные науки'}
+          rating={{ count: 74, average: 4.9 }}
+          avatar={'https://avatarko.ru/img/kartinka/22/zhivotnye_kot_21031.jpg'}
+        />
 
-            <VStack>
-              <Button size={'lg'} colorScheme={'blue'} width={'240px'}>
-                Написать сообщение
-              </Button>
-              <Button size={'lg'} colorScheme={'blue'} width={'240px'}>
-                Записаться на занятие
-              </Button>
-            </VStack>
-          </HStack>
-          <HStack>
-            <ReviewSection
-              reviews={[
-                { name: 'Михаил', rating: 5, review: 'Всё круто!', avatar: '' },
-              ]}
-            />
-          </HStack>
-        </VStack>
-      </Flex>
-      <Flex></Flex>
+        <ReviewSection
+          reviews={['Михаил', 'Анастасия'].map((x) => ({
+            name: x,
+            rating: 5,
+            review:
+              // eslint-disable-next-line max-len
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non sapien et velit suscipit faucibus non vitae leo. Nunc id lectus dolor. Curabitur quis mi metus. Integer ultricies sagittis nibh eu finibus. Nam non nulla eget ipsum vestibulum congue sed sit amet diam. Etiam purus augue, laoreet sit amet nisi eu, ultricies volutpat velit. Nam in dolor eget odio volutpat mattis vitae quis est. Fusce sed elementum risus, vitae porta odio. Nulla non magna consectetur, dictum ante at, tincidunt nisl. Ut maximus lorem et congue hendrerit. Vivamus lobortis, ipsum vel aliquet egestas, eros odio volutpat magna, vitae fermentum lorem ipsum vel nibh. Cras at varius nisi, ac pulvinar justo.',
+            avatar:
+              'https://avatarko.ru/img/kartinka/22/zhivotnye_kot_21031.jpg',
+          }))}
+        />
+      </VStack>
     </ChakraProvider>
   );
 };

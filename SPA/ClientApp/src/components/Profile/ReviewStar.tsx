@@ -1,11 +1,11 @@
-import { HStack } from '@chakra-ui/react';
-const photo = require('../../img/star.png');
+import { HStack, Image } from '@chakra-ui/react';
+import starIcon from '../../img/star.png';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const ReviewStar = ({ starCount }: ReviewStarProps) => {
+export const ReviewStar = ({}: ReviewStarProps) => {
   const stars = [];
   for (let i = 0; i < 5; i++) {
-    stars.push(<img src={photo} alt={'star'} />);
+    stars.push(<Image src={starIcon} alt={'star'} />);
   }
   return <HStack spacing="8px">{stars}</HStack>;
 };

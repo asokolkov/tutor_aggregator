@@ -1,5 +1,5 @@
 import { Review, ReviewProps } from './Review';
-import { Text, Container } from '@chakra-ui/react';
+import { Text, VStack } from '@chakra-ui/react';
 
 export const ReviewSection = ({ reviews }: ReviewSectionProps) => {
   const reviewsDiv = [];
@@ -14,12 +14,12 @@ export const ReviewSection = ({ reviews }: ReviewSectionProps) => {
     );
   }
   return (
-    <Container maxW="100%" bg={'white'}>
+    <VStack w="100%" bg={'white'} spacing={'20px'} align={'start'}>
       <Text fontSize={'2xl'} as="b">
         Отзывы
       </Text>
       {reviewsDiv}
-    </Container>
+    </VStack>
   );
 };
 
