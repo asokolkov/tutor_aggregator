@@ -9,7 +9,6 @@ using SPA.Application.Tutors.Commands.GetReviewsCommand;
 using SPA.Application.Tutors.Commands.UpdateTutorCommand;
 using SPA.Application.Tutors.Queries.GetTutorQuery;
 using SPA.Application.Tutors.Queries.GetTutorsQuery;
-using SPA.V1.DataModels;
 
 namespace SPA.Extensions;
 

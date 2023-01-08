@@ -49,7 +49,7 @@ public sealed class V1TutorsController : Controller
     }
     
     [HttpGet("{id:int}/reviews")]
-    [SwaggerResponse(200, "OK", typeof(V1ReviewDto))]
+    [SwaggerResponse(200, "OK", typeof(ICollection<V1ReviewDto>))]
     public async Task<IActionResult> GetReviews(int id, [FromQuery] int page = 0, [FromQuery] int size = 30)
     {
         var command = new GetReviewsCommand(id, page, size);
