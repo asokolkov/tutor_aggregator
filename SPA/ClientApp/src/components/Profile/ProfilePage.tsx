@@ -6,7 +6,7 @@ import { ReviewSection } from './ReviewSection';
 export const ProfilePage = () => {
   return (
     <ChakraProvider theme={Theme}>
-      <Flex background={'gray.50'} height={'100vh'}>
+      <Flex background={'white'}>
         <VStack margin={'20px'} width={'100%'}>
           <HStack>
             <ProfileInfo
@@ -29,12 +29,13 @@ export const ProfilePage = () => {
               </Button>
             </VStack>
           </HStack>
-
-          <ReviewSection
-            reviews={[
-              { name: 'Михаил', rating: 5, review: 'Всё круто!', avatar: '' },
-            ]}
-          />
+          <HStack>
+            <ReviewSection
+              reviews={[
+                { name: 'Михаил', rating: 5, review: 'Всё круто!', avatar: '' },
+              ]}
+            />
+          </HStack>
         </VStack>
       </Flex>
       <Flex></Flex>

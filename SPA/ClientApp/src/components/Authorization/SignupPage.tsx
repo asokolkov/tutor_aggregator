@@ -18,12 +18,14 @@ import {
 import Theme from '../../theme/index';
 import { PasswordField } from './PasswordField';
 import { OAuthButtons } from './OAuthButtons';
+import { Link as RLink } from 'react-router-dom';
+import { LOGIN_PAGE } from '../../route-paths';
 
 export const SignupPage = () => {
   return (
     <ChakraProvider theme={Theme}>
-      <Flex background={'gray.50'} height={'100vh'}>
-        <VStack margin={'80px'} width={'100%'}>
+      <Flex background={'white'} height={'60vh'}>
+        <VStack margin={'20px'} width={'100%'}>
           <Stack textAlign="center">
             <Heading>Зарегистрировать аккаунт</Heading>
           </Stack>
@@ -32,6 +34,7 @@ export const SignupPage = () => {
             px={{ base: '4', sm: '10' }}
             width={'40%'}
             bg="white"
+            borderWidth="2px"
             borderRadius={{ base: 'none', sm: 'xl' }}
           >
             <HStack justify="center">
@@ -68,7 +71,9 @@ export const SignupPage = () => {
               <HStack spacing="1" justify="center">
                 <Text color="muted">Уже есть аккаунт?</Text>
                 <Button variant="link" colorScheme="blue">
-                  <Link href="/login">Войти</Link>
+                  <Link>
+                    <RLink to={LOGIN_PAGE}>Войти</RLink>
+                  </Link>
                 </Button>
               </HStack>
             </Stack>
@@ -78,4 +83,3 @@ export const SignupPage = () => {
     </ChakraProvider>
   );
 };
-

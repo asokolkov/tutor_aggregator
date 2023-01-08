@@ -9,9 +9,9 @@ import Theme from '../../theme';
 const BaseLayout: React.FC = () => {
   return (
     <ChakraProvider theme={Theme}>
-      <div className="PageLayout">
+      <div>
         <Header />
-        <main className="Main">
+        <main>
           <Outlet />
         </main>
         <Footer />
