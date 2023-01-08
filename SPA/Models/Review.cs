@@ -1,15 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace SPA.Models;
 
-namespace SPA.Models;
-
-public sealed class Review
+public sealed class Review : IEntity
 {
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; init; }
     
     public double Rating { get; init; }
     
     public string Description { get; init; }
     
-    public DateTime ModificationTime { get; init; }
+    public DateTimeOffset UpdatedAt { get; init; }
+    
+    public Tutor Tutor { get; init; }
+    
+    public Student Student { get; init; }
 }

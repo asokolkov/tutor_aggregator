@@ -2,16 +2,16 @@
 
 using System.Text.Json.Serialization;
 
-internal sealed class V1PageDto<T>
+public sealed class V1PageDto<T>
 {
-    public V1PageDto(IReadOnlyCollection<T> items, long totalCount)
+    public V1PageDto(ICollection<T> items, long totalCount)
     {
         Items = items;
         TotalCount = totalCount;
     }
     
     [JsonPropertyName("items")]
-    public IReadOnlyCollection<T> Items { get; }
+    public ICollection<T> Items { get; }
     
     [JsonPropertyName("totalCount")]
     public long TotalCount { get; }

@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace SPA.Models;
 
-namespace SPA.Models;
-
-public sealed class Job
+public sealed class Job : IEntity
 {
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; init; }
     
     public string Place { get; init; }

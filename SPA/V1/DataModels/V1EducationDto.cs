@@ -2,14 +2,17 @@
 
 using System.Text.Json.Serialization;
 
-internal sealed class V1EducationDto
+public sealed class V1EducationDto
 {
+    [JsonPropertyName("id")]
+    public string Id { get; init; }
+    
     [JsonPropertyName("description")]
-    public string Description { get; set; }
+    public string Description { get; init; }
     
     [JsonPropertyName("beginYear")]
-    public int BeginYear { get; set; }
+    public int BeginYear { get; init; }
     
     [JsonPropertyName("graduationYear")]
-    public int GraduationYear { get; set; }
+    public int GraduationYear { get; init; }
 }

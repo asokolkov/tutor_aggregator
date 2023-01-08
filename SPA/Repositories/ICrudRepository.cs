@@ -6,13 +6,13 @@ using Models;
 
 public interface ICrudRepository<T>
 {
-    Task<Page<T>> Get();
-    
     Task<Page<T>> Get(long page, long size);
     
     Task<T> Get(int id);
+
+    Task<T> Update(T element);
     
-    void Update(T element);
-    
-    void Insert(T tutor);
+    Task<T> Insert(T tutor);
+
+    Task<Page<Review>> GetTutorReviews(int id, long page, long size);
 }

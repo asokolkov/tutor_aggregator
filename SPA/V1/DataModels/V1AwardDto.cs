@@ -2,11 +2,14 @@
 
 using System.Text.Json.Serialization;
 
-internal sealed class V1AwardDto
+public sealed class V1AwardDto
 {
+    [JsonPropertyName("id")]
+    public string Id { get; init; }
+    
     [JsonPropertyName("description")]
-    public string Description { get; set; }
+    public string Description { get; init; }
     
     [JsonPropertyName("year")]
-    public int Year { get; set; }
+    public int Year { get; init; }
 }

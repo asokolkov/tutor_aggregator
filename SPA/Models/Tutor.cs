@@ -1,20 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace SPA.Models;
 
-namespace SPA.Models;
-
-public sealed class Tutor
+public sealed class Tutor : IEntity
 {
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; init; }
+    
+    public string FirstName { get; init; }
 
-    [Required] public string FirstName { get; init; }
+    public string LastName { get; init; }
 
-    [Required] public string LastName { get; init; }
+    public string MiddleName { get; init; }
 
-    [Required] public string MiddleName { get; init; }
-
-    [Required] public double Rating { get; init; }
+    public double Rating { get; init; }
 
     public string Requirements { get; init; }
 
@@ -24,15 +20,15 @@ public sealed class Tutor
 
     public Job Job { get; init; }
 
-    public IReadOnlyCollection<Subject> Subjects { get; init; } = new List<Subject>();
+    public ICollection<Subject> Subjects { get; init; }
 
-    public IReadOnlyCollection<Contact> Contacts { get; init; } = new List<Contact>();
+    public ICollection<TutorContact> Contacts { get; init; }
 
-    public IReadOnlyCollection<Education> Educations { get; init; } = new List<Education>();
+    public ICollection<Education> Educations { get; init; }
 
-    public IReadOnlyCollection<Award> Awards { get; init; } = new List<Award>();
+    public ICollection<Award> Awards { get; init; }
 
-    public IReadOnlyCollection<Lesson> Lessons { get; init; } = new List<Lesson>();
+    public ICollection<Lesson> Lessons { get; init; }
     
-    public IReadOnlyCollection<Review> Reviews { get; init; } = new List<Review>();
+    public ICollection<Review> Reviews { get; init; }
 }

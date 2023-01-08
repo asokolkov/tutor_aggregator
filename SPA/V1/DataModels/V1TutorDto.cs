@@ -4,38 +4,47 @@ namespace SPA.V1.DataModels;
 
 using System.Text.Json.Serialization;
 
-internal sealed class V1TutorDto
+public sealed class V1TutorDto
 {
+    [JsonPropertyName("id")]
+    public string Id { get; init; }
+    
     [JsonPropertyName("firstName")]
-    public string FirstName { get; set; }
+    public string FirstName { get; init; }
 
     [JsonPropertyName("lastName")]
-    public string LastName { get; set; }
+    public string LastName { get; init; }
 
     [JsonPropertyName("middleName")]
-    public string MiddleName { get; set; }
-
-    [JsonPropertyName("location")]
-    public Location Location { get; set; }
+    public string MiddleName { get; init; }
 
     [JsonPropertyName("requirements")]
-    public string Requirements { get; set; }
+    public string Requirements { get; init; }
 
     [JsonPropertyName("rating")]
-    public double Rating { get; set; }
+    public double Rating { get; init; }
 
     [JsonPropertyName("avatar")]
-    public Uri Avatar { get; set; }
+    public Uri Avatar { get; init; }
+    
+    [JsonPropertyName("location")]
+    public V1LocationDto Location { get; init; }
+    
+    [JsonPropertyName("job")]
+    public V1JobDto Job { get; init; }
 
     [JsonPropertyName("subjects")]
-    public IReadOnlyCollection<Subject> Subjects { get; set; } = Array.Empty<Subject>();
+    public IReadOnlyCollection<V1SubjectDto> Subjects { get; init; }
 
     [JsonPropertyName("contacts")]
-    public IReadOnlyCollection<V1ContactDto> Contacts { get; set; } = Array.Empty<V1ContactDto>();
+    public IReadOnlyCollection<V1TutorContactDto> Contacts { get; init; }
 
     [JsonPropertyName("educations")]
-    public IReadOnlyCollection<V1EducationDto> Educations { get; set; } = Array.Empty<V1EducationDto>();
+    public IReadOnlyCollection<V1EducationDto> Educations { get; init; }
 
     [JsonPropertyName("awards")]
-    public IReadOnlyCollection<V1AwardDto> Awards { get; set; } = Array.Empty<V1AwardDto>();
+    public IReadOnlyCollection<V1AwardDto> Awards { get; init; }
+    
+    [JsonPropertyName("lessons")]
+    public IReadOnlyCollection<V1LessonDto> Lessons { get; init; }
 }

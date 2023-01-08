@@ -46,35 +46,6 @@ namespace SPA.Migrations
                     b.ToTable("Awards");
                 });
 
-            modelBuilder.Entity("SPA.Models.Contact", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("StudentId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("TutorId")
-                        .HasColumnType("integer");
-
-                    b.Property<byte>("Type")
-                        .HasColumnType("smallint");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
-
-                    b.HasIndex("TutorId");
-
-                    b.ToTable("Contacts");
-                });
-
             modelBuilder.Entity("SPA.Models.Education", b =>
                 {
                     b.Property<int>("Id")
@@ -132,13 +103,13 @@ namespace SPA.Migrations
                     b.Property<bool>("Confirmed")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("EndTime")
+                    b.Property<DateTimeOffset>("EndTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<double>("Price")
                         .HasColumnType("double precision");
 
-                    b.Property<DateTime>("StartTime")
+                    b.Property<DateTimeOffset>("StartTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int?>("StudentId")
@@ -186,9 +157,6 @@ namespace SPA.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ModificationTime")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<double>("Rating")
                         .HasColumnType("double precision");
 
@@ -197,6 +165,9 @@ namespace SPA.Migrations
 
                     b.Property<int?>("TutorId")
                         .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -219,20 +190,41 @@ namespace SPA.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("MiddleName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("SPA.Models.StudentContact", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("integer");
+
+                    b.Property<byte>("Type")
+                        .HasColumnType("smallint");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StudentsContacts");
                 });
 
             modelBuilder.Entity("SPA.Models.Subject", b =>
@@ -268,21 +260,18 @@ namespace SPA.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int?>("JobId")
                         .HasColumnType("integer");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int?>("LocationId")
                         .HasColumnType("integer");
 
                     b.Property<string>("MiddleName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<double>("Rating")
@@ -300,21 +289,34 @@ namespace SPA.Migrations
                     b.ToTable("Tutors");
                 });
 
+            modelBuilder.Entity("SPA.Models.TutorContact", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("TutorId")
+                        .HasColumnType("integer");
+
+                    b.Property<byte>("Type")
+                        .HasColumnType("smallint");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TutorId");
+
+                    b.ToTable("TutorsContacts");
+                });
+
             modelBuilder.Entity("SPA.Models.Award", b =>
                 {
                     b.HasOne("SPA.Models.Tutor", null)
                         .WithMany("Awards")
-                        .HasForeignKey("TutorId");
-                });
-
-            modelBuilder.Entity("SPA.Models.Contact", b =>
-                {
-                    b.HasOne("SPA.Models.Student", null)
-                        .WithMany("Contacts")
-                        .HasForeignKey("StudentId");
-
-                    b.HasOne("SPA.Models.Tutor", null)
-                        .WithMany("Contacts")
                         .HasForeignKey("TutorId");
                 });
 
@@ -338,13 +340,24 @@ namespace SPA.Migrations
 
             modelBuilder.Entity("SPA.Models.Review", b =>
                 {
-                    b.HasOne("SPA.Models.Student", null)
+                    b.HasOne("SPA.Models.Student", "Student")
                         .WithMany("Reviews")
                         .HasForeignKey("StudentId");
 
-                    b.HasOne("SPA.Models.Tutor", null)
+                    b.HasOne("SPA.Models.Tutor", "Tutor")
                         .WithMany("Reviews")
                         .HasForeignKey("TutorId");
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Tutor");
+                });
+
+            modelBuilder.Entity("SPA.Models.StudentContact", b =>
+                {
+                    b.HasOne("SPA.Models.Student", null)
+                        .WithMany("Contacts")
+                        .HasForeignKey("StudentId");
                 });
 
             modelBuilder.Entity("SPA.Models.Subject", b =>
@@ -367,6 +380,13 @@ namespace SPA.Migrations
                     b.Navigation("Job");
 
                     b.Navigation("Location");
+                });
+
+            modelBuilder.Entity("SPA.Models.TutorContact", b =>
+                {
+                    b.HasOne("SPA.Models.Tutor", null)
+                        .WithMany("Contacts")
+                        .HasForeignKey("TutorId");
                 });
 
             modelBuilder.Entity("SPA.Models.Student", b =>
