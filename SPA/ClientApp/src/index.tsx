@@ -7,6 +7,8 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 import router from './routes';
 
+if (process.env.NODE_ENV !== 'production') require('./apis/mocks/index');
+
 const root = createRoot(rootElement);
 
 root.render(
