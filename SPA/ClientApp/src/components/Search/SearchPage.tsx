@@ -21,6 +21,7 @@ import Theme from '../../theme/index';
 import { SearchCardInfo } from './SearchCardInfo';
 import { SelectOptions } from './SelectOptions';
 import { useEffect, useState } from 'react';
+import TutorsAPI from '../../apis/tutors';
 
 export const SearchPage = () => {
   const [, setError] = useState(null);
@@ -28,18 +29,16 @@ export const SearchPage = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetch('')
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          setIsLoaded(true);
-          setItems(result.items);
-        },
-        (e) => {
-          setIsLoaded(true);
-          setError(e);
-        }
-      );
+    TutorsAPI.getAllTutors(0, 10).then(
+      (result) => {
+        setIsLoaded(true);
+        setItems(result.items);
+      },
+      (e) => {
+        setIsLoaded(true);
+        setError(e);
+      }
+    );
   }, []);
 
   if (!isLoaded)
