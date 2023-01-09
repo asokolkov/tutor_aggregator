@@ -1,0 +1,58 @@
+﻿import { V1LoginDto } from './types';
+
+const post = async (url: string, content: any) => {
+  return await fetch(url, {
+    mode: 'no-cors',
+    method: 'POST',
+    body: JSON.stringify(content),
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    redirect: 'manual',
+  });
+};
+
+const get = async (url: string) => {
+  return await fetch(url, {
+    mode: 'no-cors',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    redirect: 'manual',
+  });
+};
+
+export enum AuthenticationStatus {
+  Authenticated = 'Authenticated',
+  Unauthenticated = 'Unauthenticated',
+  NoInfo = 'NoInfo',
+}
+
+export const login = async (loginDto: V1LoginDto) => {
+  const response = await post('/account/signin', loginDto);
+  if (response.ok) {
+    return response.url;
+  }
+  if (response.status === 401) {
+    return AuthenticationStatus.Unauthenticated;
+  }
+  return AuthenticationStatus.NoInfo;
+};
+
+export const loginViaExternalProvider = async (
+  provider: string,
+  returnUrl: string
+) => {
+  const response = await get(
+    `/account/signin-external?provider=${provider}&returnUrl=${returnUrl}`
+  );
+  if (response.ok) {
+    return response.url;
+  }
+  if (response.status === 401) {
+    return AuthenticationStatus.Unauthenticated;
+  }
+  return AuthenticationStatus.NoInfo;
+};

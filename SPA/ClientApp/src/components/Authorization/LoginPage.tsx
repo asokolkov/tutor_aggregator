@@ -20,6 +20,10 @@ import { PasswordField } from './PasswordField';
 import { OAuthButtons } from './OAuthButtons';
 import { Link as RLink } from 'react-router-dom';
 import { SIGNUP_PAGE } from '../../route-paths';
+import {PasswordField} from './PasswordField';
+import {OAuthButtons} from './OAuthButtons';
+import {useRef, MouseEvent} from "react";
+import {login} from '../../api/authentication';
 
 export const LoginPage = () => {
   return (
