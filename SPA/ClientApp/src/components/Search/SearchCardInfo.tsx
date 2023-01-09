@@ -1,38 +1,41 @@
-import { Avatar, Box, Flex, Heading, Button, VStack } from '@chakra-ui/react';
+import { Avatar, Heading, Text, VStack, Button } from '@chakra-ui/react';
+import React from 'react';
+import { ReviewStar } from '../Profile/ReviewStar';
 
-export const SearchCardInfo = (props: SearchCardInfoProps) => {
-  const { name, imgSrc, job, occupation, rating } = props;
+const SearchCardInfo = (props: SearchCardInfoProps) => {
+  const { name, imgSrc, description } = props;
   return (
-    <Flex
-      width={'100%'}
-      direction={'column'}
-      align={'center'}
-      height={'100%'}
-      background={'white'}
-      padding={'20px'}
-      borderRadius={'5px'}
+    <VStack
+      w={'100%px'}
+      minW={'350px'}
       borderWidth={'1px'}
-      justifyContent={'space-between'}
+      shadow={'md'}
+      padding={'16px'}
+      spacing={'16px'}
     >
       <Avatar name={name} showBorder={true} src={imgSrc} size="2xl" />
-      <VStack>
+      <VStack h={'200px'} spacing={'8px'}>
         <Heading as="h4" size="xl" textAlign={'center'}>
           {name}
         </Heading>
-        <Box>{job}</Box>
-        <Box>{occupation}</Box>
-        <Box>{rating.average}</Box>
+        <Text style={{ overflow: 'hidden' }} textAlign={'center'}>
+          {description}
+        </Text>
       </VStack>
-      <Button colorScheme={'teal'}>Посмотреть профиль</Button>
-    </Flex>
+      <ReviewStar starCount={5} />
+      <Button colorScheme={'teal'} w={'100%'}>
+        Посмотреть профиль
+      </Button>
+    </VStack>
   );
 };
+
+export default SearchCardInfo;
 
 export type SearchCardInfoProps = {
   name: string;
   imgSrc: string;
-  job: string;
-  occupation: string;
+  description: string;
   rating: {
     count: number;
     average: number;
