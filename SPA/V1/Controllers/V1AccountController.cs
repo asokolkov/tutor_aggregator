@@ -27,7 +27,7 @@ public class V1AccountController : ControllerBase
     }
 
     [AllowAnonymous]
-    [Route("signin")]
+    [HttpPost("signin")]
     public async Task<IActionResult> LoginAsync([FromBody] V1LoginDto loginDto)
     {
         var signInResult = await signInManager.PasswordSignInAsync(loginDto.Email, loginDto.Password,
@@ -64,7 +64,7 @@ public class V1AccountController : ControllerBase
             return Ok();
         }
 
-        return BadRequest();
+        return BadRequest(string.Join(", ", identityResult.Errors.Select(error => error.Description)));
     }
 
     [AllowAnonymous]

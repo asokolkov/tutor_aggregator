@@ -4,5 +4,5 @@ using Newtonsoft.Json;
 
 public sealed record V1LoginDto(
     [JsonProperty("email")] string Email, 
-    [JsonProperty("passport")] string Password, 
+    [JsonProperty("password")] string Password, 
     [JsonProperty("rememberMe")] bool RememberMe);

@@ -11,7 +11,7 @@ export interface TutorList extends PaginatedResponse<Tutor> {}
 
 class TutorsAPI {
   static async getAllTutors(page = 0, size = 30): Promise<TutorList> {
-    const response = await axiosInstance.get('v1/tutors', {
+    const response = await axiosInstance.get('/api/v1/tutors', {
       params: {
         page: page,
         size: size,
@@ -21,7 +21,7 @@ class TutorsAPI {
   }
 
   static async getTutorById(id: string): Promise<Tutor> {
-    const response = await axiosInstance.get(`v1/tutors/${id}`);
+    const response = await axiosInstance.get(`/api/v1/tutors/${id}`);
     return response.data as Tutor;
   }
 }

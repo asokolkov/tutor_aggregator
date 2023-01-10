@@ -1,6 +1,5 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -55,7 +54,6 @@ builder.Services.AddAuthentication()
     });
 
 var app = builder.Build();
-
 
 if (!app.Environment.IsDevelopment())
 {

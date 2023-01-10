@@ -17,7 +17,7 @@ export default class ReviewAPI {
     page: number = 0,
     size: number = 30
   ): Promise<ReviewList> {
-    const response = await axiosInstance.get(`/v1/tutors/${tutorId}/reviews`, {
+    const response = await axiosInstance.get(`/api/v1/tutors/${tutorId}/reviews`, {
       params: { page, size },
     });
     return response.data as ReviewList;

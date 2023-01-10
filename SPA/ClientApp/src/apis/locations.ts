@@ -13,14 +13,14 @@ export default class LocationAPI {
     page: number = 0,
     size: number = 30
   ): Promise<LocationList> {
-    const response = await axiosInstance.get('/v1/locations', {
+    const response = await axiosInstance.get('/api/v1/locations', {
       params: { page, size },
     });
     return response.data as LocationList;
   }
 
   static async getLocationById(id: string): Promise<Location> {
-    const response = await axiosInstance.get(`/v1/locations/${id}`);
+    const response = await axiosInstance.get(`/api/v1/locations/${id}`);
     return response.data as Location;
   }
 }

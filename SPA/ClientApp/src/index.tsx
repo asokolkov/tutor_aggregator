@@ -9,7 +9,7 @@ import router from './routes';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme/index';
 
-if (process.env.NODE_ENV !== 'production') require('./apis/mocks/index');
+//if (process.env.NODE_ENV !== 'production') require('./apis/mocks/index');
 
 const root = createRoot(rootElement);
 
