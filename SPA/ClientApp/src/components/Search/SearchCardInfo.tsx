@@ -1,6 +1,6 @@
 import { Avatar, Heading, Text, VStack, Button } from '@chakra-ui/react';
 import React from 'react';
-import { ReviewStar } from '../Profile/ReviewStar';
+import { ReviewStar } from '../TutorCard/ReviewStar';
 
 const SearchCardInfo = (props: SearchCardInfoProps) => {
   const { name, imgSrc, description } = props;
