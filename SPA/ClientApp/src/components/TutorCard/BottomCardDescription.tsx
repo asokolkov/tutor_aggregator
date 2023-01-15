@@ -1,7 +1,7 @@
 import React from 'react';
 import { HStack, Image, Text } from '@chakra-ui/react';
 
-const BottomProfileDescription: React.FC<BottomProfileDescriptionProps> = ({
+const BottomCardDescription: React.FC<BottomCardDescriptionProps> = ({
   icon,
   text,
 }) => {
@@ -13,9 +13,9 @@ const BottomProfileDescription: React.FC<BottomProfileDescriptionProps> = ({
   );
 };
 
-export default BottomProfileDescription;
+export default BottomCardDescription;
 
-interface BottomProfileDescriptionProps {
+interface BottomCardDescriptionProps {
   icon: string;
   text: string;
 }

@@ -8,11 +8,11 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { ReviewStar } from './ReviewStar';
-import BottomProfileDescription from './BottomProfileDescription';
+import BottomCardDescription from './BottomCardDescription';
 import categoryIcon from '../../img/category-icon.png';
 import locationIcon from '../../img/location-icon.png';
 
-export const ProfileInfo = (props: ProfileInfoProps) => {
+export const CardInfo = (props: CardInfoProps) => {
   return (
     <Stack
       w="100%"
@@ -40,11 +40,8 @@ export const ProfileInfo = (props: ProfileInfoProps) => {
       </HStack>
       <HStack justify={'space-between'}>
         <VStack align={'left'} padding={'8px'}>
-          <BottomProfileDescription
-            icon={categoryIcon}
-            text={props.occupation}
-          />
-          <BottomProfileDescription icon={locationIcon} text={props.location} />
+          <BottomCardDescription icon={categoryIcon} text={props.occupation} />
+          <BottomCardDescription icon={locationIcon} text={props.location} />
           <HStack spacing={'32px'}>
             <ReviewStar starCount={5} />
             <Text fontSize="m">
@@ -65,7 +62,7 @@ export const ProfileInfo = (props: ProfileInfoProps) => {
   );
 };
 
-type ProfileInfoProps = {
+type CardInfoProps = {
   name: string;
   description: string;
   location: string;

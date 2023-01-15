@@ -1,13 +1,13 @@
 import { ChakraProvider, VStack } from '@chakra-ui/react';
 import Theme from '../../theme/index';
-import { ProfileInfo } from './ProfileInfo';
+import { CardInfo } from './CardInfo';
 import { ReviewSection } from './ReviewSection';
 
-export const ProfilePage = () => {
+export const TutorCardPage = () => {
   return (
     <ChakraProvider theme={Theme}>
       <VStack maxW={'100%'} spacing={'40px'}>
-        <ProfileInfo
+        <CardInfo
           name={'Егоров Павел Владимирович'}
           description={
             'Старший преподаватель УрФУ, департамент математики, механики и компьютерных наук'

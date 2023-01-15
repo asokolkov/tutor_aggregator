@@ -6,12 +6,14 @@ import {
   PROFILE_PAGE,
   SEARCH_PAGE,
   SIGNUP_PAGE,
+  TUTOR_PAGE,
 } from './route-paths';
 import BaseLayout from './components/BaseLayout/BaseLayout';
-import { ProfilePage } from './components/Profile/ProfilePage';
+import { TutorCardPage } from './components/TutorCard/TutorCardPage';
 import { SearchPage } from './components/Search/SearchPage';
 import { LoginPage } from './components/Authorization/LoginPage';
 import { SignupPage } from './components/Authorization/SignupPage';
+import { ProfilePage } from './components/Profiles/ProfilePage';
 
 const router = createBrowserRouter([
   {
@@ -19,12 +21,16 @@ const router = createBrowserRouter([
     element: <BaseLayout />,
     children: [
       {
-        path: PROFILE_PAGE,
-        element: <ProfilePage />,
+        path: TUTOR_PAGE,
+        element: <TutorCardPage />,
       },
       {
         path: SEARCH_PAGE,
         element: <SearchPage />,
+      },
+      {
+        path: PROFILE_PAGE,
+        element: <ProfilePage />,
       },
       {
         index: true,
