@@ -1,28 +1,20 @@
-import { Review, ReviewProps } from './Review';
+import { SingleReview } from './SingleReview';
 import { Text, VStack } from '@chakra-ui/react';
+import { Review } from '../../apis/reviews';
 
 export const ReviewSection = ({ reviews }: ReviewSectionProps) => {
-  const reviewsDiv = [];
-  for (const review of reviews) {
-    reviewsDiv.push(
-      <Review
-        name={review.name}
-        review={review.review}
-        rating={review.rating}
-        avatar={review.avatar}
-      />
-    );
-  }
   return (
     <VStack w="100%" bg={'white'} spacing={'20px'} align={'start'}>
       <Text fontSize={'2xl'} as="b">
         Отзывы
       </Text>
-      {reviewsDiv}
+      {reviews.map((r) => (
+        <SingleReview {...r} key={r.id} />
+      ))}
     </VStack>
   );
 };
 
 type ReviewSectionProps = {
-  reviews: Array<ReviewProps>;
+  reviews: Array<Review>;
 };

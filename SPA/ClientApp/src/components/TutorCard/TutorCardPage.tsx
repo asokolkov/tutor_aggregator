@@ -2,33 +2,53 @@ import { ChakraProvider, VStack } from '@chakra-ui/react';
 import Theme from '../../theme/index';
 import { CardInfo } from './CardInfo';
 import { ReviewSection } from './ReviewSection';
+import { useEffect, useState } from 'react';
+import TutorsAPI, { Tutor } from '../../apis/tutors';
+import ReviewAPI, { ReviewList } from '../../apis/reviews';
+import AwardSection from './AwardSection';
+import { useParams } from 'react-router-dom';
 
 export const TutorCardPage = () => {
+  const [, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [tutorState, setTutorState] = useState<Tutor>();
+  const [reviewsState, setReviewState] = useState<ReviewList>();
+  const { tutorId } = useParams();
+
+  useEffect(() => {
+    Promise.all([
+      TutorsAPI.getTutorById(tutorId),
+      ReviewAPI.getReviewsByTutorId(tutorId),
+    ]).then(
+      (result) => {
+        setIsLoaded(true);
+        setTutorState(result[0]);
+        setReviewState(result[1]);
+      },
+      (e) => {
+        setIsLoaded(true);
+        setError(e);
+      }
+    );
+  }, []);
+  if (!isLoaded) return <div></div>;
   return (
     <ChakraProvider theme={Theme}>
       <VStack maxW={'100%'} spacing={'40px'}>
         <CardInfo
-          name={'Егоров Павел Владимирович'}
-          description={
-            'Старший преподаватель УрФУ, департамент математики, механики и компьютерных наук'
-          }
-          location={'Екатеринбург, Свердловская область'}
-          occupation={'Высшая математика, компьютерные науки'}
-          rating={{ count: 74, average: 4.9 }}
-          avatar={'https://avatarko.ru/img/kartinka/22/zhivotnye_kot_21031.jpg'}
+          name={`${tutorState.lastName} ${tutorState.firstName} ${tutorState.middleName}`}
+          job={`${tutorState.job.place}, ${tutorState.job.post}`}
+          location={`${tutorState.location.city}, ${tutorState.location.district}`}
+          subjects={tutorState.subjects.map((s) => s.description).join(', ')}
+          rating={tutorState.rating}
+          avatar={tutorState.avatar}
+          contacts={tutorState.contacts}
+          educations={tutorState.educations}
+          requirements={tutorState.requirements}
         />
 
-        <ReviewSection
-          reviews={['Михаил', 'Анастасия'].map((x) => ({
-            name: x,
-            rating: 5,
-            review:
-              // eslint-disable-next-line max-len
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non sapien et velit suscipit faucibus non vitae leo. Nunc id lectus dolor. Curabitur quis mi metus. Integer ultricies sagittis nibh eu finibus. Nam non nulla eget ipsum vestibulum congue sed sit amet diam. Etiam purus augue, laoreet sit amet nisi eu, ultricies volutpat velit. Nam in dolor eget odio volutpat mattis vitae quis est. Fusce sed elementum risus, vitae porta odio. Nulla non magna consectetur, dictum ante at, tincidunt nisl. Ut maximus lorem et congue hendrerit. Vivamus lobortis, ipsum vel aliquet egestas, eros odio volutpat magna, vitae fermentum lorem ipsum vel nibh. Cras at varius nisi, ac pulvinar justo.',
-            avatar:
-              'https://avatarko.ru/img/kartinka/22/zhivotnye_kot_21031.jpg',
-          }))}
-        />
+        <AwardSection awards={tutorState.awards} />
+        <ReviewSection reviews={reviewsState.items} />
       </VStack>
     </ChakraProvider>
   );

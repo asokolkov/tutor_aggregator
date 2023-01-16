@@ -7,14 +7,14 @@ import {
 } from '@chakra-ui/react';
 import SearchCardInfo from './SearchCardInfo';
 import { useEffect, useState } from 'react';
-import TutorsAPI from '../../apis/tutors';
+import TutorsAPI, { Tutor } from '../../apis/tutors';
 import SearchParamsSection from './SearchParamsSection';
 import './SearchPage.css';
 
 export const SearchPage = () => {
   const [, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<Tutor[]>([]);
 
   useEffect(() => {
     TutorsAPI.getAllTutors(0, 10).then(
@@ -58,6 +58,8 @@ export const SearchPage = () => {
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non sapien et velit suscipit faucibus non vitae leo. Nunc id lectus dolor. Curabitur quis mi metus. Integer ultricies sagittis nibh eu finibus. Nam non nulla eget ipsum vestibulum congue sed sit amet diam. Etiam purus augue, laoreet sit amet nisi eu, ultricies volutpat velit. Nam in dolor eget odio volutpat mattis vitae quis est. Fusce sed elementum risus, vitae porta odio. Nulla non magna consectetur, dictum ante at, tincidunt nisl. Ut maximus lorem et congue hendrerit. Vivamus lobortis, ipsum vel aliquet egestas, eros odio volutpat magna, vitae fermentum lorem ipsum vel nibh. Cras at varius nisi, ac pulvinar justo.'
               }
               rating={{ count: 25, average: item.rating }}
+              id={item.id}
+              key={item.id}
             ></SearchCardInfo>
           ))}
         </Grid>

@@ -31,3 +31,41 @@ export interface Person {
 export interface PaginatedResponse<T> {
   items: T[];
 }
+
+export interface Job {
+  id: string;
+  place: string;
+  post: string;
+}
+
+export interface Subject {
+  id: string;
+  description: string;
+}
+
+export interface Contact {
+  id: string;
+  type: number;
+  value: string;
+}
+
+export interface Education {
+  id: string;
+  description: string;
+  beginYear: number;
+  graduationYear: number;
+}
+
+export interface Award {
+  id: string;
+  description: string;
+  year: number;
+}
+
+export interface Lesson {
+  id: string;
+  price: number;
+  confirmed: boolean;
+  startTime: Date;
+  endTime: Date;
+}
