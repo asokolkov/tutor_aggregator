@@ -5,7 +5,10 @@ mock
   .onGet('v1/students')
   .reply(() => [200, createPaginatedResponse(student, 7)])
 
-  .onGet(new RegExp('v1/students/*'))
-  .reply((cfg) => [200, { ...student, id: cfg.url?.split('/').at(-1) }]);
+  .onGet(new RegExp('v1/students/([A-Za-z0-9-]+)/?$'))
+  .reply((cfg) => [
+    200,
+    { ...student, id: cfg.url?.match('v1/students/([A-Za-z0-9-]+)/?$')[1] },
+  ]);
 
 export default mock;

@@ -1,8 +1,23 @@
-import axiosInstance, { PaginatedResponse, Person } from './_share';
+import axiosInstance, {
+  Award,
+  Contact,
+  Education,
+  Job,
+  Lesson,
+  PaginatedResponse,
+  Person,
+  Subject,
+} from './_share';
 import { Location } from './locations';
 
 export interface Tutor extends Person {
   location: Location;
+  job: Job;
+  subjects: Subject[];
+  contacts: Contact[];
+  educations: Education[];
+  awards: Award[];
+  lessons: Lesson[];
   requirements: string;
   rating: number;
 }

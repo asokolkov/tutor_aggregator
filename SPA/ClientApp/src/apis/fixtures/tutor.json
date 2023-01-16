@@ -8,7 +8,59 @@
     "city": "Екатеринбург",
     "district": "Чкаловский"
   },
-  "requirements": "string",
-  "rating": 0,
+  "job": {
+    "id": "string",
+    "place": "УрФУ, департамент математики, механики и компьютерных наук",
+    "post": "Старший преподаватель"
+  },
+  "subjects": [
+    {
+      "id": "string",
+      "description": "Высшая математика"
+    },
+    {
+      "id": "string",
+      "description": "Компьютерные науки"
+    }
+  ],
+  "contacts": [
+    {
+      "id": "af52e85a-a6cf-43e3-817d-a5d8294b12fd",
+      "type": 0,
+      "value": "+7 (989) 567-45-67"
+    },
+    {
+      "id": "af52e85a-a6cf-43e3-817d-a5d8294b12ee",
+      "type": 1,
+      "value": "example@gmail.com"
+    }
+  ],
+  "educations": [
+    {
+      "id": "string",
+      "description": "УрГУ, МатМех, высшее образование",
+      "beginYear": 0,
+      "graduationYear": 0
+    }
+  ],
+  "awards": [
+    {
+      "id": "af52e85a-a6cf-43e3-111d-a5d8294b12ee",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non sapien et velit suscipit faucibus non vitae leo.",
+      "year": 2017
+    },
+    {
+      "id": "af52e85a-a6cf-43e3-765d-a5d8294b12ee",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non sapien et velit suscipit faucibus non vitae leo.",
+      "year": 2017
+    },
+    {
+      "id": "af52e85a-a6cf-43e3-456d-a5d8294b12ee",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non sapien et velit suscipit faucibus non vitae leo.",
+      "year": 2017
+    }
+  ],
+  "requirements": "Тут будут описаны требования к ученику",
+  "rating": 4.78,
   "avatar": "https://avatarko.ru/img/kartinka/22/zhivotnye_kot_21031.jpg"
 }
