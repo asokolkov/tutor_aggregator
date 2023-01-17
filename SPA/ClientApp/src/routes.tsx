@@ -6,12 +6,14 @@ import {
   PROFILE_PAGE,
   SEARCH_PAGE,
   SIGNUP_PAGE,
+  FORGOT_PASSWORD_PAGE,
 } from './route-paths';
 import BaseLayout from './components/BaseLayout/BaseLayout';
 import { ProfilePage } from './components/Profile/ProfilePage';
 import { SearchPage } from './components/Search/SearchPage';
 import { LoginPage } from './components/Authorization/LoginPage';
 import { SignupPage } from './components/Authorization/SignupPage';
+import { ForgotPasswordPage } from './components/Authorization/ForgotPasswordPage';
 
 const router = createBrowserRouter([
   {
@@ -43,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: SIGNUP_PAGE,
         element: <SignupPage />,
+      },
+      {
+        path: FORGOT_PASSWORD_PAGE,
+        element: <ForgotPasswordPage />,
       },
     ],
   },

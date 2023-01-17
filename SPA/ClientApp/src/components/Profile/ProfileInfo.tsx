@@ -7,8 +7,8 @@ import {
   Button,
   Stack,
 } from '@chakra-ui/react';
-import { ReviewStar } from './ReviewStar';
 import BottomProfileDescription from './BottomProfileDescription';
+import { ReviewStarWithStats } from './ReviewStarWithStats';
 import categoryIcon from '../../img/category-icon.png';
 import locationIcon from '../../img/location-icon.png';
 
@@ -45,12 +45,7 @@ export const ProfileInfo = (props: ProfileInfoProps) => {
             text={props.occupation}
           />
           <BottomProfileDescription icon={locationIcon} text={props.location} />
-          <HStack spacing={'32px'}>
-            <ReviewStar starCount={5} />
-            <Text fontSize="m">
-              {props.rating.average} на основе {props.rating.count} отзывов
-            </Text>
-          </HStack>
+          <ReviewStarWithStats rating={props.rating} />
         </VStack>
         <VStack spacing={'16px'}>
           <Button size={'lg'} colorScheme={'blue'} width={'256px'}>
