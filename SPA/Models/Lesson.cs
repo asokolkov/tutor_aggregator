@@ -1,8 +1,8 @@
 ﻿namespace SPA.Models;
 
-public sealed class Lesson : IEntity
+public sealed class Lesson
 {
-    public int Id { get; init; }
+    public Guid Id { get; init; }
     
     public double Price { get; init; }
     

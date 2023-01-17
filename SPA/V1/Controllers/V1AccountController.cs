@@ -8,6 +8,7 @@ namespace SPA.V1.Controllers;
 using System.Security.Claims;
 using AutoMapper;
 using DataModels;
+using Services;
 
 [ApiController]
 [Route("account")]
@@ -17,13 +18,15 @@ public class V1AccountController : ControllerBase
     private readonly UserManager<ApplicationUser> userManager;
     private readonly IMapper mapper;
     private readonly SignInManager<ApplicationUser> signInManager;
+    private readonly IUserService userService;
 
     public V1AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
-        IMapper mapper)
+        IMapper mapper, IUserService userService)
     {
         this.userManager = userManager;
         this.signInManager = signInManager;
         this.mapper = mapper;
+        this.userService = userService;
     }
 
     [AllowAnonymous]
@@ -45,6 +48,7 @@ public class V1AccountController : ControllerBase
     [HttpPost("signup")]
     public async Task<IActionResult> RegisterAsync([FromBody] V1RegisterDto registerDto)
     {
+        var accountType = mapper.Map<AccountType>(registerDto.AccountType);
         var user = new ApplicationUser
         {
             Email = registerDto.Email,
@@ -53,18 +57,34 @@ public class V1AccountController : ControllerBase
             FirstName = registerDto.FirstName,
             LastName = registerDto.LastName,
             Phone = registerDto.Phone,
-            AccountType = mapper.Map<AccountType>(registerDto.AccountType)
+            AccountType = accountType
         };
 
         var identityResult = await userManager.CreateAsync(user, registerDto.Password);
 
-        if (identityResult.Succeeded)
+        if (!identityResult.Succeeded)
         {
-            await signInManager.SignInAsync(user, false);
-            return Ok();
+            return BadRequest(string.Join(", ", identityResult.Errors.Select(error => error.Description)));
         }
 
-        return BadRequest(string.Join(", ", identityResult.Errors.Select(error => error.Description)));
+        switch (accountType)
+        {
+            case AccountType.Student:
+                await userService.CreateStudent(user);
+                break;
+            case AccountType.Tutor:
+                await userService.CreateTutor(user);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(accountType));
+        }
+
+        user.RegistrationCompleted = true;
+        await userManager.UpdateAsync(user);
+
+        await signInManager.SignInAsync(user, false);
+
+        return Ok();
     }
 
     [AllowAnonymous]
@@ -108,7 +128,7 @@ public class V1AccountController : ControllerBase
             await userManager.CreateAsync(user);
         }
 
-        
+
         await userManager.AddLoginAsync(user, info);
 
         return Ok();

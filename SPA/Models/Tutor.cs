@@ -1,9 +1,9 @@
 ﻿namespace SPA.Models;
 
-public sealed class Tutor : IEntity
+public sealed class Tutor
 {
-    public int Id { get; init; }
-    
+    public Guid Id { get; init; }
+
     public string FirstName { get; init; }
 
     public string LastName { get; init; }

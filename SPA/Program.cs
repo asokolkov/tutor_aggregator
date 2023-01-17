@@ -3,15 +3,20 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SPA.Data;
 using SPA.Extensions;
 using SPA.Identity;
 using SPA.Identity.Models;
+using SPA.Startup;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.SetUpServices(builder.Configuration);
 builder.Services.AddControllers().AddNewtonsoftJson();
+
+builder.Services.AddHostedService<DatabaseStartupService<ApplicationIdentityContext>>();
+builder.Services.AddHostedService<DatabaseStartupService<ApplicationContext>>();
 
 builder.Services.AddSwaggerGen();
 
