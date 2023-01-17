@@ -5,7 +5,7 @@ import starIcon from '../../img/star.png';
 export const ReviewStar = ({}: ReviewStarProps) => {
   const stars = [];
   for (let i = 0; i < 5; i++) {
-    stars.push(<Image src={starIcon} alt={'star'} />);
+    stars.push(<Image src={starIcon} alt={'star'} key={i} />);
   }
   return <HStack spacing="8px">{stars}</HStack>;
 };

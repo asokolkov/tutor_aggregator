@@ -1,11 +1,20 @@
 import { Avatar, Heading, VStack, Button } from '@chakra-ui/react';
 import React from 'react';
-import { ReviewStarWithStats } from '../Profile/ReviewStarWithStats';
+import { Link } from 'react-router-dom';
+import { TUTORS_PATH } from '../../route-paths';
+import { ReviewStarWithStats } from '../TutorCard/ReviewStarWithStats';
 import categoryIcon from '../../img/category-icon.png';
-import BottomProfileDescription from '../Profile/BottomProfileDescription';
+import BottomProfileDescription from '../TutorCard/BottomCardDescription';
+import { Education } from '../../apis/_share';
 
-const SearchCardInfo = (props: SearchCardInfoProps) => {
-  const { name, imgSrc, education, occupation } = props;
+const SearchCardInfo: React.FC<SearchCardInfoProps> = ({
+  id,
+  name,
+  imgSrc,
+  education,
+  job,
+  rating,
+}) => {
   return (
     <VStack
       w={'auto'}
@@ -20,13 +29,18 @@ const SearchCardInfo = (props: SearchCardInfoProps) => {
         <Heading as="h4" size="lg" textAlign={'center'}>
           {name}
         </Heading>
-        <BottomProfileDescription icon={categoryIcon} text={education} />
-        <BottomProfileDescription icon={categoryIcon} text={occupation} />
+        <BottomProfileDescription
+          icon={categoryIcon}
+          text={education.map((e) => e.description).join(', ')}
+        />
+        <BottomProfileDescription icon={categoryIcon} text={job} />
       </VStack>
-      <ReviewStarWithStats rating={props.rating} />
-      <Button colorScheme={'teal'} w={'100%'} h={'40px'}>
-        Открыть профиль
-      </Button>
+      <ReviewStarWithStats rating={rating} />
+      <Link to={`${TUTORS_PATH}/${id}`}>
+        <Button colorScheme={'teal'} w={'100%'} h={'40px'}>
+          Открыть профиль
+        </Button>
+      </Link>
     </VStack>
   );
 };
@@ -34,10 +48,11 @@ const SearchCardInfo = (props: SearchCardInfoProps) => {
 export default SearchCardInfo;
 
 export type SearchCardInfoProps = {
+  id: string;
   name: string;
   imgSrc: string;
-  education: string;
-  occupation: string;
+  education: Education[];
+  job: string;
   rating: {
     count: number;
     average: number;

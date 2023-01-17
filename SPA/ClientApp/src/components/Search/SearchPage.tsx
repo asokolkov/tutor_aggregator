@@ -1,14 +1,14 @@
 import { Flex, VStack, CircularProgress, SimpleGrid } from '@chakra-ui/react';
 import SearchCardInfo from './SearchCardInfo';
 import { useEffect, useState } from 'react';
-import TutorsAPI from '../../apis/tutors';
+import TutorsAPI, { Tutor } from '../../apis/tutors';
 import SearchParamsSection from './SearchParamsSection';
 import './SearchPage.css';
 
 export const SearchPage = () => {
   const [, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<Tutor[]>([]);
 
   useEffect(() => {
     TutorsAPI.getAllTutors(0, 10).then(
@@ -47,9 +47,11 @@ export const SearchPage = () => {
           <SearchCardInfo
             name={item.firstName + ' ' + item.lastName}
             imgSrc={item.avatar}
-            education={item.education}
-            occupation={item.occupation}
+            education={item.educations}
+            job={item.job.place}
             rating={{ count: 25, average: item.rating }}
+            id={item.id}
+            key={item.id}
           ></SearchCardInfo>
         ))}
       </SimpleGrid>
