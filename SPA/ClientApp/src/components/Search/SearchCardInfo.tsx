@@ -1,9 +1,15 @@
 import { Avatar, Heading, Text, VStack, Button } from '@chakra-ui/react';
 import React from 'react';
-import { ReviewStar } from '../Profile/ReviewStar';
+import { ReviewStar } from '../TutorCard/ReviewStar';
+import { Link } from 'react-router-dom';
+import { TUTORS_PATH } from '../../route-paths';
 
-const SearchCardInfo = (props: SearchCardInfoProps) => {
-  const { name, imgSrc, description } = props;
+const SearchCardInfo: React.FC<SearchCardInfoProps> = ({
+  id,
+  name,
+  imgSrc,
+  description,
+}) => {
   return (
     <VStack
       w={'100%px'}
@@ -23,9 +29,11 @@ const SearchCardInfo = (props: SearchCardInfoProps) => {
         </Text>
       </VStack>
       <ReviewStar starCount={5} />
-      <Button colorScheme={'teal'} w={'100%'}>
-        Посмотреть профиль
-      </Button>
+      <Link to={`${TUTORS_PATH}/${id}`}>
+        <Button colorScheme={'teal'} w={'100%'}>
+          Посмотреть профиль
+        </Button>
+      </Link>
     </VStack>
   );
 };
@@ -33,6 +41,7 @@ const SearchCardInfo = (props: SearchCardInfoProps) => {
 export default SearchCardInfo;
 
 export type SearchCardInfoProps = {
+  id: string;
   name: string;
   imgSrc: string;
   description: string;

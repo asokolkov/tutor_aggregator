@@ -6,6 +6,7 @@ export interface Review {
   description: string;
   updatedAt: Date;
   studentId: string;
+  studentName: string;
   studentAvatar: string;
 }
 
