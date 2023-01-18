@@ -12,7 +12,9 @@ using SPA.Application.Tutors.Queries.GetTutorsQuery;
 
 namespace SPA.Extensions;
 
+using Application.Users.GetCurrentUserQuery;
 using Data;
+using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Models;
@@ -50,7 +52,10 @@ internal static class ServiceCollectionExtensions
         
         services.AddScoped<IRequestHandler<UpdateReviewCommand, Review>, UpdateReviewCommandHandler>();
 
+        services.AddScoped<IRequestHandler<GetUserQuery, User>, GetUserQueryHandler>();
+
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }

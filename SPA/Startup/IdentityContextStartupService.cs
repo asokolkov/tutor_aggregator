@@ -1,6 +1,5 @@
 ﻿namespace SPA.Startup;
 
-using Identity;
 using Microsoft.EntityFrameworkCore;
 
 internal sealed class DatabaseStartupService<TContext> : IHostedService
@@ -9,7 +8,7 @@ internal sealed class DatabaseStartupService<TContext> : IHostedService
     private readonly ILogger logger;
     private readonly IServiceProvider serviceProvider;
 
-    public DatabaseStartupService(ILogger logger, IServiceProvider serviceProvider)
+    public DatabaseStartupService(ILogger<DatabaseStartupService<TContext>> logger, IServiceProvider serviceProvider)
     {
         this.logger = logger;
         this.serviceProvider = serviceProvider;

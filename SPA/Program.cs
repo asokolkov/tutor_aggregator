@@ -14,6 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.SetUpServices(builder.Configuration);
 builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddLogging(configure =>
+{
+    configure.AddConsole();
+});
 
 builder.Services.AddHostedService<DatabaseStartupService<ApplicationIdentityContext>>();
 builder.Services.AddHostedService<DatabaseStartupService<ApplicationContext>>();

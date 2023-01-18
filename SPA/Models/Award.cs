@@ -2,7 +2,8 @@
 
 public sealed class Award
 {
-    public int Guid { get; init; }
+    
+    public Guid Id { get; init; }
     
     public string Description { get; init; }
     
