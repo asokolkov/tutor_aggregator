@@ -17,13 +17,27 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 import Theme from '../../theme/index';
-import { PasswordField } from './PasswordField';
-import { OAuthButtons } from './OAuthButtons';
 import { Link as RLink } from 'react-router-dom';
 import { FORGOT_PASSWORD_PAGE, SIGNUP_PAGE } from '../../route-paths';
+import { PasswordField } from './PasswordField';
+import { OAuthButtons } from './OAuthButtons';
+import { useRef } from 'react';
+import AuthAPI from '../../apis/auth';
 
 export const LoginPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
+  const passwordRef = useRef<HTMLInputElement>();
+  const emailRef = useRef<HTMLInputElement>();
+  const rememberMeRef = useRef<HTMLInputElement>();
+
+  const handleSubmit = () => {
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+    const rememberMe = rememberMeRef.current.checked;
+
+    AuthAPI.login({ email: email, password: password, rememberMe: rememberMe });
+  };
+
   return (
     <ChakraProvider theme={Theme}>
       <Flex background={'white'} height={'60vh'}>
@@ -53,12 +67,19 @@ export const LoginPage = () => {
               <Stack spacing="5">
                 <FormControl>
                   <FormLabel htmlFor="email">Почта</FormLabel>
-                  <Input id="email" type="email" placeholder="Введите почту" />
+                  <Input
+                    ref={emailRef}
+                    id="email"
+                    type="email"
+                    placeholder="Введите почту"
+                  />
                 </FormControl>
-                <PasswordField />
+                <PasswordField ref={passwordRef} />
               </Stack>
               <HStack justify="space-between">
-                <Checkbox defaultChecked>Запомнить данные</Checkbox>
+                <Checkbox ref={rememberMeRef} defaultChecked>
+                  Запомнить данные
+                </Checkbox>
                 <Button variant="link" colorScheme="blue" size="sm">
                   <Link>
                     <RLink to={FORGOT_PASSWORD_PAGE}>Забыли пароль?</RLink>
@@ -66,7 +87,12 @@ export const LoginPage = () => {
                 </Button>
               </HStack>
               <Stack spacing="6">
-                <Button variant={'solid'} size={'lg'} colorScheme={'blue'}>
+                <Button
+                  variant={'solid'}
+                  size={'lg'}
+                  colorScheme={'blue'}
+                  onClick={handleSubmit}
+                >
                   Войти
                 </Button>
               </Stack>

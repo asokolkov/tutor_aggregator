@@ -1,8 +1,9 @@
 ﻿namespace SPA.Models;
 
-public sealed class Award : IEntity
+public sealed class Award
 {
-    public int Id { get; init; }
+    
+    public Guid Id { get; init; }
     
     public string Description { get; init; }
     
