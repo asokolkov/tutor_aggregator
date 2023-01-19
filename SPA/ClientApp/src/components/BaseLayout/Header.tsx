@@ -18,9 +18,11 @@ import {
   SIGNUP_PAGE,
 } from '../../route-paths';
 import HeaderButton from './HeaderButton';
+import { useState } from 'react';
 
 const Header: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
+  const [openTab, setOpenTab] = useState('Поиск');
   return (
     <Container
       as="header"
@@ -50,11 +52,15 @@ const Header: React.FC = () => {
                     text={'Поиск'}
                     link={SEARCH_PAGE}
                     variant={'link'}
+                    isActive={openTab === 'Поиск'}
+                    onClick={() => setOpenTab('Поиск')}
                   />
                   <HeaderButton
                     text={'Профиль'}
                     link={PROFILE_PAGE}
                     variant={'link'}
+                    isActive={openTab === 'Профиль'}
+                    onClick={() => setOpenTab('Профиль')}
                   />
                 </ButtonGroup>
                 <HStack spacing="3">
