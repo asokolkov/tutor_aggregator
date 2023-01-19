@@ -1,6 +1,6 @@
-﻿namespace SPA.Models;
+﻿namespace SPA.Entities;
 
-public sealed class Subject
+internal sealed class SubjectEntity
 {
     public Guid Id { get; init; }
     

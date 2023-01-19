@@ -13,9 +13,6 @@ public sealed class V1StudentDto
     [JsonPropertyName("lastName")]
     public string LastName { get; init; }
 
-    [JsonPropertyName("middleName")]
-    public string MiddleName { get; init; }
-    
     [JsonPropertyName("avatar")]
     public Uri Avatar { get; init; }
 

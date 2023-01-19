@@ -1,6 +1,4 @@
-﻿using SPA.Models;
-
-namespace SPA.V1.DataModels;
+﻿namespace SPA.V1.DataModels;
 
 using System.Text.Json.Serialization;
 
@@ -14,9 +12,6 @@ public sealed class V1TutorDto
 
     [JsonPropertyName("lastName")]
     public string LastName { get; init; }
-
-    [JsonPropertyName("middleName")]
-    public string MiddleName { get; init; }
 
     [JsonPropertyName("requirements")]
     public string Requirements { get; init; }

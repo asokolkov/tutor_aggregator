@@ -1,6 +1,9 @@
-﻿using MediatR;
-using SPA.Models;
+﻿#nullable enable
+using MediatR;
 
 namespace SPA.Application.Locations.Commands.UpdateLocationCommand;
 
-internal record UpdateLocationCommand(Location Element) : IRequest<Location>;
+using Domain;
+using Entities;
+
+internal record UpdateLocationCommand(Location Element) : IRequest<Location?>;

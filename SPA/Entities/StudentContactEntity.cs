@@ -1,6 +1,6 @@
-﻿namespace SPA.Models;
+﻿namespace SPA.Entities;
 
-public sealed class TutorContact
+internal sealed class StudentContactEntity
 {
     public Guid Id { get; init; }
     

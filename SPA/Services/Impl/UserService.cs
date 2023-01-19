@@ -1,20 +1,23 @@
 ﻿namespace SPA.Services.Impl;
 
+using AutoMapper;
+using Domain;
 using Identity.Models;
 using JetBrains.Annotations;
-using Models;
 using Repositories;
 
 [UsedImplicitly]
 internal sealed class UserService : IUserService
 {
-    private readonly ICrudRepository<Tutor> tutorRepository;
-    private readonly ICrudRepository<Student> studentRepository;
+    private readonly IMapper mapper;
+    private readonly ITutorsRepository tutorsRepository;
+    private readonly IStudentsRepository studentRepository;
 
-    public UserService(ICrudRepository<Tutor> tutorRepository, ICrudRepository<Student> studentRepository)
+    public UserService(ITutorsRepository tutorsRepository, IStudentsRepository studentRepository, IMapper mapper)
     {
-        this.tutorRepository = tutorRepository;
+        this.tutorsRepository = tutorsRepository;
         this.studentRepository = studentRepository;
+        this.mapper = mapper;
     }
 
     public async Task<Tutor> CreateTutor(ApplicationUser user)
@@ -25,8 +28,8 @@ internal sealed class UserService : IUserService
             FirstName = user.FirstName,
             LastName = user.LastName
         };
-
-        return await tutorRepository.Insert(tutor);
+        
+        return await tutorsRepository.Insert(tutor);
     }
 
     public async Task<Student> CreateStudent(ApplicationUser user)

@@ -1,4 +1,4 @@
-﻿namespace SPA.Models;
+﻿namespace SPA.Domain;
 
 public sealed class Lesson
 {

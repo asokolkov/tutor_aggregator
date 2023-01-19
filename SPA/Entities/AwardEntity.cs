@@ -1,8 +1,7 @@
-﻿namespace SPA.Models;
+﻿namespace SPA.Entities;
 
-public sealed class Award
+internal sealed class AwardEntity
 {
-    
     public Guid Id { get; init; }
     
     public string Description { get; init; }

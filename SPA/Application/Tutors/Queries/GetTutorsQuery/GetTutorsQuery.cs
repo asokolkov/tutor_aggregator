@@ -1,6 +1,8 @@
 ﻿using MediatR;
-using SPA.Models;
 
 namespace SPA.Application.Tutors.Queries.GetTutorsQuery;
 
-internal record GetTutorsQuery(long PageNumber, long PageSize) : IRequest<Page<Tutor>>;
+using Domain;
+using Entities;
+
+internal record GetTutorsQuery(int PageNumber, int PageSize) : IRequest<Page<Tutor>>;

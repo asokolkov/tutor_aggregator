@@ -1,16 +1,18 @@
 ﻿using JetBrains.Annotations;
 using MediatR;
-using SPA.Models;
 using SPA.Repositories;
 
 namespace SPA.Application.Tutors.Queries.GetTutorsQuery;
 
+using Domain;
+using Entities;
+
 [UsedImplicitly]
 internal class GetTutorsQueryHandler : IRequestHandler<GetTutorsQuery, Page<Tutor>>
 {
-    private readonly ICrudRepository<Tutor> repository;
+    private readonly ITutorsRepository repository;
 
-    public GetTutorsQueryHandler(ICrudRepository<Tutor> repository)
+    public GetTutorsQueryHandler(ITutorsRepository repository)
     {
         this.repository = repository;
     }

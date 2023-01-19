@@ -1,6 +1,8 @@
-﻿using MediatR;
-using SPA.Models;
+﻿#nullable enable
+using MediatR;
 
 namespace SPA.Application.Tutors.Commands.UpdateTutorCommand;
 
-internal record UpdateTutorCommand(Tutor Element) : IRequest<Tutor>;
+using Domain;
+
+internal record UpdateTutorCommand(Guid TutorId, UpdateTutor Tutor) : IRequest<Tutor?>;

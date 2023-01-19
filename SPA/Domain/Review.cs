@@ -1,4 +1,4 @@
-﻿namespace SPA.Models;
+﻿namespace SPA.Domain;
 
 public sealed class Review
 {
@@ -9,8 +9,4 @@ public sealed class Review
     public string Description { get; init; }
     
     public DateTimeOffset UpdatedAt { get; init; }
-    
-    public Tutor Tutor { get; init; }
-    
-    public Student Student { get; init; }
 }

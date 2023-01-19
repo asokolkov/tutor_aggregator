@@ -97,7 +97,7 @@ public class V1AccountController : ControllerBase
     }
 
     [AllowAnonymous]
-    [Route("signin-external-callback")]
+    [HttpGet("signin-external-callback")]
     public async Task<IActionResult> ExternalLoginCallback(string returnUrl)
     {
         var info = await signInManager.GetExternalLoginInfoAsync();

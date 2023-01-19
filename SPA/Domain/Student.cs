@@ -1,16 +1,14 @@
-﻿namespace SPA.Models;
+﻿namespace SPA.Domain;
 
-public class Student
+public sealed class Student
 {
     public Guid Id { get; init; }
 
-    public string FirstName { get; init; }
+    public string FirstName { get; set; }
 
-    public string LastName { get; init; }
-
-    public string MiddleName { get; init; }
+    public string LastName { get; set; }
     
-    public Uri Avatar { get; init; }
+    public Uri Avatar { get; set; }
 
     public ICollection<StudentContact> Contacts { get; init; }
 

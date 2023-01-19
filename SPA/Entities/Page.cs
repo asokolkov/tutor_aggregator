@@ -1,6 +1,6 @@
-﻿namespace SPA.Models;
+﻿namespace SPA.Entities;
 
-public sealed class Page<T>
+internal sealed class Page<T>
 {
     public Page(ICollection<T> items, long totalCount)
     {

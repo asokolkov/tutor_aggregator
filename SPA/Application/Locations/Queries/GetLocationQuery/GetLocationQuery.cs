@@ -1,6 +1,9 @@
-﻿using MediatR;
-using SPA.Models;
+﻿#nullable enable
+using MediatR;
 
 namespace SPA.Application.Locations.Queries.GetLocationQuery;
 
-internal record GetLocationQuery(int Id) : IRequest<Location>;
+using Domain;
+using Entities;
+
+internal record GetLocationQuery(Guid Id) : IRequest<Location?>;

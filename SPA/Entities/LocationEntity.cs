@@ -1,6 +1,6 @@
-﻿namespace SPA.Models;
+﻿namespace SPA.Entities;
 
-public sealed class Location
+internal sealed class LocationEntity
 {
     public Guid Id { get; init; }
     

@@ -9,7 +9,7 @@ const context = [
     "/signin-oidc",
     "/signin-google",
     "/account",
-    "/signin-vk"
+    "/signin-vk",
 ];
 
 module.exports = function (app) {

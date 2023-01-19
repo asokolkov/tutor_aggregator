@@ -1,21 +1,23 @@
-﻿using JetBrains.Annotations;
+﻿#nullable enable
+using JetBrains.Annotations;
 using MediatR;
-using SPA.Models;
 using SPA.Repositories;
 
 namespace SPA.Application.Locations.Queries.GetLocationQuery;
 
+using Domain;
+
 [UsedImplicitly]
-internal class GetLocationQueryHandler : IRequestHandler<GetLocationQuery, Location> 
+internal class GetLocationQueryHandler : IRequestHandler<GetLocationQuery, Location?> 
 {
-    private readonly ICrudRepository<Location> repository;
+    private readonly ILocationRepository repository;
     
-    public GetLocationQueryHandler(ICrudRepository<Location> repository)
+    public GetLocationQueryHandler(ILocationRepository repository)
     {
         this.repository = repository;
     }
 
-    public async Task<Location> Handle(GetLocationQuery request, CancellationToken cancellationToken)
+    public async Task<Location?> Handle(GetLocationQuery request, CancellationToken cancellationToken)
     {
         return await repository.Get(request.Id);
     }

@@ -1,6 +1,6 @@
-﻿namespace SPA.Models;
+﻿namespace SPA.Entities;
 
-public sealed class Job
+internal sealed class JobEntity
 {
     public Guid Id { get; init; }
 
