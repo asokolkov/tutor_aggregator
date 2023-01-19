@@ -6,14 +6,39 @@ type HeaderButtonProps = {
   text: string;
   link: string;
   variant: string;
+  isActive?: boolean;
+  onClick?: () => void;
 };
-const HeaderButton: React.FC<HeaderButtonProps> = (props) => {
+const HeaderButton: React.FC<HeaderButtonProps> = ({
+  isActive,
+  onClick,
+  variant,
+  text,
+  link,
+}) => {
   return (
     <Link
-      to={props.link}
+      to={link}
       style={{ display: 'flex', alignItems: 'center', justifyItems: 'center' }}
     >
-      <Button variant={props.variant}>{props.text}</Button>
+      <Button
+        colorScheme={isActive && 'blue'}
+        variant={variant}
+        onClick={onClick}
+      >
+        <p
+          style={
+            isActive
+              ? {
+                  textDecoration: 'underline',
+                  fontWeight: 'bold',
+                }
+              : {}
+          }
+        >
+          {text}
+        </p>
+      </Button>
     </Link>
   );
 };
