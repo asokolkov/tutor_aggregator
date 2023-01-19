@@ -2,8 +2,10 @@ import { FormControl, FormLabel, Select } from '@chakra-ui/react';
 import * as React from 'react';
 
 export const SelectOptions = (props: SelectOptionsProps) => {
-  const options = props.options.map((option, i) => (
-    <option value={'option' + i}>{option}</option>
+  const options = props.options.map((option) => (
+    <option value={option} key={option}>
+      {option}
+    </option>
   ));
   return (
     <FormControl display={'flex'} alignItems={'center'}>
@@ -16,11 +18,12 @@ export const SelectOptions = (props: SelectOptionsProps) => {
         {props.label}
       </FormLabel>
       <Select
-        placeholder={props.placeholder}
         bg="white"
         color="black"
         width={'100%'}
         fontSize={'lg'}
+        value={props.value}
+        onChange={(e) => props.updateState(e.target.value)}
       >
         {options}
       </Select>
@@ -29,7 +32,8 @@ export const SelectOptions = (props: SelectOptionsProps) => {
 };
 
 type SelectOptionsProps = {
-  placeholder: string;
+  value: string | number;
   options: Array<string>;
   label: string;
+  updateState: (newState: string) => void;
 };

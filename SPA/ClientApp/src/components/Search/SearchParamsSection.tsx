@@ -9,10 +9,30 @@ import {
 import { SelectOptions } from './SelectOptions';
 import { SwitchOptions } from './SwitchOptions';
 import searchIcon from '../../img/search_icon_bg.png';
+import { useSearchParams } from 'react-router-dom';
 
-type Props = {};
-const SearchParamsSection: React.FC<Props> = () => {
+const SearchParams = {
+  subject: 'subject',
+  district: 'district',
+  price: 'price',
+  rating: 'rating',
+};
+
+const SearchParamsSection: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
+
+  const [searchParamsState, searchParamsSetState] = useSearchParams({
+    district: 'Уралмаш',
+    price: 'Любая',
+    rating: 'Любой',
+    subject: 'Математика',
+  });
+
+  const updateSearchParam = (paramName: string, newState: string) => {
+    searchParamsState.set(paramName, newState);
+    searchParamsSetState(searchParamsState);
+  };
+
   return (
     <>
       <Box
@@ -21,7 +41,7 @@ const SearchParamsSection: React.FC<Props> = () => {
         borderRadius={'5px'}
         borderWidth={'1px'}
         bg="#A0AEC0"
-        backgroundImage={isDesktop ? searchIcon : NaN}
+        backgroundImage={isDesktop && searchIcon}
         backgroundPosition={'right bottom'}
         backgroundRepeat={'no-repeat'}
         backgroundSize={'14em'}
@@ -53,8 +73,11 @@ const SearchParamsSection: React.FC<Props> = () => {
           <GridItem area={'subject'} alignItems={'center'}>
             <SelectOptions
               label={'Предмет'}
-              placeholder={'Математика'}
-              options={['Программирование', 'История']}
+              options={['Математика', 'Программирование', 'История']}
+              value={searchParamsState.get(SearchParams.subject)}
+              updateState={(newState) =>
+                updateSearchParam(SearchParams.subject, newState)
+              }
             />
           </GridItem>
           <GridItem area={'online'}>
@@ -63,22 +86,31 @@ const SearchParamsSection: React.FC<Props> = () => {
           <GridItem area={'district'}>
             <SelectOptions
               label={'Район'}
-              placeholder={'Уралмаш'}
-              options={['Ленинский', 'Ботанический']}
+              options={['Уралмаш', 'Ленинский', 'Ботанический']}
+              value={searchParamsState.get(SearchParams.district)}
+              updateState={(newState) =>
+                updateSearchParam(SearchParams.district, newState)
+              }
             />
           </GridItem>
           <GridItem area={'price'}>
             <SelectOptions
               label={'Цена'}
-              placeholder={'Любая'}
-              options={['< 1000 ₽ за час', '< 900 ₽ за час']}
+              options={['Любая', '< 1000 ₽ за час', '< 900 ₽ за час']}
+              value={searchParamsState.get(SearchParams.price)}
+              updateState={(newState) =>
+                updateSearchParam(SearchParams.price, newState)
+              }
             />
           </GridItem>
           <GridItem area={'rating'}>
             <SelectOptions
               label={'Рейтинг'}
-              placeholder={'Любой'}
-              options={['⭐⭐⭐⭐ и более', '⭐⭐⭐ и более']}
+              options={['Любой', '⭐⭐⭐⭐ и более', '⭐⭐⭐ и более']}
+              value={searchParamsState.get(SearchParams.rating)}
+              updateState={(newState) =>
+                updateSearchParam(SearchParams.rating, newState)
+              }
             />
           </GridItem>
           <GridItem area={'button'}>
