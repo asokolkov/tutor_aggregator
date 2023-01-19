@@ -16,13 +16,15 @@ import {
   Text,
   InputLeftAddon,
   InputGroup,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import Theme from '../../theme/index';
 
 export const SignupOAuthPage = () => {
+  const isDesktop = useBreakpointValue({ base: false, lg: true });
   return (
     <ChakraProvider theme={Theme}>
-      <Flex background="gray.50" height={'100vh'}>
+      <Flex background={'gray.50'} height={'100vh'}>
         <VStack margin={'80px'} width={'100%'}>
           <Stack textAlign="center">
             <Heading>Продолжение регистрации</Heading>
@@ -30,7 +32,7 @@ export const SignupOAuthPage = () => {
           <Box
             py={{ base: '0', sm: '8' }}
             px={{ base: '4', sm: '10' }}
-            width={'40%'}
+            width={isDesktop ? '50%' : '90%'}
             bg="white"
             borderRadius={{ base: 'none', sm: 'xl' }}
           >

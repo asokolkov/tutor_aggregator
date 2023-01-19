@@ -10,7 +10,7 @@ const BaseLayout: React.FC = () => {
   return (
     <ChakraProvider theme={Theme}>
       <Header />
-      <Container padding={'60px'} maxW={'100%'}>
+      <Container padding={'0vh 5vw 16vh 5vw'} maxW={'100%'}>
         <Outlet />
       </Container>
       <Footer />
