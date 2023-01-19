@@ -14,16 +14,18 @@ import {
   Input,
   Stack,
   Text,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import Theme from '../../theme/index';
 import { Link as RLink } from 'react-router-dom';
-import { SIGNUP_PAGE } from '../../route-paths';
+import { FORGOT_PASSWORD_PAGE, SIGNUP_PAGE } from '../../route-paths';
 import { PasswordField } from './PasswordField';
 import { OAuthButtons } from './OAuthButtons';
 import { useRef } from 'react';
 import AuthAPI from '../../apis/auth';
 
 export const LoginPage = () => {
+  const isDesktop = useBreakpointValue({ base: false, lg: true });
   const passwordRef = useRef<HTMLInputElement>();
   const emailRef = useRef<HTMLInputElement>();
   const rememberMeRef = useRef<HTMLInputElement>();
@@ -46,7 +48,7 @@ export const LoginPage = () => {
           <Box
             py={{ base: '0', sm: '8' }}
             px={{ base: '4', sm: '10' }}
-            width={'40%'}
+            width={isDesktop ? '50%' : '90%'}
             bg="white"
             borderWidth="2px"
             borderRadius={{ base: 'none', sm: 'xl' }}
@@ -79,7 +81,9 @@ export const LoginPage = () => {
                   Запомнить данные
                 </Checkbox>
                 <Button variant="link" colorScheme="blue" size="sm">
-                  Забыли пароль?
+                  <Link>
+                    <RLink to={FORGOT_PASSWORD_PAGE}>Забыли пароль?</RLink>
+                  </Link>
                 </Button>
               </HStack>
               <Stack spacing="6">

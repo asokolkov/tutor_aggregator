@@ -16,6 +16,7 @@ import {
   Stack,
   Switch,
   Text,
+  useBreakpointValue,
   VStack,
 } from '@chakra-ui/react';
 import Theme from '../../theme/index';
@@ -27,6 +28,7 @@ import { useRef } from 'react';
 import AuthAPI, { AccountType } from '../../apis/auth';
 
 export const SignupPage = () => {
+  const isDesktop = useBreakpointValue({ base: false, lg: true });
   const emailRef = useRef<HTMLInputElement>();
   const passwordRef = useRef<HTMLInputElement>();
   const accountTypeRef = useRef<HTMLInputElement>();
@@ -71,7 +73,7 @@ export const SignupPage = () => {
           <Box
             py={{ base: '0', sm: '8' }}
             px={{ base: '4', sm: '10' }}
-            width={'40%'}
+            width={isDesktop ? '50%' : '90%'}
             bg="white"
             borderWidth="2px"
             borderRadius={{ base: 'none', sm: 'xl' }}

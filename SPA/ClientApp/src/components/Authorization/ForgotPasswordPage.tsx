@@ -16,8 +16,13 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  //useDisclosure,
+  useBreakpointValue,
 } from '@chakra-ui/react';
+import React, { useState } from 'react';
 import Theme from '../../theme/index';
+import { Link as RLink } from 'react-router-dom';
+import { LOGIN_PAGE } from '../../route-paths';
 
 export const ForgotPasswordPage = () => {
   // const [value, setValue] = useState('');
@@ -36,29 +41,36 @@ export const ForgotPasswordPage = () => {
   //         setValue('Правильная почта');
   //     }
   // }
-
+  const [isError] = useState(false);
+  const isDesktop = useBreakpointValue({ base: false, lg: true });
   return (
     <ChakraProvider theme={Theme}>
-      <Flex background="gray.50" height={'100vh'}>
-        <VStack margin={'80px'} width={'100%'}>
+      <Flex background={'white'} height={'60vh'}>
+        <VStack margin={'20px'} width={'100%'}>
           <Stack textAlign="center">
             <Heading>Восстановить пароль</Heading>
           </Stack>
           <Box
             py={{ base: '0', sm: '8' }}
             px={{ base: '4', sm: '10' }}
-            width={'40%'}
+            width={isDesktop ? '50%' : '90%'}
             bg="white"
+            borderWidth="2px"
             borderRadius={{ base: 'none', sm: 'xl' }}
           >
-            <Stack spacing="6">
-              <Stack spacing="5">
-                isError ? (
+            {isError ? (
+              <React.Fragment>
                 <Alert status="error">
                   <AlertIcon />
                   <AlertTitle>Введена некорректная почта!</AlertTitle>
                   <AlertDescription>Проверьте почту.</AlertDescription>
                 </Alert>
+              </React.Fragment>
+            ) : (
+              <React.Fragment></React.Fragment>
+            )}
+            <Stack spacing="6">
+              <Stack spacing="5">
                 <FormControl>
                   <FormLabel htmlFor="email">Почта от аккаунта</FormLabel>
                   <Input
@@ -81,9 +93,13 @@ export const ForgotPasswordPage = () => {
                 </Button>
               </Stack>
               <HStack spacing="1" justify="center">
-                <Text color="muted">Восстановили пароль?</Text>
-                <Button variant="link" colorScheme="blue">
-                  <Link href="/login">Войти</Link>
+                <Text color="muted" size="md">
+                  Восстановили пароль?
+                </Text>
+                <Button variant="link" colorScheme="blue" size="md">
+                  <Link>
+                    <RLink to={LOGIN_PAGE}>Войти</RLink>
+                  </Link>
                 </Button>
               </HStack>
             </Stack>

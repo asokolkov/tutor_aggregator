@@ -1,10 +1,4 @@
-import {
-  Flex,
-  VStack,
-  Heading,
-  CircularProgress,
-  Grid,
-} from '@chakra-ui/react';
+import { Flex, VStack, CircularProgress, SimpleGrid } from '@chakra-ui/react';
 import SearchCardInfo from './SearchCardInfo';
 import { useEffect, useState } from 'react';
 import TutorsAPI, { Tutor } from '../../apis/tutors';
@@ -43,27 +37,24 @@ export const SearchPage = () => {
     );
   return (
     <VStack spacing={'32px'} align={'start'}>
-      <Heading as="h3" size="xl" marginLeft={'3%'}>
-        Поиск наставника
-      </Heading>
       <SearchParamsSection />
-      <VStack>
-        <Grid className={'grid-container'}>
-          {items.map((item) => (
-            <SearchCardInfo
-              name={item.firstName + ' ' + item.lastName}
-              imgSrc={item.avatar}
-              description={
-                // eslint-disable-next-line max-len
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non sapien et velit suscipit faucibus non vitae leo. Nunc id lectus dolor. Curabitur quis mi metus. Integer ultricies sagittis nibh eu finibus. Nam non nulla eget ipsum vestibulum congue sed sit amet diam. Etiam purus augue, laoreet sit amet nisi eu, ultricies volutpat velit. Nam in dolor eget odio volutpat mattis vitae quis est. Fusce sed elementum risus, vitae porta odio. Nulla non magna consectetur, dictum ante at, tincidunt nisl. Ut maximus lorem et congue hendrerit. Vivamus lobortis, ipsum vel aliquet egestas, eros odio volutpat magna, vitae fermentum lorem ipsum vel nibh. Cras at varius nisi, ac pulvinar justo.'
-              }
-              rating={{ count: 25, average: item.rating }}
-              id={item.id}
-              key={item.id}
-            ></SearchCardInfo>
-          ))}
-        </Grid>
-      </VStack>
+      <SimpleGrid
+        className={'grid-container'}
+        minChildWidth="390px"
+        width={'100%'}
+      >
+        {items.map((item) => (
+          <SearchCardInfo
+            name={item.firstName + ' ' + item.lastName}
+            imgSrc={item.avatar}
+            education={item.educations}
+            job={item.job.place}
+            rating={item.rating}
+            id={item.id}
+            key={item.id}
+          ></SearchCardInfo>
+        ))}
+      </SimpleGrid>
     </VStack>
   );
 };
