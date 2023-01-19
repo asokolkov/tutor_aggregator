@@ -14,6 +14,7 @@ import {
   Stack,
   Text,
   Divider,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import Theme from '../../theme/index';
 import { PasswordField } from './PasswordField';
@@ -22,6 +23,7 @@ import { Link as RLink } from 'react-router-dom';
 import { LOGIN_PAGE } from '../../route-paths';
 
 export const SignupPage = () => {
+  const isDesktop = useBreakpointValue({ base: false, lg: true });
   return (
     <ChakraProvider theme={Theme}>
       <Flex background={'white'} height={'60vh'}>
@@ -32,7 +34,7 @@ export const SignupPage = () => {
           <Box
             py={{ base: '0', sm: '8' }}
             px={{ base: '4', sm: '10' }}
-            width={'40%'}
+            width={isDesktop ? '50%' : '90%'}
             bg="white"
             borderWidth="2px"
             borderRadius={{ base: 'none', sm: 'xl' }}

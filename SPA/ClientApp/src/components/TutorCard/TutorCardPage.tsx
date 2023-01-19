@@ -1,4 +1,9 @@
-import { ChakraProvider, VStack } from '@chakra-ui/react';
+import {
+  ChakraProvider,
+  CircularProgress,
+  Flex,
+  VStack,
+} from '@chakra-ui/react';
 import Theme from '../../theme/index';
 import { CardInfo } from './CardInfo';
 import { ReviewSection } from './ReviewSection';
@@ -31,13 +36,24 @@ export const TutorCardPage = () => {
       }
     );
   }, []);
-  if (!isLoaded) return <div></div>;
+  if (!isLoaded)
+    return (
+      <Flex align={'center'} justify={'center'}>
+        <CircularProgress
+          isIndeterminate
+          color="teal"
+          size={'100px'}
+          value={25}
+          thickness="12px"
+        />
+      </Flex>
+    );
   return (
     <ChakraProvider theme={Theme}>
       <VStack maxW={'100%'} spacing={'40px'}>
         <CardInfo
           name={`${tutorState.lastName} ${tutorState.firstName} ${tutorState.middleName}`}
-          job={`${tutorState.job.place}, ${tutorState.job.post}`}
+          job={`${tutorState.job.post} в ${tutorState.job.place}`}
           location={`${tutorState.location.city}, ${tutorState.location.district}`}
           subjects={tutorState.subjects.map((s) => s.description).join(', ')}
           rating={tutorState.rating}

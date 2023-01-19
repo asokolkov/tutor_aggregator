@@ -1,37 +1,47 @@
-import { Avatar, Heading, Text, VStack, Button } from '@chakra-ui/react';
+import { Avatar, Heading, VStack, Button } from '@chakra-ui/react';
 import React from 'react';
-import { ReviewStar } from '../TutorCard/ReviewStar';
 import { Link } from 'react-router-dom';
 import { TUTORS_PATH } from '../../route-paths';
+import { ReviewStarWithStats } from '../TutorCard/ReviewStarWithStats';
+import categoryIcon from '../../img/category-icon.png';
+import jobIcon from '../../img/job-icon.png';
+import BottomProfileDescription from '../TutorCard/BottomCardDescription';
+import { Education } from '../../apis/_share';
 
 const SearchCardInfo: React.FC<SearchCardInfoProps> = ({
   id,
   name,
   imgSrc,
-  description,
+  education,
+  job,
+  rating,
 }) => {
   return (
     <VStack
-      w={'100%px'}
-      minW={'350px'}
+      w={'auto'}
+      minW={'390px'}
       borderWidth={'1px'}
       shadow={'md'}
       padding={'16px'}
-      spacing={'16px'}
+      spacing={'8px'}
     >
-      <Avatar name={name} showBorder={true} src={imgSrc} size="2xl" />
-      <VStack h={'200px'} spacing={'8px'}>
-        <Heading as="h4" size="xl" textAlign={'center'}>
+      <Avatar name={name} border={'0px'} src={imgSrc} size="2xl" />
+      <VStack h={'auto'} spacing={'6px'}>
+        <Heading as="h4" size="lg" textAlign={'center'}>
           {name}
         </Heading>
-        <Text style={{ overflow: 'hidden' }} textAlign={'center'}>
-          {description}
-        </Text>
+        <BottomProfileDescription
+          icon={categoryIcon}
+          text={education.map((e) => e.description).join(', ')}
+        />
+        <BottomProfileDescription icon={jobIcon} text={job} />
       </VStack>
-      <ReviewStar starCount={5} />
-      <Link to={`${TUTORS_PATH}/${id}`}>
-        <Button colorScheme={'teal'} w={'100%'}>
-          Посмотреть профиль
+      <VStack spacing={'4px'} padding={'0 0 16px 0'}>
+        <ReviewStarWithStats rating={rating} />
+      </VStack>
+      <Link to={`${TUTORS_PATH}/${id}`} style={{ width: '100%' }}>
+        <Button colorScheme={'teal'} h={'40px'} w={'100%'}>
+          Открыть профиль
         </Button>
       </Link>
     </VStack>
@@ -44,9 +54,7 @@ export type SearchCardInfoProps = {
   id: string;
   name: string;
   imgSrc: string;
-  description: string;
-  rating: {
-    count: number;
-    average: number;
-  };
+  education: Education[];
+  job: string;
+  rating: number;
 };

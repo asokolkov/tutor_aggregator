@@ -6,7 +6,7 @@ const BottomCardDescription: React.FC<BottomCardDescriptionProps> = ({
   text,
 }) => {
   return (
-    <HStack spacing={'16px'}>
+    <HStack spacing={'16px'} w={'100%'}>
       <Image src={icon} alt={'icon'} w={'24px'} h={'24px'}></Image>
       <Text fontSize="m">{text}</Text>
     </HStack>
