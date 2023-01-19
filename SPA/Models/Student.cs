@@ -1,8 +1,8 @@
 ﻿namespace SPA.Models;
 
-public class Student : IEntity
+public class Student
 {
-    public int Id { get; init; }
+    public Guid Id { get; init; }
 
     public string FirstName { get; init; }
 

@@ -1,8 +1,8 @@
 ﻿namespace SPA.Models;
 
-public sealed class Location : IEntity
+public sealed class Location
 {
-    public int Id { get; init; }
+    public Guid Id { get; init; }
     
     public string City { get; init; }
     

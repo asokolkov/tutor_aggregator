@@ -1,8 +1,8 @@
 ﻿namespace SPA.Models;
 
-public sealed class StudentContact : IEntity
+public sealed class StudentContact
 {
-    public int Id { get; init; }
+    public Guid Id { get; init; }
     
     public ContactType Type { get; init; }
     

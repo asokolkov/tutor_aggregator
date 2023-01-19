@@ -1,29 +1,68 @@
 import {
-  ChakraProvider,
   Box,
   Button,
+  ChakraProvider,
   Checkbox,
+  Divider,
   Flex,
   FormControl,
   FormLabel,
-  Link,
   Heading,
-  VStack,
   HStack,
   Input,
+  InputGroup,
+  InputLeftAddon,
+  Link,
   Stack,
+  Switch,
   Text,
-  Divider,
   useBreakpointValue,
+  VStack,
 } from '@chakra-ui/react';
 import Theme from '../../theme/index';
 import { PasswordField } from './PasswordField';
 import { OAuthButtons } from './OAuthButtons';
 import { Link as RLink } from 'react-router-dom';
 import { LOGIN_PAGE } from '../../route-paths';
+import { useRef } from 'react';
+import AuthAPI, { AccountType } from '../../apis/auth';
 
 export const SignupPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
+  const emailRef = useRef<HTMLInputElement>();
+  const passwordRef = useRef<HTMLInputElement>();
+  const accountTypeRef = useRef<HTMLInputElement>();
+  const firstNameRef = useRef<HTMLInputElement>();
+  const lastNameRef = useRef<HTMLInputElement>();
+  const phoneRef = useRef<HTMLInputElement>();
+
+  const handleSubmit = () => {
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+    const accountType = accountTypeRef.current.checked
+      ? AccountType.Tutor
+      : AccountType.Student;
+    const firstName = firstNameRef.current.value;
+    const lastName = lastNameRef.current.value;
+    const phone = '+7' + phoneRef.current.value;
+
+    AuthAPI.register({
+      email: email,
+      password: password,
+      accountType: accountType,
+      firstName: firstName,
+      lastName: lastName,
+      phone: phone,
+    })
+      .then(() => {
+        //TODO: navigate to main page/profile page
+      })
+      .catch((error) => {
+        //TODO: show error
+        console.log(error.message);
+      });
+  };
+
   return (
     <ChakraProvider theme={Theme}>
       <Flex background={'white'} height={'60vh'}>
@@ -49,13 +88,67 @@ export const SignupPage = () => {
               </Text>
               <Divider />
             </HStack>
+            <FormControl>
+              <FormLabel htmlFor="email">Имя и фамилия</FormLabel>
+              <HStack>
+                <Input
+                  ref={firstNameRef}
+                  id="name"
+                  type="text"
+                  placeholder="Введите имя"
+                />
+                <Input
+                  ref={lastNameRef}
+                  id="surname"
+                  type="text"
+                  placeholder="Введите фамилию"
+                />
+              </HStack>
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="email">Телефон</FormLabel>
+              <HStack>
+                <InputGroup>
+                  <InputLeftAddon children="+7" />
+                  <Input
+                    ref={phoneRef}
+                    id="tel"
+                    type="tel"
+                    placeholder="9991234567"
+                  />
+                </InputGroup>
+              </HStack>
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="email">Тип аккаунта</FormLabel>
+              <HStack justify="center">
+                <Text fontSize="md" whiteSpace="nowrap" color="muted">
+                  Ученик
+                </Text>
+                <Switch
+                  ref={accountTypeRef}
+                  size="lg"
+                  colorScheme="Gray 200"
+                  id="isRequired"
+                  isRequired
+                />
+                <Text fontSize="md" whiteSpace="nowrap" color="muted">
+                  Репетитор
+                </Text>
+              </HStack>
+            </FormControl>
             <Stack spacing="6">
               <Stack spacing="5">
                 <FormControl>
                   <FormLabel htmlFor="email">Почта</FormLabel>
-                  <Input id="email" type="email" placeholder="Введите почту" />
+                  <Input
+                    ref={emailRef}
+                    id="email"
+                    type="email"
+                    placeholder="Введите почту"
+                  />
                 </FormControl>
-                <PasswordField />
+                <PasswordField ref={passwordRef} />
               </Stack>
               <HStack justify="space-between">
                 <Checkbox>
@@ -66,7 +159,12 @@ export const SignupPage = () => {
                 </Checkbox>
               </HStack>
               <Stack spacing="6">
-                <Button variant={'solid'} size={'lg'} colorScheme={'blue'}>
+                <Button
+                  variant={'solid'}
+                  size={'lg'}
+                  colorScheme={'blue'}
+                  onClick={handleSubmit}
+                >
                   Зарегистрироваться
                 </Button>
               </Stack>
