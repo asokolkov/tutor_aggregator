@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {
   Avatar,
@@ -8,14 +7,14 @@ import {
   Select,
   VStack,
   Textarea,
-  Switch,
-  FormLabel,
 } from '@chakra-ui/react';
 import { ProfileCardRow } from './ProfileCardRow';
-import { useState } from 'react';
+import { useContext } from 'react';
+import userContext from '../BaseLayout/UserContext';
 
 export const ProfileCard = () => {
-  const [isTutor, setIsTutor] = useState(true);
+  const userState = useContext(userContext);
+  console.log(userState);
   return (
     <HStack
       spacing={'36px'}
@@ -27,15 +26,6 @@ export const ProfileCard = () => {
       <VStack spacing={'12px'}>
         <Avatar size={'xl'}></Avatar>
         <Button>Выбрать файл</Button>
-        <FormLabel htmlFor="email-alerts" mb="0">
-          Dev: IsTutor
-        </FormLabel>
-        <Switch
-          isChecked={isTutor}
-          onChange={(e) => {
-            setIsTutor(e.target.checked);
-          }}
-        />
       </VStack>
       <VStack align={'left'}>
         <ProfileCardRow
@@ -47,7 +37,7 @@ export const ProfileCard = () => {
           other={[<Select placeholder={'Екатеринбург'} w={'500px'} />]}
         />
 
-        {isTutor && (
+        {userState.type === 'tutor' && (
           <>
             <ProfileCardRow
               title={'Район:'}

@@ -1,4 +1,4 @@
-﻿namespace SPA.V1.Controllers;
+namespace SPA.V1.Controllers;
 
 using System.Security.Claims;
 using Application.Users.GetCurrentUserQuery;
