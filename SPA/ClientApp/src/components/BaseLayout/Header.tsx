@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   ButtonGroup,
   Container,
@@ -32,6 +33,8 @@ import {
   SIGNUP_PAGE,
 } from '../../route-paths';
 import HeaderButton from './HeaderButton';
+import { useContext } from 'react';
+import UserContext from './UserContext';
 import HeaderMenuButton from './HeaderMenuButton';
 import logo from '../../img/teacher_icon.png';
 import { HamburgerIcon } from '@chakra-ui/icons';
@@ -39,6 +42,7 @@ import { useState } from 'react';
 
 const Header: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
+  const userState = useContext(UserContext);
   const [openTab, setOpenTab] = useState('Поиск');
   return (
     <>
@@ -131,18 +135,29 @@ const Header: React.FC = () => {
                       onClick={() => setOpenTab('Мой профиль')}
                     />
                   </ButtonGroup>
-                  <HStack spacing="3">
-                    <HeaderButton
-                      text={'Зарегистрироваться'}
-                      link={SIGNUP_PAGE}
-                      variant={'ghost'}
-                    />
-                    <HeaderButton
-                      text={'Войти'}
-                      link={LOGIN_PAGE}
-                      variant={'ghost'}
-                    />
-                  </HStack>
+                  {userState.isAuthorized ? (
+                    <HStack spacing={'3'}>
+                      <HeaderButton
+                        text={'Выйди,разбiник'}
+                        link={SEARCH_PAGE}
+                        variant={'ghost'}
+                      />
+                      <Avatar size={'sm'} src={userState.avatar}></Avatar>
+                    </HStack>
+                  ) : (
+                    <HStack spacing="3">
+                      <HeaderButton
+                        text={'Зарегистрироваться'}
+                        link={SIGNUP_PAGE}
+                        variant={'ghost'}
+                      />
+                      <HeaderButton
+                        text={'Войти'}
+                        link={LOGIN_PAGE}
+                        variant={'ghost'}
+                      />
+                    </HStack>
+                  )}
                 </Flex>
               </React.Fragment>
             ) : (
