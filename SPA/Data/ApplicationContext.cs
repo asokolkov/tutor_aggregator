@@ -11,6 +11,7 @@ internal sealed class ApplicationContext : DbContext
     public DbSet<StudentContactEntity> StudentsContacts { get; set; }
     public DbSet<EducationEntity> Educations { get; set; }
     public DbSet<LessonEntity> Lessons { get; set; }
+    public DbSet<SubjectEntity> Subjects { get; set; }
     public DbSet<StudentEntity> Students { get; set; }
     public DbSet<ReviewEntity> Reviews { get; set; }
     public DbSet<LocationEntity> Locations { get; set; }

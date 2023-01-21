@@ -37,13 +37,13 @@ builder.Services.AddAuthentication()
     .AddCookie()
     .AddGoogle(options =>
     {
-        options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+        options.ClientId = "1"; // builder.Configuration["Authentication:Google:ClientId"];
+        options.ClientSecret = "2"; // builder.Configuration["Authentication:Google:ClientSecret"];
     })
     .AddOAuth("Vk", options =>
     {
-        options.ClientId = builder.Configuration["Authentication:Vk:ClientId"];
-        options.ClientSecret = builder.Configuration["Authentication:Vk:ClientSecret"];
+        options.ClientId = "2"; // builder.Configuration["Authentication:Vk:ClientId"];
+        options.ClientSecret = "2"; // builder.Configuration["Authentication:Vk:ClientSecret"];
         options.ClaimsIssuer = "Vk";
         options.CallbackPath = new PathString("/signin-vk");
         options.AuthorizationEndpoint = "https://oauth.vk.com/authorize";
