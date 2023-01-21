@@ -1,6 +1,6 @@
 import { SingleReview } from './SingleReview';
 import { Text, VStack } from '@chakra-ui/react';
-import { Review } from '../../apis/reviews';
+import { Review } from '../../apis/tutors';
 
 export const ReviewSection = ({ reviews }: ReviewSectionProps) => {
   return (

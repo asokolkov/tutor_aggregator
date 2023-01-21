@@ -8,8 +8,7 @@ import Theme from '../../theme/index';
 import { CardInfo } from './CardInfo';
 import { ReviewSection } from './ReviewSection';
 import { useEffect, useState } from 'react';
-import TutorsAPI, { Tutor } from '../../apis/tutors';
-import ReviewAPI, { ReviewList } from '../../apis/reviews';
+import TutorsAPI, { Tutor, ReviewList } from '../../apis/tutors';
 import AwardSection from './AwardSection';
 import { useParams } from 'react-router-dom';
 
@@ -23,7 +22,7 @@ export const TutorCardPage = () => {
   useEffect(() => {
     Promise.all([
       TutorsAPI.getTutorById(tutorId),
-      ReviewAPI.getReviewsByTutorId(tutorId),
+      TutorsAPI.getReviewsByTutorId(tutorId),
     ]).then(
       (result) => {
         setIsLoaded(true);
