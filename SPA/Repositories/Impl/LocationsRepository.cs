@@ -6,13 +6,13 @@ using Domain;
 using Entities;
 using Microsoft.EntityFrameworkCore;
 
-internal sealed class LocationRepository : ILocationRepository
+internal sealed class LocationsesRepository : ILocationsRepository
 {
     private readonly ApplicationContext context;
     private readonly DbSet<LocationEntity> table;
     private readonly IMapper mapper;
 
-    public LocationRepository(ApplicationContext context, IMapper mapper)
+    public LocationsesRepository(ApplicationContext context, IMapper mapper)
     {
         this.context = context;
         this.mapper = mapper;

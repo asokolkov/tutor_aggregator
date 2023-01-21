@@ -53,6 +53,6 @@ internal static class ServiceCollectionExtensions
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ITutorsRepository, TutorsRepository>();
         services.AddScoped<IStudentsRepository, StudentsRepository>();
-        services.AddScoped<ILocationRepository, LocationRepository>();
+        services.AddScoped<ILocationsRepository, LocationsesRepository>();
     }
 }

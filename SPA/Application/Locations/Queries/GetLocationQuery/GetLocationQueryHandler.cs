@@ -10,9 +10,9 @@ using Domain;
 [UsedImplicitly]
 internal class GetLocationQueryHandler : IRequestHandler<GetLocationQuery, Location?> 
 {
-    private readonly ILocationRepository repository;
+    private readonly ILocationsRepository repository;
     
-    public GetLocationQueryHandler(ILocationRepository repository)
+    public GetLocationQueryHandler(ILocationsRepository repository)
     {
         this.repository = repository;
     }

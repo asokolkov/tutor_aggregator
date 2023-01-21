@@ -11,9 +11,9 @@ using Entities;
 [UsedImplicitly]
 internal class GetLocationsQueryHandler : IRequestHandler<GetLocationsQuery, Page<Location?>>
 {
-    private readonly ILocationRepository repository;
+    private readonly ILocationsRepository repository;
 
-    public GetLocationsQueryHandler(ILocationRepository repository)
+    public GetLocationsQueryHandler(ILocationsRepository repository)
     {
         this.repository = repository;
     }

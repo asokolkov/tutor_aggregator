@@ -11,9 +11,9 @@ using Entities;
 [UsedImplicitly]
 internal class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationCommand, Location?> 
 {
-    private readonly ILocationRepository repository;
+    private readonly ILocationsRepository repository;
     
-    public UpdateLocationCommandHandler(ILocationRepository repository)
+    public UpdateLocationCommandHandler(ILocationsRepository repository)
     {
         this.repository = repository;
     }

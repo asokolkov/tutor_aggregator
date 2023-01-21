@@ -3,7 +3,7 @@
 using Domain;
 using Entities;
 
-internal interface ILocationRepository
+internal interface ILocationsRepository
 {
     Task<Page<Location>> Get(int page, int size);
     
