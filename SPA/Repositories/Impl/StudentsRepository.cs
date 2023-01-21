@@ -29,7 +29,7 @@ internal sealed class StudentsRepository : IStudentsRepository
             .Take(size)
             .ToListAsync();
         var students = mapper.Map<List<Student>>(studentEntities);
-        return new Page<Student>(students, students.Count);
+        return new Page<Student>(students);
     }
 
     public async Task<Student?> Get(Guid id)

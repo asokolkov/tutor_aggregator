@@ -28,7 +28,7 @@ internal sealed class LocationsesRepository : ILocationsRepository
             .ToListAsync();
 
         var locations = mapper.Map<List<Location>>(tutorEntities);
-        return new Page<Location>(locations, locations.Count);
+        return new Page<Location>(locations);
     }
 
     public async Task<Location> Get(Guid id)

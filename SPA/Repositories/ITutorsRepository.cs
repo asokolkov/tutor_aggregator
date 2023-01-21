@@ -7,7 +7,7 @@ using Entities;
 
 internal interface ITutorsRepository
 {
-    Task<Page<Tutor>> Get(int page, int size);
+    Task<Page<Tutor>> Get(int page, int size, string subject, string city, string district, int maxPrice, int rating);
     
     Task<Tutor?> Get(Guid id);
 

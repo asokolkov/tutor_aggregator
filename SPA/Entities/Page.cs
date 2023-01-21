@@ -2,12 +2,13 @@
 
 internal sealed class Page<T>
 {
-    public Page(ICollection<T> items, long totalCount)
+    public ICollection<T> Items { get; }
+    
+    public long TotalCount { get; }
+    
+    public Page(ICollection<T> items)
     {
         Items = items;
-        TotalCount = totalCount;
+        TotalCount = items.Count;
     }
-    
-    public ICollection<T> Items { get; }
-    public long TotalCount { get; }
 }

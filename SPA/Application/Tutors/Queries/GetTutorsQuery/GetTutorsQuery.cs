@@ -5,4 +5,5 @@ namespace SPA.Application.Tutors.Queries.GetTutorsQuery;
 using Domain;
 using Entities;
 
-internal record GetTutorsQuery(int PageNumber, int PageSize) : IRequest<Page<Tutor>>;
+internal record GetTutorsQuery(int PageNumber, int PageSize, string Subject, string City, string District, int MaxPrice,
+    int Rating) : IRequest<Page<Tutor>>;

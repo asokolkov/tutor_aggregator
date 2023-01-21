@@ -6,7 +6,7 @@ internal sealed class LessonEntity
     
     public double Price { get; init; }
     
-    public bool Confirmed { get; init; }
+    public LessonStatus Status { get; init; }
     
     public DateTimeOffset StartTime { get; init; }
     
