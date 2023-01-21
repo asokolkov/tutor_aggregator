@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { AccountInfo } from './AccountInfo';
-import { ProfileCard } from './ProfileCard';
+import { TutorCard } from './TutorCard';
 import { VStack } from '@chakra-ui/react';
 
 export const ProfilePage = () => {
   return (
     <VStack spacing={'2em'}>
-      <ProfileCard />
+      <TutorCard />
       <AccountInfo />
     </VStack>
   );
