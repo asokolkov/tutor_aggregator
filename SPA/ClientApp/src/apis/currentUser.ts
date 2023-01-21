@@ -12,7 +12,7 @@ export interface User {
 export default class UserAPI {
   static async getCurrentUser(): Promise<User> {
     try {
-      const response = await axiosInstance.get<User>('/v1/me');
+      const response = await axiosInstance.get<User>('/v1/current');
       const authUser = response.data;
       authUser.isAuthorized = true;
       return authUser;

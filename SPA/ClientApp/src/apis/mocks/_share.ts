@@ -20,3 +20,7 @@ export function createPaginatedResponse(type: Object, count: number) {
     }),
   };
 }
+
+export const mockConfig = {
+  isUserAuth: true,
+};
