@@ -24,20 +24,51 @@ export interface Tutor extends Person {
 
 export interface TutorList extends PaginatedResponse<Tutor> {}
 
+export interface Review {
+  id: string;
+  rating: number;
+  description: string;
+  updatedAt: Date;
+  studentId: string;
+  studentName: string;
+  studentAvatar: string;
+}
+
+export interface ReviewList extends PaginatedResponse<Review> {}
+
 class TutorsAPI {
   static async getAllTutors(page = 0, size = 30): Promise<TutorList> {
-    const response = await axiosInstance.get('/api/v1/tutors', {
+    const response = await axiosInstance.get<TutorList>('/api/v1/tutors', {
       params: {
         page: page,
         size: size,
       },
     });
-    return response.data as TutorList;
+    return response.data;
   }
 
   static async getTutorById(id: string): Promise<Tutor> {
-    const response = await axiosInstance.get(`/api/v1/tutors/${id}`);
-    return response.data as Tutor;
+    const response = await axiosInstance.get<Tutor>(`/api/v1/tutors/${id}`);
+    return response.data;
+  }
+
+  static async getReviewsByTutorId(
+    tutorId: string,
+    page: number = 0,
+    size: number = 30
+  ): Promise<ReviewList> {
+    const response = await axiosInstance.get<ReviewList>(
+      `/api/v1/tutors/${tutorId}/reviews`,
+      {
+        params: { page, size },
+      }
+    );
+    return response.data;
+  }
+
+  static async getCurrentProfileInfo(): Promise<Tutor> {
+    const response = await axiosInstance.get<Tutor>('/api/v1/tutors/profile');
+    return response.data;
   }
 }
 

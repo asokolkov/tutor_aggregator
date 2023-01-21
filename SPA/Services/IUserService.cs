@@ -1,7 +1,8 @@
 ﻿namespace SPA.Services;
 
+using Domain;
+
 using Identity.Models;
-using Models;
 
 public interface IUserService
 {

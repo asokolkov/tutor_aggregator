@@ -9,6 +9,9 @@ mock
   .reply((cfg) => [
     200,
     { ...student, id: cfg.url?.match('api/v1/students/([A-Za-z0-9-]+)/?$')[1] },
-  ]);
+  ])
+
+  .onGet('api/v1/students/profile')
+  .reply(() => [200, student]);
 
 export default mock;

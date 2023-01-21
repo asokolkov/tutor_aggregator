@@ -1,21 +1,24 @@
-﻿using JetBrains.Annotations;
+﻿#nullable enable
+using JetBrains.Annotations;
 using MediatR;
-using SPA.Models;
 using SPA.Repositories;
 
 namespace SPA.Application.Students.Queries.GetStudentQuery;
 
+using Domain;
+using Entities;
+
 [UsedImplicitly]
-internal class GetStudentQueryHandler : IRequestHandler<GetStudentQuery, Student> 
+internal class GetStudentQueryHandler : IRequestHandler<GetStudentQuery, Student?> 
 {
-    private readonly ICrudRepository<Student> repository;
+    private readonly IStudentsRepository repository;
     
-    public GetStudentQueryHandler(ICrudRepository<Student> repository)
+    public GetStudentQueryHandler(IStudentsRepository repository)
     {
         this.repository = repository;
     }
-
-    public async Task<Student> Handle(GetStudentQuery request, CancellationToken cancellationToken)
+    
+    public async Task<Student?> Handle(GetStudentQuery request, CancellationToken cancellationToken)
     {
         return await repository.Get(request.Id);
     }

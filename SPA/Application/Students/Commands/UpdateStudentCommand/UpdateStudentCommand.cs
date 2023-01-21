@@ -1,6 +1,8 @@
 ﻿using MediatR;
-using SPA.Models;
 
 namespace SPA.Application.Students.Commands.UpdateStudentCommand;
 
-internal record UpdateStudentCommand(Student Element) : IRequest<Student>;
+using Domain;
+using Entities;
+
+internal record UpdateStudentCommand(Guid StudentId, UpdateStudent Student) : IRequest<Student>;

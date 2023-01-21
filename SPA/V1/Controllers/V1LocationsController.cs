@@ -1,13 +1,13 @@
 ﻿using SPA.Application.Locations.Commands.UpdateLocationCommand;
 using SPA.Application.Locations.Queries.GetLocationQuery;
 using SPA.Application.Locations.Queries.GetLocationsQuery;
-using SPA.Models;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace SPA.V1.Controllers;
 
 using AutoMapper;
 using DataModels;
+using Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,21 +38,12 @@ public sealed class V1LocationsController : Controller
         return Ok(mapper.Map<V1PageDto<V1LocationDto>>(modelsPage));
     }
     
-    [HttpGet("{id:int}")]
+    [HttpGet("{id:guid}")]
     [SwaggerResponse(200, "OK", typeof(V1LocationDto))]
-    public async Task<IActionResult> Get(int id)
+    public async Task<IActionResult> Get(Guid id)
     {
         var query = new GetLocationQuery(id);
         var model = await mediator.Send(query);
         return Ok(mapper.Map<V1LocationDto>(model));
-    }
-
-    [HttpPut]
-    [SwaggerResponse(200, "OK", typeof(UpdateLocationCommand))]
-    public async Task<IActionResult> Update([FromBody] V1LocationDto old)
-    {
-        var model = mapper.Map<Location>(old);
-        var query = new UpdateLocationCommand(model);
-        return Ok(await mediator.Send(query));
     }
 }

@@ -18,10 +18,10 @@ import {
 } from '@chakra-ui/react';
 import Theme from '../../theme/index';
 import { Link as RLink } from 'react-router-dom';
+import { FORGOT_PASSWORD_PAGE, SIGNUP_PAGE } from '../../route-paths';
 import { PasswordField } from './PasswordField';
 import { OAuthButtons } from './OAuthButtons';
 import { useRef } from 'react';
-import { FORGOT_PASSWORD_PAGE, SIGNUP_PAGE } from '../../route-paths';
 import AuthAPI from '../../apis/auth';
 
 export const LoginPage = () => {

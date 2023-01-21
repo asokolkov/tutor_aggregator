@@ -1,6 +1,9 @@
-﻿using MediatR;
-using SPA.Models;
+﻿#nullable enable
+using MediatR;
 
 namespace SPA.Application.Students.Queries.GetStudentQuery;
 
-internal record GetStudentQuery(int Id) : IRequest<Student>;
+using Domain;
+using Entities;
+
+internal record GetStudentQuery(Guid Id) : IRequest<Student?>;

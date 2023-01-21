@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.SetUpServices(builder.Configuration);
-builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddControllers();
 builder.Services.AddLogging(configure =>
 {
     configure.AddConsole();

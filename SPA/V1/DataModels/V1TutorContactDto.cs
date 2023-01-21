@@ -1,7 +1,8 @@
 ﻿using System.Text.Json.Serialization;
-using SPA.Models;
 
 namespace SPA.V1.DataModels;
+
+using Entities;
 
 public sealed class V1TutorContactDto
 {
@@ -9,7 +10,7 @@ public sealed class V1TutorContactDto
     public string Id { get; init; }
     
     [JsonPropertyName("type")]
-    public ContactType Type { get; init; }
+    public V1ContactTypeDto Type { get; init; }
 
     [JsonPropertyName("value")]
     public string Value { get; init; }
