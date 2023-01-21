@@ -6,4 +6,4 @@ namespace SPA.Application.Locations.Queries.GetLocationQuery;
 using Domain;
 using Entities;
 
-internal record GetLocationQuery(Guid Id) : IRequest<Location?>;
+internal sealed record GetLocationQuery(Guid Id) : IRequest<Location?>;

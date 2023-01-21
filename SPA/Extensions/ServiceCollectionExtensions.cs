@@ -4,6 +4,7 @@ using SPA.Application.Locations.Queries.GetLocationsQuery;
 using SPA.Application.Students.Commands.UpdateStudentCommand;
 using SPA.Application.Students.Queries.GetStudentQuery;
 using SPA.Application.Students.Queries.GetStudentsQuery;
+using SPA.Application.Subjects.Queries.GetSubjectsQuery;
 using SPA.Application.Tutors.Commands.UpdateTutorCommand;
 using SPA.Application.Tutors.Queries.GetTutorQuery;
 using SPA.Application.Tutors.Queries.GetTutorsQuery;
@@ -49,6 +50,8 @@ internal static class ServiceCollectionExtensions
         services.AddScoped<IRequestHandler<GetLocationQuery, Location>, GetLocationQueryHandler>();
         services.AddScoped<IRequestHandler<UpdateLocationCommand, Location>, UpdateLocationCommandHandler>();
 
+        services.AddScoped<IRequestHandler<GetSubjectsQuery, List<Subject>>, GetSubjectQueryHandler>();
+
         services.AddScoped<IRequestHandler<GetUserQuery, User>, GetUserQueryHandler>();
 
         services.AddScoped<IUserService, UserService>();
@@ -56,5 +59,6 @@ internal static class ServiceCollectionExtensions
         services.AddScoped<ITutorsRepository, TutorsRepository>();
         services.AddScoped<IStudentsRepository, StudentsRepository>();
         services.AddScoped<ILocationsRepository, LocationsesRepository>();
+        services.AddScoped<ISubjectsRepository, SubjectsRepository>();
     }
 }
