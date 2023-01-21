@@ -5,7 +5,7 @@ import { VStack } from '@chakra-ui/react';
 
 export const ProfilePage = () => {
   return (
-    <VStack spacing={'40px'}>
+    <VStack spacing={'2em'}>
       <ProfileCard />
       <AccountInfo />
     </VStack>
