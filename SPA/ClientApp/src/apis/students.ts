@@ -19,4 +19,11 @@ export default class StudentAPI {
     const response = await axiosInstance.get<Student>(`/api/v1/students/${id}`);
     return response.data;
   }
+
+  static async getCurrentProfileInfo(): Promise<Student> {
+    const response = await axiosInstance.get<Student>(
+      'api/v1/students/profile'
+    );
+    return response.data;
+  }
 }

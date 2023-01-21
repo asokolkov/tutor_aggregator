@@ -65,6 +65,11 @@ class TutorsAPI {
     );
     return response.data;
   }
+
+  static async getCurrentProfileInfo(): Promise<Tutor> {
+    const response = await axiosInstance.get<Tutor>('/api/v1/tutors/profile');
+    return response.data;
+  }
 }
 
 export default TutorsAPI;
