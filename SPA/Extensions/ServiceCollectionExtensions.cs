@@ -12,7 +12,9 @@ namespace SPA.Extensions;
 
 using Application.Tutors.Queries.GetReviewsQuery;
 using Application.Users.GetCurrentUserQuery;
+using Application.Users.GetCurrentUserQuery;
 using Data;
+using Domain;
 using Domain;
 using Entities;
 using MediatR;

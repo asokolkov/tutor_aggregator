@@ -1,4 +1,4 @@
-﻿namespace SPA.Identity.Models;
+namespace SPA.Identity.Models;
 
 public enum AccountType : byte
 {
