@@ -38,18 +38,18 @@ export interface ReviewList extends PaginatedResponse<Review> {}
 
 class TutorsAPI {
   static async getAllTutors(page = 0, size = 30): Promise<TutorList> {
-    const response = await axiosInstance.get('/api/v1/tutors', {
+    const response = await axiosInstance.get<TutorList>('/api/v1/tutors', {
       params: {
         page: page,
         size: size,
       },
     });
-    return response.data as TutorList;
+    return response.data;
   }
 
   static async getTutorById(id: string): Promise<Tutor> {
-    const response = await axiosInstance.get(`/api/v1/tutors/${id}`);
-    return response.data as Tutor;
+    const response = await axiosInstance.get<Tutor>(`/api/v1/tutors/${id}`);
+    return response.data;
   }
 
   static async getReviewsByTutorId(
@@ -57,13 +57,13 @@ class TutorsAPI {
     page: number = 0,
     size: number = 30
   ): Promise<ReviewList> {
-    const response = await axiosInstance.get(
+    const response = await axiosInstance.get<ReviewList>(
       `/api/v1/tutors/${tutorId}/reviews`,
       {
         params: { page, size },
       }
     );
-    return response.data as ReviewList;
+    return response.data;
   }
 }
 

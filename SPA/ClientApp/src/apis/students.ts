@@ -9,14 +9,14 @@ export default class StudentAPI {
     page: number = 0,
     size: number = 30
   ): Promise<StudentList> {
-    const response = await axiosInstance.get('/api/v1/students', {
+    const response = await axiosInstance.get<StudentList>('/api/v1/students', {
       params: { page, size },
     });
-    return response.data as StudentList;
+    return response.data;
   }
 
   static async getStudentById(id: string): Promise<Student> {
-    const response = await axiosInstance.get(`/api/v1/students/${id}`);
-    return response.data as Student;
+    const response = await axiosInstance.get<Student>(`/api/v1/students/${id}`);
+    return response.data;
   }
 }
