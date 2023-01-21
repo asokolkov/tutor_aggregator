@@ -4,7 +4,7 @@ using SPA.Models;
 
 namespace SPA.Repositories.Impl;
 
-public class PostgresRepository<T> : ICrudRepository<T> where T : class, IEntity
+public class PostgresRepository<T> : ICrudRepository<T> where T : class
 {
     private readonly ApplicationContext context;
     private readonly DbSet<T> table;
@@ -20,7 +20,7 @@ public class PostgresRepository<T> : ICrudRepository<T> where T : class, IEntity
         const int pageSize = 100; // ?
 
         var elements = await table
-            .OrderBy(e => e.Id)
+            .OrderBy(e => e)
             .Skip((int)page * pageSize)
             .Take((int)size)
             .ToListAsync();

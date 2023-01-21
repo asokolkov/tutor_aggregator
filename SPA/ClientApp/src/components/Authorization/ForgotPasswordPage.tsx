@@ -19,11 +19,10 @@ import {
   //useDisclosure,
   useBreakpointValue,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import Theme from '../../theme/index';
 import { Link as RLink } from 'react-router-dom';
 import { LOGIN_PAGE } from '../../route-paths';
-//import { ChangeEvent, useState } from 'react';
 
 export const ForgotPasswordPage = () => {
   // const [value, setValue] = useState('');
@@ -42,7 +41,7 @@ export const ForgotPasswordPage = () => {
   //         setValue('Правильная почта');
   //     }
   // }
-  const isError = false;
+  const [isError] = useState(false);
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   return (
     <ChakraProvider theme={Theme}>

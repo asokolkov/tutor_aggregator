@@ -12,12 +12,16 @@ using SPA.Application.Tutors.Queries.GetTutorsQuery;
 
 namespace SPA.Extensions;
 
+using Application.Users.GetCurrentUserQuery;
 using Data;
+using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using Repositories;
 using Repositories.Impl;
+using Services;
+using Services.Impl;
 using V1.Mapping;
 
 internal static class ServiceCollectionExtensions
@@ -33,20 +37,25 @@ internal static class ServiceCollectionExtensions
         services.AddAutoMapper(opt => opt.AddProfile<V1Profile>());
         services.AddMediatR(typeof(Program));
         
-        services.AddTransient<IRequestHandler<GetStudentsQuery, Page<Student>>, GetStudentsQueryHandler>();
-        services.AddTransient<IRequestHandler<GetStudentQuery, Student>, GetStudentQueryHandler>();
-        services.AddTransient<IRequestHandler<UpdateStudentCommand, Student>, UpdateStudentCommandHandler>();
+        services.AddScoped<IRequestHandler<GetStudentsQuery, Page<Student>>, GetStudentsQueryHandler>();
+        services.AddScoped<IRequestHandler<GetStudentQuery, Student>, GetStudentQueryHandler>();
+        services.AddScoped<IRequestHandler<UpdateStudentCommand, Student>, UpdateStudentCommandHandler>();
         
-        services.AddTransient<IRequestHandler<GetTutorsQuery, Page<Tutor>>, GetTutorsQueryHandler>();
-        services.AddTransient<IRequestHandler<GetTutorQuery, Tutor>, GetTutorQueryHandler>();
-        services.AddTransient<IRequestHandler<UpdateTutorCommand, Tutor>, UpdateTutorCommandHandler>();
-        services.AddTransient<IRequestHandler<GetReviewsCommand, Page<Review>>, GetReviewsCommandHandler>();
+        services.AddScoped<IRequestHandler<GetTutorsQuery, Page<Tutor>>, GetTutorsQueryHandler>();
+        services.AddScoped<IRequestHandler<GetTutorQuery, Tutor>, GetTutorQueryHandler>();
+        services.AddScoped<IRequestHandler<UpdateTutorCommand, Tutor>, UpdateTutorCommandHandler>();
+        services.AddScoped<IRequestHandler<GetReviewsCommand, Page<Review>>, GetReviewsCommandHandler>();
         
-        services.AddTransient<IRequestHandler<GetLocationsQuery, Page<Location>>, GetLocationsQueryHandler>();
-        services.AddTransient<IRequestHandler<GetLocationQuery, Location>, GetLocationQueryHandler>();
-        services.AddTransient<IRequestHandler<UpdateLocationCommand, Location>, UpdateLocationCommandHandler>();
+        services.AddScoped<IRequestHandler<GetLocationsQuery, Page<Location>>, GetLocationsQueryHandler>();
+        services.AddScoped<IRequestHandler<GetLocationQuery, Location>, GetLocationQueryHandler>();
+        services.AddScoped<IRequestHandler<UpdateLocationCommand, Location>, UpdateLocationCommandHandler>();
         
-        services.AddTransient<IRequestHandler<UpdateReviewCommand, Review>, UpdateReviewCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateReviewCommand, Review>, UpdateReviewCommandHandler>();
+
+        services.AddScoped<IRequestHandler<GetUserQuery, User>, GetUserQueryHandler>();
+
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }

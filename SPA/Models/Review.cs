@@ -1,8 +1,8 @@
 ﻿namespace SPA.Models;
 
-public sealed class Review : IEntity
+public sealed class Review
 {
-    public int Id { get; init; }
+    public Guid Id { get; init; }
     
     public double Rating { get; init; }
     

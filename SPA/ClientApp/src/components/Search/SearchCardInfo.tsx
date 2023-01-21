@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { TUTORS_PATH } from '../../route-paths';
 import { ReviewStarWithStats } from '../TutorCard/ReviewStarWithStats';
 import categoryIcon from '../../img/category-icon.png';
+import jobIcon from '../../img/job-icon.png';
 import BottomProfileDescription from '../TutorCard/BottomCardDescription';
 import { Education } from '../../apis/_share';
 
@@ -22,10 +23,10 @@ const SearchCardInfo: React.FC<SearchCardInfoProps> = ({
       borderWidth={'1px'}
       shadow={'md'}
       padding={'16px'}
-      spacing={'16px'}
+      spacing={'8px'}
     >
       <Avatar name={name} border={'0px'} src={imgSrc} size="2xl" />
-      <VStack h={'100px'} spacing={'8px'}>
+      <VStack h={'auto'} spacing={'6px'}>
         <Heading as="h4" size="lg" textAlign={'center'}>
           {name}
         </Heading>
@@ -33,11 +34,13 @@ const SearchCardInfo: React.FC<SearchCardInfoProps> = ({
           icon={categoryIcon}
           text={education.map((e) => e.description).join(', ')}
         />
-        <BottomProfileDescription icon={categoryIcon} text={job} />
+        <BottomProfileDescription icon={jobIcon} text={job} />
       </VStack>
-      <ReviewStarWithStats rating={rating} />
-      <Link to={`${TUTORS_PATH}/${id}`}>
-        <Button colorScheme={'teal'} w={'100%'} h={'40px'}>
+      <VStack spacing={'4px'} padding={'0 0 16px 0'}>
+        <ReviewStarWithStats rating={rating} />
+      </VStack>
+      <Link to={`${TUTORS_PATH}/${id}`} style={{ width: '100%' }}>
+        <Button colorScheme={'teal'} h={'40px'} w={'100%'}>
           Открыть профиль
         </Button>
       </Link>
@@ -53,8 +56,5 @@ export type SearchCardInfoProps = {
   imgSrc: string;
   education: Education[];
   job: string;
-  rating: {
-    count: number;
-    average: number;
-  };
+  rating: number;
 };

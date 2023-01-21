@@ -49,7 +49,7 @@ export const SearchPage = () => {
             imgSrc={item.avatar}
             education={item.educations}
             job={item.job.place}
-            rating={{ count: 25, average: item.rating }}
+            rating={item.rating}
             id={item.id}
             key={item.id}
           ></SearchCardInfo>

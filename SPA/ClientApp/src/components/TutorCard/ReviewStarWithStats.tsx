@@ -1,20 +1,16 @@
-import { Text, HStack } from '@chakra-ui/react';
+import { Text } from '@chakra-ui/react';
 import { ReviewStar } from './ReviewStar';
+import React from 'react';
 
 export const ReviewStarWithStats = (props: ReviewStarWithStatsProps) => {
   return (
-    <HStack spacing={'32px'}>
+    <React.Fragment>
       <ReviewStar starCount={5} />
-      <Text fontSize="m">
-        {props.rating.average} на основе {props.rating.count} отзывов
-      </Text>
-    </HStack>
+      <Text fontSize="m">Средняя оценка: {props.rating}</Text>
+    </React.Fragment>
   );
 };
 
 type ReviewStarWithStatsProps = {
-  rating: {
-    count: number;
-    average: number;
-  };
+  rating: number;
 };
