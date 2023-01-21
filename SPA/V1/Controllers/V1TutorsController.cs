@@ -1,4 +1,5 @@
-﻿using SPA.Application.Tutors.Commands.UpdateTutorCommand;
+﻿using SPA.Application.Tutors.Commands.CreateReviewCommand;
+using SPA.Application.Tutors.Commands.UpdateTutorCommand;
 using SPA.Application.Tutors.Queries.GetTutorQuery;
 using SPA.Application.Tutors.Queries.GetTutorsQuery;
 using Swashbuckle.AspNetCore.Annotations;
@@ -59,6 +60,22 @@ public sealed class V1TutorsController : Controller
         var command = new GetTutorReviewsQuery(id, page, size);
         var model = await mediator.Send(command);
         return Ok(mapper.Map<V1PageDto<V1ReviewDto>>(model));
+    }
+    
+    [HttpPost("{id:guid}/reviews")]
+    [SwaggerResponse(200, "OK", typeof(V1ReviewDto))]
+    [SwaggerResponse(401, "Unauthorized")]
+    [SwaggerResponse(404, "NotFound")]
+    public async Task<IActionResult> CreateReviewAsync(Guid id, [FromBody] V1ReviewDto reviewDto)
+    {
+        var studentId = User.GetId();
+        if (studentId is null)
+            return Unauthorized();
+        
+        var review = mapper.Map<Review>(reviewDto);
+        var command = new CreateReviewCommand(id, (Guid)studentId, review);
+        var reviewResult = await mediator.Send(command);
+        return Ok(mapper.Map<V1ReviewDto>(reviewResult));
     }
 
     [HttpPut]
