@@ -53,12 +53,12 @@ public sealed class V1TutorsController : Controller
     }
 
     [HttpGet("{id:guid}/reviews")]
-    [SwaggerResponse(200, "OK", typeof(ICollection<V1ReviewDto>))]
+    [SwaggerResponse(200, "OK", typeof(V1PageDto<V1ReviewDto>))]
     public async Task<IActionResult> GetReviewsAsync(Guid id, [FromQuery] int page = 0, [FromQuery] int size = 30)
     {
         var command = new GetTutorReviewsQuery(id, page, size);
         var model = await mediator.Send(command);
-        return Ok(mapper.Map<ICollection<V1ReviewDto>>(model.Items));
+        return Ok(mapper.Map<V1PageDto<V1ReviewDto>>(model));
     }
 
     [HttpPut]
