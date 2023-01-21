@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.ObjectModel;
-
-namespace SPA.Repositories.Impl;
+﻿namespace SPA.Repositories.Impl;
 
 using AutoMapper;
 using Data;
@@ -24,41 +21,22 @@ internal sealed class TutorsRepository : ITutorsRepository
         table = context.Tutors;
     }
 
-    public async Task<Page<Tutor>> Get(int page, int size, string subject, string city, string district, int maxPrice, int rating)
+    public async Task<Page<Tutor>> Get(int page, int size, string subject, string city, string district, int maxPrice,
+        int rating)
     {
-        // var tutorEntities = await table
-        //     // .OrderBy(e => e)
-        //     .Where(x => ModelEligible(x, subject, city, district, maxPrice, rating))
-        //     // .Skip(page * size)
-        //     // .Take(size)
-        //     .ToListAsync();
-
-        // var tutorsEntities = await table
-        //     .OrderBy(e => e)
-        //     .Where(x => ModelEligible(x, subject, city, district, maxPrice, rating))
-        //     .Skip(page * size)
-        //     .Take(size)
-        //     .ToListAsync();
         var tutorsEntities = await table
-            // .Where(x => ModelEligible(x, subject, city, district, maxPrice, rating))
+            .OrderBy(x => x)
+            .Where(x => (int)x.Rating == rating || rating == -1)
+            .Where(x => x.Location.City == city || city == "")
+            .Where(x => x.Location.District == district || district == "")
+            .Where(x => x.Subjects.FirstOrDefault(y => y.Description == subject) != null || subject == "")
+            .Where(x => x.Lessons.FirstOrDefault(y => y.Price <= maxPrice) != null || maxPrice == -1)
+            .Skip(page * size)
+            .Take(size)
             .ToListAsync();
 
         var tutors = mapper.Map<List<Tutor>>(tutorsEntities);
         return new Page<Tutor>(tutors);
-    }
-
-    private static bool ModelEligible(TutorEntity tutor, string subject, string city, string district, int maxPrice, int rating)
-    {
-        var modelSubject = tutor.Subjects.FirstOrDefault(x => x.Description == subject);
-        var subjectEligible = modelSubject != null || subject == "";
-        var cityEligible = tutor.Location?.City == city || city == "";
-        var districtEligible = tutor.Location?.District == district || district == "";
-        var modelLessonPrice = tutor.Lessons.FirstOrDefault(x => x.Price <= maxPrice);
-        var lessonPriceEligible = modelLessonPrice != null || maxPrice == -1;
-        var ratingEligible = (int)tutor.Rating == rating || rating == -1;
-
-        return subjectEligible && cityEligible && districtEligible && lessonPriceEligible && ratingEligible;
-
     }
 
     public async Task<Tutor?> Get(Guid id)
