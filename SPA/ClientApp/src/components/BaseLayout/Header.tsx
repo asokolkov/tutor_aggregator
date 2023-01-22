@@ -31,6 +31,7 @@ import {
   PROFILE_PAGE,
   SEARCH_PAGE,
   SIGNUP_PAGE,
+  LESSONS_PAGE,
 } from '../../route-paths';
 import HeaderButton from './HeaderButton';
 import { useContext } from 'react';
@@ -64,6 +65,7 @@ const Header: React.FC = () => {
               spacing="5"
               display={'flex'}
               justifyContent={'left'}
+              align={'center'}
               width={'100%'}
               maxWidth={'100%'}
             >
@@ -72,7 +74,12 @@ const Header: React.FC = () => {
               </Link>
               <VStack spacing="0px" align="left">
                 <Link to={SEARCH_PAGE}>
-                  <Text as="b" fontSize="2xl" color="subtle">
+                  <Text
+                    as="b"
+                    fontSize="2xl"
+                    color="subtle"
+                    _hover={{ color: '#777777' }}
+                  >
                     Репетиторы
                   </Text>
                 </Link>
@@ -111,7 +118,7 @@ const Header: React.FC = () => {
             {isDesktop ? (
               <React.Fragment>
                 <Spacer />
-                <Flex justify="flex-end" flex="10">
+                <Flex justify="center" align={'center'} flex="10">
                   <ButtonGroup spacing="8" margin="0px 40px 0px 0px">
                     <HeaderButton
                       text={'Поиск'}
@@ -122,7 +129,7 @@ const Header: React.FC = () => {
                     />
                     <HeaderButton
                       text={'Мои занятия'}
-                      link={PROFILE_PAGE}
+                      link={LESSONS_PAGE}
                       variant={'link'}
                       isActive={openTab === 'Мои занятия'}
                       onClick={() => setOpenTab('Мои занятия')}
@@ -137,12 +144,9 @@ const Header: React.FC = () => {
                   </ButtonGroup>
                   {userState.isAuthorized ? (
                     <HStack spacing={'3'}>
-                      <HeaderButton
-                        text={'Выйди,разбiник'}
-                        link={SEARCH_PAGE}
-                        variant={'ghost'}
-                      />
-                      <Avatar size={'sm'} src={userState.avatar}></Avatar>
+                      <Link to={PROFILE_PAGE}>
+                        <Avatar size={'sm'} src={userState.avatar} />
+                      </Link>
                     </HStack>
                   ) : (
                     <HStack spacing="3">
