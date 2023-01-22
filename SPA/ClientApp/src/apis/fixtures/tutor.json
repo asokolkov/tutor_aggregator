@@ -23,24 +23,12 @@
       "description": "Компьютерные науки"
     }
   ],
-  "contacts": [
-    {
-      "id": "af52e85a-a6cf-43e3-817d-a5d8294b12fd",
-      "type": 0,
-      "value": "+7 (989) 567-45-67"
-    },
-    {
-      "id": "af52e85a-a6cf-43e3-817d-a5d8294b12ee",
-      "type": 1,
-      "value": "example@gmail.com"
-    }
-  ],
+  "contacts": "По телефону: +7999565815. В Телеграме @theoilside",
   "educations": [
     {
       "id": "string",
       "description": "УрГУ, МатМех, высшее образование",
-      "beginYear": 0,
-      "graduationYear": 0
+      "graduationYear": 2024
     }
   ],
   "awards": [
