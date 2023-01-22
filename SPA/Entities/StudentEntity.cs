@@ -1,4 +1,6 @@
-﻿namespace SPA.Entities;
+﻿using System.Reflection.Metadata;
+
+namespace SPA.Entities;
 
 internal sealed class StudentEntity
 {
@@ -8,7 +10,7 @@ internal sealed class StudentEntity
 
     public string LastName { get; init; }
 
-    public Uri Avatar { get; init; }
+    public Blob Avatar { get; init; }
 
     public string Contacts { get; set; }
 

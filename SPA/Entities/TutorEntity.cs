@@ -1,4 +1,6 @@
-﻿namespace SPA.Entities;
+﻿using System.Reflection.Metadata;
+
+namespace SPA.Entities;
 
 internal sealed class TutorEntity
 {
@@ -12,7 +14,7 @@ internal sealed class TutorEntity
 
     public string Requirements { get; set; }
 
-    public Uri Avatar { get; set; }
+    public Blob Avatar { get; set; }
     
     public LocationEntity Location { get; set; }
 

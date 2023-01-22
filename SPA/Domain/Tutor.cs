@@ -1,4 +1,6 @@
-﻿namespace SPA.Domain;
+﻿using System.Reflection.Metadata;
+
+namespace SPA.Domain;
 
 public sealed class Tutor
 {
@@ -12,7 +14,7 @@ public sealed class Tutor
 
     public string Requirements { get; set; }
 
-    public Uri Avatar { get; set; }
+    public Blob Avatar { get; set; }
     
     public Location Location { get; set; }
 

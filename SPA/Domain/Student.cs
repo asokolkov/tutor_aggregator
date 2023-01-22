@@ -1,4 +1,6 @@
-﻿namespace SPA.Domain;
+﻿using System.Reflection.Metadata;
+
+namespace SPA.Domain;
 
 public sealed class Student
 {
@@ -8,7 +10,7 @@ public sealed class Student
 
     public string LastName { get; set; }
     
-    public Uri Avatar { get; set; }
+    public Blob Avatar { get; set; }
 
     public string Contacts { get; set; }
 
