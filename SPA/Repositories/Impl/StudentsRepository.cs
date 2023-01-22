@@ -44,10 +44,10 @@ internal sealed class StudentsRepository : IStudentsRepository
         try
         {
             var studentEntity = mapper.Map<StudentEntity>(student);
-            var entity = table.Update(studentEntity);
+            var entityEntry = table.Update(studentEntity);
             await context.SaveChangesAsync();
             await transaction.CommitAsync();
-            return mapper.Map<Student>(entity);
+            return mapper.Map<Student>(entityEntry.Entity);
         }
         catch (Exception)
         {
@@ -63,10 +63,10 @@ internal sealed class StudentsRepository : IStudentsRepository
         try
         {
             var studentEntity = mapper.Map<StudentEntity>(student);
-            var entity = await table.AddAsync(studentEntity);
+            var entityEntry = await table.AddAsync(studentEntity);
             await context.SaveChangesAsync();
             await transaction.CommitAsync();
-            return mapper.Map<Student>(entity);
+            return mapper.Map<Student>(entityEntry.Entity);
         }
         catch (Exception)
         {

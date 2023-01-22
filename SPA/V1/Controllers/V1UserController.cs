@@ -25,6 +25,7 @@ public sealed class V1UserController : ControllerBase
 
     [HttpGet("current")]
     [SwaggerResponse(200, "OK", typeof(V1UserDto))]
+    [SwaggerResponse(401, "Unauthorized")]
     public async Task<IActionResult> GetCurrentUserAsync()
     {
         var userId = User.GetId();

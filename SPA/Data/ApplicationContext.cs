@@ -18,18 +18,43 @@ internal sealed class ApplicationContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<TutorEntity>().Navigation(e => e.Subjects).AutoInclude();
-        modelBuilder.Entity<TutorEntity>().Navigation(e => e.Contacts).AutoInclude();
-        modelBuilder.Entity<TutorEntity>().Navigation(e => e.Educations).AutoInclude();
-        modelBuilder.Entity<TutorEntity>().Navigation(e => e.Awards).AutoInclude();
-        modelBuilder.Entity<TutorEntity>().Navigation(e => e.Lessons).AutoInclude();
-        modelBuilder.Entity<TutorEntity>().Navigation(e => e.Reviews).AutoInclude();
+        modelBuilder.Entity<TutorEntity>()
+            .HasMany(e => e.Subjects)
+            .WithMany(e => e.Tutors);
+        modelBuilder.Entity<TutorEntity>()
+            .HasOne(e => e.Location)
+            .WithMany(e => e.Tutors);
+        modelBuilder.Entity<TutorEntity>()
+            .Navigation(e => e.Contacts)
+            .AutoInclude();
+        modelBuilder.Entity<TutorEntity>()
+            .Navigation(e => e.Educations)
+            .AutoInclude();
+        modelBuilder.Entity<TutorEntity>()
+            .Navigation(e => e.Awards)
+            .AutoInclude();
+        modelBuilder.Entity<TutorEntity>()
+            .Navigation(e => e.Lessons)
+            .AutoInclude();
+        modelBuilder.Entity<TutorEntity>()
+            .Navigation(e => e.Reviews)
+            .AutoInclude();
+        modelBuilder.Entity<TutorEntity>().Navigation(e => e.Job).AutoInclude();
 
-        modelBuilder.Entity<StudentEntity>().Navigation(e => e.Contacts).AutoInclude();
-        modelBuilder.Entity<StudentEntity>().Navigation(e => e.Lessons).AutoInclude();
-        modelBuilder.Entity<StudentEntity>().Navigation(e => e.Reviews).AutoInclude();
 
-        modelBuilder.Entity<ReviewEntity>().Navigation(e => e.Student).AutoInclude();
+        modelBuilder.Entity<StudentEntity>()
+            .Navigation(e => e.Contacts)
+            .AutoInclude();
+        modelBuilder.Entity<StudentEntity>()
+            .Navigation(e => e.Lessons)
+            .AutoInclude();
+        modelBuilder.Entity<StudentEntity>()
+            .Navigation(e => e.Reviews)
+            .AutoInclude();
+
+        modelBuilder.Entity<ReviewEntity>()
+            .Navigation(e => e.Student)
+            .AutoInclude();
 
         modelBuilder.UseSerialColumns();
     }

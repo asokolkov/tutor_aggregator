@@ -12,7 +12,7 @@ internal sealed class V1Profile : Profile
         CreateMap<TutorEntity, Tutor>().ReverseMap();
         CreateMap<Tutor, V1TutorDto>().ReverseMap();
         CreateMap<Page<Tutor>, V1PageDto<V1TutorDto>>().ReverseMap();
-        CreateMap<List<TutorEntity>, List<Tutor>>().ReverseMap();
+        // CreateMap<List<TutorEntity>, List<Tutor>>().ReverseMap();
         
         CreateMap<AwardEntity, Award>().ReverseMap();
         CreateMap<Award, V1AwardDto>().ReverseMap();
@@ -53,7 +53,7 @@ internal sealed class V1Profile : Profile
         CreateMap<TutorContactEntity, TutorContact>().ReverseMap();
         CreateMap<TutorContact, V1TutorContactDto>().ReverseMap();
         CreateMap<Page<TutorContact>, V1PageDto<V1TutorContactDto>>().ReverseMap();
-
+        
         CreateMap<User, V1UserDto>();
         
         CreateMap<Review, V1ReviewDto>()
@@ -61,8 +61,5 @@ internal sealed class V1Profile : Profile
             .ForMember(dest => dest.StudentAvatar, opt => opt.MapFrom(src => src.Student.Avatar));
         
         CreateMap<V1UpdateTutorDto, UpdateTutor>();
-
-        CreateMap(typeof(ICollection<>), typeof(ICollection<>))
-            .ConstructUsing(collection => collection);
     }
 }
