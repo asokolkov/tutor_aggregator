@@ -13,7 +13,7 @@ import categoryIcon from '../../img/category-icon.png';
 import locationIcon from '../../img/location-icon.png';
 import educationIcon from '../../img/educations-icon.png';
 import requirementsIcon from '../../img/requirements-icon.png';
-import { Contact, Education } from '../../apis/_share';
+import { Education } from '../../apis/_share';
 import ContactsInfoModal from './ContactsInfoModal';
 import { ReviewStarWithStats } from './ReviewStarWithStats';
 
@@ -93,6 +93,6 @@ type CardInfoProps = {
   location: string;
   avatar: string;
   requirements: string;
-  contacts: Contact[];
+  contacts: string;
   rating: number;
 };

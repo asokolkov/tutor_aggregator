@@ -3,8 +3,8 @@ import * as React from 'react';
 
 export const SelectOptions = (props: SelectOptionsProps) => {
   const options = props.options.map((option) => (
-    <option value={option} key={option}>
-      {option}
+    <option value={option[1]} key={option[1]}>
+      {option[0]}
     </option>
   ));
   return (
@@ -33,7 +33,7 @@ export const SelectOptions = (props: SelectOptionsProps) => {
 
 type SelectOptionsProps = {
   value: string | number;
-  options: Array<string>;
+  options: Array<Array<string>>;
   label: string;
   updateState: (newState: string) => void;
 };

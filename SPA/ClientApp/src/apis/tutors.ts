@@ -1,6 +1,5 @@
 import axiosInstance, {
   Award,
-  Contact,
   Education,
   Job,
   Lesson,
@@ -14,7 +13,7 @@ export interface Tutor extends Person {
   location: Location;
   job: Job;
   subjects: Subject[];
-  contacts: Contact[];
+  contacts: string;
   educations: Education[];
   awards: Award[];
   lessons: Lesson[];
