@@ -7,4 +7,6 @@ internal sealed class LocationEntity
     public string City { get; init; }
     
     public string District { get; init; }
+
+    public IReadOnlyCollection<TutorEntity> Tutors { get; init; }
 }
