@@ -7,7 +7,6 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 import { SelectOptions } from './SelectOptions';
-import { SwitchOptions } from './SwitchOptions';
 import searchIcon from '../../img/search_icon_bg.png';
 import { useSearchParams } from 'react-router-dom';
 
@@ -50,10 +49,10 @@ const SearchParamsSection: React.FC = () => {
           templateAreas={
             isDesktop
               ? `"subject subject subject"
-                  "online district district"
+                  "district district district"
                   "price rating button"`
               : `"subject subject subject"
-                  "online district district"
+                  "district district district"
                   "price price price"
                   "rating rating rating"
                   "button button button"`
@@ -83,9 +82,6 @@ const SearchParamsSection: React.FC = () => {
                 updateSearchParam(SearchParams.subject, newState)
               }
             />
-          </GridItem>
-          <GridItem area={'online'}>
-            <SwitchOptions label={'Онлайн?'} />
           </GridItem>
           <GridItem area={'district'}>
             <SelectOptions
