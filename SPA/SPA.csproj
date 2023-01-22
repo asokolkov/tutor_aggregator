@@ -48,7 +48,6 @@
 
     <ItemGroup>
         <Folder Include="Application\Users\Queries" />
-        <Folder Include="Migrations\ApplicationIdentity" />
     </ItemGroup>
 
     <ItemGroup>
