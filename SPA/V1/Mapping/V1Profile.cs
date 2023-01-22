@@ -36,8 +36,5 @@ internal sealed class V1Profile : Profile
         CreateMap<User, V1UserDto>();
 
         CreateMap<V1UpdateTutorDto, UpdateTutor>();
-        
-        CreateMap<AvatarEntity, Avatar>().ReverseMap();
-        // CreateMap<Avatar, V1AvatarDto>().ReverseMap();
     }
 }

@@ -6,5 +6,5 @@ internal interface IAvatarsRepository
 {
     Task<byte[]> Get(Guid id);
     
-    // Task<Avatar?> Create(Avatar avatar);
+    Task<byte[]> Create(Guid id, byte[] image);
 }

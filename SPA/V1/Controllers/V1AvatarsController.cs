@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using SPA.Application.Avatars.Commands.CreateAvatarCommand;
 using SPA.Application.Avatars.Queries.GetAvatarQuery;
+using SPA.Domain;
+using SPA.Extensions;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace SPA.V1.Controllers;
@@ -25,21 +28,20 @@ public sealed class V1AvatarsController : ControllerBase
     {
         var query = new GetAvatarQuery(id);
         var image = await mediator.Send(query);
-        return Ok(image);
+        return image is null ? NotFound(id) : Ok(image);
     }
     
-    // [HttpPost]
-    // [SwaggerResponse(200, "OK", typeof(V1AvatarDto))]
-    // [SwaggerResponse(401, "Unauthorized")]
-    // [SwaggerResponse(404, "NotFound")]
-    // public async Task<IActionResult> Create([FromBody] V1AvatarDto avatarDto)
-    // {
-    //     var userId = User.GetId();
-    //     if (userId is null)
-    //         return Unauthorized();
-    //
-    //     var avatar = mapper.Map<Avatar>(avatarDto);
-    //     var query = new CreateAvatarCommand(avatar);
-    //     return Ok(await mediator.Send(query));
-    // }
+    [HttpPost]
+    [RequestSizeLimit(4 * 1024 * 1024)]
+    [SwaggerResponse(401, "Unauthorized")]
+    [SwaggerResponse(404, "NotFound")]
+    public async Task<IActionResult> Create([FromBody] byte[] image)
+    {
+        var userId = User.GetId();
+        if (userId is null)
+            return Unauthorized();
+        
+        var query = new CreateAvatarCommand(userId.Value, image);
+        return Ok(await mediator.Send(query));
+    }
 }

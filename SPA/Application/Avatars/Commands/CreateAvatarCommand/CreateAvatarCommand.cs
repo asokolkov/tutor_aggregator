@@ -1,6 +1,5 @@
-﻿// using MediatR;
-// using SPA.Domain;
-//
-// namespace SPA.Application.Avatars.Commands.CreateAvatarCommand;
-//
-// internal record CreateAvatarCommand(Avatar Avatar) : IRequest<Avatar>;
+﻿using MediatR;
+
+namespace SPA.Application.Avatars.Commands.CreateAvatarCommand;
+
+internal record CreateAvatarCommand(Guid Id, byte[] Image) : IRequest<byte[]>;
