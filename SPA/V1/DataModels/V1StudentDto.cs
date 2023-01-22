@@ -17,7 +17,7 @@ public sealed class V1StudentDto
     public Uri Avatar { get; init; }
 
     [JsonPropertyName("contacts")]
-    public IReadOnlyCollection<V1StudentContactDto> Contacts { get; init; }
+    public string Contacts { get; init; }
 
     [JsonPropertyName("lessons")]
     public IReadOnlyCollection<V1LessonDto> Lessons { get; init; }

@@ -26,20 +26,20 @@ public sealed class V1TutorDto
     public V1LocationDto Location { get; init; }
     
     [JsonPropertyName("job")]
-    public V1JobDto Job { get; init; }
+    public string Job { get; init; }
+    
+    [JsonPropertyName("contacts")]
+    public string Contacts { get; init; }
+
+    [JsonPropertyName("educations")]
+    public string Educations { get; init; }
+
+    [JsonPropertyName("awards")]
+    public string Awards { get; init; }
 
     [JsonPropertyName("subjects")]
     public IReadOnlyCollection<V1SubjectDto> Subjects { get; init; }
 
-    [JsonPropertyName("contacts")]
-    public IReadOnlyCollection<V1TutorContactDto> Contacts { get; init; }
-
-    [JsonPropertyName("educations")]
-    public IReadOnlyCollection<V1EducationDto> Educations { get; init; }
-
-    [JsonPropertyName("awards")]
-    public IReadOnlyCollection<V1AwardDto> Awards { get; init; }
-    
     [JsonPropertyName("lessons")]
     public IReadOnlyCollection<V1LessonDto> Lessons { get; init; }
 }

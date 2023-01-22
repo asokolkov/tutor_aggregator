@@ -6,5 +6,5 @@ public sealed class V1UpdateStudentDto
 
     public string LastName { get; init; }
 
-    public ICollection<V1StudentContactDto> Contacts { get; init; }
+    public string Contacts { get; init; }
 }

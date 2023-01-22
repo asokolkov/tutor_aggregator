@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using SPA.Data;
 using SPA.Domain;
 using SPA.Entities;
@@ -19,7 +20,9 @@ internal sealed class ReviewsRepository : IReviewsRepository
 
     public async Task<Review?> Insert(Guid tutorId, Guid studentId, Review review)
     {
-        var tutor = await context.Tutors.FindAsync(tutorId);
+        var tutor = await context.Tutors
+            .Include(x => x.Reviews)
+            .FirstOrDefaultAsync(x => x.Id == tutorId);
 
         if (tutor is null)
             return null;
@@ -31,45 +34,30 @@ internal sealed class ReviewsRepository : IReviewsRepository
 
         var reviewEntity = new ReviewEntity
         {
-            Id = new Guid(),
+            Id = Guid.NewGuid(),
             Description = review.Description,
             Rating = review.Rating,
-            TutorId = tutorId,
-            StudentId = studentId,
-            StudentFirstName = student.FirstName,
-            StudentAvatar = student.Avatar,
-            UpdatedAt = DateTimeOffset.Now
+            Tutor = tutor,
+            Student = student,
+            UpdatedAt = DateTimeOffset.Now.ToUniversalTime()
         };
         
-        await using var reviewTransaction = await context.Database.BeginTransactionAsync();
-        await reviewTransaction.CreateSavepointAsync("BeforeReviewInsert");
+        await using var transaction = await context.Database.BeginTransactionAsync();
+        await transaction.CreateSavepointAsync("BeforeInsert");
         try
         {
             await context.Reviews.AddAsync(reviewEntity);
             await context.SaveChangesAsync();
-            await reviewTransaction.CommitAsync();
+            tutor.Rating = tutor.Reviews.Average(x => x.Rating);
+            await transaction.CommitAsync();
         }
         catch (Exception)
         {
-            await reviewTransaction.RollbackToSavepointAsync("BeforeReviewInsert");
+            await transaction.RollbackToSavepointAsync("BeforeInsert");
             return default;
         }
 
-        await using var tutorTransaction = await context.Database.BeginTransactionAsync();
-        await tutorTransaction.CreateSavepointAsync("BeforeTutorUpdate");
-        try
-        {
-            tutor.Rating = tutor.Reviews.Average(x => x.Rating);
-            await context.SaveChangesAsync();
-            await tutorTransaction.CommitAsync();
-        }
-        catch (Exception)
-        {
-            await tutorTransaction.RollbackToSavepointAsync("BeforeTutorUpdate");
-            return default;
-        }
-        
-        return mapper.Map<Review>(reviewEntity); 
+        return mapper.Map<Review>(reviewEntity);
     }
 
     public Task<Review> Delete(Review review)

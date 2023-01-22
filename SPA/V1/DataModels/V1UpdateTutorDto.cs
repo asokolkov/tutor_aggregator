@@ -17,17 +17,17 @@ public sealed class V1UpdateTutorDto
     public V1LocationDto Location { get; init; }
 
     [JsonPropertyName("job")]
-    public V1JobDto Job { get; init; }
+    public string Job { get; init; }
+    
+    [JsonPropertyName("contacts")]
+    public string Contacts { get; init; }
+
+    [JsonPropertyName("educations")]
+    public string Educations { get; init; }
+
+    [JsonPropertyName("awards")]
+    public string Awards { get; init; }
 
     [JsonPropertyName("subjects")]
     public ICollection<V1SubjectDto> Subjects { get; init; }
-
-    [JsonPropertyName("contacts")]
-    public ICollection<V1TutorContactDto> Contacts { get; init; }
-
-    [JsonPropertyName("educations")]
-    public ICollection<V1EducationDto> Educations { get; init; }
-
-    [JsonPropertyName("awards")]
-    public ICollection<V1AwardDto> Awards { get; init; }
 }

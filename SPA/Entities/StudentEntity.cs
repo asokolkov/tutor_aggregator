@@ -10,7 +10,7 @@ internal sealed class StudentEntity
 
     public Uri Avatar { get; init; }
 
-    public ICollection<StudentContactEntity> Contacts { get; init; }
+    public string Contacts { get; set; }
 
     public ICollection<LessonEntity> Lessons { get; init; }
     

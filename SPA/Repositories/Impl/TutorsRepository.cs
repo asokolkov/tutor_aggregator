@@ -26,11 +26,12 @@ internal sealed class TutorsRepository : ITutorsRepository
     {
         var tutorsEntities = await table
             .OrderBy(x => x)
-            .Where(x => (int)x.Rating == rating || rating == -1)
-            .Where(x => x.Location.City == city || city == "")
-            .Where(x => x.Location.District == district || district == "")
-            .Where(x => x.Subjects.FirstOrDefault(y => y.Description == subject) != null || subject == "")
-            .Where(x => x.Lessons.FirstOrDefault(y => y.Price <= maxPrice) != null || maxPrice == -1)
+            // TODO
+            // .Where(x => (int)x.Rating == rating || rating == -1)
+            // .Where(x => x.Location.City == city || city == "")
+            // .Where(x => x.Location.District == district || district == "")
+            // .Where(x => x.Subjects.FirstOrDefault(y => y.Description == subject) != null || subject == "")
+            // .Where(x => x.Lessons.FirstOrDefault(y => y.Price <= maxPrice) != null || maxPrice == -1)
             .Skip(page * size)
             .Take(size)
             .ToListAsync();
@@ -51,10 +52,10 @@ internal sealed class TutorsRepository : ITutorsRepository
         try
         {
             var tutorEntity = mapper.Map<TutorEntity>(tutor);
-            var entity = table.Update(tutorEntity);
+            var entityEntry = table.Update(tutorEntity);
             await context.SaveChangesAsync();
             await transaction.CommitAsync();
-            return mapper.Map<Tutor>(entity);
+            return mapper.Map<Tutor>(entityEntry.Entity);
         }
         catch (Exception)
         {
@@ -70,10 +71,10 @@ internal sealed class TutorsRepository : ITutorsRepository
         try
         {
             var tutorEntity = mapper.Map<TutorEntity>(tutor);
-            var insertedEntity = await table.AddAsync(tutorEntity);
+            var entityEntry = await table.AddAsync(tutorEntity);
             await context.SaveChangesAsync();
             await transaction.CommitAsync();
-            return mapper.Map<Tutor>(insertedEntity.Entity);
+            return mapper.Map<Tutor>(entityEntry.Entity);
         }
         catch (Exception)
         {
@@ -86,7 +87,7 @@ internal sealed class TutorsRepository : ITutorsRepository
     {
         var tutor = await context.Tutors.FindAsync(id);
         
-        if (tutor is null)
+        if (tutor?.Reviews is null)
             return new Page<Review>(Array.Empty<Review>());
         
         var reviewsEntities = tutor.Reviews

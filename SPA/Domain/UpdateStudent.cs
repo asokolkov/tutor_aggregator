@@ -6,5 +6,5 @@ internal sealed class UpdateStudent
 
     public string LastName { get; init; }
 
-    public ICollection<StudentContact> Contacts { get; init; }
+    public string Contacts { get; init; }
 }

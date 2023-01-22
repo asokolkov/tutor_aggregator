@@ -10,13 +10,13 @@ internal sealed class UpdateTutor
     
     public Location Location { get; init; }
     
-    public Job Job { get; init; }
+    public string Job { get; init; }
+    
+    public string Contacts { get; init; }
+
+    public string Educations { get; init; }
+    
+    public string Awards { get; init; }
     
     public ICollection<Subject> Subjects { get; init; }
-    
-    public ICollection<TutorContact> Contacts { get; init; }
-
-    public ICollection<Education> Educations { get; init; }
-    
-    public ICollection<Award> Awards { get; init; }
 }

@@ -10,7 +10,7 @@ public sealed class Student
     
     public Uri Avatar { get; set; }
 
-    public ICollection<StudentContact> Contacts { get; init; }
+    public string Contacts { get; set; }
 
     public ICollection<Lesson> Lessons { get; init; }
     

@@ -10,6 +10,5 @@ public class ApplicationIdentityContext : IdentityDbContext<ApplicationUser, Ide
 {
     public ApplicationIdentityContext(DbContextOptions<ApplicationIdentityContext> options) : base(options)
     {
-        Database.EnsureCreated();
     }
 }
