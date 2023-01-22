@@ -14,7 +14,9 @@ export const LoadBar: React.FC<Props> = ({ description }) => {
         value={25}
         thickness="12px"
       />
-      <Text>{description ? description : 'Выполнеяется загрузка'}</Text>
+      <Text color={'teal'}>
+        {description ? description : 'Выполнеяется загрузка'}
+      </Text>
     </VStack>
   );
 };

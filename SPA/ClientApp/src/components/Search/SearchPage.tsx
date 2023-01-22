@@ -24,7 +24,8 @@ export const SearchPage = () => {
     );
   }, []);
 
-  if (!isLoaded) return <LoadBar />;
+  if (!isLoaded)
+    return <LoadBar description={'Загружаем список преподавателей'} />;
   return (
     <VStack spacing={'32px'} align={'start'}>
       <SearchParamsSection />
