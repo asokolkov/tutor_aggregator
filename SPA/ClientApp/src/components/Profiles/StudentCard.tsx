@@ -107,6 +107,35 @@ export const StudentCard: React.FC = () => {
                 </Tooltip>,
               ]}
             />
+            <ProfilePageSelectOptionsRow
+              label={'Пол'}
+              placeholder={''}
+              isDisabled={false}
+              isRequired={false}
+              options={['Мужской', 'Женский', 'Другое']}
+              tooltip={[
+                <Tooltip
+                  label="Укажите пол"
+                  placement={'left-start'}
+                >
+                  <InfoIcon margin={'0 0 0 10px'} />
+                </Tooltip>,
+              ]}
+            />
+            <ProfilePageInputRow
+              label={'Возраст'}
+              placeholder={''}
+              isDisabled={false}
+              isRequired={false}
+              tooltip={[
+                <Tooltip
+                  label="Укажите возраст"
+                  placement={'left-start'}
+                >
+                  <InfoIcon margin={'0 0 0 10px'} />
+                </Tooltip>,
+              ]}
+            />
             <ProfilePageTextAreaRow
               label={'О себе'}
               placeholder={'Увлекаюсь горными лыжами и версткой сайтов'}
