@@ -24,6 +24,7 @@ export const ProfilePageSelectOptionsRow = (
         </FormLabel>
         <Select
           placeholder={props.placeholder}
+          value={props.value}
           bg="white"
           color={'#000000'}
           width={'100%'}
@@ -45,4 +46,5 @@ type ProfilePageSelectOptionsProps = {
   isDisabled: boolean;
   isRequired: boolean;
   tooltip: JSX.Element[];
+  value?: string;
 };

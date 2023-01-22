@@ -43,10 +43,10 @@ internal sealed class LocationsesRepository : ILocationsRepository
         try
         {
             var tutorEntity = mapper.Map<LocationEntity>(location);
-            var entity = table.Update(tutorEntity);
+            var entityEntry = table.Update(tutorEntity);
             await context.SaveChangesAsync();
             await transaction.CommitAsync();
-            return mapper.Map<Location>(entity);
+            return mapper.Map<Location>(entityEntry.Entity);
         }
         catch (Exception)
         {
@@ -62,10 +62,10 @@ internal sealed class LocationsesRepository : ILocationsRepository
         try
         {
             var tutorEntity = mapper.Map<LocationEntity>(location);
-            var insertedEntity = await table.AddAsync(tutorEntity);
+            var entityEntry = await table.AddAsync(tutorEntity);
             await context.SaveChangesAsync();
             await transaction.CommitAsync();
-            return mapper.Map<Location>(insertedEntity);
+            return mapper.Map<Location>(entityEntry.Entity);
         }
         catch (Exception)
         {

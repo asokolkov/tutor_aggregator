@@ -1,9 +1,10 @@
-import { Flex, VStack, CircularProgress, SimpleGrid } from '@chakra-ui/react';
+import { VStack, SimpleGrid } from '@chakra-ui/react';
 import SearchCardInfo from './SearchCardInfo';
 import { useEffect, useState } from 'react';
 import TutorsAPI, { Tutor } from '../../apis/tutors';
 import SearchParamsSection from './SearchParamsSection';
 import './SearchPage.css';
+import { LoadBar } from '../BaseLayout/LoadBar';
 
 export const SearchPage = () => {
   const [, setError] = useState(null);
@@ -24,17 +25,7 @@ export const SearchPage = () => {
   }, []);
 
   if (!isLoaded)
-    return (
-      <Flex align={'center'} justify={'center'}>
-        <CircularProgress
-          isIndeterminate
-          color="teal"
-          size={'100px'}
-          value={25}
-          thickness="12px"
-        />
-      </Flex>
-    );
+    return <LoadBar description={'Загружаем список преподавателей'} />;
   return (
     <VStack spacing={'32px'} align={'start'}>
       <SearchParamsSection />

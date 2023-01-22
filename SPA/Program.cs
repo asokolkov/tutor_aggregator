@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Converters;
 using SPA.Data;
 using SPA.Extensions;
 using SPA.Identity;
@@ -11,18 +12,19 @@ using SPA.Startup;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(builder =>
+        builder.SerializerSettings.Converters.Add(new StringEnumConverter()));
 builder.Services.SetUpServices(builder.Configuration);
 builder.Services.AddControllers();
-builder.Services.AddLogging(configure =>
-{
-    configure.AddConsole();
-});
+builder.Services.AddLogging(configure => { configure.AddConsole(); });
 
 builder.Services.AddHostedService<DatabaseStartupService<ApplicationIdentityContext>>();
 builder.Services.AddHostedService<DatabaseStartupService<ApplicationContext>>();
 
-builder.Services.AddSwaggerGen();
+builder.Services
+    .AddSwaggerGen()
+    .AddSwaggerGenNewtonsoftSupport();
 
 /* Identity */
 builder.Services
@@ -33,8 +35,19 @@ builder.Services
     .AddIdentity<ApplicationUser, IdentityRole<Guid>>()
     .AddEntityFrameworkStores<ApplicationIdentityContext>();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.Name = "auth_cookie";
+    options.Cookie.SameSite = SameSiteMode.None;
+
+    options.Events.OnRedirectToLogin = context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        return Task.CompletedTask;
+    };
+});
+
 builder.Services.AddAuthentication()
-    .AddCookie()
     .AddGoogle(options =>
     {
         options.ClientId = builder.Configuration["Authentication:Google:ClientId"];

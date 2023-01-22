@@ -9,12 +9,11 @@ import {
   ModalCloseButton,
   Button,
 } from '@chakra-ui/react';
-import { Contact } from '../../apis/_share';
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  contacts: Contact[];
+  contacts: string;
 }
 
 const ContactsInfoModal: React.FC<Props> = ({ isOpen, onClose, contacts }) => {
@@ -29,11 +28,7 @@ const ContactsInfoModal: React.FC<Props> = ({ isOpen, onClose, contacts }) => {
       <ModalContent>
         <ModalHeader>Контакты репититора</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
-          {contacts.map((c) => (
-            <p key={c.id}>{c.value}</p>
-          ))}
-        </ModalBody>
+        <ModalBody>{contacts}</ModalBody>
         <ModalFooter>
           <Button colorScheme="blue" mr={3} onClick={onClose}>
             Закрыть

@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SPA.Application.Subjects.Queries.GetSubjectsQuery;
+using SPA.Domain;
 using SPA.V1.DataModels;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -25,7 +26,7 @@ public class V1SubjectsController : ControllerBase
     public async Task<IActionResult> GetSubjectsAsync()
     {
         var getSubjectsQuery = new GetSubjectsQuery();
-        var subjects = await mediator.Send(getSubjectsQuery);
-        return Ok(subjects);
+        var subjects = (ICollection<Subject>) await mediator.Send(getSubjectsQuery);
+        return Ok(mapper.Map<V1SubjectDto>(subjects));
     }
 }
