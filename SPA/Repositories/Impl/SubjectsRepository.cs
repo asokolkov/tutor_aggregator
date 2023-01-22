@@ -40,10 +40,10 @@ internal sealed class SubjectsRepository : ISubjectsRepository
         try
         {
             var subjectEntity = mapper.Map<SubjectEntity>(subject);
-            var entity = await table.AddAsync(subjectEntity);
+            var entityEntry = await table.AddAsync(subjectEntity);
             await context.SaveChangesAsync();
             await transaction.CommitAsync();
-            return mapper.Map<Subject>(entity);
+            return mapper.Map<Subject>(entityEntry.Entity);
         }
         catch (Exception)
         {

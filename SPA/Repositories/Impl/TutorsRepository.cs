@@ -51,10 +51,10 @@ internal sealed class TutorsRepository : ITutorsRepository
         try
         {
             var tutorEntity = mapper.Map<TutorEntity>(tutor);
-            var entity = table.Update(tutorEntity);
+            var entityEntry = table.Update(tutorEntity);
             await context.SaveChangesAsync();
             await transaction.CommitAsync();
-            return mapper.Map<Tutor>(entity);
+            return mapper.Map<Tutor>(entityEntry.Entity);
         }
         catch (Exception)
         {
@@ -70,10 +70,10 @@ internal sealed class TutorsRepository : ITutorsRepository
         try
         {
             var tutorEntity = mapper.Map<TutorEntity>(tutor);
-            var insertedEntity = await table.AddAsync(tutorEntity);
+            var entityEntry = await table.AddAsync(tutorEntity);
             await context.SaveChangesAsync();
             await transaction.CommitAsync();
-            return mapper.Map<Tutor>(insertedEntity);
+            return mapper.Map<Tutor>(entityEntry.Entity);
         }
         catch (Exception)
         {
@@ -84,18 +84,17 @@ internal sealed class TutorsRepository : ITutorsRepository
 
     public async Task<Page<Review>> GetTutorReviews(Guid id, int page, int size)
     {
-        // var tutor = await context.Tutors.FindAsync(id);
-        //
-        // if (tutor is null)
-        //     return new Page<Review>(Array.Empty<Review>());
-        //
-        // var reviewsEntities = tutor.Reviews
-        //     .OrderBy(e => e)
-        //     .Skip(page * size)
-        //     .Take(size)
-        //     .ToList();
-        // var reviews = mapper.Map<List<Review>>(reviewsEntities);
-        // return new Page<Review>(reviews);
-        return default;
+        var tutor = await context.Tutors.FindAsync(id);
+        
+        if (tutor is null)
+            return new Page<Review>(Array.Empty<Review>());
+        
+        var reviewsEntities = tutor.Reviews
+            .OrderBy(e => e)
+            .Skip(page * size)
+            .Take(size)
+            .ToList();
+        var reviews = mapper.Map<List<Review>>(reviewsEntities);
+        return new Page<Review>(reviews);
     }
 }
