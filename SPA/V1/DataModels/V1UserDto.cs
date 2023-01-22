@@ -11,8 +11,6 @@ public sealed class V1UserDto
 
     [JsonPropertyName("lastName")] public string LastName { get; init; }
 
-    [JsonPropertyName("avatar")] public Uri Avatar { get; init; }
-
     [JsonPropertyName("accounType")] public AccountType? AccountType { get; init; }
 
     [JsonPropertyName("registrationCompleted")]

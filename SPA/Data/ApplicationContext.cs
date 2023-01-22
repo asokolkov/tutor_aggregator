@@ -17,10 +17,10 @@ internal sealed class ApplicationContext : DbContext
     
     public DbSet<SubjectEntity> Subjects { get; set; } = null!;
     
+    public DbSet<AvatarEntity> Avatars { get; set; } = null!;
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
     {
-        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

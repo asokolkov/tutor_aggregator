@@ -10,8 +10,6 @@ internal sealed class StudentEntity
 
     public string LastName { get; init; }
 
-    public Blob Avatar { get; init; }
-
     public string Contacts { get; set; }
 
     public ICollection<LessonEntity> Lessons { get; init; }

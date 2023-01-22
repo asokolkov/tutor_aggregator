@@ -14,8 +14,6 @@ internal sealed class TutorEntity
 
     public string Requirements { get; set; }
 
-    public Blob Avatar { get; set; }
-    
     public LocationEntity Location { get; set; }
 
     public string Job { get; set; }

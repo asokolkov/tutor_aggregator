@@ -1,4 +1,5 @@
-﻿using SPA.Application.Locations.Commands.UpdateLocationCommand;
+﻿using SPA.Application.Avatars.Queries.GetAvatarQuery;
+using SPA.Application.Locations.Commands.UpdateLocationCommand;
 using SPA.Application.Locations.Queries.GetLocationQuery;
 using SPA.Application.Locations.Queries.GetLocationsQuery;
 using SPA.Application.Students.Commands.UpdateStudentCommand;
@@ -14,9 +15,7 @@ namespace SPA.Extensions;
 
 using Application.Tutors.Queries.GetReviewsQuery;
 using Application.Users.GetCurrentUserQuery;
-using Application.Users.GetCurrentUserQuery;
 using Data;
-using Domain;
 using Domain;
 using Entities;
 using MediatR;
@@ -55,13 +54,17 @@ internal static class ServiceCollectionExtensions
         services.AddScoped<IRequestHandler<GetSubjectsQuery, List<Subject>>, GetSubjectQueryHandler>();
 
         services.AddScoped<IRequestHandler<GetUserQuery, User>, GetUserQueryHandler>();
+        
+        services.AddScoped<IRequestHandler<GetAvatarQuery, byte[]>, GetAvatarQueryHandler>();
+        // services.AddScoped<IRequestHandler<CreateAvatarCommand, Avatar>, CreateAvatarCommandHandler>();
 
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ITutorsRepository, TutorsRepository>();
         services.AddScoped<IStudentsRepository, StudentsRepository>();
-        services.AddScoped<ILocationsRepository, LocationsesRepository>();
+        services.AddScoped<ILocationsRepository, LocationsRepository>();
         services.AddScoped<ISubjectsRepository, SubjectsRepository>();
         services.AddScoped<IReviewsRepository, ReviewsRepository>();
+        services.AddScoped<IAvatarsRepository, AvatarsRepository>();
     }
 }

@@ -9,8 +9,6 @@ public sealed class Student
     public string FirstName { get; set; }
 
     public string LastName { get; set; }
-    
-    public Blob Avatar { get; set; }
 
     public string Contacts { get; set; }
 

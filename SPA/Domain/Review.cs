@@ -15,6 +15,4 @@ public sealed class Review
     public Guid StudentId { get; init; }
     
     public string StudentFirstName { get; init; }
-    
-    public Uri StudentAvatar { get; init; }
 }

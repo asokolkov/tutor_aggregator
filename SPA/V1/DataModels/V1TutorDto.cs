@@ -19,9 +19,6 @@ public sealed class V1TutorDto
     [JsonPropertyName("rating")]
     public double Rating { get; init; }
 
-    [JsonPropertyName("avatar")]
-    public Uri Avatar { get; init; }
-    
     [JsonPropertyName("location")]
     public V1LocationDto Location { get; init; }
     

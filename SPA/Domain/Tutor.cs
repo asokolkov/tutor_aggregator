@@ -14,8 +14,6 @@ public sealed class Tutor
 
     public string Requirements { get; set; }
 
-    public Blob Avatar { get; set; }
-    
     public Location Location { get; set; }
 
     public string Job { get; set; }
