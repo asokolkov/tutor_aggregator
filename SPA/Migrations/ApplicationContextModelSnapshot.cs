@@ -148,10 +148,22 @@ namespace SPA.Migrations
                     b.Property<double>("Rating")
                         .HasColumnType("double precision");
 
-                    b.Property<Guid?>("StudentId")
+                    b.Property<string>("StudentAvatar")
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("StudentEntityId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("TutorId")
+                    b.Property<string>("StudentFirstName")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("TutorEntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("TutorId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
@@ -159,9 +171,9 @@ namespace SPA.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("StudentEntityId");
 
-                    b.HasIndex("TutorId");
+                    b.HasIndex("TutorEntityId");
 
                     b.ToTable("Reviews");
                 });
@@ -312,17 +324,13 @@ namespace SPA.Migrations
 
             modelBuilder.Entity("SPA.Entities.ReviewEntity", b =>
                 {
-                    b.HasOne("SPA.Entities.StudentEntity", "Student")
+                    b.HasOne("SPA.Entities.StudentEntity", null)
                         .WithMany("Reviews")
-                        .HasForeignKey("StudentId");
+                        .HasForeignKey("StudentEntityId");
 
-                    b.HasOne("SPA.Entities.TutorEntity", "Tutor")
+                    b.HasOne("SPA.Entities.TutorEntity", null)
                         .WithMany("Reviews")
-                        .HasForeignKey("TutorId");
-
-                    b.Navigation("Student");
-
-                    b.Navigation("Tutor");
+                        .HasForeignKey("TutorEntityId");
                 });
 
             modelBuilder.Entity("SPA.Entities.StudentContactEntity", b =>

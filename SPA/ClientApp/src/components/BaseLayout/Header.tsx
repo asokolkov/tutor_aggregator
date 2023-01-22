@@ -42,7 +42,6 @@ import { useState } from 'react';
 
 const Header: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
-  const userState = useContext(UserContext);
   const [openTab, setOpenTab] = useState('Поиск');
   return (
     <>
@@ -135,7 +134,7 @@ const Header: React.FC = () => {
                       onClick={() => setOpenTab('Мой профиль')}
                     />
                   </ButtonGroup>
-                  {userState.isAuthorized ? (
+                  {false ? (
                     <HStack spacing={'3'}>
                       <HeaderButton
                         text={'Выйди,разбiник'}

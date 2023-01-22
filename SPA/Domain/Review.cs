@@ -10,7 +10,11 @@ public sealed class Review
     
     public DateTimeOffset UpdatedAt { get; init; }
 
-    public Tutor Tutor { get; init; }
+    public Guid TutorId { get; init; }
     
-    public Student Student { get; init; }
+    public Guid StudentId { get; init; }
+    
+    public string StudentFirstName { get; init; }
+    
+    public Uri StudentAvatar { get; init; }
 }

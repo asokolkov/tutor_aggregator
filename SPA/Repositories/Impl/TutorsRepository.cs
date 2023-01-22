@@ -73,7 +73,7 @@ internal sealed class TutorsRepository : ITutorsRepository
             var insertedEntity = await table.AddAsync(tutorEntity);
             await context.SaveChangesAsync();
             await transaction.CommitAsync();
-            return mapper.Map<Tutor>(insertedEntity);
+            return mapper.Map<Tutor>(insertedEntity.Entity);
         }
         catch (Exception)
         {
