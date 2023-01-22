@@ -6,13 +6,18 @@ export interface User {
   name?: string;
   surname?: string;
   avatar?: string;
-  type?: string;
+  type?: AccountType;
+}
+
+export enum AccountType {
+  Tutor = 'Tutor',
+  Student = 'Student',
 }
 
 export default class UserAPI {
   static async getCurrentUser(): Promise<User> {
     try {
-      const response = await axiosInstance.get<User>('/v1/me');
+      const response = await axiosInstance.get<User>('/v1/current');
       const authUser = response.data;
       authUser.isAuthorized = true;
       return authUser;

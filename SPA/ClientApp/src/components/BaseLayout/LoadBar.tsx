@@ -1,9 +1,12 @@
 import * as React from 'react';
-import { CircularProgress, Flex } from '@chakra-ui/react';
+import { CircularProgress, VStack, Text } from '@chakra-ui/react';
 
-export const LoadBar = () => {
+interface Props {
+  description?: string;
+}
+export const LoadBar: React.FC<Props> = ({ description }) => {
   return (
-    <Flex align={'center'} justify={'center'}>
+    <VStack style={{ margin: '30vh auto 0', transform: 'translateY(-50%)' }}>
       <CircularProgress
         isIndeterminate
         color="teal"
@@ -11,6 +14,9 @@ export const LoadBar = () => {
         value={25}
         thickness="12px"
       />
-    </Flex>
+      <Text color={'teal'}>
+        {description ? description : 'Выполнеяется загрузка'}
+      </Text>
+    </VStack>
   );
 };

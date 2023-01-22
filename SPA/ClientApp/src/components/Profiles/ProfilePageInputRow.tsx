@@ -19,6 +19,7 @@ export const ProfilePageInputRow = (props: ProfilePageInputProps) => {
         </FormLabel>
         <Input
           placeholder={props.placeholder}
+          value={props.value}
           bg="white"
           color={'#000000'}
           width={'100%'}
@@ -33,9 +34,10 @@ export const ProfilePageInputRow = (props: ProfilePageInputProps) => {
 };
 
 type ProfilePageInputProps = {
-  placeholder: string;
+  placeholder?: string;
   label: string;
   isDisabled: boolean;
   isRequired: boolean;
   tooltip: JSX.Element[];
+  value?: string;
 };

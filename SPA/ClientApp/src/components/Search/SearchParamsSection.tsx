@@ -73,9 +73,11 @@ const SearchParamsSection: React.FC = () => {
           <GridItem area={'subject'} alignItems={'center'}>
             <SelectOptions
               label={'Предмет'}
-              options={[['Математика', 'Математика'],
+              options={[
+                ['Математика', 'Математика'],
                 ['Программирование', 'Программирование'],
-                ['История', 'История']]}
+                ['История', 'История'],
+              ]}
               value={searchParamsState.get(SearchParams.subject)}
               updateState={(newState) =>
                 updateSearchParam(SearchParams.subject, newState)
@@ -88,8 +90,11 @@ const SearchParamsSection: React.FC = () => {
           <GridItem area={'district'}>
             <SelectOptions
               label={'Район'}
-              options={[['Уралмаш', 'Уралмаш'], ['Ленинский', 'Ленинский'],
-                ['Ботанический', 'Ботанический']]}
+              options={[
+                ['Уралмаш', 'Уралмаш'],
+                ['Ленинский', 'Ленинский'],
+                ['Ботанический', 'Ботанический'],
+              ]}
               value={searchParamsState.get(SearchParams.district)}
               updateState={(newState) =>
                 updateSearchParam(SearchParams.district, newState)
@@ -99,9 +104,14 @@ const SearchParamsSection: React.FC = () => {
           <GridItem area={'price'}>
             <SelectOptions
               label={'Цена'}
-              options={[['Любая', '10000000'], ['< 1000 ₽ за час', '1000'],
-                ['< 800 ₽ за час', '800'], ['< 700 ₽ за час', '700'],
-                ['< 600 ₽ за час', '600'], ['< 500 ₽ за час', '500']]}
+              options={[
+                ['Любая', '10000000'],
+                ['< 1000 ₽ за час', '1000'],
+                ['< 800 ₽ за час', '800'],
+                ['< 700 ₽ за час', '700'],
+                ['< 600 ₽ за час', '600'],
+                ['< 500 ₽ за час', '500'],
+              ]}
               value={searchParamsState.get(SearchParams.price)}
               updateState={(newState) =>
                 updateSearchParam(SearchParams.price, newState)
@@ -111,7 +121,11 @@ const SearchParamsSection: React.FC = () => {
           <GridItem area={'rating'}>
             <SelectOptions
               label={'Рейтинг'}
-              options={[['Любой', '0'], ['⭐⭐⭐⭐ и более', '4'], ['⭐⭐⭐ и более', '3']]}
+              options={[
+                ['Любой', '0'],
+                ['⭐⭐⭐⭐ и более', '4'],
+                ['⭐⭐⭐ и более', '3'],
+              ]}
               value={searchParamsState.get(SearchParams.rating)}
               updateState={(newState) =>
                 updateSearchParam(SearchParams.rating, newState)
