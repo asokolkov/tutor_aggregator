@@ -8,14 +8,36 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import { LockIcon, InfoIcon } from '@chakra-ui/icons';
-import { ProfilePageSelectOptionsRow } from './ProfilePageSelectOptionsRow';
-import { ProfilePageInputRow } from './ProfilePageInputRow';
 import { ProfilePageTextAreaRow } from './ProfilePageTextAreaRow';
 import { ProfilePageButtonRow } from './ProfilePageButtonRow';
 import profileIcon from '../../img/profile_icon_bg.png';
+import StudentAPI, { Student } from '../../apis/students';
+import { ProfilePageInputRow } from './ProfilePageInputRow';
+import { ProfilePageSelectOptionsRow } from './ProfilePageSelectOptionsRow';
+import { useEffect, useState } from 'react';
+import { LoadBar } from '../BaseLayout/LoadBar';
+import { mapToFullName } from './_share';
 
-export const StudentCard = () => {
+export const StudentCard: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
+
+  const [, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [items, setItems] = useState<Student>(null);
+
+  useEffect(() => {
+    StudentAPI.getCurrentProfileInfo().then(
+      (result) => {
+        setIsLoaded(true);
+        setItems(result);
+      },
+      (e) => {
+        setIsLoaded(true);
+        setError(e);
+      }
+    );
+  }, []);
+  if (!isLoaded) return <LoadBar />;
   return (
     <>
       <Box
@@ -24,7 +46,7 @@ export const StudentCard = () => {
         borderRadius={'5px'}
         borderWidth={'1px'}
         bg="#A0AEC0"
-        backgroundImage={isDesktop ? profileIcon : NaN}
+        backgroundImage={isDesktop && profileIcon}
         backgroundPosition={'right bottom'}
         backgroundRepeat={'no-repeat'}
         backgroundSize={'14em'}
@@ -60,6 +82,7 @@ export const StudentCard = () => {
               placeholder={'Михаил Ланец'}
               isDisabled={true}
               isRequired={true}
+              value={mapToFullName(items.firstName, items.lastName)}
               tooltip={[
                 <Tooltip
                   label="Чтобы изменить ФИО, напишите в поддержку сайта"

@@ -6,7 +6,12 @@ export interface User {
   name?: string;
   surname?: string;
   avatar?: string;
-  type?: string;
+  type?: AccountType;
+}
+
+export enum AccountType {
+  Tutor = 'Tutor',
+  Student = 'Student',
 }
 
 export default class UserAPI {

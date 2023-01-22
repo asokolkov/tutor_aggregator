@@ -1,4 +1,6 @@
-﻿namespace SPA.V1.Controllers;
+﻿using Swashbuckle.AspNetCore.Annotations;
+
+namespace SPA.V1.Controllers;
 
 using Application.Users.GetCurrentUserQuery;
 using AutoMapper;
@@ -22,6 +24,7 @@ public sealed class V1UserController : ControllerBase
     }
 
     [HttpGet("current")]
+    [SwaggerResponse(200, "OK", typeof(V1UserDto))]
     public async Task<IActionResult> GetCurrentUserAsync()
     {
         var userId = User.GetId();

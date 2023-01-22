@@ -15,9 +15,32 @@ import { ProfilePageTextAreaRow } from './ProfilePageTextAreaRow';
 import { ProfilePageButtonRow } from './ProfilePageButtonRow';
 import { ProfilePageCheckboxesRow } from './ProfilePageCheckboxesRow';
 import profileIcon from '../../img/profile_icon_bg.png';
+import { mapToFullName } from './_share';
+import { useEffect, useState } from 'react';
+import { LoadBar } from '../BaseLayout/LoadBar';
+import TutorsAPI, { Tutor } from '../../apis/tutors';
 
-export const TutorCard = () => {
+export const TutorCard: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
+
+  const [, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [items, setItems] = useState<Tutor>(null);
+
+  useEffect(() => {
+    TutorsAPI.getCurrentProfileInfo().then(
+      (result) => {
+        setIsLoaded(true);
+        setItems(result);
+      },
+      (e) => {
+        setIsLoaded(true);
+        setError(e);
+      }
+    );
+  });
+
+  if (!isLoaded) return <LoadBar />;
   return (
     <>
       <Box
@@ -59,7 +82,7 @@ export const TutorCard = () => {
           >
             <ProfilePageInputRow
               label={'ФИО'}
-              placeholder={'Михаил Ланец'}
+              value={mapToFullName(items.firstName, items.lastName)}
               isDisabled={true}
               isRequired={true}
               tooltip={[
@@ -104,7 +127,6 @@ export const TutorCard = () => {
             <Divider color={'gray'} margin={'0 0 10px 0'} />
             <ProfilePageInputRow
               label={'Образование'}
-              placeholder={'УрФУ Матмех'}
               isDisabled={false}
               isRequired={false}
               tooltip={[
