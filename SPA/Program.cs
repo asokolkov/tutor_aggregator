@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Converters;
+using SPA.Authorization;
+using SPA.Authorization.Requirements;
 using SPA.Data;
 using SPA.Extensions;
 using SPA.Identity;
@@ -45,6 +47,11 @@ builder.Services.ConfigureApplicationCookie(options =>
         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
         return Task.CompletedTask;
     };
+    options.Events.OnRedirectToAccessDenied = context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status403Forbidden;
+        return Task.CompletedTask;
+    };
 });
 
 builder.Services.AddAuthentication()
@@ -73,6 +80,25 @@ builder.Services.AddAuthentication()
                 return Task.CompletedTask;
             }
         };
+    });
+
+builder.Services.AddAuthorization(
+    authorization =>
+    {
+        authorization.AddPolicy(
+            Policies.CreateLessonPolicy,
+            policy => { policy.AddRequirements(new CreateLessonRequirement()); });
+        authorization.AddPolicy(
+            Policies.CancelLessonPolicy,
+            policy =>
+            {
+                policy.AddRequirements(
+                    new CancelLessonStudentRequirement(),
+                    new CancelLessonTutorRequirement());
+            });
+        authorization.AddPolicy(
+            Policies.BookLessonPolicy,
+            policy => { policy.AddRequirements(new BookLessonRequirement()); });
     });
 
 var app = builder.Build();

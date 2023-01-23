@@ -1,24 +1,21 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace SPA.V1.DataModels;
 
 public sealed class V1StudentDto
 {
-    [JsonPropertyName("id")]
+    [JsonProperty("id")]
     public string Id { get; init; }
     
-    [JsonPropertyName("firstName")]
+    [JsonProperty("firstName")]
     public string FirstName { get; init; }
 
-    [JsonPropertyName("lastName")]
+    [JsonProperty("lastName")]
     public string LastName { get; init; }
     
-    [JsonPropertyName("age")]
+    [JsonProperty("age")]
     public int Age { get; init; }
 
-    [JsonPropertyName("contacts")]
+    [JsonProperty("contacts")]
     public string Contacts { get; init; }
-
-    [JsonPropertyName("lessons")]
-    public IReadOnlyCollection<V1LessonDto> Lessons { get; init; }
 }

@@ -6,15 +6,10 @@ using Microsoft.EntityFrameworkCore;
 internal sealed class ApplicationContext : DbContext
 {
     public DbSet<TutorEntity> Tutors { get; set; } = null!;
-    
     public DbSet<LessonEntity> Lessons { get; set; } = null!;
-    
     public DbSet<StudentEntity> Students { get; set; } = null!;
-    
     public DbSet<ReviewEntity> Reviews { get; set; } = null!;
-    
     public DbSet<LocationEntity> Locations { get; set; } = null!;
-    
     public DbSet<SubjectEntity> Subjects { get; set; } = null!;
     
     public DbSet<AvatarEntity> Avatars { get; set; } = null!;
@@ -35,12 +30,15 @@ internal sealed class ApplicationContext : DbContext
             .HasMany(e => e.Reviews)
             .WithOne(e => e.Tutor);
         modelBuilder.Entity<TutorEntity>()
-            .Navigation(e => e.Lessons)
+            .HasMany(e => e.Lessons)
+            .WithOne(e => e.Tutor);
+        modelBuilder.Entity<TutorEntity>()
+            .Navigation(e => e.Reviews)
             .AutoInclude();
         
         modelBuilder.Entity<StudentEntity>()
-            .Navigation(e => e.Lessons)
-            .AutoInclude();
+            .HasMany(e => e.Lessons)
+            .WithOne(e => e.Student);
         modelBuilder.Entity<StudentEntity>()
             .HasMany(e => e.Reviews)
             .WithOne(e => e.Student);

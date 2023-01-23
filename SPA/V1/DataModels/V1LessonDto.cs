@@ -1,21 +1,29 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Security.Policy;
+using Newtonsoft.Json;
+using SPA.Entities;
 
 namespace SPA.V1.DataModels;
 
 public sealed class V1LessonDto
 {
-    [JsonPropertyName("id")]
+    [JsonProperty("id")]
     public string Id { get; init; }
     
-    [JsonPropertyName("price")]
+    [JsonProperty("price")]
     public double Price { get; init; }
     
-    [JsonPropertyName("confirmed")]
-    public bool Confirmed { get; init; }
+    [JsonProperty("status")]
+    public LessonStatus Status { get; init; }
     
-    [JsonPropertyName("startTime")]
-    public DateTimeOffset StartTime { get; init; }
+    [JsonProperty("start")]
+    public DateTimeOffset Start { get; init; }
     
-    [JsonPropertyName("endTime")]
-    public DateTimeOffset EndTime { get; init; }
+    [JsonProperty("end")]
+    public DateTimeOffset End { get; init; }
+
+    [JsonProperty("tutor")]
+    public V1TutorInfoDto Tutor { get; init; }
+    
+    [JsonProperty("student")]
+    public V1StudentInfoDto Student { get; init; }
 }

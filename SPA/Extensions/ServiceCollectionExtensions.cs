@@ -4,6 +4,7 @@ using SPA.Application.Locations.Commands.UpdateLocationCommand;
 using SPA.Application.Locations.Queries.GetLocationQuery;
 using SPA.Application.Locations.Queries.GetLocationsQuery;
 using SPA.Application.Students.Commands.UpdateStudentCommand;
+using SPA.Application.Students.Queries.GetLessonsQuery;
 using SPA.Application.Students.Queries.GetStudentQuery;
 using SPA.Application.Students.Queries.GetStudentsQuery;
 using SPA.Application.Subjects.Queries.GetSubjectsQuery;
@@ -16,10 +17,12 @@ using SPA.Application.Users.Queries.GetCurrentUserQuery;
 namespace SPA.Extensions;
 
 using Application.Tutors.Queries.GetReviewsQuery;
+using Authorization;
 using Data;
 using Domain;
 using Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
 using Repositories.Impl;
@@ -59,6 +62,8 @@ internal static class ServiceCollectionExtensions
         services.AddScoped<IRequestHandler<GetAvatarQuery, byte[]>, GetAvatarQueryHandler>();
         services.AddScoped<IRequestHandler<CreateAvatarCommand, byte[]>, CreateAvatarCommandHandler>();
 
+        services.AddScoped<IRequestHandler<GetStudentLessonsQuery, ICollection<Lesson>>, GetStudentLessonsQueryHandler>();
+
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ITutorsRepository, TutorsRepository>();
@@ -67,5 +72,11 @@ internal static class ServiceCollectionExtensions
         services.AddScoped<ISubjectsRepository, SubjectsRepository>();
         services.AddScoped<IReviewsRepository, ReviewsRepository>();
         services.AddScoped<IAvatarsRepository, AvatarsRepository>();
+        services.AddScoped<ILessonRepository, LessonRepository>();
+
+        services
+            .AddScoped<IAuthorizationHandler, CancelLessonAuthorizationHadnler>()
+            .AddScoped<IAuthorizationHandler, CreateLessonAuthorizationHandler>()
+            .AddScoped<IAuthorizationHandler, BookLessonAuthorizationHandler>();
     }
 }

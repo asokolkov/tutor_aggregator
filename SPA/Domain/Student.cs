@@ -9,10 +9,10 @@ public sealed class Student
     public string LastName { get; set; }
     
     public int Age { get; set; }
-
-    public string Contacts { get; set; }
+    
+    public string Contacts { get; init; }
 
     public ICollection<Lesson> Lessons { get; init; }
-    
+
     public ICollection<Review> Reviews { get; init; }
 }

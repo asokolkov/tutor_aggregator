@@ -1,33 +1,33 @@
-﻿namespace SPA.V1.DataModels;
+﻿using Newtonsoft.Json;
 
-using System.Text.Json.Serialization;
+namespace SPA.V1.DataModels;
 
 public sealed class V1UpdateTutorDto
 {
-    [JsonPropertyName("firstName")]
+    [JsonProperty("firstName")]
     public string FirstName { get; init; }
 
-    [JsonPropertyName("lastName")]
+    [JsonProperty("lastName")]
     public string LastName { get; init; }
 
-    [JsonPropertyName("requirements")]
+    [JsonProperty("requirements")]
     public string Requirements { get; init; }
 
-    [JsonPropertyName("location")]
+    [JsonProperty("location")]
     public V1LocationDto Location { get; init; }
 
-    [JsonPropertyName("job")]
+    [JsonProperty("job")]
     public string Job { get; init; }
-    
-    [JsonPropertyName("contacts")]
+
+    [JsonProperty("contacts")]
     public string Contacts { get; init; }
 
-    [JsonPropertyName("educations")]
+    [JsonProperty("educations")]
     public string Educations { get; init; }
 
-    [JsonPropertyName("awards")]
+    [JsonProperty("awards")]
     public string Awards { get; init; }
-
-    [JsonPropertyName("subjects")]
+    
+    [JsonProperty("subjects")]
     public ICollection<V1SubjectDto> Subjects { get; init; }
 }

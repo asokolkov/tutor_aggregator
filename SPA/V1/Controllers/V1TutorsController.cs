@@ -1,5 +1,7 @@
-﻿using SPA.Application.Tutors.Commands.CreateReviewCommand;
+using SPA.Application.Tutors.Commands.CreateReviewCommand;
+using SPA.Application.Lessons.CreateLessonCommand;
 using SPA.Application.Tutors.Commands.UpdateTutorCommand;
+using SPA.Application.Tutors.Queries.GetLessonsQuery;
 using SPA.Application.Tutors.Queries.GetTutorQuery;
 using SPA.Application.Tutors.Queries.GetTutorsQuery;
 using Swashbuckle.AspNetCore.Annotations;
@@ -30,8 +32,8 @@ public sealed class V1TutorsController : Controller
 
     [HttpGet]
     [SwaggerResponse(200, "OK", typeof(V1PageDto<V1TutorDto>))]
-    public async Task<IActionResult> GetPageAsync([FromQuery] int page = 0, 
-        [FromQuery] int size = 30, [FromQuery] string subject = "", [FromQuery] string city = "" /* TODO Екатеринбург */, 
+    public async Task<IActionResult> GetPageAsync([FromQuery] int page = 0,
+        [FromQuery] int size = 30, [FromQuery] string subject = "", [FromQuery] string city = "Екатеринбург",
         [FromQuery] string district = "", [FromQuery] int maxPrice = -1, [FromQuery] int rating = -1)
     {
         if (page < 0)
@@ -54,7 +56,7 @@ public sealed class V1TutorsController : Controller
     }
 
     [HttpGet("{id:guid}/reviews")]
-    [SwaggerResponse(200, "OK", typeof(V1PageDto<V1ReviewDto>))]
+    [SwaggerResponse(200, "OK", typeof(ICollection<V1ReviewDto>))]
     public async Task<IActionResult> GetReviewsAsync(Guid id, [FromQuery] int page = 0, [FromQuery] int size = 30)
     {
         var command = new GetTutorReviewsQuery(id, page, size);
@@ -87,7 +89,7 @@ public sealed class V1TutorsController : Controller
             return Unauthorized();
 
         var updateTutor = mapper.Map<UpdateTutor>(updateTutorDto);
-        
+
         var query = new UpdateTutorCommand(tutorId.Value, updateTutor);
         var tutor = await mediator.Send(query);
         return Ok(mapper.Map<V1TutorDto>(tutor));
@@ -107,5 +109,14 @@ public sealed class V1TutorsController : Controller
         if (tutor is null)
             return NotFound();
         return Ok(mapper.Map<V1TutorDto>(tutor));
+    }
+
+    [HttpGet("{id:guid}/lessons")]
+    [SwaggerResponse(200, "OK", typeof(ICollection<V1LessonDto>))]
+    public async Task<IActionResult> GetLessonsAsync(Guid id)
+    {
+        var getTutorQuery = new GetTutorLessonsQuery(id);
+        var lessons = await mediator.Send(getTutorQuery);
+        return Ok(mapper.Map<ICollection<V1LessonDto>>(lessons));
     }
 }

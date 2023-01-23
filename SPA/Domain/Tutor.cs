@@ -1,4 +1,5 @@
 ﻿using System.Reflection.Metadata;
+using JetBrains.Annotations;
 
 namespace SPA.Domain;
 
@@ -11,10 +12,10 @@ public sealed class Tutor
     public string LastName { get; set; }
 
     public double Rating { get; set; }
+    
+    public Location Location { get; set; }
 
     public string Requirements { get; set; }
-
-    public Location Location { get; set; }
 
     public string Job { get; set; }
     
