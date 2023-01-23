@@ -58,11 +58,12 @@ internal static class ServiceCollectionExtensions
         services.AddScoped<IRequestHandler<GetSubjectsQuery, List<Subject>>, GetSubjectQueryHandler>();
 
         services.AddScoped<IRequestHandler<GetUserQuery, User>, GetUserQueryHandler>();
-        
+
         services.AddScoped<IRequestHandler<GetAvatarQuery, byte[]>, GetAvatarQueryHandler>();
         services.AddScoped<IRequestHandler<CreateAvatarCommand, byte[]>, CreateAvatarCommandHandler>();
 
-        services.AddScoped<IRequestHandler<GetStudentLessonsQuery, ICollection<Lesson>>, GetStudentLessonsQueryHandler>();
+        services
+            .AddScoped<IRequestHandler<GetStudentLessonsQuery, ICollection<Lesson>>, GetStudentLessonsQueryHandler>();
 
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IUserRepository, UserRepository>();
