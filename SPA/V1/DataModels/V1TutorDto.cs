@@ -19,25 +19,22 @@ public sealed class V1TutorDto
 
     [JsonProperty("rating")]
     public double Rating { get; init; }
-
-    [JsonProperty("avatar")]
-    public Uri Avatar { get; init; }
     
     [JsonProperty("location")]
     public V1LocationDto Location { get; init; }
     
     [JsonProperty("job")]
-    public V1JobDto Job { get; init; }
-
-    [JsonProperty("subjects")]
-    public IReadOnlyCollection<V1SubjectDto> Subjects { get; init; }
+    public string Job { get; init; }
 
     [JsonProperty("contacts")]
-    public IReadOnlyCollection<V1TutorContactDto> Contacts { get; init; }
+    public string Contacts { get; init; }
 
     [JsonProperty("educations")]
-    public IReadOnlyCollection<V1EducationDto> Educations { get; init; }
-
+    public string Educations { get; init; }
+    
     [JsonProperty("awards")]
-    public IReadOnlyCollection<V1AwardDto> Awards { get; init; }
+    public string Awards { get; init; }
+    
+    [JsonProperty("subjects")]
+    public IReadOnlyCollection<V1SubjectDto> Subjects { get; init; }
 }

@@ -18,7 +18,4 @@ public sealed class V1ReviewDto
     
     [JsonProperty("studentId")]
     public string StudentId { get; init; }
-    
-    [JsonProperty("studentAvatar")]
-    public Uri StudentAvatar { get; init; }
 }

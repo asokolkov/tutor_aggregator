@@ -8,9 +8,11 @@ public sealed class Student
 
     public string LastName { get; set; }
     
-    public Uri Avatar { get; set; }
-
-    public ICollection<StudentContact> Contacts { get; init; }
+    public int Age { get; set; }
     
+    public string Contacts { get; init; }
+
+    public ICollection<Lesson> Lessons { get; init; }
+
     public ICollection<Review> Reviews { get; init; }
 }

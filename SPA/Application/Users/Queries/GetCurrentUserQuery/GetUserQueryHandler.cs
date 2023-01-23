@@ -1,9 +1,9 @@
-﻿namespace SPA.Application.Users.GetCurrentUserQuery;
-
-using Domain;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using MediatR;
-using Repositories;
+using SPA.Domain;
+using SPA.Repositories;
+
+namespace SPA.Application.Users.Queries.GetCurrentUserQuery;
 
 #nullable enable
 

@@ -25,6 +25,7 @@ const SearchCardInfo: React.FC<SearchCardInfoProps> = ({
       padding={'16px'}
       spacing={'8px'}
     >
+      
       <Avatar name={name} border={'0px'} src={imgSrc} size="2xl" />
       <VStack h={'auto'} spacing={'6px'}>
         <Heading as="h4" size="lg" textAlign={'center'}>

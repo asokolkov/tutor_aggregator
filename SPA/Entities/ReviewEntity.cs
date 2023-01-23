@@ -1,4 +1,6 @@
-﻿namespace SPA.Entities;
+﻿using SPA.Domain;
+
+namespace SPA.Entities;
 
 internal sealed class ReviewEntity
 {

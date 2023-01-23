@@ -4,6 +4,5 @@ using MediatR;
 namespace SPA.Application.Locations.Commands.UpdateLocationCommand;
 
 using Domain;
-using Entities;
 
 internal record UpdateLocationCommand(Location Element) : IRequest<Location?>;

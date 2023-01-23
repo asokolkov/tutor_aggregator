@@ -7,10 +7,10 @@ internal sealed class StudentEntity
     public string FirstName { get; init; }
 
     public string LastName { get; init; }
+    
+    public int Age { get; set; }
 
-    public Uri Avatar { get; init; }
-
-    public ICollection<StudentContactEntity> Contacts { get; init; }
+    public string Contacts { get; init; }
 
     public ICollection<LessonEntity> Lessons { get; init; }
     

@@ -48,8 +48,8 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Folder Include="Application\Avatars\Queries" />
         <Folder Include="Application\Users\Queries" />
-        <Folder Include="Migrations\ApplicationIdentity" />
     </ItemGroup>
 
     <ItemGroup>

@@ -9,7 +9,10 @@ public sealed class V1UpdateStudentDto
 
     [JsonProperty("lastName")]
     public string LastName { get; init; }
+    
+    [JsonProperty("age")]
+    public int Age { get; init; }
 
     [JsonProperty("contacts")]
-    public ICollection<V1StudentContactDto> Contacts { get; init; }
+    public string Contacts { get; init; }
 }

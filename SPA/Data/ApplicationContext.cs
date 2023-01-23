@@ -11,6 +11,8 @@ internal sealed class ApplicationContext : DbContext
     public DbSet<ReviewEntity> Reviews { get; set; } = null!;
     public DbSet<LocationEntity> Locations { get; set; } = null!;
     public DbSet<SubjectEntity> Subjects { get; set; } = null!;
+    
+    public DbSet<AvatarEntity> Avatars { get; set; } = null!;
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
     {
@@ -25,34 +27,27 @@ internal sealed class ApplicationContext : DbContext
             .HasOne(e => e.Location)
             .WithMany(e => e.Tutors);
         modelBuilder.Entity<TutorEntity>()
-            .Navigation(e => e.Contacts)
-            .AutoInclude();
-        modelBuilder.Entity<TutorEntity>()
-            .Navigation(e => e.Educations)
-            .AutoInclude();
-        modelBuilder.Entity<TutorEntity>()
-            .Navigation(e => e.Awards)
-            .AutoInclude();
+            .HasMany(e => e.Reviews)
+            .WithOne(e => e.Tutor);
         modelBuilder.Entity<TutorEntity>()
             .HasMany(e => e.Lessons)
             .WithOne(e => e.Tutor);
         modelBuilder.Entity<TutorEntity>()
             .Navigation(e => e.Reviews)
             .AutoInclude();
-        modelBuilder.Entity<TutorEntity>().Navigation(e => e.Job).AutoInclude();
         
-        modelBuilder.Entity<StudentEntity>()
-            .Navigation(e => e.Contacts)
-            .AutoInclude();
         modelBuilder.Entity<StudentEntity>()
             .HasMany(e => e.Lessons)
             .WithOne(e => e.Student);
         modelBuilder.Entity<StudentEntity>()
-            .Navigation(e => e.Reviews)
-            .AutoInclude();
+            .HasMany(e => e.Reviews)
+            .WithOne(e => e.Student);
 
         modelBuilder.Entity<ReviewEntity>()
             .Navigation(e => e.Student)
+            .AutoInclude();
+        modelBuilder.Entity<ReviewEntity>()
+            .Navigation(e => e.Tutor)
             .AutoInclude();
 
         modelBuilder.UseSerialColumns();

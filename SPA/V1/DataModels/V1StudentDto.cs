@@ -12,10 +12,10 @@ public sealed class V1StudentDto
 
     [JsonProperty("lastName")]
     public string LastName { get; init; }
-
-    [JsonProperty("avatar")]
-    public Uri Avatar { get; init; }
+    
+    [JsonProperty("age")]
+    public int Age { get; init; }
 
     [JsonProperty("contacts")]
-    public IReadOnlyCollection<V1StudentContactDto> Contacts { get; init; }
+    public string Contacts { get; init; }
 }

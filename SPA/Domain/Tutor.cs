@@ -1,4 +1,7 @@
-﻿namespace SPA.Domain;
+﻿using System.Reflection.Metadata;
+using JetBrains.Annotations;
+
+namespace SPA.Domain;
 
 public sealed class Tutor
 {
@@ -9,23 +12,21 @@ public sealed class Tutor
     public string LastName { get; set; }
 
     public double Rating { get; set; }
-
-    public string Requirements { get; set; }
-
-    public Uri Avatar { get; set; }
     
     public Location Location { get; set; }
 
-    public Job Job { get; set; }
+    public string Requirements { get; set; }
+
+    public string Job { get; set; }
+    
+    public string Educations { get; set; }
+
+    public string Awards { get; set; }
+    
+    public string Contacts { get; init; }
 
     public ICollection<Subject> Subjects { get; init; }
-
-    public ICollection<TutorContact> Contacts { get; init; }
-
-    public ICollection<Education> Educations { get; init; }
-
-    public ICollection<Award> Awards { get; init; }
-
+    
     public ICollection<Lesson> Lessons { get; init; }
     
     public ICollection<Review> Reviews { get; init; }
