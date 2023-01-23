@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SPA.Data;
 using SPA.Entities;
 
@@ -9,12 +8,10 @@ internal sealed class AvatarsRepository : IAvatarsRepository
 {
     private readonly ApplicationContext context;
     private readonly DbSet<AvatarEntity> table;
-    private readonly IMapper mapper;
 
-    public AvatarsRepository(ApplicationContext context, IMapper mapper)
+    public AvatarsRepository(ApplicationContext context)
     {
         this.context = context;
-        this.mapper = mapper;
         table = context.Avatars;
     }
     
