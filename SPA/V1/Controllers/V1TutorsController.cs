@@ -1,5 +1,4 @@
 using SPA.Application.Tutors.Commands.CreateReviewCommand;
-using SPA.Application.Lessons.CreateLessonCommand;
 using SPA.Application.Tutors.Commands.UpdateTutorCommand;
 using SPA.Application.Tutors.Queries.GetLessonsQuery;
 using SPA.Application.Tutors.Queries.GetTutorQuery;
@@ -9,6 +8,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace SPA.V1.Controllers;
 
 using Application.Tutors.Queries.GetReviewsQuery;
+using Authorization;
 using AutoMapper;
 using DataModels;
 using Domain;
@@ -63,7 +63,8 @@ public sealed class V1TutorsController : Controller
         var model = await mediator.Send(command);
         return Ok(mapper.Map<V1PageDto<V1ReviewDto>>(model));
     }
-    
+
+    [Authorize(Policy = Policies.CreateReviewPolicy)]
     [HttpPost("{id:guid}/reviews")]
     [SwaggerResponse(200, "OK", typeof(V1ReviewDto))]
     [SwaggerResponse(401, "Unauthorized")]
@@ -73,14 +74,15 @@ public sealed class V1TutorsController : Controller
         var studentId = User.GetId();
         if (studentId is null)
             return Unauthorized();
-        
+
         var review = mapper.Map<Review>(reviewDto);
-        var command = new CreateReviewCommand(id, (Guid)studentId, review);
+        var command = new CreateReviewCommand(id, studentId.Value, review);
         var reviewResult = await mediator.Send(command);
         return Ok(mapper.Map<V1ReviewDto>(reviewResult));
     }
 
     [HttpPut]
+    [Authorize]
     [SwaggerResponse(200, "OK", typeof(V1TutorDto))]
     public async Task<IActionResult> UpdateAsync([FromBody] V1UpdateTutorDto updateTutorDto)
     {

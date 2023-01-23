@@ -23,9 +23,10 @@ import Theme from '../../theme/index';
 import { PasswordField } from './PasswordField';
 import { OAuthButtons } from './OAuthButtons';
 import { Link as RLink } from 'react-router-dom';
-import { LOGIN_PAGE } from '../../route-paths';
+import { LOGIN_PAGE, SEARCH_PAGE } from '../../route-paths';
 import { useRef } from 'react';
 import AuthAPI, { AccountType } from '../../apis/auth';
+import { useNavigate } from "react-router-dom";
 
 export const SignupPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
@@ -35,6 +36,7 @@ export const SignupPage = () => {
   const firstNameRef = useRef<HTMLInputElement>();
   const lastNameRef = useRef<HTMLInputElement>();
   const phoneRef = useRef<HTMLInputElement>();
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
     const email = emailRef.current.value;
@@ -55,7 +57,7 @@ export const SignupPage = () => {
       phone: phone,
     })
       .then(() => {
-        //TODO: navigate to main page/profile page
+          navigate(SEARCH_PAGE);
       })
       .catch((error) => {
         //TODO: show error
