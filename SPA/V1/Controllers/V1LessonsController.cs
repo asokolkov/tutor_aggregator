@@ -11,6 +11,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace SPA.V1.Controllers;
 
 using Application.Lessons.CancelLessonCommand;
+using Authorization;
 
 [Route("api/v1")]
 public sealed class V1LessonsController : ControllerBase
@@ -24,7 +25,7 @@ public sealed class V1LessonsController : ControllerBase
         this.mapper = mapper;
     }
 
-    [Authorize]
+    [Authorize(Policy = Policies.CreateLessonPolicy)]
     [HttpPost("lessons")]
     [SwaggerResponse(200, "OK", typeof(ICollection<V1LessonDto>))]
     public async Task<IActionResult> CreateAsync([FromBody] V1CreateLessonDto createLessonDto)
@@ -40,7 +41,7 @@ public sealed class V1LessonsController : ControllerBase
         return Ok(mapper.Map<V1LessonDto>(lesson));
     }
 
-    [Authorize]
+    [Authorize(Policy = Policies.BookLessonPolicy)]
     [HttpPost("lessons/{id:guid}/book")]
     [SwaggerResponse(200, "OK", typeof(V1LessonDto))]
     public async Task<IActionResult> BookAsync(Guid id)
@@ -55,7 +56,7 @@ public sealed class V1LessonsController : ControllerBase
         return Ok(mapper.Map<V1LessonDto>(lesson));
     }
 
-    [Authorize]
+    [Authorize(Policy = Policies.CancelLessonPolicy)]
     [HttpPost("lessons/{id:guid}/cancel")]
     [SwaggerResponse(200, "OK", typeof(V1LessonDto))]
     public async Task<IActionResult> CancelAsync(Guid id)

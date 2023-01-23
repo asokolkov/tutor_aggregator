@@ -14,12 +14,12 @@ namespace SPA.Extensions;
 
 using Application.Tutors.Queries.GetReviewsQuery;
 using Application.Users.GetCurrentUserQuery;
-using Application.Users.GetCurrentUserQuery;
+using Authorization;
 using Data;
-using Domain;
 using Domain;
 using Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
 using Repositories.Impl;
@@ -65,5 +65,10 @@ internal static class ServiceCollectionExtensions
         services.AddScoped<ILocationsRepository, LocationsesRepository>();
         services.AddScoped<ISubjectsRepository, SubjectsRepository>();
         services.AddScoped<ILessonRepository, LessonRepository>();
+
+        services
+            .AddScoped<IAuthorizationHandler, CancelLessonAuthorizationHadnler>()
+            .AddScoped<IAuthorizationHandler, CreateLessonAuthorizationHandler>()
+            .AddScoped<IAuthorizationHandler, BookLessonAuthorizationHandler>();
     }
 }
