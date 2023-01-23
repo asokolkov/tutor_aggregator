@@ -33,7 +33,7 @@ public sealed class V1TutorsController : Controller
     [HttpGet]
     [SwaggerResponse(200, "OK", typeof(V1PageDto<V1TutorDto>))]
     public async Task<IActionResult> GetPageAsync([FromQuery] int page = 0,
-        [FromQuery] int size = 30, [FromQuery] string subject = "", [FromQuery] string city = "Екатеринбург",
+        [FromQuery] int size = 30, [FromQuery] string subject = "", [FromQuery] string city = "",
         [FromQuery] string district = "", [FromQuery] int maxPrice = -1, [FromQuery] int rating = -1)
     {
         if (page < 0)

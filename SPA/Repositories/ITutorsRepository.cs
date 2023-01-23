@@ -11,8 +11,8 @@ internal interface ITutorsRepository
     
     Task<Tutor?> Get(Guid id);
 
-    Task<Tutor?> Update(Tutor tutor);
-    
+    Task<Tutor?> Update(Guid id, UpdateTutor tutor);
+
     Task<Tutor?> Insert(Tutor tutor);
 
     Task<Page<Review>> GetTutorReviews(Guid tutorId, int page, int size);

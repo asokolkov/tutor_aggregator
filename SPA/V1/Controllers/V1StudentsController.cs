@@ -58,7 +58,9 @@ public sealed class V1StudentsController : Controller
         var userId = User.GetId();
         if (userId is null)
             return Unauthorized();
+        
         var updateStudent = mapper.Map<UpdateStudent>(old);
+        
         var query = new UpdateStudentCommand(userId.Value, updateStudent);
         var student = await mediator.Send(query);
         return Ok(mapper.Map<V1StudentDto>(student));

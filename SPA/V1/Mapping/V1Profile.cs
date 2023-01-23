@@ -39,6 +39,7 @@ internal sealed class V1Profile : Profile
         CreateMap<User, V1UserDto>();
 
         CreateMap<V1UpdateTutorDto, UpdateTutor>();
+        CreateMap<UpdateTutor, TutorEntity>();
         
         CreateMap<V1UpdateStudentDto, UpdateStudent>();
         CreateMap<UpdateStudent, StudentEntity>();

@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata;
-
-namespace SPA.Entities;
+﻿namespace SPA.Entities;
 
 internal sealed class TutorEntity
 {
@@ -24,7 +22,7 @@ internal sealed class TutorEntity
     
     public string Contacts { get; set; }
 
-    public ICollection<SubjectEntity> Subjects { get; init; }
+    public ICollection<SubjectEntity> Subjects { get; set; }
     
     public ICollection<LessonEntity> Lessons { get; init; }
     

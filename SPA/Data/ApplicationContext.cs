@@ -35,6 +35,12 @@ internal sealed class ApplicationContext : DbContext
         modelBuilder.Entity<TutorEntity>()
             .Navigation(e => e.Reviews)
             .AutoInclude();
+        modelBuilder.Entity<TutorEntity>()
+            .Navigation(e => e.Location)
+            .AutoInclude();
+        modelBuilder.Entity<TutorEntity>()
+            .Navigation(e => e.Subjects)
+            .AutoInclude();
         
         modelBuilder.Entity<StudentEntity>()
             .HasMany(e => e.Lessons)

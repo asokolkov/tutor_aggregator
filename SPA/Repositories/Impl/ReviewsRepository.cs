@@ -41,14 +41,14 @@ internal sealed class ReviewsRepository : IReviewsRepository
             Student = student,
             UpdatedAt = DateTimeOffset.Now.ToUniversalTime()
         };
-        
+
         await using var transaction = await context.Database.BeginTransactionAsync();
         await transaction.CreateSavepointAsync("BeforeInsert");
         try
         {
             await context.Reviews.AddAsync(reviewEntity);
+            tutor.Rating = tutor.Reviews.Concat(new[] { reviewEntity }).Average(x => x.Rating);
             await context.SaveChangesAsync();
-            tutor.Rating = tutor.Reviews.Average(x => x.Rating);
             await transaction.CommitAsync();
         }
         catch (Exception)

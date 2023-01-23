@@ -1,7 +1,4 @@
-﻿using System.Reflection.Metadata;
-using JetBrains.Annotations;
-
-namespace SPA.Domain;
+﻿namespace SPA.Domain;
 
 public sealed class Tutor
 {

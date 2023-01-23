@@ -20,19 +20,6 @@ internal class UpdateTutorCommandHandler : IRequestHandler<UpdateTutorCommand, T
 
     public async Task<Tutor?> Handle(UpdateTutorCommand request, CancellationToken cancellationToken)
     {
-        var tutor = await repository.Get(request.TutorId);
-
-        if (tutor is null)
-            return null;
-        
-        tutor.FirstName = request.Tutor.FirstName;
-        tutor.LastName = request.Tutor.LastName;
-        tutor.Requirements = request.Tutor.Requirements;
-        tutor.Job = request.Tutor.Job;
-        tutor.Location = request.Tutor.Location;
-        
-        //TODO: остальные поля
-
-        return await repository.Update(tutor);
+        return await repository.Update(request.TutorId, request.Tutor);
     }
 }

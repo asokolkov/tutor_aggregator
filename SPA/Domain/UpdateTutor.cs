@@ -2,21 +2,21 @@
 
 internal sealed class UpdateTutor
 {
-    public string FirstName { get; init; }
+    public string FirstName { get; set; }
 
-    public string LastName { get; init; }
-    
-    public string Requirements { get; init; }
-    
-    public Location Location { get; init; }
-    
-    public string Job { get; init; }
-    
-    public string Contacts { get; init; }
+    public string LastName { get; set; }
 
-    public string Educations { get; init; }
+    public Location Location { get; set; }
+
+    public string Requirements { get; set; }
+
+    public string Job { get; set; }
     
-    public string Awards { get; init; }
+    public string Educations { get; set; }
+
+    public string Awards { get; set; }
     
+    public string Contacts { get; set; }
+
     public ICollection<Subject> Subjects { get; init; }
 }
