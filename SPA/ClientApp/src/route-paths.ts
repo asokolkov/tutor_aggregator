@@ -10,3 +10,4 @@ export const AUTH_LAYOUT = '/auth';
 export const LOGIN_PAGE = `${AUTH_LAYOUT}/login`;
 export const SIGNUP_PAGE = `${AUTH_LAYOUT}/signup`;
 export const FORGOT_PASSWORD_PAGE = `${AUTH_LAYOUT}/forgot`;
+export const LESSONS_PAGE = `${DEFAULT_LAYOUT}/calendar`;

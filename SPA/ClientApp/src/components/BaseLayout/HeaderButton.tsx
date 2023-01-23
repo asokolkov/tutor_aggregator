@@ -19,18 +19,23 @@ const HeaderButton: React.FC<HeaderButtonProps> = ({
   return (
     <Link
       to={link}
-      style={{ display: 'flex', alignItems: 'center', justifyItems: 'center' }}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyItems: 'center',
+        height: 'fit-content',
+      }}
     >
       <Button
-        colorScheme={isActive && 'blue'}
+        colorScheme={isActive && 'black'}
         variant={variant}
         onClick={onClick}
+        _hover={{ color: '#777777' }}
       >
         <p
           style={
             isActive
               ? {
-                  textDecoration: 'underline',
                   fontWeight: 'bold',
                 }
               : {}

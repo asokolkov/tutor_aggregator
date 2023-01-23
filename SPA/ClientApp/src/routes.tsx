@@ -8,6 +8,7 @@ import {
   SIGNUP_PAGE,
   FORGOT_PASSWORD_PAGE,
   TUTOR_PAGE,
+  LESSONS_PAGE,
 } from './route-paths';
 import BaseLayout from './components/BaseLayout/BaseLayout';
 import { TutorCardPage } from './components/TutorCard/TutorCardPage';
@@ -16,6 +17,7 @@ import { LoginPage } from './components/Authorization/LoginPage';
 import { SignupPage } from './components/Authorization/SignupPage';
 import { ForgotPasswordPage } from './components/Authorization/ForgotPasswordPage';
 import { ProfilePage } from './components/Profiles/ProfilePage';
+import { LessonsPage } from './components/Lessons/LessonsPage';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: PROFILE_PAGE,
         element: <ProfilePage />,
+      },
+      {
+        path: LESSONS_PAGE,
+        element: <LessonsPage />,
       },
       {
         index: true,

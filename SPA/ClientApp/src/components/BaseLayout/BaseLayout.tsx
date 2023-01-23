@@ -10,15 +10,23 @@ import UserContext from './UserContext';
 import { LoadBar } from './LoadBar';
 
 const BaseLayout: React.FC = () => {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User>({ isAuthorized: false });
   const [isLoading, setLoading] = useState(true);
   useEffect(() => {
-    UserAPI.getCurrentUser().then((u) => {
-      setUser(u);
-      setLoading(false);
-    });
+    UserAPI.getCurrentUser()
+      .then((u) => {
+        setUser(u);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log('Запрос на авторизацию провалился');
+
+        setLoading(false);
+      });
   }, []);
-  if (isLoading) return <LoadBar />;
+  if (isLoading)
+    return <LoadBar description={'Загружаем данные пользователя'} />;
   return (
     <ChakraProvider theme={Theme}>
       <UserContext.Provider value={user}>

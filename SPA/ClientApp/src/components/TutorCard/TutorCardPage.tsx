@@ -1,9 +1,4 @@
-import {
-  ChakraProvider,
-  CircularProgress,
-  Flex,
-  VStack,
-} from '@chakra-ui/react';
+import { ChakraProvider, VStack } from '@chakra-ui/react';
 import Theme from '../../theme/index';
 import { CardInfo } from './CardInfo';
 import { ReviewSection } from './ReviewSection';
@@ -11,6 +6,7 @@ import { useEffect, useState } from 'react';
 import TutorsAPI, { Tutor, ReviewList } from '../../apis/tutors';
 import AwardSection from './AwardSection';
 import { useParams } from 'react-router-dom';
+import { LoadBar } from '../BaseLayout/LoadBar';
 
 export const TutorCardPage = () => {
   const [, setError] = useState(null);
@@ -36,17 +32,8 @@ export const TutorCardPage = () => {
     );
   }, []);
   if (!isLoaded)
-    return (
-      <Flex align={'center'} justify={'center'}>
-        <CircularProgress
-          isIndeterminate
-          color="teal"
-          size={'100px'}
-          value={25}
-          thickness="12px"
-        />
-      </Flex>
-    );
+    return <LoadBar description={'Загружаем карточку преподавателя'} />;
+
   return (
     <ChakraProvider theme={Theme}>
       <VStack maxW={'100%'} spacing={'40px'}>

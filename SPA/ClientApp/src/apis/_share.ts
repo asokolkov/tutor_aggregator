@@ -50,16 +50,9 @@ export interface Subject {
   description: string;
 }
 
-export interface Contact {
-  id: string;
-  type: number;
-  value: string;
-}
-
 export interface Education {
   id: string;
   description: string;
-  beginYear: number;
   graduationYear: number;
 }
 
