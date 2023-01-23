@@ -47,7 +47,6 @@ export const DateEditorTable = () => {
             maxWidth={'1000px'}
             width={'100%'}
             direction={'row'}
-            overflow-x={'scroll'}
           >
             <TimeBoxColumn
               columnLabel={nextDays[0]}

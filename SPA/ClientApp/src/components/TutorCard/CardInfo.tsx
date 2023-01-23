@@ -6,80 +6,148 @@ import {
   VStack,
   Button,
   Stack,
+  Flex,
   useDisclosure,
+  useBreakpointValue,
+  Divider,
 } from '@chakra-ui/react';
 import BottomCardDescription from './BottomCardDescription';
+import AwardsRow from './AwardsRow';
 import categoryIcon from '../../img/category-icon.png';
 import locationIcon from '../../img/location-icon.png';
 import educationIcon from '../../img/educations-icon.png';
 import requirementsIcon from '../../img/requirements-icon.png';
-import { Education } from '../../apis/_share';
-import ContactsInfoModal from './ContactsInfoModal';
+import ageIcon from '../../img/age-icon.png';
+import aboutIcon from '../../img/about-icon.png';
+import awardsIcon from '../../img/awards-icon.png';
+import { Award, Education } from '../../apis/_share';
+import RegisterModal from './RegisterModal';
+import ContactsPopoverButton from './ContactsPopoverButton';
 import { ReviewStarWithStats } from './ReviewStarWithStats';
+import React from 'react';
+
+function getTextToAge(age: number): string {
+  const lastDigit = age % 10;
+  const texts = [
+    'лет',
+    'год',
+    'года',
+    'года',
+    'года',
+    'лет',
+    'лет',
+    'лет',
+    'лет',
+    'лет',
+  ];
+  return texts[lastDigit];
+}
 
 export const CardInfo = (props: CardInfoProps) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const isDesktop = useBreakpointValue({ base: false, lg: true });
+  const {
+    isOpen: isOpenRegister,
+    onOpen: onOpenRegister,
+    onClose: onCloseRegister,
+  } = useDisclosure();
+  const nameSize = isDesktop ? '3xl' : '2xl';
+  const jobSize = isDesktop ? 'xl' : 'md';
   return (
     <>
-      <ContactsInfoModal
-        isOpen={isOpen}
-        onClose={onClose}
-        contacts={props.contacts}
-      />
+      <RegisterModal isOpen={isOpenRegister} onClose={onCloseRegister} />
       <Stack
         w="100%"
-        bg={'white'}
-        spacing={'24px'}
+        bg={'#ffffff'}
+        spacing={'12px'}
+        shadow={'lg'}
+        borderRadius={'5px'}
         borderWidth={'1px'}
-        shadow={'md'}
-        padding={'24px'}
+        padding={isDesktop ? '1.5em 3em 1.5em 3em' : '1em 1em 1em 1em'}
       >
         <HStack spacing={'40px'}>
           <WrapItem>
-            <Avatar
-              name={props.name}
-              showBorder={true}
-              src={props.avatar}
-              size="2xl"
-            />
+            <Avatar name={props.name} src={props.avatar} size="2xl" />
           </WrapItem>
           <VStack align={'left'} spacing={'2px'}>
-            <Text as="b" fontSize="4xl">
+            <Text as="b" fontSize={nameSize}>
               {props.name}
             </Text>
-            <Text fontSize="xl">{props.job}</Text>
+            <Text fontSize={jobSize}>{props.job}</Text>
           </VStack>
         </HStack>
-        <HStack justify={'space-between'} alignItems={'end'}>
-          <VStack align={'left'} padding={'8px'}>
-            <BottomCardDescription icon={locationIcon} text={props.location} />
+        <Flex
+          justify={isDesktop ? 'space-between' : 'start'}
+          direction={'column'}
+        >
+          <Flex
+            direction={'column'}
+            justify={'space-between'}
+            borderRadius={'8px'}
+            borderWidth={'1px'}
+            borderColor={'gray'}
+            padding={'1em'}
+            h={'100%'}
+            w={'100%'}
+            margin={'0 0 1em 0'}
+          >
+            <BottomCardDescription
+              icon={locationIcon}
+              categoryText={isDesktop ? 'Район:' : ''}
+              text={props.location}
+            />
             <BottomCardDescription
               icon={educationIcon}
+              categoryText={isDesktop ? 'Образование:' : ''}
               text={props.educations[0].description}
             />
-            <BottomCardDescription icon={categoryIcon} text={props.subjects} />
+            <BottomCardDescription
+              icon={categoryIcon}
+              categoryText={isDesktop ? 'Предметы:' : ''}
+              text={props.subjects}
+            />
+            <BottomCardDescription
+              icon={ageIcon}
+              categoryText={isDesktop ? 'Возраст:' : ''}
+              text={`${props.age.toString()} ${getTextToAge(props.age)}`}
+            />
+            <Divider colorScheme={'black'} margin={'0 0 8px 0'} />
+            <BottomCardDescription
+              icon={aboutIcon}
+              categoryText={isDesktop ? `О себе:` : ''}
+              text={props.about}
+            />
+            <AwardsRow
+              icon={awardsIcon}
+              categoryText={isDesktop ? 'Награды:' : ''}
+              awards={props.awards}
+            />
             <BottomCardDescription
               icon={requirementsIcon}
+              categoryText={isDesktop ? 'Требования:' : ''}
               text={props.requirements}
             />
-            <HStack>
-              <ReviewStarWithStats rating={props.rating} />
-            </HStack>
-          </VStack>
-          <VStack spacing={'16px'}>
-            <Button
-              size={'lg'}
-              colorScheme={'blue'}
-              width={'256px'}
-              onClick={onOpen}
+          </Flex>
+          <Flex width={'100%'} direction={isDesktop ? 'row' : 'column'}>
+            <Flex
+              width={isDesktop ? '50em' : 'auto'}
+              align={'center'}
+              justify={'center'}
+              margin={isDesktop ? 'auto' : '0 0 1em 0'}
             >
-              Показать контакты
-            </Button>
-            <Button size={'lg'} colorScheme={'green'} width={'256px'}>
+              <ReviewStarWithStats rating={props.rating} />
+            </Flex>
+            <ContactsPopoverButton contacts={props.contacts} />
+            <Button
+              size={'md'}
+              colorScheme={'green'}
+              width={'100%'}
+              onClick={onOpenRegister}
+              margin={isDesktop ? '0 0 0 1em' : '8px 0 0 0'}
+            >
               Записаться на занятие
             </Button>
-          </VStack>
-        </HStack>
+          </Flex>
+        </Flex>
       </Stack>
     </>
   );
@@ -93,6 +161,9 @@ type CardInfoProps = {
   location: string;
   avatar: string;
   requirements: string;
+  awards: Award[];
   contacts: string;
   rating: number;
+  age: number;
+  about: string;
 };

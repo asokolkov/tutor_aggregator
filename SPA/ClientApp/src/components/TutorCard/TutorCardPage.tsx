@@ -4,7 +4,6 @@ import { CardInfo } from './CardInfo';
 import { ReviewSection } from './ReviewSection';
 import { useEffect, useState } from 'react';
 import TutorsAPI, { Tutor, ReviewList } from '../../apis/tutors';
-import AwardSection from './AwardSection';
 import { useParams } from 'react-router-dom';
 import { LoadBar } from '../BaseLayout/LoadBar';
 
@@ -47,9 +46,13 @@ export const TutorCardPage = () => {
           contacts={tutorState.contacts}
           educations={tutorState.educations}
           requirements={tutorState.requirements}
+          awards={tutorState.awards}
+          age={18}
+          about={
+            // eslint-disable-next-line max-len
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non sapien et velit suscipit faucibus non vitae leo. Nunc id lectus dolor. Curabitur quis mi metus. Integer ultricies sagittis nibh eu finibus. Nam non nulla eget ipsum vestibulum congue sed sit amet diam. Etiam purus augue, laoreet sit amet nisi eu, ultricies volutpat velit.'
+          }
         />
-
-        <AwardSection awards={tutorState.awards} />
         <ReviewSection reviews={reviewsState.items} />
       </VStack>
     </ChakraProvider>
