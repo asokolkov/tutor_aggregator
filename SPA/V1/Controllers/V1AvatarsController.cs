@@ -28,6 +28,9 @@ public sealed class V1AvatarsController : ControllerBase
     {
         var query = new GetAvatarQuery(id);
         var image = await mediator.Send(query);
+        
+        HttpContext.Response.ContentType = "image/png";
+        
         return image is null ? NotFound(id) : Ok(image);
     }
     
@@ -42,6 +45,9 @@ public sealed class V1AvatarsController : ControllerBase
             return Unauthorized();
         
         var query = new CreateAvatarCommand(userId.Value, image);
+        
+        HttpContext.Response.ContentType = "image/png";
+        
         return Ok(await mediator.Send(query));
     }
 }
