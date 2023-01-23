@@ -99,6 +99,9 @@ builder.Services.AddAuthorization(
         authorization.AddPolicy(
             Policies.BookLessonPolicy,
             policy => { policy.AddRequirements(new BookLessonRequirement()); });
+        authorization.AddPolicy(
+            Policies.CreateReviewPolicy,
+            policy => { policy.AddRequirements(new CreateReviewRequirement()); });
     });
 
 var app = builder.Build();
