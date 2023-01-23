@@ -1,15 +1,15 @@
-﻿namespace SPA.V1.DataModels;
+﻿using Newtonsoft.Json;
 
-using System.Text.Json.Serialization;
+namespace SPA.V1.DataModels;
 
 public sealed class V1AwardDto
 {
-    [JsonPropertyName("id")]
+    [JsonProperty("id")]
     public string Id { get; init; }
     
-    [JsonPropertyName("description")]
+    [JsonProperty("description")]
     public string Description { get; init; }
     
-    [JsonPropertyName("year")]
+    [JsonProperty("year")]
     public int Year { get; init; }
 }

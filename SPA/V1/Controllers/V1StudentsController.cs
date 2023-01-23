@@ -1,4 +1,5 @@
 ﻿using SPA.Application.Students.Commands.UpdateStudentCommand;
+using SPA.Application.Students.Queries.GetLessonsQuery;
 using SPA.Application.Students.Queries.GetStudentQuery;
 using SPA.Application.Students.Queries.GetStudentsQuery;
 using Swashbuckle.AspNetCore.Annotations;
@@ -8,7 +9,6 @@ namespace SPA.V1.Controllers;
 using AutoMapper;
 using DataModels;
 using Domain;
-using Entities;
 using Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -76,5 +76,33 @@ public sealed class V1StudentsController : Controller
         var getStudentQuery = new GetStudentQuery(userId.Value);
         var student = await mediator.Send(getStudentQuery);
         return Ok(mapper.Map<V1StudentDto>(student));
+    }
+
+    [Authorize]
+    [HttpGet("current/lessons")]
+    [SwaggerResponse(200, "OK", typeof(ICollection<V1LessonDto>))]
+    [SwaggerResponse(401, "Unauthorized")]
+    public async Task<IActionResult> GetLessonsAsync()
+    {
+        var userId = User.GetId();
+        if (userId is null)
+            return Unauthorized();
+        var getStudentLessonsQuery = new GetStudentLessonsQuery(userId.Value);
+        var lessons = await mediator.Send(getStudentLessonsQuery);
+        return Ok(mapper.Map<ICollection<V1LessonDto>>(lessons));
+    }
+    
+    [Authorize]
+    [HttpGet("current/lessons/{id:guid}/cancel")]
+    [SwaggerResponse(200, "OK", typeof(ICollection<V1LessonDto>))]
+    [SwaggerResponse(401, "Unauthorized")]
+    public async Task<IActionResult> CancelLessonsAsync()
+    {
+        var userId = User.GetId();
+        if (userId is null)
+            return Unauthorized();
+        var getStudentLessonsQuery = new GetStudentLessonsQuery(userId.Value);
+        var lessons = await mediator.Send(getStudentLessonsQuery);
+        return Ok(mapper.Map<ICollection<V1LessonDto>>(lessons));
     }
 }

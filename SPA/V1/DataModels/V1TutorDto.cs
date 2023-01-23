@@ -1,45 +1,43 @@
-﻿namespace SPA.V1.DataModels;
+﻿using Newtonsoft.Json;
 
-using System.Text.Json.Serialization;
+namespace SPA.V1.DataModels;
+
 
 public sealed class V1TutorDto
 {
-    [JsonPropertyName("id")]
+    [JsonProperty("id")]
     public string Id { get; init; }
     
-    [JsonPropertyName("firstName")]
+    [JsonProperty("firstName")]
     public string FirstName { get; init; }
 
-    [JsonPropertyName("lastName")]
+    [JsonProperty("lastName")]
     public string LastName { get; init; }
 
-    [JsonPropertyName("requirements")]
+    [JsonProperty("requirements")]
     public string Requirements { get; init; }
 
-    [JsonPropertyName("rating")]
+    [JsonProperty("rating")]
     public double Rating { get; init; }
 
-    [JsonPropertyName("avatar")]
+    [JsonProperty("avatar")]
     public Uri Avatar { get; init; }
     
-    [JsonPropertyName("location")]
+    [JsonProperty("location")]
     public V1LocationDto Location { get; init; }
     
-    [JsonPropertyName("job")]
+    [JsonProperty("job")]
     public V1JobDto Job { get; init; }
 
-    [JsonPropertyName("subjects")]
+    [JsonProperty("subjects")]
     public IReadOnlyCollection<V1SubjectDto> Subjects { get; init; }
 
-    [JsonPropertyName("contacts")]
+    [JsonProperty("contacts")]
     public IReadOnlyCollection<V1TutorContactDto> Contacts { get; init; }
 
-    [JsonPropertyName("educations")]
+    [JsonProperty("educations")]
     public IReadOnlyCollection<V1EducationDto> Educations { get; init; }
 
-    [JsonPropertyName("awards")]
+    [JsonProperty("awards")]
     public IReadOnlyCollection<V1AwardDto> Awards { get; init; }
-    
-    [JsonPropertyName("lessons")]
-    public IReadOnlyCollection<V1LessonDto> Lessons { get; init; }
 }

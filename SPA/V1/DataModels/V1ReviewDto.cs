@@ -1,24 +1,24 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace SPA.V1.DataModels;
 
 public sealed class V1ReviewDto
 {
-    [JsonPropertyName("id")]
+    [JsonProperty("id")]
     public string Id { get; init; }
     
-    [JsonPropertyName("rating")]
+    [JsonProperty("rating")]
     public double Rating { get; init; }
     
-    [JsonPropertyName("description")]
+    [JsonProperty("description")]
     public string Description { get; init; }
     
-    [JsonPropertyName("updatedAt")]
+    [JsonProperty("updatedAt")]
     public DateTimeOffset UpdatedAt { get; init; }
     
-    [JsonPropertyName("studentId")]
+    [JsonProperty("studentId")]
     public string StudentId { get; init; }
     
-    [JsonPropertyName("studentAvatar")]
+    [JsonProperty("studentAvatar")]
     public Uri StudentAvatar { get; init; }
 }

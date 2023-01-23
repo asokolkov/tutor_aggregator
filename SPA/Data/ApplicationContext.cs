@@ -34,20 +34,19 @@ internal sealed class ApplicationContext : DbContext
             .Navigation(e => e.Awards)
             .AutoInclude();
         modelBuilder.Entity<TutorEntity>()
-            .Navigation(e => e.Lessons)
-            .AutoInclude();
+            .HasMany(e => e.Lessons)
+            .WithOne(e => e.Tutor);
         modelBuilder.Entity<TutorEntity>()
             .Navigation(e => e.Reviews)
             .AutoInclude();
         modelBuilder.Entity<TutorEntity>().Navigation(e => e.Job).AutoInclude();
-
-
+        
         modelBuilder.Entity<StudentEntity>()
             .Navigation(e => e.Contacts)
             .AutoInclude();
         modelBuilder.Entity<StudentEntity>()
-            .Navigation(e => e.Lessons)
-            .AutoInclude();
+            .HasMany(e => e.Lessons)
+            .WithOne(e => e.Student);
         modelBuilder.Entity<StudentEntity>()
             .Navigation(e => e.Reviews)
             .AutoInclude();

@@ -1,6 +1,6 @@
-﻿namespace SPA.V1.DataModels;
+﻿using Newtonsoft.Json;
 
-using System.Text.Json.Serialization;
+namespace SPA.V1.DataModels;
 
 public sealed class V1PageDto<T>
 {
@@ -9,10 +9,8 @@ public sealed class V1PageDto<T>
         Items = items;
         TotalCount = totalCount;
     }
-    
-    [JsonPropertyName("items")]
-    public ICollection<T> Items { get; }
-    
-    [JsonPropertyName("totalCount")]
-    public long TotalCount { get; }
+
+    [JsonProperty("items")] public ICollection<T> Items { get; }
+
+    [JsonProperty("totalCount")] public long TotalCount { get; }
 }
