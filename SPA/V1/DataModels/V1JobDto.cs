@@ -1,15 +1,16 @@
 ﻿using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace SPA.V1.DataModels;
 
 public sealed class V1JobDto
 {
-    [JsonPropertyName("id")]
+    [JsonProperty("id")]
     public string Id { get; init; }
     
-    [JsonPropertyName("place")]
+    [JsonProperty("place")]
     public string Place { get; init; }
 
-    [JsonPropertyName("post")]
+    [JsonProperty("post")]
     public string Post { get; init; }
 }

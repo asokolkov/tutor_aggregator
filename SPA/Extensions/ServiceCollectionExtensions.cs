@@ -2,6 +2,7 @@
 using SPA.Application.Locations.Queries.GetLocationQuery;
 using SPA.Application.Locations.Queries.GetLocationsQuery;
 using SPA.Application.Students.Commands.UpdateStudentCommand;
+using SPA.Application.Students.Queries.GetLessonsQuery;
 using SPA.Application.Students.Queries.GetStudentQuery;
 using SPA.Application.Students.Queries.GetStudentsQuery;
 using SPA.Application.Subjects.Queries.GetSubjectsQuery;
@@ -13,12 +14,12 @@ namespace SPA.Extensions;
 
 using Application.Tutors.Queries.GetReviewsQuery;
 using Application.Users.GetCurrentUserQuery;
-using Application.Users.GetCurrentUserQuery;
+using Authorization;
 using Data;
-using Domain;
 using Domain;
 using Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
 using Repositories.Impl;
@@ -54,11 +55,20 @@ internal static class ServiceCollectionExtensions
 
         services.AddScoped<IRequestHandler<GetUserQuery, User>, GetUserQueryHandler>();
 
+        services
+            .AddScoped<IRequestHandler<GetStudentLessonsQuery, ICollection<Lesson>>, GetStudentLessonsQueryHandler>();
+
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ITutorsRepository, TutorsRepository>();
         services.AddScoped<IStudentsRepository, StudentsRepository>();
         services.AddScoped<ILocationsRepository, LocationsesRepository>();
         services.AddScoped<ISubjectsRepository, SubjectsRepository>();
+        services.AddScoped<ILessonRepository, LessonRepository>();
+
+        services
+            .AddScoped<IAuthorizationHandler, CancelLessonAuthorizationHadnler>()
+            .AddScoped<IAuthorizationHandler, CreateLessonAuthorizationHandler>()
+            .AddScoped<IAuthorizationHandler, BookLessonAuthorizationHandler>();
     }
 }

@@ -23,7 +23,7 @@ internal sealed class UserRepository : IUserRepository
         var user = await userManager.Users.FirstOrDefaultAsync(user => user.Id == id);
         if (user is null)
             return null;
-        return new User(user.FirstName, user.LastName, user.Avatar, user.AccountType, user.RegistrationCompleted);
+        return new User(user.Id, user.FirstName, user.LastName, user.Avatar, user.AccountType, user.RegistrationCompleted);
     }
 
     public async Task<User?> UpdateAsync(ApplicationUser user)
@@ -31,6 +31,6 @@ internal sealed class UserRepository : IUserRepository
         var result = await userManager.UpdateAsync(user);
         if (!result.Succeeded)
             return null;
-        return new User(user.FirstName, user.LastName, user.Avatar, user.AccountType, user.RegistrationCompleted);
+        return new User(user.Id, user.FirstName, user.LastName, user.Avatar, user.AccountType, user.RegistrationCompleted);
     }
 }

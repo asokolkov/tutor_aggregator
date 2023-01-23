@@ -1,15 +1,16 @@
 ﻿using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace SPA.V1.DataModels;
 
 public sealed class V1LocationDto
 {
-    [JsonPropertyName("id")]
+    [JsonProperty("id")]
     public string Id { get; init; }
     
-    [JsonPropertyName("city")]
+    [JsonProperty("city")]
     public string City { get; init; }
     
-    [JsonPropertyName("district")]
+    [JsonProperty("district")]
     public string District { get; init; }
 }
