@@ -1,11 +1,11 @@
-import { Avatar, Heading, VStack, Button } from '@chakra-ui/react';
+import { Avatar, Heading, VStack, Button, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { TUTORS_PATH } from '../../route-paths';
 import { ReviewStarWithStats } from '../TutorCard/ReviewStarWithStats';
 import categoryIcon from '../../img/category-icon.png';
 import jobIcon from '../../img/job-icon.png';
-import BottomProfileDescription from '../TutorCard/BottomCardDescription';
+import SearchCardInfoRow from './SearchCardInfoRow';
 import { Education } from '../../apis/_share';
 
 const SearchCardInfo: React.FC<SearchCardInfoProps> = ({
@@ -27,16 +27,17 @@ const SearchCardInfo: React.FC<SearchCardInfoProps> = ({
     >
       
       <Avatar name={name} border={'0px'} src={imgSrc} size="2xl" />
-      <VStack h={'auto'} spacing={'6px'}>
-        <Heading as="h4" size="lg" textAlign={'center'}>
+      <Flex h={'auto'} direction={'column'}>
+        <Heading as="h4" size="lg" textAlign={'center'} margin={'0 0 12px 0'}>
           {name}
         </Heading>
-        <BottomProfileDescription
+        <SearchCardInfoRow
           icon={categoryIcon}
           text={education.map((e) => e.description).join(', ')}
+          categoryText={''}
         />
-        <BottomProfileDescription icon={jobIcon} text={job} />
-      </VStack>
+        <SearchCardInfoRow icon={jobIcon} text={job} categoryText={''} />
+      </Flex>
       <VStack spacing={'4px'} padding={'0 0 16px 0'}>
         <ReviewStarWithStats rating={rating} />
       </VStack>

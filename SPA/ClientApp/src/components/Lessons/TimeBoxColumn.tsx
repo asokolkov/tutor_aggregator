@@ -8,7 +8,12 @@ export const TimeBoxColumn = (props: TimeBoxColumnProps) => {
     <TimeBox time={slot.time} isCancellableEditor={!slot.isLocked} />
   ));
   return (
-    <Flex width={'100%'} align={'left'} direction={'column'} margin={'0'}>
+    <Flex
+      width={'100%'}
+      align={'left'}
+      direction={'column'}
+      margin={'0 0.5em 0 0'}
+    >
       <Heading size={'sm'} margin={'0'}>
         {props.columnLabel}
       </Heading>

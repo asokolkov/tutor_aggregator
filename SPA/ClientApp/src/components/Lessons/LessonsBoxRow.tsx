@@ -7,8 +7,11 @@ import {
   Button,
   useBreakpointValue,
   Divider,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { Link, To } from 'react-router-dom';
+import CancelLessonModal from './CancelLessonModal';
+import NewReviewModal from './NewReviewModal';
 
 const monthNames = [
   'января',
@@ -27,6 +30,16 @@ const monthNames = [
 const daysOfWeek = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
 
 export const LessonsBoxRow = (props: LessonsBoxProps) => {
+  const {
+    isOpen: isOpenCancel,
+    onOpen: OnOpenCancel,
+    onClose: onCloseCancel,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenReview,
+    onOpen: OnOpenReview,
+    onClose: onCloseReview,
+  } = useDisclosure();
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   const date = new Date(props.datetime);
   const hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
@@ -35,59 +48,67 @@ export const LessonsBoxRow = (props: LessonsBoxProps) => {
   const month =
     date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
   return (
-    <Box
-      w={'100%'}
-      h={'50px'}
-      borderRadius={'5px'}
-      borderWidth={'1px'}
-      bg="white"
-      margin={'0 0 0.5em 0'}
-    >
-      <Flex h={'100%'} padding={'0 1em 0 1em'}>
-        <Flex
-          align={'center'}
-          maxWidth={'30%'}
-          justify={'center'}
-          direction={'column'}
-        >
-          <Text as={'b'}>
-            {isDesktop
-              ? `${date.getDate()} ${monthNames[date.getMonth()]}, ${
-                  daysOfWeek[date.getDay()]
-                }. ${hours}:${minutes}`
-              : `${date.getDate()}.${month}.${date.getFullYear() - 2000}`}
-          </Text>
-          {!isDesktop && (
-            <Text w={'100%'} textAlign={'right'}>
-              {hours}:{minutes}
+    <React.Fragment>
+      <NewReviewModal isOpen={isOpenReview} onClose={onCloseReview} />
+      <CancelLessonModal isOpen={isOpenCancel} onClose={onCloseCancel} />
+      <Box
+        w={'100%'}
+        h={'50px'}
+        borderRadius={'5px'}
+        borderWidth={'1px'}
+        bg="white"
+        margin={'0 0 0.5em 0'}
+      >
+        <Flex h={'100%'} padding={'0 1em 0 1em'}>
+          <Flex
+            align={'center'}
+            maxWidth={'30%'}
+            justify={'center'}
+            direction={'column'}
+          >
+            <Text as={'b'}>
+              {isDesktop
+                ? `${date.getDate()} ${monthNames[date.getMonth()]}, ${
+                    daysOfWeek[date.getDay()]
+                  }. ${hours}:${minutes}`
+                : `${date.getDate()}.${month}.${date.getFullYear() - 2000}`}
             </Text>
-          )}
+            {!isDesktop && (
+              <Text w={'100%'} textAlign={'right'}>
+                {hours}:{minutes}
+              </Text>
+            )}
+          </Flex>
+          <Divider
+            orientation="vertical"
+            color={'gray'}
+            margin={'0 1em 0 1em'}
+          />
+          <Flex align={'center'} width={'20em'}>
+            {props.isLink ? (
+              <Link to={props.linkTo}>
+                <Text>{props.personName}</Text>
+              </Link>
+            ) : (
+              <Text>{props.personName}</Text>
+            )}
+          </Flex>
+          <Spacer />
+          <Flex align={'center'} maxWidth={'30%'} margin={'0 0 0 1em'}>
+            {props.isRatable && (
+              <Button colorScheme="green" size={'sm'} onClick={OnOpenReview}>
+                Оценить
+              </Button>
+            )}
+            {props.isCancellable && (
+              <Button colorScheme="red" size={'sm'} onClick={OnOpenCancel}>
+                Отменить
+              </Button>
+            )}
+          </Flex>
         </Flex>
-        <Divider orientation="vertical" color={'gray'} margin={'0 1em 0 1em'} />
-        <Flex align={'center'} width={'20em'}>
-          {props.isLink ? (
-            <Link to={props.linkTo}>
-              <Text as={'u'}>{props.personName}</Text>
-            </Link>
-          ) : (
-            <Text as={'u'}>{props.personName}</Text>
-          )}
-        </Flex>
-        <Spacer />
-        <Flex align={'center'} maxWidth={'30%'} margin={'0 0 0 1em'}>
-          {props.isRatable && (
-            <Button colorScheme="green" size={'sm'}>
-              Оценить
-            </Button>
-          )}
-          {props.isCancellable && (
-            <Button colorScheme="red" size={'sm'}>
-              Отменить
-            </Button>
-          )}
-        </Flex>
-      </Flex>
-    </Box>
+      </Box>
+    </React.Fragment>
   );
 };
 

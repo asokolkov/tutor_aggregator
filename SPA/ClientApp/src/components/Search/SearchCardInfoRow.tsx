@@ -1,16 +1,15 @@
 import React from 'react';
-import { Flex, Image, Text, useBreakpointValue } from '@chakra-ui/react';
+import { Flex, Image, Text } from '@chakra-ui/react';
 
-const BottomCardDescription: React.FC<BottomCardDescriptionProps> = ({
+const SearchCardInfoRow: React.FC<SearchCardInfoRowProps> = ({
   icon,
   text,
   categoryText,
 }) => {
-  const isDesktop = useBreakpointValue({ base: false, lg: true });
   let isWithCategoryText = categoryText.length > 0;
   return (
     <Flex margin={'0 0 8px 0'}>
-      <Flex margin={'0 0 0 0'} width={isDesktop ? 'calc(168px - 1em)' : 'auto'}>
+      <Flex margin={'0 0 0 0'} width={'auto'}>
         <Image
           src={icon}
           alt={'icon'}
@@ -38,9 +37,9 @@ const BottomCardDescription: React.FC<BottomCardDescriptionProps> = ({
   );
 };
 
-export default BottomCardDescription;
+export default SearchCardInfoRow;
 
-interface BottomCardDescriptionProps {
+interface SearchCardInfoRowProps {
   icon: string;
   categoryText: string;
   text: string;
