@@ -114,24 +114,18 @@ export const StudentCard: React.FC = () => {
               isRequired={false}
               options={['Мужской', 'Женский', 'Другое']}
               tooltip={[
-                <Tooltip
-                  label="Укажите пол"
-                  placement={'left-start'}
-                >
+                <Tooltip label="Укажите пол" placement={'left-start'}>
                   <InfoIcon margin={'0 0 0 10px'} />
                 </Tooltip>,
               ]}
             />
             <ProfilePageInputRow
               label={'Возраст'}
-              placeholder={''}
+              placeholder={'23'}
               isDisabled={false}
               isRequired={false}
               tooltip={[
-                <Tooltip
-                  label="Укажите возраст"
-                  placement={'left-start'}
-                >
+                <Tooltip label="Укажите возраст" placement={'left-start'}>
                   <InfoIcon margin={'0 0 0 10px'} />
                 </Tooltip>,
               ]}

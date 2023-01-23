@@ -10,6 +10,7 @@ import {
   Button,
   Flex,
   useDisclosure,
+  Divider,
 } from '@chakra-ui/react';
 import RegisterConfirmationModal from './RegisterConfirmationModal';
 import { TimeBoxRow } from './TimeBoxRow';
@@ -51,7 +52,7 @@ const RegisterModal: React.FC<Props> = ({ isOpen, onClose }) => {
         isOpen={isOpen}
         onClose={onClose}
         motionPreset="slideInBottom"
-        size={'xl'}
+        size={'2xl'}
         closeOnOverlayClick={false}
       >
         <ModalOverlay />
@@ -64,11 +65,23 @@ const RegisterModal: React.FC<Props> = ({ isOpen, onClose }) => {
                 rowLabel={nextDays[0]}
                 slots={[
                   { time: '09:30', isAvailable: true },
-                  { time: '11:00', isAvailable: true },
-                  { time: '12:30', isAvailable: true },
+                  { time: '11:00', isAvailable: false },
+                  { time: '12:30', isAvailable: false },
+                  { time: '14:00', isAvailable: true },
+                  { time: '14:00', isAvailable: true },
+                  { time: '14:00', isAvailable: true },
+                  { time: '14:00', isAvailable: true },
+                  { time: '14:00', isAvailable: true },
+                  { time: '14:00', isAvailable: true },
+                  { time: '14:00', isAvailable: true },
+                  { time: '14:00', isAvailable: true },
+                  { time: '14:00', isAvailable: true },
+                  { time: '14:00', isAvailable: true },
+                  { time: '14:00', isAvailable: true },
                   { time: '14:00', isAvailable: true },
                 ]}
               />
+              <Divider margin={'0 0 13px 0'} colorScheme={'gray'} />
               <TimeBoxRow
                 rowLabel={nextDays[1]}
                 slots={[
@@ -78,8 +91,49 @@ const RegisterModal: React.FC<Props> = ({ isOpen, onClose }) => {
                   { time: '14:00', isAvailable: true },
                 ]}
               />
+              <Divider margin={'0 0 13px 0'} colorScheme={'gray'} />
               <TimeBoxRow
                 rowLabel={nextDays[2]}
+                slots={[
+                  { time: '09:30', isAvailable: true },
+                  { time: '11:00', isAvailable: true },
+                  { time: '12:30', isAvailable: true },
+                  { time: '14:00', isAvailable: true },
+                ]}
+              />
+              <Divider margin={'0 0 13px 0'} colorScheme={'gray'} />
+              <TimeBoxRow
+                rowLabel={nextDays[3]}
+                slots={[
+                  { time: '09:30', isAvailable: true },
+                  { time: '11:00', isAvailable: true },
+                  { time: '12:30', isAvailable: true },
+                  { time: '14:00', isAvailable: true },
+                ]}
+              />
+              <Divider margin={'0 0 13px 0'} colorScheme={'gray'} />
+              <TimeBoxRow
+                rowLabel={nextDays[4]}
+                slots={[
+                  { time: '09:30', isAvailable: true },
+                  { time: '11:00', isAvailable: true },
+                  { time: '12:30', isAvailable: true },
+                  { time: '14:00', isAvailable: true },
+                ]}
+              />
+              <Divider margin={'0 0 13px 0'} colorScheme={'gray'} />
+              <TimeBoxRow
+                rowLabel={nextDays[5]}
+                slots={[
+                  { time: '09:30', isAvailable: true },
+                  { time: '11:00', isAvailable: true },
+                  { time: '12:30', isAvailable: true },
+                  { time: '14:00', isAvailable: true },
+                ]}
+              />
+              <Divider margin={'0 0 13px 0'} colorScheme={'gray'} />
+              <TimeBoxRow
+                rowLabel={nextDays[6]}
                 slots={[
                   { time: '09:30', isAvailable: true },
                   { time: '11:00', isAvailable: true },

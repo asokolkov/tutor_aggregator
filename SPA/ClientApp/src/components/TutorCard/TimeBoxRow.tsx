@@ -4,7 +4,7 @@ import { TimeBoxCalendar } from './TimeBoxCalendar';
 
 export const TimeBoxRow = (props: TimeBoxRowProps) => {
   const row = props.slots.map((slot) => (
-    <TimeBoxCalendar time={slot.time} isCancellableEditor={!slot.isAvailable} />
+    <TimeBoxCalendar time={slot.time} isUnavailable={!slot.isAvailable} />
   ));
   return (
     <Flex
@@ -14,10 +14,12 @@ export const TimeBoxRow = (props: TimeBoxRowProps) => {
       margin={'0 0 0.6em 0'}
       justify={'left'}
     >
-      <Heading size={'sm'} width={'50px'}>
-        {props.rowLabel}
-      </Heading>
-      {row}
+      <Flex>
+        <Heading size={'sm'} width={'50px'}>
+          {props.rowLabel}
+        </Heading>
+      </Flex>
+      <Flex wrap={'wrap'}>{row}</Flex>
     </Flex>
   );
 };

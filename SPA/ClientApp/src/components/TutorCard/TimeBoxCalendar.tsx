@@ -3,20 +3,27 @@ import { Box, Flex, Button } from '@chakra-ui/react';
 
 export const TimeBoxCalendar = (props: TimeBoxCalendarProps) => {
   return (
-    <Flex h={'32px'} margin={'0 5px 0 0'}>
+    <Flex h={'32px'} margin={'0 5px 5px 0'}>
       <Box
         borderRadius={'5px'}
-        bg={'#A1C0A0'}
         w={'60px'}
         display={'flex'}
         justifyContent={'center'}
       >
         <Button
-          colorScheme={'green'}
+          colorScheme={props.isUnavailable ? 'gray' : 'twitter'}
+          bg={props.isUnavailable ? '#a1a0a0' : '#A0AEC0'}
           size={'sm'}
           textAlign={'center'}
           margin={'auto'}
           as={'b'}
+          isDisabled={props.isUnavailable}
+          _hover={{
+            bg: '#6eaeb6',
+          }}
+          _active={{
+            bg: '#339b2e',
+          }}
         >
           {props.time}
         </Button>
@@ -27,8 +34,6 @@ export const TimeBoxCalendar = (props: TimeBoxCalendarProps) => {
 
 type TimeBoxCalendarProps = {
   time: string;
-  isLockedEditor?: boolean;
-  isCancellableEditor?: boolean;
-  isFreePicker?: boolean;
-  isChosenPicker?: boolean;
+  isUnavailable: boolean;
+  isChosen?: boolean;
 };
