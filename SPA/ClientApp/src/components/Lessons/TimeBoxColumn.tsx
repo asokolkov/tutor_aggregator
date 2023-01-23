@@ -4,9 +4,6 @@ import { TimeBox } from './TimeBox';
 import { TimeBoxCreateRow } from './TimeBoxCreateRow';
 
 export const TimeBoxColumn = (props: TimeBoxColumnProps) => {
-  const column = props.slots.map((slot) => (
-    <TimeBox time={slot.time} isCancellableEditor={!slot.isLocked} />
-  ));
   return (
     <Flex
       width={'100%'}
@@ -17,13 +14,16 @@ export const TimeBoxColumn = (props: TimeBoxColumnProps) => {
       <Heading size={'sm'} margin={'0'}>
         {props.columnLabel}
       </Heading>
-      {column}
-      <TimeBoxCreateRow />
+      {props.slots.map((slot: any) => (
+          <TimeBox columnLabel={props.columnLabel} slots={props.slots} slot={slot} removeSlot={props.removeSlot} />
+      ))}
+      <TimeBoxCreateRow columnLabel={props.columnLabel} slots={props.slots} removeSlot={props.removeSlot} />
     </Flex>
   );
 };
 
 type TimeBoxColumnProps = {
   columnLabel: string;
-  slots: { time: string; isLocked: boolean }[];
+  slots: any;
+  removeSlot: any;
 };

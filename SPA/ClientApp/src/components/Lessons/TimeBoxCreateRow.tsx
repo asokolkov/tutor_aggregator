@@ -1,9 +1,26 @@
 import * as React from 'react';
 import { Box, Flex, IconButton, Input } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
+import {useState} from "react";
 
-export const TimeBoxCreateRow = () => {
-  return (
+export const TimeBoxCreateRow = ({columnLabel, slots, removeSlot} : any) => {
+    // const inputRef = useRef();
+    // const [v, setV] = useState<any>('');
+    //
+    // useEffect(() => {
+    //     const a = inputRef.current;
+    //     setV(a?.value);
+    // }, [inputRef]);
+    const a = ['13:00', '15:00', '19:30', '20:00'];
+    const [v, setV] = useState(0);
+    
+    function changeTime() {
+        const t = a[v % a.length];
+        setV(v + 1);
+        return t;
+    }
+
+    return (
     <Flex h={'32px'}>
       <Box
         borderRadius={'5px'}
@@ -26,6 +43,7 @@ export const TimeBoxCreateRow = () => {
           w={'100%'}
           aria-label="Добавить слот"
           icon={<AddIcon />}
+          onClick={() => removeSlot(columnLabel, [...slots, {time: changeTime(), isLocked: false}])}
         />
       </Box>
     </Flex>
