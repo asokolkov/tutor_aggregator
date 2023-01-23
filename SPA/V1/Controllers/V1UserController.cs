@@ -1,8 +1,8 @@
-﻿using Swashbuckle.AspNetCore.Annotations;
+﻿using SPA.Application.Users.Queries.GetCurrentUserQuery;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace SPA.V1.Controllers;
 
-using Application.Users.GetCurrentUserQuery;
 using AutoMapper;
 using DataModels;
 using Extensions;

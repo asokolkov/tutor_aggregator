@@ -37,13 +37,21 @@ internal sealed class StudentsRepository : IStudentsRepository
         return mapper.Map<Student>(await table.FindAsync(id));
     }
 
-    public async Task<Student?> Update(Student student)
+    public async Task<Student?> Update(Guid id, UpdateStudent student)
     {
+        var studentEntity = new StudentEntity
+        {
+            Id = id,
+            FirstName = student.FirstName,
+            LastName = student.LastName,
+            Age = student.Age,
+            Contacts = student.Contacts
+        };
+        
         await using var transaction = await context.Database.BeginTransactionAsync();
         await transaction.CreateSavepointAsync("BeforeUpdate");
         try
         {
-            var studentEntity = mapper.Map<StudentEntity>(student);
             var entityEntry = table.Update(studentEntity);
             await context.SaveChangesAsync();
             await transaction.CommitAsync();

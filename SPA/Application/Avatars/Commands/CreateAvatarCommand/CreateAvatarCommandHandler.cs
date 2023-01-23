@@ -1,6 +1,5 @@
 ﻿using JetBrains.Annotations;
 using MediatR;
-using SPA.Domain;
 using SPA.Repositories;
 
 namespace SPA.Application.Avatars.Commands.CreateAvatarCommand;

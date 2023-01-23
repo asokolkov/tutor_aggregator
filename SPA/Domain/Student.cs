@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata;
-
-namespace SPA.Domain;
+﻿namespace SPA.Domain;
 
 public sealed class Student
 {
@@ -9,6 +7,8 @@ public sealed class Student
     public string FirstName { get; set; }
 
     public string LastName { get; set; }
+    
+    public int Age { get; set; }
 
     public string Contacts { get; set; }
 

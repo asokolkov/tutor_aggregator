@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata;
-
-namespace SPA.Entities;
+﻿namespace SPA.Entities;
 
 internal sealed class StudentEntity
 {
@@ -9,6 +7,8 @@ internal sealed class StudentEntity
     public string FirstName { get; init; }
 
     public string LastName { get; init; }
+    
+    public int Age { get; set; }
 
     public string Contacts { get; set; }
 

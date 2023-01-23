@@ -7,7 +7,6 @@ using SPA.Repositories;
 namespace SPA.Application.Tutors.Commands.UpdateTutorCommand;
 
 using Domain;
-using Entities;
 
 [UsedImplicitly]
 internal class UpdateTutorCommandHandler : IRequestHandler<UpdateTutorCommand, Tutor?> 

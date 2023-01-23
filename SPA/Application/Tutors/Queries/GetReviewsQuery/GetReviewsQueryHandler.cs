@@ -4,7 +4,7 @@ using Domain;
 using Entities;
 using JetBrains.Annotations;
 using MediatR;
-using SPA.Repositories;
+using Repositories;
 
 [UsedImplicitly]
 internal class GetReviewsCommandHandler : IRequestHandler<GetTutorReviewsQuery, Page<Review>>

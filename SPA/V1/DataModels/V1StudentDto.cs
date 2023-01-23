@@ -12,6 +12,9 @@ public sealed class V1StudentDto
 
     [JsonPropertyName("lastName")]
     public string LastName { get; init; }
+    
+    [JsonPropertyName("age")]
+    public int Age { get; init; }
 
     [JsonPropertyName("contacts")]
     public string Contacts { get; init; }

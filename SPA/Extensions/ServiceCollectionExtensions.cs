@@ -11,11 +11,11 @@ using SPA.Application.Tutors.Commands.CreateReviewCommand;
 using SPA.Application.Tutors.Commands.UpdateTutorCommand;
 using SPA.Application.Tutors.Queries.GetTutorQuery;
 using SPA.Application.Tutors.Queries.GetTutorsQuery;
+using SPA.Application.Users.Queries.GetCurrentUserQuery;
 
 namespace SPA.Extensions;
 
 using Application.Tutors.Queries.GetReviewsQuery;
-using Application.Users.GetCurrentUserQuery;
 using Data;
 using Domain;
 using Entities;

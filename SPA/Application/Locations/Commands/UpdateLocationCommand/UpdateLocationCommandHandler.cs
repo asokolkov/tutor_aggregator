@@ -6,7 +6,6 @@ using SPA.Repositories;
 namespace SPA.Application.Locations.Commands.UpdateLocationCommand;
 
 using Domain;
-using Entities;
 
 [UsedImplicitly]
 internal class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationCommand, Location?> 

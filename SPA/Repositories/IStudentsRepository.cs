@@ -9,7 +9,7 @@ internal interface IStudentsRepository
     
     Task<Student> Get(Guid id);
 
-    Task<Student> Update(Student student);
+    Task<Student> Update(Guid id, UpdateStudent student);
     
     Task<Student> Insert(Student tutor);
 }
