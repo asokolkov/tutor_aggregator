@@ -2,26 +2,26 @@ import 'bootstrap/dist/css/bootstrap.css';
 import React from 'react';
 
 const rootElement = document.getElementById('root');
-import {createRoot} from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 
-import {RouterProvider} from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import router from './routes';
-import {ChakraProvider} from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme/index';
 
 if (
-    process.env.NODE_ENV === 'development' &&
-    process.env.REACT_APP_USE_MOCK_API === 'true'
+  process.env.NODE_ENV === 'development' &&
+  process.env.REACT_APP_USE_MOCK_API === 'true'
 ) {
-    require('./apis/mocks/index');
+  require('./apis/mocks/index');
 }
 
 const root = createRoot(rootElement);
 
 root.render(
-    <React.StrictMode>
-        <ChakraProvider theme={theme}>
-            <RouterProvider router={router}/>
-        </ChakraProvider>
-    </React.StrictMode>
+  <React.StrictMode>
+    <ChakraProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ChakraProvider>
+  </React.StrictMode>
 );

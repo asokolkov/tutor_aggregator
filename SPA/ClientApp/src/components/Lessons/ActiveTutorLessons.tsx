@@ -21,21 +21,23 @@ export const ActiveTutorLessons = () => {
           </Heading>
           <LessonsBoxRow
             personName={'Михаил Ланец'}
-            datetime={Date.now()}
+            datetime={new Date(2023, 0, 25, 12, 0).getTime()}
+            //datetime={Date.now()}
             isLink={false}
             isRatable={false}
             isCancellable={true}
           />
           <LessonsBoxRow
             personName={'Владислав Бикбулатов'}
-            datetime={Date.now()}
+            datetime={new Date(2023, 0, 26, 13, 0).getTime()}
+            //datetime={Date.now()}
             isLink={false}
             isRatable={false}
             isCancellable={true}
           />
           <LessonsBoxRow
-            personName={'Михаил Ланец'}
-            datetime={Date.now()}
+            personName={'Илья Жданов'}
+            datetime={new Date(2023, 0, 26, 14, 30).getTime()}
             isLink={false}
             isRatable={false}
             isCancellable={true}

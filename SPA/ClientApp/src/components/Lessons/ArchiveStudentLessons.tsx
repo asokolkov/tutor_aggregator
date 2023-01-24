@@ -22,7 +22,7 @@ export const ArchiveStudentLessons = () => {
           </Heading>
           <LessonsBoxRow
             personName={'Арсений Шур'}
-            datetime={Date.now()}
+            datetime={new Date(2022, 11, 28, 11, 30).getTime()}
             isLink={true}
             linkTo={PROFILE_PAGE}
             isRatable={true}
@@ -30,15 +30,15 @@ export const ArchiveStudentLessons = () => {
           />
           <LessonsBoxRow
             personName={'Дмитрий Косолобов'}
-            datetime={Date.now()}
+            datetime={new Date(2022, 11, 25, 11, 30).getTime()}
             isLink={true}
             linkTo={PROFILE_PAGE}
             isRatable={true}
             isCancellable={false}
           />
           <LessonsBoxRow
-            personName={'Леонид Волков'}
-            datetime={Date.now()}
+            personName={'Иван Симонов'}
+            datetime={new Date(2022, 11, 22, 10, 30).getTime()}
             isLink={true}
             linkTo={PROFILE_PAGE}
             isRatable={true}

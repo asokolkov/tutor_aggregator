@@ -20,22 +20,22 @@ export const ArchiveTutorLessons = () => {
             Архивные записи ваших учеников
           </Heading>
           <LessonsBoxRow
-            personName={'Михаил Ланец'}
-            datetime={Date.now()}
-            isLink={false}
-            isRatable={false}
-            isCancellable={false}
-          />
-          <LessonsBoxRow
-            personName={'Владислав Бикбулатов'}
-            datetime={Date.now()}
-            isLink={false}
-            isRatable={false}
-            isCancellable={false}
-          />
-          <LessonsBoxRow
             personName={'Алексей Соколков'}
-            datetime={Date.now()}
+            datetime={new Date(2023, 0, 22, 11, 0).getTime()}
+            isLink={false}
+            isRatable={false}
+            isCancellable={false}
+          />
+          <LessonsBoxRow
+            personName={'Артемий Курганов'}
+            datetime={new Date(2023, 0, 20, 11, 30).getTime()}
+            isLink={false}
+            isRatable={false}
+            isCancellable={false}
+          />
+          <LessonsBoxRow
+            personName={'Диляра Фатыхова'}
+            datetime={new Date(2023, 0, 19, 14, 30).getTime()}
             isLink={false}
             isRatable={false}
             isCancellable={false}

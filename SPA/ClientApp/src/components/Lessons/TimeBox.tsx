@@ -38,7 +38,12 @@ export const TimeBox = (props: TimeBoxProps) => {
             w={'100%'}
             aria-label="Удалить слот"
             icon={<CloseIcon />}
-            onClick={() => props.removeSlot(props.columnLabel, props.slots.filter((e:any) => e !== props.slot))}
+            onClick={() =>
+              props.removeSlot(
+                props.columnLabel,
+                props.slots.filter((e: any) => e !== props.slot)
+              )
+            }
           />
         </Box>
       )}
@@ -46,8 +51,8 @@ export const TimeBox = (props: TimeBoxProps) => {
   );
 };
 
-type TimeBoxProps = { 
-  columnLabel:any;
+type TimeBoxProps = {
+  columnLabel: any;
   slots: any;
   slot: any;
   removeSlot: any;

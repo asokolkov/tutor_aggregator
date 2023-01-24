@@ -1,5 +1,4 @@
 import {
-  ChakraProvider,
   Box,
   Button,
   Checkbox,
@@ -16,7 +15,7 @@ import {
   Text,
   useBreakpointValue,
 } from '@chakra-ui/react';
-import Theme from '../../theme/index';
+import React from 'react';
 import { Link as RLink } from 'react-router-dom';
 import { FORGOT_PASSWORD_PAGE, SIGNUP_PAGE } from '../../route-paths';
 import { PasswordField } from './PasswordField';
@@ -39,8 +38,8 @@ export const LoginPage = () => {
   };
 
   return (
-    <ChakraProvider theme={Theme}>
-      <Flex background={'white'} height={'60vh'}>
+    <React.Fragment>
+      <Flex background={'white'}>
         <VStack margin={'20px'} width={'100%'}>
           <Stack textAlign="center">
             <Heading>Войти в аккаунт</Heading>
@@ -108,6 +107,6 @@ export const LoginPage = () => {
           </Box>
         </VStack>
       </Flex>
-    </ChakraProvider>
+    </React.Fragment>
   );
 };

@@ -22,7 +22,7 @@ export const ActiveStudentLessons = () => {
           </Heading>
           <LessonsBoxRow
             personName={'Павел Егоров'}
-            datetime={Date.now()}
+            datetime={new Date(2023, 0, 25, 12, 0).getTime()}
             isLink={true}
             linkTo={PROFILE_PAGE}
             isCancellable={true}
@@ -30,7 +30,7 @@ export const ActiveStudentLessons = () => {
           />
           <LessonsBoxRow
             personName={'Евгений Скворцов'}
-            datetime={Date.now()}
+            datetime={new Date(2023, 0, 26, 13, 30).getTime()}
             isLink={true}
             linkTo={PROFILE_PAGE}
             isCancellable={true}
@@ -38,7 +38,7 @@ export const ActiveStudentLessons = () => {
           />
           <LessonsBoxRow
             personName={'Юрий Окуловский'}
-            datetime={Date.now()}
+            datetime={new Date(2023, 0, 28, 15, 30).getTime()}
             isLink={true}
             linkTo={PROFILE_PAGE}
             isCancellable={true}

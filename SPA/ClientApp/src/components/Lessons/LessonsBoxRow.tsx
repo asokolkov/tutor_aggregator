@@ -87,7 +87,7 @@ export const LessonsBoxRow = (props: LessonsBoxProps) => {
           <Flex align={'center'} width={'20em'}>
             {props.isLink ? (
               <Link to={props.linkTo}>
-                <Text>{props.personName}</Text>
+                <Text as={'u'}>{props.personName}</Text>
               </Link>
             ) : (
               <Text>{props.personName}</Text>

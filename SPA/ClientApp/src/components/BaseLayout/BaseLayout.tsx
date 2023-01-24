@@ -25,8 +25,7 @@ const BaseLayout: React.FC = () => {
         setLoading(false);
       });
   }, []);
-  if (isLoading)
-    return <LoadBar description={'Загружаем данные пользователя'} />;
+  if (isLoading) return <LoadBar description={'Загружаем данные'} />;
   return (
     <ChakraProvider theme={Theme}>
       <UserContext.Provider value={user}>

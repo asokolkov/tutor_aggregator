@@ -15,9 +15,18 @@ export const TimeBoxColumn = (props: TimeBoxColumnProps) => {
         {props.columnLabel}
       </Heading>
       {props.slots.map((slot: any) => (
-          <TimeBox columnLabel={props.columnLabel} slots={props.slots} slot={slot} removeSlot={props.removeSlot} />
+        <TimeBox
+          columnLabel={props.columnLabel}
+          slots={props.slots}
+          slot={slot}
+          removeSlot={props.removeSlot}
+        />
       ))}
-      <TimeBoxCreateRow columnLabel={props.columnLabel} slots={props.slots} removeSlot={props.removeSlot} />
+      <TimeBoxCreateRow
+        columnLabel={props.columnLabel}
+        slots={props.slots}
+        removeSlot={props.removeSlot}
+      />
     </Flex>
   );
 };
