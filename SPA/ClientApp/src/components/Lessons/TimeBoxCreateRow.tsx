@@ -1,23 +1,14 @@
 import * as React from 'react';
 import { Box, Flex, IconButton, Input } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
-import {useState} from "react";
+import {useRef} from "react";
 
 export const TimeBoxCreateRow = ({columnLabel, slots, removeSlot} : any) => {
-    // const inputRef = useRef();
-    // const [v, setV] = useState<any>('');
-    //
-    // useEffect(() => {
-    //     const a = inputRef.current;
-    //     setV(a?.value);
-    // }, [inputRef]);
-    const a = ['13:00', '15:00', '19:30', '20:00'];
-    const [v, setV] = useState(0);
+    const inputRef = useRef(null);
     
-    function changeTime() {
-        const t = a[v % a.length];
-        setV(v + 1);
-        return t;
+    function aa() {
+        if (inputRef.current.value)
+            removeSlot(columnLabel, [...slots, {time: inputRef.current.value, isLocked: false}]);
     }
 
     return (
@@ -29,7 +20,7 @@ export const TimeBoxCreateRow = ({columnLabel, slots, removeSlot} : any) => {
         display={'flex'}
         justifyContent={'center'}
       >
-        <Input h={'32px'} borderRadius={'5px 0 0 5px'} placeholder="13:45" />
+        <Input h={'32px'} borderRadius={'5px 0 0 5px'} placeholder="13:45" ref={inputRef} />
       </Box>
       <Box h={'32px'} w={'24px'}>
         <IconButton
@@ -43,7 +34,7 @@ export const TimeBoxCreateRow = ({columnLabel, slots, removeSlot} : any) => {
           w={'100%'}
           aria-label="Добавить слот"
           icon={<AddIcon />}
-          onClick={() => removeSlot(columnLabel, [...slots, {time: changeTime(), isLocked: false}])}
+          onClick={aa}
         />
       </Box>
     </Flex>
