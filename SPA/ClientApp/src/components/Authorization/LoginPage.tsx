@@ -16,7 +16,7 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 import React from 'react';
-import { Link as RLink } from 'react-router-dom';
+import { Link as ReactLink } from 'react-router-dom';
 import { FORGOT_PASSWORD_PAGE, SIGNUP_PAGE } from '../../route-paths';
 import { PasswordField } from './components/PasswordField';
 import { OAuthButtons } from './components/OAuthButtons';
@@ -53,7 +53,7 @@ export const LoginPage = () => {
             borderRadius={{ base: 'none', sm: 'xl' }}
           >
             <HStack justify="center">
-              <OAuthButtons></OAuthButtons>
+              <OAuthButtons />
             </HStack>
             <HStack margin={'10px'}>
               <Divider />
@@ -81,7 +81,9 @@ export const LoginPage = () => {
                 </Checkbox>
                 <Button variant="link" colorScheme="blue" size="sm">
                   <Link>
-                    <RLink to={FORGOT_PASSWORD_PAGE}>Забыли пароль?</RLink>
+                    <ReactLink to={FORGOT_PASSWORD_PAGE}>
+                      Забыли пароль?
+                    </ReactLink>
                   </Link>
                 </Button>
               </HStack>
@@ -99,7 +101,7 @@ export const LoginPage = () => {
                 <Text color="muted">Нет аккаунта?</Text>
                 <Button variant="link" colorScheme="blue">
                   <Link>
-                    <RLink to={SIGNUP_PAGE}>Зарегистрироваться</RLink>
+                    <ReactLink to={SIGNUP_PAGE}>Зарегистрироваться</ReactLink>
                   </Link>
                 </Button>
               </HStack>
