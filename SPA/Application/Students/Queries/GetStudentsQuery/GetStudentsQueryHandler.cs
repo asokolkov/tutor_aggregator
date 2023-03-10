@@ -6,7 +6,6 @@ using SPA.Repositories;
 namespace SPA.Application.Students.Queries.GetStudentsQuery;
 
 using Domain;
-using Entities;
 
 [UsedImplicitly]
 internal class GetStudentsQueryHandler : IRequestHandler<GetStudentsQuery, Page<Student?>>

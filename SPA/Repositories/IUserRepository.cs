@@ -1,7 +1,7 @@
 ﻿namespace SPA.Repositories;
 
 using Domain;
-using Identity.Models;
+using EFCore.Postgres.Identity.Models;
 
 #nullable enable
 

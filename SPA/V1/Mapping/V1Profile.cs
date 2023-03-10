@@ -3,7 +3,7 @@
 using AutoMapper;
 using DataModels;
 using Domain;
-using Entities;
+using EFCore.Postgres.Application.Models.Entities;
 
 internal sealed class V1Profile : Profile
 {

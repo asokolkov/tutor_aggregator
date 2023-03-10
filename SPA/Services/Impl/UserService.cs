@@ -2,7 +2,7 @@
 
 using AutoMapper;
 using Domain;
-using Identity.Models;
+using EFCore.Postgres.Identity.Models;
 using JetBrains.Annotations;
 using Repositories;
 

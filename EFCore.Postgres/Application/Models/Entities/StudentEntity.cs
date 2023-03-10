@@ -1,6 +1,6 @@
-﻿namespace SPA.Entities;
+﻿namespace EFCore.Postgres.Application.Models.Entities;
 
-internal sealed class StudentEntity
+public sealed class StudentEntity
 {
     public Guid Id { get; init; }
 

@@ -1,7 +1,5 @@
 ﻿namespace SPA.Domain;
 
-using Entities;
-
 public sealed class Lesson
 {
     public Guid Id { get; init; }

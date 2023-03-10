@@ -1,9 +1,9 @@
-﻿namespace SPA.Data;
+﻿namespace EFCore.Postgres.Application.Contexts;
 
-using Entities;
 using Microsoft.EntityFrameworkCore;
+using Models.Entities;
 
-internal sealed class ApplicationContext : DbContext
+public sealed class ApplicationContext : DbContext
 {
     public DbSet<TutorEntity> Tutors { get; set; } = null!;
     public DbSet<LessonEntity> Lessons { get; set; } = null!;

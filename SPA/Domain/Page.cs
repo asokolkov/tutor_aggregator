@@ -1,6 +1,6 @@
-﻿namespace SPA.Entities;
+﻿namespace SPA.Domain;
 
-internal sealed class Page<T>
+public sealed class Page<T>
 {
     public ICollection<T> Items { get; }
     

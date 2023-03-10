@@ -1,7 +1,6 @@
 ﻿namespace SPA.Repositories;
 
 using Domain;
-using Entities;
 
 #nullable enable
 

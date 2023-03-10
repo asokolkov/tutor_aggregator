@@ -1,7 +1,6 @@
 ﻿using JetBrains.Annotations;
 using MediatR;
 using SPA.Domain;
-using SPA.Entities;
 using SPA.Repositories;
 
 namespace SPA.Application.Lessons.CreateLessonCommand;

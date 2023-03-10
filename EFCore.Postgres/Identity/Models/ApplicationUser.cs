@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace SPA.Identity.Models;
-
-using V1.DataModels;
+﻿namespace EFCore.Postgres.Identity.Models;
 
 #nullable enable
+using Microsoft.AspNetCore.Identity;
+using SPA.Identity.Models;
 
 public class ApplicationUser : IdentityUser<Guid>
 {

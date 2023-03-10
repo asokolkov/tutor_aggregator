@@ -8,6 +8,7 @@ namespace SPA.V1.Controllers;
 using System.Security.Claims;
 using AutoMapper;
 using DataModels;
+using EFCore.Postgres.Identity.Models;
 using Services;
 
 [ApiController]

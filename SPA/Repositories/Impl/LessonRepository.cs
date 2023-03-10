@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using SPA.Data;
 using SPA.Domain;
-using SPA.Entities;
+
 
 #nullable enable
 
 namespace SPA.Repositories.Impl;
+
+using EFCore.Postgres.Application.Contexts;
+using EFCore.Postgres.Application.Models.Entities;
+
 
 internal sealed class LessonRepository : ILessonRepository
 {
@@ -56,7 +59,7 @@ internal sealed class LessonRepository : ILessonRepository
             Id = lesson.Id,
             Tutor = tutor,
             Price = lesson.Price,
-            Status = lesson.Status,
+            Status = mapper.Map<LessonStatus>(lesson.Status),
             Start = lesson.Start,
             End = lesson.End
         };

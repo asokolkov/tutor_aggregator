@@ -1,10 +1,9 @@
-﻿using JetBrains.Annotations;
-
-namespace SPA.Entities;
+﻿namespace EFCore.Postgres.Application.Models.Entities;
 
 #nullable enable
 
-internal sealed class LessonEntity
+
+public sealed class LessonEntity
 {
     public Guid Id { get; init; }
     

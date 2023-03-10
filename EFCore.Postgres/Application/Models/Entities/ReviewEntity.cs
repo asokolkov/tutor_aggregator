@@ -1,8 +1,7 @@
-﻿using SPA.Domain;
+﻿namespace EFCore.Postgres.Application.Models.Entities;
 
-namespace SPA.Entities;
 
-internal sealed class ReviewEntity
+public sealed class ReviewEntity
 {
     public Guid Id { get; init; }
     

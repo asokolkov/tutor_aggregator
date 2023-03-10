@@ -1,7 +1,6 @@
 ﻿namespace SPA.Repositories;
 
 using Domain;
-using Entities;
 
 internal interface ILocationsRepository
 {

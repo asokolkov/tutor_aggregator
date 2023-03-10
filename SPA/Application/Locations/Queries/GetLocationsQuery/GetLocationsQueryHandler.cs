@@ -6,7 +6,6 @@ using SPA.Repositories;
 namespace SPA.Application.Locations.Queries.GetLocationsQuery;
 
 using Domain;
-using Entities;
 
 [UsedImplicitly]
 internal class GetLocationsQueryHandler : IRequestHandler<GetLocationsQuery, Page<Location?>>
