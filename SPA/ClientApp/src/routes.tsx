@@ -10,7 +10,7 @@ import {
   TUTOR_PAGE,
   LESSONS_PAGE,
 } from './route-paths';
-import BaseLayout from './components/BaseLayout/BaseLayout';
+import BaseLayout from './layouts/base/BaseLayout';
 import { TutorCardPage } from './components/TutorCard/TutorCardPage';
 import { SearchPage } from './components/Search/SearchPage';
 import { LoginPage } from './components/Authorization/LoginPage';
