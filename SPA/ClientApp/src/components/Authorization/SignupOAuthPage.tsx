@@ -8,7 +8,6 @@ import {
   FormLabel,
   Switch,
   Link,
-  Heading,
   VStack,
   HStack,
   Input,
@@ -19,6 +18,7 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 import Theme from '../../assets/theme/index';
+import { Header } from './components/Header';
 
 export const SignupOAuthPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
@@ -26,9 +26,7 @@ export const SignupOAuthPage = () => {
     <ChakraProvider theme={Theme}>
       <Flex background={'gray.50'} height={'100vh'}>
         <VStack margin={'80px'} width={'100%'}>
-          <Stack textAlign="center">
-            <Heading>Продолжение регистрации</Heading>
-          </Stack>
+          <Header title={'Продолжение регистрации'} />
           <Box
             py={{ base: '0', sm: '8' }}
             px={{ base: '4', sm: '10' }}

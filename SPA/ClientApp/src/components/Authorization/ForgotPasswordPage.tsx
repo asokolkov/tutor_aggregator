@@ -16,7 +16,6 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
-  //useDisclosure,
   useBreakpointValue,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
@@ -25,22 +24,6 @@ import { Link as RLink } from 'react-router-dom';
 import { LOGIN_PAGE } from '../../route-paths';
 
 export const ForgotPasswordPage = () => {
-  // const [value, setValue] = useState('');
-  // const {isError: isVisible,} = useDisclosure({ defaultIsOpen: true })
-  //
-  // function isValidEmail(email: string) {
-  //     return /\S+@\S+\.\S+/.test(email);
-  // }
-  // const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-  //     setValue(event.target.value);
-  // }
-  // const handleSubmit = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-  //     if (!isValidEmail(value)) {
-  //         isVisible;
-  //     } else {
-  //         setValue('Правильная почта');
-  //     }
-  // }
   const [isError] = useState(false);
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   return (
@@ -58,37 +41,22 @@ export const ForgotPasswordPage = () => {
             borderWidth="2px"
             borderRadius={{ base: 'none', sm: 'xl' }}
           >
-            {isError ? (
-              <React.Fragment>
-                <Alert status="error">
-                  <AlertIcon />
-                  <AlertTitle>Введена некорректная почта!</AlertTitle>
-                  <AlertDescription>Проверьте почту.</AlertDescription>
-                </Alert>
-              </React.Fragment>
-            ) : (
-              <React.Fragment></React.Fragment>
+            {isError && (
+              <Alert status="error">
+                <AlertIcon />
+                <AlertTitle>Введена некорректная почта!</AlertTitle>
+                <AlertDescription>Проверьте почту.</AlertDescription>
+              </Alert>
             )}
             <Stack spacing="6">
               <Stack spacing="5">
                 <FormControl>
                   <FormLabel htmlFor="email">Почта от аккаунта</FormLabel>
-                  <Input
-                    id="email"
-                    type="email"
-                    // value={value}
-                    // onChange={handleChange}
-                    placeholder="Введите почту"
-                  />
+                  <Input id="email" type="email" placeholder="Введите почту" />
                 </FormControl>
               </Stack>
               <Stack spacing="6">
-                <Button
-                  // onClick={handleSubmit}
-                  variant={'solid'}
-                  size={'lg'}
-                  colorScheme={'blue'}
-                >
+                <Button variant={'solid'} size={'lg'} colorScheme={'blue'}>
                   Отправить письмо
                 </Button>
               </Stack>

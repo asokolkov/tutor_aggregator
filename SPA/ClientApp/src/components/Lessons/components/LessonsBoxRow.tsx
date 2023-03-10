@@ -48,7 +48,7 @@ export const LessonsBoxRow = (props: LessonsBoxProps) => {
   const month =
     date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
   return (
-    <React.Fragment>
+    <>
       <NewReviewModal isOpen={isOpenReview} onClose={onCloseReview} />
       <CancelLessonModal isOpen={isOpenCancel} onClose={onCloseCancel} />
       <Box
@@ -108,7 +108,7 @@ export const LessonsBoxRow = (props: LessonsBoxProps) => {
           </Flex>
         </Flex>
       </Box>
-    </React.Fragment>
+    </>
   );
 };
 

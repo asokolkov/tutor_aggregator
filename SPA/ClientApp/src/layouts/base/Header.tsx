@@ -119,7 +119,7 @@ const Header: React.FC = () => {
               </VStack>
             </HStack>
             {isDesktop ? (
-              <React.Fragment>
+              <>
                 <Spacer />
                 <Flex justify="center" align={'center'} flex="10">
                   <ButtonGroup spacing="8" margin="0px 40px 0px 0px">
@@ -163,35 +163,33 @@ const Header: React.FC = () => {
                     </HStack>
                   )}
                 </Flex>
-              </React.Fragment>
+              </>
             ) : (
-              <React.Fragment>
-                <Center>
-                  <Menu>
-                    <MenuButton
-                      as={Button}
-                      rightIcon={<HamburgerIcon />}
-                      aria-label="Menu"
-                      variant="outline"
-                    >
-                      Меню
-                    </MenuButton>
-                    <MenuList>
-                      <HeaderMenuButton text={'Поиск'} link={SEARCH_PAGE} />
-                      <HeaderMenuButton
-                        text={'Мои занятия'}
-                        link={PROFILE_PAGE}
-                      />
-                      <MenuDivider />
-                      <HeaderMenuButton
-                        text={'Зарегистрироваться'}
-                        link={SIGNUP_PAGE}
-                      />
-                      <HeaderMenuButton text={'Войти'} link={LOGIN_PAGE} />
-                    </MenuList>
-                  </Menu>
-                </Center>
-              </React.Fragment>
+              <Center>
+                <Menu>
+                  <MenuButton
+                    as={Button}
+                    rightIcon={<HamburgerIcon />}
+                    aria-label="Menu"
+                    variant="outline"
+                  >
+                    Меню
+                  </MenuButton>
+                  <MenuList>
+                    <HeaderMenuButton text={'Поиск'} link={SEARCH_PAGE} />
+                    <HeaderMenuButton
+                      text={'Мои занятия'}
+                      link={PROFILE_PAGE}
+                    />
+                    <MenuDivider />
+                    <HeaderMenuButton
+                      text={'Зарегистрироваться'}
+                      link={SIGNUP_PAGE}
+                    />
+                    <HeaderMenuButton text={'Войти'} link={LOGIN_PAGE} />
+                  </MenuList>
+                </Menu>
+              </Center>
             )}
           </Flex>
         </Box>
