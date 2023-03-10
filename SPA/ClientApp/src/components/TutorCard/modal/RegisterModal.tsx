@@ -13,7 +13,7 @@ import {
   Divider,
 } from '@chakra-ui/react';
 import RegisterConfirmationModal from './RegisterConfirmationModal';
-import { TimeBoxRow } from './TimeBoxRow';
+import { TimeBoxRow } from '../components/TimeBoxRow';
 import moment from 'moment/moment';
 
 interface Props {

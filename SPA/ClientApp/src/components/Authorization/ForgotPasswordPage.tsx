@@ -20,7 +20,7 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import Theme from '../../theme/index';
+import Theme from '../../assets/theme/index';
 import { Link as RLink } from 'react-router-dom';
 import { LOGIN_PAGE } from '../../route-paths';
 

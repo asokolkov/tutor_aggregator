@@ -19,13 +19,13 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import React from 'react';
-import { PasswordField } from './PasswordField';
-import { OAuthButtons } from './OAuthButtons';
-import { Link as RLink } from 'react-router-dom';
+import { PasswordField } from './components/PasswordField';
+import { OAuthButtons } from './components/OAuthButtons';
+import { Link as ReactLink } from 'react-router-dom';
 import { LOGIN_PAGE, SEARCH_PAGE } from '../../route-paths';
 import { useRef } from 'react';
 import AuthAPI, { AccountType } from '../../apis/auth';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 export const SignupPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
@@ -56,7 +56,7 @@ export const SignupPage = () => {
       phone: phone,
     })
       .then(() => {
-          navigate(SEARCH_PAGE);
+        navigate(SEARCH_PAGE);
       })
       .catch((error) => {
         //TODO: show error
@@ -173,7 +173,7 @@ export const SignupPage = () => {
                 <Text color="muted">Уже есть аккаунт?</Text>
                 <Button variant="link" colorScheme="blue">
                   <Link>
-                    <RLink to={LOGIN_PAGE}>Войти</RLink>
+                    <ReactLink to={LOGIN_PAGE}>Войти</ReactLink>
                   </Link>
                 </Button>
               </HStack>

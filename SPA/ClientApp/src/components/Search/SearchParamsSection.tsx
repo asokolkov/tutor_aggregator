@@ -6,8 +6,8 @@ import {
   GridItem,
   useBreakpointValue,
 } from '@chakra-ui/react';
-import { SelectOptions } from './SelectOptions';
-import searchIcon from '../../img/search_icon_bg.png';
+import { SelectOptions } from './components/SelectOptions';
+import searchIcon from '../../assets/images/search_icon_bg.png';
 import { useSearchParams } from 'react-router-dom';
 
 const SearchParams = {

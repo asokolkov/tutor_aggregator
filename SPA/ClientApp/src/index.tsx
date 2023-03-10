@@ -7,12 +7,10 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 import router from './routes';
 import { ChakraProvider } from '@chakra-ui/react';
-import theme from './theme/index';
+import theme from './assets/theme/index';
 
-if (
-  process.env.NODE_ENV === 'development' &&
-  process.env.REACT_APP_USE_MOCK_API === 'true'
-) {
+const useMock = true;
+if (useMock) {
   require('./apis/mocks/index');
 }
 

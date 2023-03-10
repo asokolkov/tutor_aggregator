@@ -32,17 +32,7 @@ const HeaderButton: React.FC<HeaderButtonProps> = ({
         onClick={onClick}
         _hover={{ color: '#777777' }}
       >
-        <p
-          style={
-            isActive
-              ? {
-                  fontWeight: 'bold',
-                }
-              : {}
-          }
-        >
-          {text}
-        </p>
+        <p style={isActive ? { fontWeight: 'bold' } : undefined}>{text}</p>
       </Button>
     </Link>
   );

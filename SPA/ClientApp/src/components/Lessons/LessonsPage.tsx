@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Switch, VStack } from '@chakra-ui/react';
-import { ActiveStudentLessons } from './ActiveStudentLessons';
-import { ActiveTutorLessons } from './ActiveTutorLessons';
-import { DateEditorTable } from './DateEditorTable';
-import { ArchiveStudentLessons } from './ArchiveStudentLessons';
-import { ArchiveTutorLessons } from './ArchiveTutorLessons';
+import { ActiveStudentLessons } from './components/ActiveStudentLessons';
+import { ActiveTutorLessons } from './components/ActiveTutorLessons';
+import { DateEditorTable } from './components/DateEditorTable';
+import { ArchiveStudentLessons } from './components/ArchiveStudentLessons';
+import { ArchiveTutorLessons } from './components/ArchiveTutorLessons';
 import { useState } from 'react';
 
 export const LessonsPage = () => {

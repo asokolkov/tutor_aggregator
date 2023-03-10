@@ -1,11 +1,11 @@
 import { ChakraProvider, VStack } from '@chakra-ui/react';
-import Theme from '../../theme/index';
+import Theme from '../../assets/theme/index';
 import { CardInfo } from './CardInfo';
 import { ReviewSection } from './ReviewSection';
 import { useEffect, useState } from 'react';
 import TutorsAPI, { Tutor, ReviewList } from '../../apis/tutors';
 import { useParams } from 'react-router-dom';
-import { LoadBar } from '../BaseLayout/LoadBar';
+import { LoadBar } from '../shared/LoadBar';
 
 export const TutorCardPage = () => {
   const [, setError] = useState(null);

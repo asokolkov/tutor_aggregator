@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { AccountInfo } from './AccountInfo';
+import { AccountInfo } from './components/AccountInfo';
 import { TutorCard } from './TutorCard';
 import { VStack } from '@chakra-ui/react';
-import UserContext from '../BaseLayout/UserContext';
+import UserContext from '../../contexts/UserContext';
 import { StudentCard } from './StudentCard';
 import { AccountType } from '../../apis/currentUser';
 
