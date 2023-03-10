@@ -5,110 +5,58 @@ import {
   Flex,
   FormControl,
   FormLabel,
-  Divider,
-  Link,
-  Heading,
   VStack,
   HStack,
   Input,
   Stack,
-  Text,
   useBreakpointValue,
 } from '@chakra-ui/react';
 import React from 'react';
-import { Link as ReactLink } from 'react-router-dom';
-import { FORGOT_PASSWORD_PAGE, SIGNUP_PAGE } from '../../route-paths';
 import { PasswordField } from './components/PasswordField';
 import { OAuthButtons } from './components/OAuthButtons';
-import { useRef } from 'react';
-import AuthAPI from '../../apis/auth';
+import { Header } from './components/Header';
+import { SignupSuggestion } from './components/SignupSuggestion';
+import { ForgetPasswordButton } from './components/ForgetPasswordButton';
+import { DividerWithOr } from './components/DividerWithOr';
 
 export const LoginPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
-  const passwordRef = useRef<HTMLInputElement>();
-  const emailRef = useRef<HTMLInputElement>();
-  const rememberMeRef = useRef<HTMLInputElement>();
-
-  const handleSubmit = () => {
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
-    const rememberMe = rememberMeRef.current.checked;
-
-    AuthAPI.login({ email: email, password: password, rememberMe: rememberMe });
-  };
 
   return (
-    <React.Fragment>
-      <Flex background={'white'}>
-        <VStack margin={'20px'} width={'100%'}>
-          <Stack textAlign="center">
-            <Heading>Войти в аккаунт</Heading>
-          </Stack>
-          <Box
-            py={{ base: '0', sm: '8' }}
-            px={{ base: '4', sm: '10' }}
-            width={isDesktop ? '50%' : '90%'}
-            bg="white"
-            borderWidth="2px"
-            borderRadius={{ base: 'none', sm: 'xl' }}
-          >
-            <HStack justify="center">
-              <OAuthButtons />
-            </HStack>
-            <HStack margin={'10px'}>
-              <Divider />
-              <Text fontSize="sm" whiteSpace="nowrap" color="muted">
-                или
-              </Text>
-              <Divider />
+    <Flex background={'white'}>
+      <VStack margin={'20px'} width={'100%'}>
+        <Header title={'Войти в аккаунт'} />
+        <Box
+          py={{ base: '0', sm: '8' }}
+          px={{ base: '4', sm: '10' }}
+          width={isDesktop ? '50%' : '90%'}
+          bg="white"
+          borderWidth="2px"
+          borderRadius={{ base: 'none', sm: 'xl' }}
+        >
+          <OAuthButtons />
+          <DividerWithOr />
+          <Stack spacing="6">
+            <Stack spacing="5">
+              <FormControl>
+                <FormLabel htmlFor="email">Почта</FormLabel>
+                <Input id="email" type="email" placeholder="Введите почту" />
+              </FormControl>
+              <PasswordField />
+            </Stack>
+            <HStack justify="space-between">
+              <Checkbox defaultChecked>Запомнить данные</Checkbox>
+              <ForgetPasswordButton />
             </HStack>
             <Stack spacing="6">
-              <Stack spacing="5">
-                <FormControl>
-                  <FormLabel htmlFor="email">Почта</FormLabel>
-                  <Input
-                    ref={emailRef}
-                    id="email"
-                    type="email"
-                    placeholder="Введите почту"
-                  />
-                </FormControl>
-                <PasswordField ref={passwordRef} />
-              </Stack>
-              <HStack justify="space-between">
-                <Checkbox ref={rememberMeRef} defaultChecked>
-                  Запомнить данные
-                </Checkbox>
-                <Button variant="link" colorScheme="blue" size="sm">
-                  <Link>
-                    <ReactLink to={FORGOT_PASSWORD_PAGE}>
-                      Забыли пароль?
-                    </ReactLink>
-                  </Link>
-                </Button>
-              </HStack>
-              <Stack spacing="6">
-                <Button
-                  variant={'solid'}
-                  size={'lg'}
-                  colorScheme={'blue'}
-                  onClick={handleSubmit}
-                >
-                  Войти
-                </Button>
-              </Stack>
-              <HStack spacing="1" justify="center">
-                <Text color="muted">Нет аккаунта?</Text>
-                <Button variant="link" colorScheme="blue">
-                  <Link>
-                    <ReactLink to={SIGNUP_PAGE}>Зарегистрироваться</ReactLink>
-                  </Link>
-                </Button>
-              </HStack>
+              <Button variant={'solid'} size={'lg'} colorScheme={'blue'}>
+                Войти
+              </Button>
             </Stack>
-          </Box>
-        </VStack>
-      </Flex>
-    </React.Fragment>
+            <SignupSuggestion />
+          </Stack>
+        </Box>
+      </VStack>
+    </Flex>
   );
 };

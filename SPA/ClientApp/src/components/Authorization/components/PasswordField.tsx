@@ -7,22 +7,14 @@ import {
   InputProps,
   InputRightElement,
   useDisclosure,
-  useMergeRefs,
 } from '@chakra-ui/react';
 import * as React from 'react';
 import { GoEye, GoEyeClosed } from 'react-icons/go';
 
 export const PasswordField = React.forwardRef<HTMLInputElement, InputProps>(
-  (props, ref) => {
+  (props) => {
     const { isOpen, onToggle } = useDisclosure();
-    const inputRef = React.useRef<HTMLInputElement>(null);
-    const mergeRef = useMergeRefs(inputRef, ref);
-    const onClickReveal = () => {
-      onToggle();
-      if (inputRef.current) {
-        inputRef.current.focus({ preventScroll: true });
-      }
-    };
+    const onClickReveal = () => onToggle();
 
     return (
       <FormControl>
@@ -38,7 +30,6 @@ export const PasswordField = React.forwardRef<HTMLInputElement, InputProps>(
           </InputRightElement>
           <Input
             id="password"
-            ref={mergeRef}
             placeholder="Введите пароль"
             name="password"
             type={isOpen ? 'text' : 'password'}
