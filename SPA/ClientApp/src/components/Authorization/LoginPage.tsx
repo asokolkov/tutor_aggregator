@@ -18,8 +18,8 @@ import {
 import React from 'react';
 import { Link as RLink } from 'react-router-dom';
 import { FORGOT_PASSWORD_PAGE, SIGNUP_PAGE } from '../../route-paths';
-import { PasswordField } from './PasswordField';
-import { OAuthButtons } from './OAuthButtons';
+import { PasswordField } from './components/PasswordField';
+import { OAuthButtons } from './components/OAuthButtons';
 import { useRef } from 'react';
 import AuthAPI from '../../apis/auth';
 

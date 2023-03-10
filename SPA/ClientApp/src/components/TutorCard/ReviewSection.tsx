@@ -1,4 +1,4 @@
-import { SingleReview } from './SingleReview';
+import { SingleReview } from './components/SingleReview';
 import { Text, VStack } from '@chakra-ui/react';
 import { Review } from '../../apis/tutors';
 

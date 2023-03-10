@@ -19,8 +19,8 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import React from 'react';
-import { PasswordField } from './PasswordField';
-import { OAuthButtons } from './OAuthButtons';
+import { PasswordField } from './components/PasswordField';
+import { OAuthButtons } from './components/OAuthButtons';
 import { Link as RLink } from 'react-router-dom';
 import { LOGIN_PAGE, SEARCH_PAGE } from '../../route-paths';
 import { useRef } from 'react';

@@ -9,15 +9,15 @@ import {
   Divider,
 } from '@chakra-ui/react';
 import { LockIcon, InfoIcon } from '@chakra-ui/icons';
-import { ProfilePageSelectOptionsRow } from './ProfilePageSelectOptionsRow';
-import { ProfilePageInputRow } from './ProfilePageInputRow';
-import { ProfilePageTextAreaRow } from './ProfilePageTextAreaRow';
-import { ProfilePageButtonRow } from './ProfilePageButtonRow';
-import { ProfilePageCheckboxesRow } from './ProfilePageCheckboxesRow';
+import { ProfilePageSelectOptionsRow } from './components/ProfilePageSelectOptionsRow';
+import { ProfilePageInputRow } from './components/ProfilePageInputRow';
+import { ProfilePageTextAreaRow } from './components/ProfilePageTextAreaRow';
+import { ProfilePageButtonRow } from './components/ProfilePageButtonRow';
+import { ProfilePageCheckboxesRow } from './components/ProfilePageCheckboxesRow';
 import profileIcon from '../../img/profile_icon_bg.png';
-import { mapToFullName } from './_share';
+import { mapToFullName } from './components/_share';
 import { useEffect, useState } from 'react';
-import { LoadBar } from '../BaseLayout/LoadBar';
+import { LoadBar } from '../shared/LoadBar';
 import TutorsAPI, { Tutor } from '../../apis/tutors';
 
 export const TutorCard: React.FC = () => {

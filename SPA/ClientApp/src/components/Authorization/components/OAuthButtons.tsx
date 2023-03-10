@@ -1,6 +1,6 @@
 import { Button, ButtonGroup, VisuallyHidden } from '@chakra-ui/react';
 import { FaGoogle, FaVk } from 'react-icons/fa';
-import AuthAPI from '../../apis/auth';
+import AuthAPI from '../../../apis/auth';
 
 const providers = [
   { name: 'Google', icon: <FaGoogle /> },

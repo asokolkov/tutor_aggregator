@@ -1,6 +1,6 @@
 import React from 'react';
 import { Flex, Image, Text, useBreakpointValue } from '@chakra-ui/react';
-import { Award } from '../../apis/_share';
+import { Award } from '../../../apis/_share';
 
 const AwardsRow: React.FC<AwardsRowProps> = ({
   icon,

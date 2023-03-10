@@ -33,10 +33,10 @@ import {
   SIGNUP_PAGE,
   LESSONS_PAGE,
 } from '../../route-paths';
-import HeaderButton from './HeaderButton';
+import HeaderButton from './components/HeaderButton';
 import { useContext } from 'react';
-import UserContext from './UserContext';
-import HeaderMenuButton from './HeaderMenuButton';
+import UserContext from '../../contexts/UserContext';
+import HeaderMenuButton from './components/HeaderMenuButton';
 import logo from '../../img/teacher_icon.png';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import { useState } from 'react';

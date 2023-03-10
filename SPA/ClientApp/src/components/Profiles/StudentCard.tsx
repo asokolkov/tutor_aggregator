@@ -8,15 +8,15 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import { LockIcon, InfoIcon } from '@chakra-ui/icons';
-import { ProfilePageTextAreaRow } from './ProfilePageTextAreaRow';
-import { ProfilePageButtonRow } from './ProfilePageButtonRow';
+import { ProfilePageTextAreaRow } from './components/ProfilePageTextAreaRow';
+import { ProfilePageButtonRow } from './components/ProfilePageButtonRow';
 import profileIcon from '../../img/profile_icon_bg.png';
 import StudentAPI, { Student } from '../../apis/students';
-import { ProfilePageInputRow } from './ProfilePageInputRow';
-import { ProfilePageSelectOptionsRow } from './ProfilePageSelectOptionsRow';
+import { ProfilePageInputRow } from './components/ProfilePageInputRow';
+import { ProfilePageSelectOptionsRow } from './components/ProfilePageSelectOptionsRow';
 import { useEffect, useState } from 'react';
-import { LoadBar } from '../BaseLayout/LoadBar';
-import { mapToFullName } from './_share';
+import { LoadBar } from '../shared/LoadBar';
+import { mapToFullName } from './components/_share';
 
 export const StudentCard: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });

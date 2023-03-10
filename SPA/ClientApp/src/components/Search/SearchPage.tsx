@@ -1,10 +1,10 @@
 import { VStack, SimpleGrid } from '@chakra-ui/react';
-import SearchCardInfo from './SearchCardInfo';
+import SearchCardInfo from './components/SearchCardInfo';
 import { useEffect, useState } from 'react';
 import TutorsAPI, { Tutor } from '../../apis/tutors';
 import SearchParamsSection from './SearchParamsSection';
 import './SearchPage.css';
-import { LoadBar } from '../BaseLayout/LoadBar';
+import { LoadBar } from '../shared/LoadBar';
 
 export const SearchPage = () => {
   const [, setError] = useState(null);

@@ -6,8 +6,8 @@ import Footer from './Footer';
 import { ChakraProvider, Container } from '@chakra-ui/react';
 import Theme from '../../theme';
 import UserAPI, { User } from '../../apis/currentUser';
-import UserContext from './UserContext';
-import { LoadBar } from './LoadBar';
+import UserContext from '../../contexts/UserContext';
+import { LoadBar } from '../shared/LoadBar';
 
 const BaseLayout: React.FC = () => {
   const [user, setUser] = useState<User>({ isAuthorized: false });

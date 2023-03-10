@@ -11,8 +11,8 @@ import {
   useBreakpointValue,
   Divider,
 } from '@chakra-ui/react';
-import BottomCardDescription from './BottomCardDescription';
-import AwardsRow from './AwardsRow';
+import BottomCardDescription from './components/BottomCardDescription';
+import AwardsRow from './components/AwardsRow';
 import categoryIcon from '../../img/category-icon.png';
 import locationIcon from '../../img/location-icon.png';
 import educationIcon from '../../img/educations-icon.png';
@@ -21,9 +21,9 @@ import ageIcon from '../../img/age-icon.png';
 import aboutIcon from '../../img/about-icon.png';
 import awardsIcon from '../../img/awards-icon.png';
 import { Award, Education } from '../../apis/_share';
-import RegisterModal from './RegisterModal';
-import ContactsPopoverButton from './ContactsPopoverButton';
-import { ReviewStarWithStats } from './ReviewStarWithStats';
+import RegisterModal from './modal/RegisterModal';
+import ContactsPopoverButton from './components/ContactsPopoverButton';
+import { ReviewStarWithStats } from './components/ReviewStarWithStats';
 import React from 'react';
 
 function getTextToAge(age: number): string {

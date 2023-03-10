@@ -1,6 +1,6 @@
 import { Avatar, Text, HStack, VStack } from '@chakra-ui/react';
 import { ReviewStar } from './ReviewStar';
-import { Review } from '../../apis/tutors';
+import { Review } from '../../../apis/tutors';
 
 export const SingleReview = (props: Review) => {
   return (

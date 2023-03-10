@@ -1,12 +1,12 @@
 import { Avatar, Heading, VStack, Button, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { TUTORS_PATH } from '../../route-paths';
-import { ReviewStarWithStats } from '../TutorCard/ReviewStarWithStats';
-import categoryIcon from '../../img/category-icon.png';
-import jobIcon from '../../img/job-icon.png';
+import { TUTORS_PATH } from '../../../route-paths';
+import { ReviewStarWithStats } from '../../TutorCard/components/ReviewStarWithStats';
+import categoryIcon from '../../../img/category-icon.png';
+import jobIcon from '../../../img/job-icon.png';
 import SearchCardInfoRow from './SearchCardInfoRow';
-import { Education } from '../../apis/_share';
+import { Education } from '../../../apis/_share';
 
 const SearchCardInfo: React.FC<SearchCardInfoProps> = ({
   id,
