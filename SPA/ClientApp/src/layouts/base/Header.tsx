@@ -24,7 +24,7 @@ import {
   PopoverBody,
 } from '@chakra-ui/react';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FiMapPin } from 'react-icons/fi';
 import {
   LOGIN_PAGE,
@@ -39,12 +39,15 @@ import UserContext from '../../contexts/UserContext';
 import HeaderMenuButton from './components/HeaderMenuButton';
 import logo from '../../assets/images/teacher_icon.png';
 import { HamburgerIcon } from '@chakra-ui/icons';
-import { useState } from 'react';
 
 const Header: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   const userState = useContext(UserContext);
-  const [openTab, setOpenTab] = useState('Поиск');
+
+  const location = useLocation();
+  const isActive = (path: string): boolean => {
+    return location.pathname.includes(path);
+  };
   return (
     <>
       <Container
@@ -124,32 +127,19 @@ const Header: React.FC = () => {
                       text={'Поиск'}
                       link={SEARCH_PAGE}
                       variant={'link'}
-                      isActive={openTab === 'Поиск'}
-                      onClick={() => setOpenTab('Поиск')}
+                      isActive={isActive(SEARCH_PAGE)}
                     />
                     <HeaderButton
                       text={'Мои занятия'}
-                      link={userState.isAuthorized ? LESSONS_PAGE : LOGIN_PAGE}
+                      link={LESSONS_PAGE}
                       variant={'link'}
-                      isActive={
-                        userState.isAuthorized && openTab === 'Мои занятия'
-                      }
-                      onClick={
-                        userState.isAuthorized &&
-                        (() => setOpenTab('Мои занятия'))
-                      }
+                      isActive={isActive(LESSONS_PAGE)}
                     />
                     <HeaderButton
                       text={'Мой профиль'}
-                      link={userState.isAuthorized ? PROFILE_PAGE : LOGIN_PAGE}
+                      link={PROFILE_PAGE}
                       variant={'link'}
-                      isActive={
-                        userState.isAuthorized && openTab === 'Мой профиль'
-                      }
-                      onClick={
-                        userState.isAuthorized &&
-                        (() => setOpenTab('Мой профиль'))
-                      }
+                      isActive={isActive(PROFILE_PAGE)}
                     />
                   </ButtonGroup>
                   {userState.isAuthorized ? (
