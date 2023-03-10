@@ -18,7 +18,7 @@ import {
   InputGroup,
   useBreakpointValue,
 } from '@chakra-ui/react';
-import Theme from '../../theme/index';
+import Theme from '../../assets/theme/index';
 
 export const SignupOAuthPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });

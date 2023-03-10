@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import { ChakraProvider, Container } from '@chakra-ui/react';
-import Theme from '../../theme';
+import Theme from '../../assets/theme';
 import UserAPI, { User } from '../../apis/currentUser';
 import UserContext from '../../contexts/UserContext';
 import { LoadBar } from '../shared/LoadBar';

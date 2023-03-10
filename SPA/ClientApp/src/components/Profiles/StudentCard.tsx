@@ -10,7 +10,7 @@ import {
 import { LockIcon, InfoIcon } from '@chakra-ui/icons';
 import { ProfilePageTextAreaRow } from './components/ProfilePageTextAreaRow';
 import { ProfilePageButtonRow } from './components/ProfilePageButtonRow';
-import profileIcon from '../../img/profile_icon_bg.png';
+import profileIcon from '../../assets/images/profile_icon_bg.png';
 import StudentAPI, { Student } from '../../apis/students';
 import { ProfilePageInputRow } from './components/ProfilePageInputRow';
 import { ProfilePageSelectOptionsRow } from './components/ProfilePageSelectOptionsRow';

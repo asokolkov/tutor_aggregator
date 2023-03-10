@@ -14,7 +14,7 @@ import { ProfilePageInputRow } from './components/ProfilePageInputRow';
 import { ProfilePageTextAreaRow } from './components/ProfilePageTextAreaRow';
 import { ProfilePageButtonRow } from './components/ProfilePageButtonRow';
 import { ProfilePageCheckboxesRow } from './components/ProfilePageCheckboxesRow';
-import profileIcon from '../../img/profile_icon_bg.png';
+import profileIcon from '../../assets/images/profile_icon_bg.png';
 import { mapToFullName } from './components/_share';
 import { useEffect, useState } from 'react';
 import { LoadBar } from '../shared/LoadBar';
