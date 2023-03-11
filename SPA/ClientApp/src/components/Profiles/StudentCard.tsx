@@ -11,33 +11,18 @@ import { LockIcon, InfoIcon } from '@chakra-ui/icons';
 import { ProfilePageTextAreaRow } from './components/ProfilePageTextAreaRow';
 import { ProfilePageButtonRow } from './components/ProfilePageButtonRow';
 import profileIcon from '../../assets/images/profile_icon_bg.png';
-import StudentAPI, { Student } from '../../apis/students';
 import { ProfilePageInputRow } from './components/ProfilePageInputRow';
 import { ProfilePageSelectOptionsRow } from './components/ProfilePageSelectOptionsRow';
-import { useEffect, useState } from 'react';
-import { LoadBar } from '../shared/LoadBar';
 import { mapToFullName } from './components/_share';
+import { ProfileContext } from '../../contexts/ProfileContext';
+import { useContext } from 'react';
 
 export const StudentCard: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
+  const profileContext = useContext(ProfileContext);
 
-  const [, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState<Student>(null);
-
-  useEffect(() => {
-    StudentAPI.getCurrentProfileInfo().then(
-      (result) => {
-        setIsLoaded(true);
-        setItems(result);
-      },
-      (e) => {
-        setIsLoaded(true);
-        setError(e);
-      }
-    );
-  }, []);
-  if (!isLoaded) return <LoadBar />;
+  if (profileContext.isLoading) return <></>;
+  const student = profileContext.studentProfile;
   return (
     <>
       <Box
@@ -82,7 +67,7 @@ export const StudentCard: React.FC = () => {
               placeholder={'Михаил Ланец'}
               isDisabled={true}
               isRequired={true}
-              value={mapToFullName(items.firstName, items.lastName)}
+              value={mapToFullName(student.firstName, student.lastName)}
               tooltip={[
                 <Tooltip
                   label="Чтобы изменить ФИО, напишите в поддержку сайта"

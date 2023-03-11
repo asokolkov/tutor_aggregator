@@ -16,31 +16,17 @@ import { ProfilePageButtonRow } from './components/ProfilePageButtonRow';
 import { ProfilePageCheckboxesRow } from './components/ProfilePageCheckboxesRow';
 import profileIcon from '../../assets/images/profile_icon_bg.png';
 import { mapToFullName } from './components/_share';
-import { useEffect, useState } from 'react';
 import { LoadBar } from '../shared/LoadBar';
-import TutorsAPI, { Tutor } from '../../apis/tutors';
+import { ProfileContext } from '../../contexts/ProfileContext';
+import { useContext } from 'react';
 
 export const TutorCard: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
+  const profileContext = useContext(ProfileContext);
 
-  const [, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState<Tutor>(null);
+  if (profileContext.isLoading) return <LoadBar />;
+  const tutor = profileContext.tutorProfile;
 
-  useEffect(() => {
-    TutorsAPI.getCurrentProfileInfo().then(
-      (result) => {
-        setIsLoaded(true);
-        setItems(result);
-      },
-      (e) => {
-        setIsLoaded(true);
-        setError(e);
-      }
-    );
-  });
-
-  if (!isLoaded) return <LoadBar />;
   return (
     <>
       <Box
@@ -82,7 +68,7 @@ export const TutorCard: React.FC = () => {
           >
             <ProfilePageInputRow
               label={'ФИО'}
-              value={mapToFullName(items.firstName, items.lastName)}
+              value={mapToFullName(tutor.firstName, tutor.lastName)}
               isDisabled={true}
               isRequired={true}
               tooltip={[

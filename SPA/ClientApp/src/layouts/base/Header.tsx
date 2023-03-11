@@ -35,7 +35,7 @@ import {
 } from '../../route-paths';
 import HeaderButton from './components/HeaderButton';
 import { useContext } from 'react';
-import UserContext from '../../contexts/UserContext';
+import { UserContext } from '../../contexts/UserContext';
 import HeaderMenuButton from './components/HeaderMenuButton';
 import logo from '../../assets/images/teacher_icon.png';
 import { HamburgerIcon } from '@chakra-ui/icons';
