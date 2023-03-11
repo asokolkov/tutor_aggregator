@@ -1,13 +1,9 @@
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
-  FormControl,
-  FormLabel,
   VStack,
   HStack,
-  Input,
   Stack,
   useBreakpointValue,
 } from '@chakra-ui/react';
@@ -18,9 +14,17 @@ import { Header } from './components/Header';
 import { SignupSuggestion } from './components/SignupSuggestion';
 import { ForgetPasswordButton } from './components/ForgetPasswordButton';
 import { DividerWithOr } from './components/DividerWithOr';
+import { EmailField } from './components/EmailField';
+import { Form, Formik, FormikValues } from 'formik';
+import { RememberMeCheckbox } from './components/RememberMeCheckbox';
+
+const initialValues = { email: '', password: '', remember: true };
 
 export const LoginPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
+  const onFormSubmit = (values: FormikValues) => {
+    console.log(values);
+  };
 
   return (
     <Flex background={'white'}>
@@ -36,25 +40,31 @@ export const LoginPage = () => {
         >
           <OAuthButtons />
           <DividerWithOr />
-          <Stack spacing="6">
-            <Stack spacing="5">
-              <FormControl>
-                <FormLabel htmlFor="email">Почта</FormLabel>
-                <Input id="email" type="email" placeholder="Введите почту" />
-              </FormControl>
-              <PasswordField />
-            </Stack>
-            <HStack justify="space-between">
-              <Checkbox defaultChecked>Запомнить данные</Checkbox>
-              <ForgetPasswordButton />
-            </HStack>
-            <Stack spacing="6">
-              <Button variant={'solid'} size={'lg'} colorScheme={'blue'}>
-                Войти
-              </Button>
-            </Stack>
-            <SignupSuggestion />
-          </Stack>
+          <Formik initialValues={initialValues} onSubmit={onFormSubmit}>
+            <Form>
+              <Stack spacing="6">
+                <Stack spacing="5">
+                  <EmailField />
+                  <PasswordField />
+                </Stack>
+                <HStack justify={'space-between'}>
+                  <RememberMeCheckbox />
+                  <ForgetPasswordButton />
+                </HStack>
+                <Stack spacing="6">
+                  <Button
+                    variant={'solid'}
+                    size={'lg'}
+                    colorScheme={'blue'}
+                    type="submit"
+                  >
+                    Войти
+                  </Button>
+                </Stack>
+                <SignupSuggestion />
+              </Stack>
+            </Form>
+          </Formik>
         </Box>
       </VStack>
     </Flex>

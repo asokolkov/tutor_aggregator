@@ -10,11 +10,13 @@ import {
 } from '@chakra-ui/react';
 import * as React from 'react';
 import { GoEye, GoEyeClosed } from 'react-icons/go';
+import { useField } from 'formik';
 
 export const PasswordField = React.forwardRef<HTMLInputElement, InputProps>(
   (props) => {
     const { isOpen, onToggle } = useDisclosure();
     const onClickReveal = () => onToggle();
+    const [field] = useField({ name: 'password' });
 
     return (
       <FormControl>
@@ -31,7 +33,7 @@ export const PasswordField = React.forwardRef<HTMLInputElement, InputProps>(
           <Input
             id="password"
             placeholder="Введите пароль"
-            name="password"
+            {...field}
             type={isOpen ? 'text' : 'password'}
             autoComplete="current-password"
             required

@@ -3,16 +3,9 @@ import {
   Button,
   Checkbox,
   Flex,
-  FormControl,
-  FormLabel,
   HStack,
-  Input,
-  InputGroup,
-  InputLeftAddon,
   Link,
   Stack,
-  Switch,
-  Text,
   useBreakpointValue,
   VStack,
 } from '@chakra-ui/react';
@@ -22,9 +15,25 @@ import { OAuthButtons } from './components/OAuthButtons';
 import { Header } from './components/Header';
 import { DividerWithOr } from './components/DividerWithOr';
 import { SignupSuggestion } from './components/SignupSuggestion';
+import { EmailField } from './components/EmailField';
+import { TutorOrStudentSwitchField } from './components/TutorOrStudentSwitchField';
+import { PhoneNumberField } from './components/PhoneNumberField';
+import { NameSurnameField } from './components/NameSurnameField';
+import { Form, Formik, FormikValues } from 'formik';
+
+const initialValues = {
+  name: '',
+  surname: '',
+  phoneNumber: '',
+  isTutor: false,
+  email: '',
+  password: '',
+};
 
 export const SignupPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
+
+  const onSubmit = (values: FormikValues) => console.log(values);
 
   return (
     <Flex background={'white'}>
@@ -40,62 +49,38 @@ export const SignupPage = () => {
         >
           <OAuthButtons />
           <DividerWithOr />
-          <FormControl>
-            <FormLabel htmlFor="email">Имя и фамилия</FormLabel>
-            <HStack>
-              <Input id="name" type="text" placeholder="Введите имя" />
-              <Input id="surname" type="text" placeholder="Введите фамилию" />
-            </HStack>
-          </FormControl>
-          <FormControl>
-            <FormLabel htmlFor="email">Телефон</FormLabel>
-            <HStack>
-              <InputGroup>
-                <InputLeftAddon children="+7" />
-                <Input id="tel" type="tel" placeholder="9991234567" />
-              </InputGroup>
-            </HStack>
-          </FormControl>
-          <FormControl>
-            <FormLabel htmlFor="email">Тип аккаунта</FormLabel>
-            <HStack justify="center">
-              <Text fontSize="md" whiteSpace="nowrap" color="muted">
-                Ученик
-              </Text>
-              <Switch
-                size="lg"
-                colorScheme="Gray 200"
-                id="isRequired"
-                isRequired
-              />
-              <Text fontSize="md" whiteSpace="nowrap" color="muted">
-                Репетитор
-              </Text>
-            </HStack>
-          </FormControl>
-          <Stack spacing="6">
-            <Stack spacing="5">
-              <FormControl>
-                <FormLabel htmlFor="email">Почта</FormLabel>
-                <Input id="email" type="email" placeholder="Введите почту" />
-              </FormControl>
-              <PasswordField />
-            </Stack>
-            <HStack justify="space-between">
-              <Checkbox>
-                Принимаю{' '}
-                <Link color="teal.500" href="#">
-                  условия сервиса.
-                </Link>
-              </Checkbox>
-            </HStack>
-            <Stack spacing="6">
-              <Button variant={'solid'} size={'lg'} colorScheme={'blue'}>
-                Зарегистрироваться
-              </Button>
-            </Stack>
-            <SignupSuggestion />
-          </Stack>
+          <Formik initialValues={initialValues} onSubmit={onSubmit}>
+            <Form>
+              <NameSurnameField />
+              <PhoneNumberField />
+              <TutorOrStudentSwitchField />
+              <Stack spacing="6">
+                <Stack spacing="5">
+                  <EmailField />
+                  <PasswordField />
+                </Stack>
+                <HStack justify="space-between">
+                  <Checkbox>
+                    Принимаю{' '}
+                    <Link color="teal.500" href="#">
+                      условия сервиса.
+                    </Link>
+                  </Checkbox>
+                </HStack>
+                <Stack spacing="6">
+                  <Button
+                    variant={'solid'}
+                    size={'lg'}
+                    colorScheme={'blue'}
+                    type="submit"
+                  >
+                    Зарегистрироваться
+                  </Button>
+                </Stack>
+                <SignupSuggestion />
+              </Stack>
+            </Form>
+          </Formik>
         </Box>
       </VStack>
     </Flex>
