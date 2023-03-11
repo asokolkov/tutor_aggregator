@@ -1,4 +1,8 @@
 using System.Security.Claims;
+using EFCore.Postgres.Application.Contexts;
+using EFCore.Postgres.Extensions;
+using EFCore.Postgres.Identity;
+using EFCore.Postgres.Identity.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Identity;
@@ -6,10 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Converters;
 using SPA.Authorization;
 using SPA.Authorization.Requirements;
-using SPA.Data;
 using SPA.Extensions;
-using SPA.Identity;
-using SPA.Identity.Models;
 using SPA.Startup;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,10 +31,7 @@ builder.Services
 
 /* Identity */
 builder.Services
-    .AddDbContext<ApplicationIdentityContext>(config =>
-    {
-        config.UseNpgsql(builder.Configuration.GetConnectionString("Identity"));
-    })
+    .AddIdentityContext(builder.Configuration.GetConnectionString("Identity"))
     .AddIdentity<ApplicationUser, IdentityRole<Guid>>()
     .AddEntityFrameworkStores<ApplicationIdentityContext>();
 

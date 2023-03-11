@@ -1,7 +1,6 @@
 ﻿namespace SPA.Application.Tutors.Queries.GetReviewsQuery;
 
 using Domain;
-using Entities;
 using JetBrains.Annotations;
 using MediatR;
 using Repositories;

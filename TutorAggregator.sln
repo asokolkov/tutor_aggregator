@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPA", "SPA\SPA.csproj", "{D55A87ED-50EA-4406-895A-2C253A630DF0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCore.Postgres", "EFCore.Postgres\EFCore.Postgres.csproj", "{6C6C5F85-884F-4490-B9A2-C9C8AC2EEC99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.DataGenerator", "Tools.DataGenerator\Tools.DataGenerator.csproj", "{515ACA46-CBCE-4CB5-85F5-0A68ED25BDD7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{D55A87ED-50EA-4406-895A-2C253A630DF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D55A87ED-50EA-4406-895A-2C253A630DF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D55A87ED-50EA-4406-895A-2C253A630DF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C6C5F85-884F-4490-B9A2-C9C8AC2EEC99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C6C5F85-884F-4490-B9A2-C9C8AC2EEC99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C6C5F85-884F-4490-B9A2-C9C8AC2EEC99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C6C5F85-884F-4490-B9A2-C9C8AC2EEC99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{515ACA46-CBCE-4CB5-85F5-0A68ED25BDD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{515ACA46-CBCE-4CB5-85F5-0A68ED25BDD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{515ACA46-CBCE-4CB5-85F5-0A68ED25BDD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{515ACA46-CBCE-4CB5-85F5-0A68ED25BDD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -5,7 +5,6 @@ using SPA.Repositories;
 namespace SPA.Application.Tutors.Queries.GetTutorsQuery;
 
 using Domain;
-using Entities;
 
 [UsedImplicitly]
 internal class GetTutorsQueryHandler : IRequestHandler<GetTutorsQuery, Page<Tutor>>

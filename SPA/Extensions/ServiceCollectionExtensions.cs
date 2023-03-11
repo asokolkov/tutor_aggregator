@@ -18,12 +18,10 @@ namespace SPA.Extensions;
 
 using Application.Tutors.Queries.GetReviewsQuery;
 using Authorization;
-using Data;
 using Domain;
-using Entities;
+using EFCore.Postgres.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
 using Repositories;
 using Repositories.Impl;
 using Services;
@@ -35,8 +33,7 @@ internal static class ServiceCollectionExtensions
     public static void SetUpServices(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("Postgres");
-        services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(connectionString,
-            o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
+        services.AddApplicationContext(connectionString);
 
         services.AddAutoMapper(opt => opt.AddProfile<V1Profile>());
         services.AddMediatR(typeof(Program));

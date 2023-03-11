@@ -7,7 +7,6 @@ namespace SPA.V1.Controllers;
 
 using AutoMapper;
 using DataModels;
-using Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

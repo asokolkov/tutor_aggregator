@@ -1,9 +1,9 @@
 ﻿namespace SPA.Repositories.Impl;
 
 using AutoMapper;
-using Data;
 using Domain;
-using Entities;
+using EFCore.Postgres.Application.Contexts;
+using EFCore.Postgres.Application.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 internal sealed class LocationsRepository : ILocationsRepository

@@ -1,7 +1,7 @@
 ﻿namespace SPA.Repositories.Impl;
 
 using Domain;
-using Identity.Models;
+using EFCore.Postgres.Identity.Models;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

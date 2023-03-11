@@ -1,5 +1,4 @@
 ﻿using SPA.Domain;
-using SPA.Entities;
 
 namespace SPA.Repositories;
 

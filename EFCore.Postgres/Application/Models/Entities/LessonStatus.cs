@@ -1,4 +1,4 @@
-﻿namespace SPA.Entities;
+﻿namespace EFCore.Postgres.Application.Models.Entities;
 
 public enum LessonStatus : byte
 {

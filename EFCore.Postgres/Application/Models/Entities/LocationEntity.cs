@@ -1,6 +1,6 @@
-﻿namespace SPA.Entities;
+﻿namespace EFCore.Postgres.Application.Models.Entities;
 
-internal sealed class LocationEntity
+public sealed class LocationEntity
 {
     public Guid Id { get; init; }
     

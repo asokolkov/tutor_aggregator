@@ -1,8 +1,8 @@
-﻿using System.Security.Policy;
-using Newtonsoft.Json;
-using SPA.Entities;
+﻿using Newtonsoft.Json;
 
 namespace SPA.V1.DataModels;
+
+using Domain;
 
 public sealed class V1LessonDto
 {

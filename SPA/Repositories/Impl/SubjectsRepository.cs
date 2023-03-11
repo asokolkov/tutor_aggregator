@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using SPA.Data;
 using SPA.Domain;
-using SPA.Entities;
 
 namespace SPA.Repositories.Impl;
+
+using EFCore.Postgres.Application.Contexts;
+using EFCore.Postgres.Application.Models.Entities;
 
 internal sealed class SubjectsRepository : ISubjectsRepository
 {
