@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { FormControl, FormLabel, Flex, Textarea } from '@chakra-ui/react';
+import { useField } from 'formik';
 
 export const ProfilePageTextAreaRow = (props: ProfilePageTextAreaProps) => {
+  const [field] = useField({ name: props.name });
   return (
     <Flex align={'start'} margin={'0 0 10px 0'}>
       <FormControl display={'flex'} alignItems={'center'}>
@@ -23,6 +25,7 @@ export const ProfilePageTextAreaRow = (props: ProfilePageTextAreaProps) => {
           size={'md'}
           resize={'vertical'}
           isDisabled={props.isDisabled}
+          {...field}
         />
         {props.tooltip}
       </FormControl>
@@ -35,4 +38,5 @@ type ProfilePageTextAreaProps = {
   label: string;
   isDisabled: boolean;
   tooltip: JSX.Element[];
+  name: string;
 };

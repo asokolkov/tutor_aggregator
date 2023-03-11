@@ -1,9 +1,5 @@
 ﻿import axiosInstance from './_share';
-
-export enum AccountType {
-  Student = 'Student',
-  Tutor = 'Tutor',
-}
+import { AccountType } from './currentUser';
 
 export type V1LoginDto = {
   email: string;

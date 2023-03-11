@@ -1,15 +1,24 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import {
-  Flex,
   Box,
-  useBreakpointValue,
-  Heading,
   Button,
+  Flex,
+  Heading,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import { ProfilePageTextRow } from './ProfilePageTextRow';
+import { UserContext } from '../../../contexts/UserContext';
+import { AccountType } from '../../../apis/currentUser';
+import { ProfileContext } from '../../../contexts/ProfileContext';
 
 export const AccountInfo = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
+  const userContext = useContext(UserContext);
+  const isTutor = userContext.type === AccountType.Tutor;
+
+  const profileContext = useContext(ProfileContext);
+  if (profileContext.isLoading) return <></>;
   return (
     <>
       <Box
@@ -34,9 +43,18 @@ export const AccountInfo = () => {
             direction={'column'}
             margin={isDesktop ? '0 0 0 15em' : '0 0 0 0'}
           >
-            <ProfilePageTextRow label={'Тип профиля'} text={'ученик'} />
-            <ProfilePageTextRow label={'Почта'} text={'theoilside@gmail.com'} />
-            <ProfilePageTextRow label={'Телефон'} text={'+79995654815'} />
+            <ProfilePageTextRow
+              label={'Тип профиля'}
+              text={isTutor ? 'репетитор' : 'ученик'}
+            />
+            <ProfilePageTextRow
+              label={'Почта'}
+              text={'Почта не прикручена в апишке'}
+            />
+            <ProfilePageTextRow
+              label={'Телефон'}
+              text={'Телефон не прикручен в апишке'}
+            />
           </Flex>
           <Button
             color={'red'}

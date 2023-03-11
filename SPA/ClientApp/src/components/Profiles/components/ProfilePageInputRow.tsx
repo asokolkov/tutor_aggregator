@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { FormControl, FormLabel, Flex, Input } from '@chakra-ui/react';
+import { useField } from 'formik';
 
 export const ProfilePageInputRow = (props: ProfilePageInputProps) => {
+  const [field] = useField({ name: props.name });
   return (
     <Flex width={'100%'} margin={'0 0 10px 0'} align={'center'}>
       <FormControl
@@ -26,6 +28,7 @@ export const ProfilePageInputRow = (props: ProfilePageInputProps) => {
           fontSize={'lg'}
           size={'md'}
           isDisabled={props.isDisabled}
+          {...field}
         />
         {props.tooltip}
       </FormControl>
@@ -40,4 +43,5 @@ type ProfilePageInputProps = {
   isRequired: boolean;
   tooltip: JSX.Element[];
   value?: string;
+  name: string;
 };

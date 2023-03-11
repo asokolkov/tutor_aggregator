@@ -1,19 +1,36 @@
 import * as React from 'react';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { AccountInfo } from './components/AccountInfo';
 import { TutorCard } from './TutorCard';
 import { VStack } from '@chakra-ui/react';
-import UserContext from '../../contexts/UserContext';
+import { UserContext } from '../../contexts/UserContext';
 import { StudentCard } from './StudentCard';
 import { AccountType } from '../../apis/currentUser';
+import { useProfileInfo } from './hooks';
+import { ProfileContext } from '../../contexts/ProfileContext';
+import { LoadBar } from '../shared/LoadBar';
 
 export const ProfilePage = () => {
   const userContext = useContext(UserContext);
+  const { isLoading, tutorProfile, studentProfile } = useProfileInfo(
+    userContext.type
+  );
+
+  const providerValues = useMemo(
+    () => ({ isLoading, tutorProfile, studentProfile }),
+    [isLoading, studentProfile, tutorProfile]
+  );
+
+  const isTutor = userContext.type === AccountType.Tutor;
+  if (isLoading)
+    return <LoadBar description={'Загружаем данные вашего профиля'} />;
 
   return (
-    <VStack spacing={'2em'}>
-      {userContext.type === AccountType.Tutor ? <TutorCard /> : <StudentCard />}
-      <AccountInfo />
-    </VStack>
+    <ProfileContext.Provider value={providerValues}>
+      <VStack spacing={'2em'}>
+        {isTutor ? <TutorCard /> : <StudentCard />}
+        <AccountInfo />
+      </VStack>
+    </ProfileContext.Provider>
   );
 };
