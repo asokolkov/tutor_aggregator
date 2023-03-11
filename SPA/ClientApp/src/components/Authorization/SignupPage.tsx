@@ -14,12 +14,12 @@ import { PasswordField } from './components/PasswordField';
 import { OAuthButtons } from './components/OAuthButtons';
 import { Header } from './components/Header';
 import { DividerWithOr } from './components/DividerWithOr';
-import { SignupSuggestion } from './components/SignupSuggestion';
 import { EmailField } from './components/EmailField';
 import { TutorOrStudentSwitchField } from './components/TutorOrStudentSwitchField';
 import { PhoneNumberField } from './components/PhoneNumberField';
 import { NameSurnameField } from './components/NameSurnameField';
 import { Form, Formik, FormikValues } from 'formik';
+import { LoginSuggestion } from './components/LoginSuggestion';
 
 const initialValues = {
   name: '',
@@ -77,7 +77,7 @@ export const SignupPage = () => {
                     Зарегистрироваться
                   </Button>
                 </Stack>
-                <SignupSuggestion />
+                <LoginSuggestion />
               </Stack>
             </Form>
           </Formik>
