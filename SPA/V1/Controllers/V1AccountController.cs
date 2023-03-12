@@ -10,6 +10,7 @@ using AutoMapper;
 using DataModels;
 using EFCore.Postgres.Identity.Models;
 using Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 [ApiController]
 [Route("account")]
@@ -152,5 +153,16 @@ public class V1AccountController : ControllerBase
         }
 
         return BadRequest();
+    }
+
+
+    [HttpGet("sign-out")]
+    [Authorize]
+    [SwaggerResponse(StatusCodes.Status302Found)]
+    [SwaggerResponse(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult> SignOutAsync()
+    {
+        await signInManager.SignOutAsync();
+        return SignOut();
     }
 }
