@@ -35,6 +35,9 @@ public sealed class V1TutorDto
     [JsonProperty("awards")]
     public string Awards { get; init; }
     
+    [JsonProperty("description")]
+    public string Description { get; init; }
+    
     [JsonProperty("subjects")]
     public IReadOnlyCollection<V1SubjectDto> Subjects { get; init; }
 }

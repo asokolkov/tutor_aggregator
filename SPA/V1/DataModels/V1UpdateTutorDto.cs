@@ -28,6 +28,9 @@ public sealed class V1UpdateTutorDto
     [JsonProperty("awards")]
     public string Awards { get; init; }
     
+    [JsonProperty("description")]
+    public string Description { get; init; }
+    
     [JsonProperty("subjects")]
     public ICollection<V1SubjectDto> Subjects { get; init; }
 }

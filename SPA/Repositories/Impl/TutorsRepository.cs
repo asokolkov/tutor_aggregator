@@ -56,6 +56,7 @@ internal sealed class TutorsRepository : ITutorsRepository
             
             tutorEntity.FirstName = tutor.FirstName;
             tutorEntity.LastName = tutor.LastName;
+            tutorEntity.Description = tutor.Description;
             tutorEntity.Job = tutor.Job;
             tutorEntity.Contacts = tutor.Contacts;
             tutorEntity.Educations = tutor.Educations;

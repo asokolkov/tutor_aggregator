@@ -45,7 +45,8 @@ internal sealed class StudentsRepository : IStudentsRepository
             FirstName = student.FirstName,
             LastName = student.LastName,
             Age = student.Age,
-            Contacts = student.Contacts
+            Contacts = student.Contacts,
+            Description = student.Description
         };
         
         await using var transaction = await context.Database.BeginTransactionAsync();

@@ -24,6 +24,7 @@ internal sealed class DataGenerator : IDataGenerator
     private readonly string[] jobs = new[] { "Строитель", "Продавец", "Учитель" };
     private readonly string[] educations = new[] { "Школа", "Не школа", "Работа" };
     private readonly string[] awards = new[] { "Учитель года", "Учитель века" };
+    private readonly string[] descriptions = new[] { "Неплохой человек", "В прошлом кондитер", "Есть домашние животные" };
     
     private readonly Random random = new();
 
@@ -162,7 +163,8 @@ internal sealed class DataGenerator : IDataGenerator
             Id = user.Id,
             FirstName = user.FirstName,
             LastName = user.LastName,
-            Contacts = contacts[random.Next(contacts.Length)]
+            Contacts = contacts[random.Next(contacts.Length)],
+            Description = descriptions[random.Next(descriptions.Length)]
         };
     }
 
@@ -180,6 +182,7 @@ internal sealed class DataGenerator : IDataGenerator
             Job = jobs[random.Next(jobs.Length)],
             Educations = educations[random.Next(educations.Length)],
             Awards = requirements[random.Next(awards.Length)],
+            Description = descriptions[random.Next(descriptions.Length)]
         };
     }
 }

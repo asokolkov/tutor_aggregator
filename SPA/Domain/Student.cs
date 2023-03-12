@@ -13,6 +13,8 @@ public sealed class Student
     public int Age { get; set; }
 
     [CanBeNull] public string Contacts { get; init; }
+    
+    [CanBeNull] public string Description { get; set; }
 
     public ICollection<Lesson> Lessons { get; init; }
 

@@ -17,6 +17,8 @@ internal sealed class UpdateTutor
     public string Awards { get; set; }
     
     public string Contacts { get; set; }
+    
+    public string Description { get; set; }
 
     public ICollection<Subject> Subjects { get; init; }
 }

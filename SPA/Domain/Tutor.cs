@@ -23,6 +23,8 @@ public sealed class Tutor
     [CanBeNull] public string Awards { get; set; }
     
     [CanBeNull] public string Contacts { get; init; }
+    
+    [CanBeNull] public string Description { get; set; }
 
     public ICollection<Subject> Subjects { get; init; }
     

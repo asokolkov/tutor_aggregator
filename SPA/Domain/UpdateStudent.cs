@@ -9,4 +9,6 @@ internal sealed class UpdateStudent
     public int Age { get; init; }
 
     public string Contacts { get; init; }
+    
+    public string Description { get; init; }
 }

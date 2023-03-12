@@ -18,4 +18,7 @@ public sealed class V1StudentDto
 
     [JsonProperty("contacts")]
     public string Contacts { get; init; }
+    
+    [JsonProperty("description")]
+    public string Description { get; init; }
 }
