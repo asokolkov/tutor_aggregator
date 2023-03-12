@@ -10,7 +10,7 @@ public sealed class StudentEntity
     
     public int Age { get; set; }
 
-    public string Contacts { get; init; }
+    public string? Contacts { get; init; }
 
     public ICollection<LessonEntity> Lessons { get; init; }
     

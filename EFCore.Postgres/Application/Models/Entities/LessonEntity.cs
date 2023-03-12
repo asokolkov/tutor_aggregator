@@ -11,6 +11,8 @@ public sealed class LessonEntity
     
     public LessonStatus Status { get; set; }
     
+    public LessonType Type { get; set; }
+    
     public DateTimeOffset Start { get; init; }
     
     public DateTimeOffset End { get; init; }

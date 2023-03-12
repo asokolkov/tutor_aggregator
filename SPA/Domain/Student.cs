@@ -1,4 +1,6 @@
-﻿namespace SPA.Domain;
+﻿using JetBrains.Annotations;
+
+namespace SPA.Domain;
 
 public sealed class Student
 {
@@ -9,8 +11,8 @@ public sealed class Student
     public string LastName { get; set; }
     
     public int Age { get; set; }
-    
-    public string Contacts { get; init; }
+
+    [CanBeNull] public string Contacts { get; init; }
 
     public ICollection<Lesson> Lessons { get; init; }
 

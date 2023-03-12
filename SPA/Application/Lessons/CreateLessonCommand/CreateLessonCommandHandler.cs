@@ -22,6 +22,7 @@ internal sealed class CreateLessonCommandHandler : IRequestHandler<CreateLessonC
             Id = Guid.NewGuid(),
             Price = request.Price,
             Status = LessonStatus.Scheduled,
+            Type = request.Type,
             Start = request.Start,
             End = request.End
         };

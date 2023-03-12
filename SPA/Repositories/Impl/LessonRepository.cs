@@ -60,6 +60,7 @@ internal sealed class LessonRepository : ILessonRepository
             Tutor = tutor,
             Price = lesson.Price,
             Status = mapper.Map<LessonStatus>(lesson.Status),
+            Type = mapper.Map<LessonType>(lesson.Type),
             Start = lesson.Start,
             End = lesson.End
         };

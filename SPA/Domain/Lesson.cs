@@ -7,6 +7,8 @@ public sealed class Lesson
     public double Price { get; init; }
 
     public LessonStatus Status { get; init; }
+    
+    public LessonType Type { get; init; }
 
     public DateTimeOffset Start { get; init; }
 
