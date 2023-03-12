@@ -18,7 +18,13 @@ internal sealed class DataGenerator : IDataGenerator
     private readonly string[] districts = { "Ленинский", "Орджоникидзевский" };
     private readonly string city = "Ектеринбург";
     private readonly string[] subjectsNames = { "Математика", "Русский язык", "Физика", "Литература", "Информатика" };
-
+    private readonly string[] contacts = { "+70000000000", "+71111111111", "+72222222222", "+73333333333" };
+    private readonly AccountType[] accountTypes = { AccountType.Student, AccountType.Tutor };
+    private readonly string[] requirements = new[] { "Каво?", "Дети до 14 лет" };
+    private readonly string[] jobs = new[] { "Строитель", "Продавец", "Учитель" };
+    private readonly string[] educations = new[] { "Школа", "Не школа", "Работа" };
+    private readonly string[] awards = new[] { "Учитель года", "Учитель века" };
+    
     private readonly Random random = new();
 
     public DataGenerator(
@@ -97,6 +103,7 @@ internal sealed class DataGenerator : IDataGenerator
                     Student = students[random.Next(0, students.Count)],
                     Price = random.NextDouble() * 10000,
                     Status = (LessonStatus)random.Next(0, 3),
+                    Type = (LessonType)random.Next(0, 2),
                     Start = start,
                     End = start + TimeSpan.FromHours(random.NextDouble() * 5)
                 };
@@ -116,7 +123,7 @@ internal sealed class DataGenerator : IDataGenerator
                     Tutor = tutor,
                     Student = students[random.Next(0, students.Count)],
                     Rating = random.NextDouble() * 10,
-                    UpdatedAt = DateTimeOffset.Now
+                    UpdatedAt = DateTimeOffset.FromUnixTimeSeconds(random.Next(100000, 1000000))
                 };
 
                 await applicationContext.AddAsync(review);
@@ -139,7 +146,7 @@ internal sealed class DataGenerator : IDataGenerator
                 Email = Guid.NewGuid().ToString(),
                 FirstName = firstNames[random.Next(firstNames.Length)],
                 LastName = lastNames[random.Next(lastNames.Length)],
-                AccountType = random.Next(0, 1) == 0 ? AccountType.Student : AccountType.Tutor
+                AccountType = accountTypes[random.Next(accountTypes.Length)]
             };
 
             users.Add(user);
@@ -154,7 +161,8 @@ internal sealed class DataGenerator : IDataGenerator
         {
             Id = user.Id,
             FirstName = user.FirstName,
-            LastName = user.LastName
+            LastName = user.LastName,
+            Contacts = contacts[random.Next(contacts.Length)]
         };
     }
 
@@ -166,7 +174,12 @@ internal sealed class DataGenerator : IDataGenerator
             FirstName = user.FirstName,
             LastName = user.LastName,
             Location = locationEntity,
-            Subjects = subjects
+            Subjects = subjects,
+            Contacts = contacts[random.Next(contacts.Length)],
+            Requirements = requirements[random.Next(requirements.Length)],
+            Job = jobs[random.Next(jobs.Length)],
+            Educations = educations[random.Next(educations.Length)],
+            Awards = requirements[random.Next(awards.Length)],
         };
     }
 }
