@@ -9,7 +9,7 @@ import router from './routes';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './assets/theme/index';
 
-const useMock = true;
+const useMock = false;
 if (useMock) {
   require('./apis/mocks/index');
 }

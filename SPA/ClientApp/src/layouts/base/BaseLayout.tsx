@@ -1,34 +1,23 @@
-import React, { useEffect, useState } from 'react';
-
 import { Outlet } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import { ChakraProvider, Container } from '@chakra-ui/react';
 import Theme from '../../assets/theme';
-import UserAPI, { User } from '../../apis/currentUser';
 import { UserContext } from '../../contexts/UserContext';
 import { LoadBar } from '../../components/shared/LoadBar';
+import { useUser } from './hooks';
+import React, { useMemo } from 'react';
 
 const BaseLayout: React.FC = () => {
-  const [user, setUser] = useState<User>({ isAuthorized: false });
-  const [isLoading, setLoading] = useState(true);
-  useEffect(() => {
-    UserAPI.getCurrentUser()
-      .then((u) => {
-        setUser(u);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log('Запрос на авторизацию провалился');
-
-        setLoading(false);
-      });
-  }, []);
+  const { user, setUser, removeUser, isLoading } = useUser();
+  const userProviderValues = useMemo(
+    () => ({ user, setUser, removeUser }),
+    [user, setUser, removeUser]
+  );
   if (isLoading) return <LoadBar description={'Загружаем данные'} />;
   return (
     <ChakraProvider theme={Theme}>
-      <UserContext.Provider value={user}>
+      <UserContext.Provider value={userProviderValues}>
         <Header />
         <Container padding={'0vh 5vw 16vh 5vw'} maxW={'100%'}>
           <Outlet />
