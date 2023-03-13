@@ -7,10 +7,11 @@ import {
   Heading,
   useBreakpointValue,
 } from '@chakra-ui/react';
-import { ProfilePageTextRow } from './ProfilePageTextRow';
-import { UserContext } from '../../../contexts/UserContext';
-import { AccountType } from '../../../apis/currentUser';
-import { ProfileContext } from '../../../contexts/ProfileContext';
+import { ProfilePageTextRow } from './components/ProfilePageTextRow';
+import { UserContext } from '../../contexts/UserContext';
+import { AccountType } from '../../apis/currentUser';
+import { ProfileContext } from '../../contexts/ProfileContext';
+import AccountAPI from '../../apis/account';
 
 export const AccountInfo = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
@@ -57,6 +58,7 @@ export const AccountInfo = () => {
             />
           </Flex>
           <Button
+            onClick={AccountAPI.signOut}
             color={'red'}
             as={'u'}
             w={'100%'}

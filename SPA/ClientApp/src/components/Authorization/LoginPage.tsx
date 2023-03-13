@@ -17,7 +17,7 @@ import { DividerWithOr } from './components/DividerWithOr';
 import { EmailField } from './components/EmailField';
 import { Form, Formik } from 'formik';
 import { RememberMeCheckbox } from './components/RememberMeCheckbox';
-import AuthAPI, { V1LoginDto } from '../../apis/auth';
+import AccountAPI, { V1LoginDto } from '../../apis/account';
 
 type FormikValuesProps = {
   email: string;
@@ -39,7 +39,7 @@ export const LoginPage = () => {
       password: values.password,
     };
 
-    await AuthAPI.login(loginData);
+    await AccountAPI.login(loginData);
   };
 
   return (
