@@ -15,7 +15,7 @@ import { ProfileContext } from '../../../contexts/ProfileContext';
 export const AccountInfo = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   const userContext = useContext(UserContext);
-  const isTutor = userContext.type === AccountType.Tutor;
+  const isTutor = userContext.user.type === AccountType.Tutor;
 
   const profileContext = useContext(ProfileContext);
   if (profileContext.isLoading) return <></>;

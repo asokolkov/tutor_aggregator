@@ -15,15 +15,31 @@ import { SignupSuggestion } from './components/SignupSuggestion';
 import { ForgetPasswordButton } from './components/ForgetPasswordButton';
 import { DividerWithOr } from './components/DividerWithOr';
 import { EmailField } from './components/EmailField';
-import { Form, Formik, FormikValues } from 'formik';
+import { Form, Formik } from 'formik';
 import { RememberMeCheckbox } from './components/RememberMeCheckbox';
+import AuthAPI, { V1LoginDto } from '../../apis/auth';
 
-const initialValues = { email: '', password: '', remember: true };
+type FormikValuesProps = {
+  email: string;
+  password: string;
+  remember: boolean;
+};
+const initialValues: FormikValuesProps = {
+  email: '',
+  password: '',
+  remember: true,
+};
 
 export const LoginPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
-  const onFormSubmit = (values: FormikValues) => {
-    console.log(values);
+  const onFormSubmit = async (values: FormikValuesProps) => {
+    const loginData: V1LoginDto = {
+      rememberMe: values.remember,
+      email: values.email,
+      password: values.password,
+    };
+
+    await AuthAPI.login(loginData);
   };
 
   return (

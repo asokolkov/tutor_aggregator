@@ -142,10 +142,10 @@ const Header: React.FC = () => {
                       isActive={isActive(PROFILE_PAGE)}
                     />
                   </ButtonGroup>
-                  {userState.isAuthorized ? (
+                  {userState.user ? (
                     <HStack spacing={'3'}>
                       <Link to={PROFILE_PAGE}>
-                        <Avatar size={'sm'} src={userState.avatar} />
+                        <Avatar size={'sm'} src={userState.user.avatar} />
                       </Link>
                     </HStack>
                   ) : (

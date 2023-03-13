@@ -30,9 +30,8 @@ export default class AuthAPI {
     return undefined;
   }
 
-  static async register(registerDto: V1RegisterDto): Promise<undefined> {
+  static async register(registerDto: V1RegisterDto) {
     await axiosInstance.post('account/signup', registerDto);
-    return undefined;
   }
 
   static async loginViaExternal(

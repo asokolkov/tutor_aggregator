@@ -13,7 +13,7 @@ import { LoadBar } from '../shared/LoadBar';
 export const ProfilePage = () => {
   const userContext = useContext(UserContext);
   const { isLoading, tutorProfile, studentProfile } = useProfileInfo(
-    userContext.type
+    userContext.user.type
   );
 
   const providerValues = useMemo(
@@ -21,7 +21,7 @@ export const ProfilePage = () => {
     [isLoading, studentProfile, tutorProfile]
   );
 
-  const isTutor = userContext.type === AccountType.Tutor;
+  const isTutor = userContext.user.type === AccountType.Tutor;
   if (isLoading)
     return <LoadBar description={'Загружаем данные вашего профиля'} />;
 

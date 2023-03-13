@@ -18,10 +18,21 @@ import { EmailField } from './components/EmailField';
 import { TutorOrStudentSwitchField } from './components/TutorOrStudentSwitchField';
 import { PhoneNumberField } from './components/PhoneNumberField';
 import { NameSurnameField } from './components/NameSurnameField';
-import { Form, Formik, FormikValues } from 'formik';
+import { Form, Formik } from 'formik';
 import { LoginSuggestion } from './components/LoginSuggestion';
+import AuthAPI, { V1RegisterDto } from '../../apis/auth';
+import { AccountType } from '../../apis/currentUser';
 
-const initialValues = {
+type FormikValuesProps = {
+  name: string;
+  surname: string;
+  phoneNumber: string;
+  isTutor: boolean;
+  email: string;
+  password: string;
+};
+
+const initialValues: FormikValuesProps = {
   name: '',
   surname: '',
   phoneNumber: '',
@@ -33,7 +44,19 @@ const initialValues = {
 export const SignupPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
 
-  const onSubmit = (values: FormikValues) => console.log(values);
+  const onSubmit = async (values: FormikValuesProps) => {
+    const [firstName, lastName] = values.name.split(' ');
+    const registerData: V1RegisterDto = {
+      accountType: values.isTutor ? AccountType.Tutor : AccountType.Student,
+      email: values.email,
+      firstName: firstName,
+      lastName: lastName,
+      password: values.password,
+      phone: values.phoneNumber,
+    };
+
+    await AuthAPI.register(registerData);
+  };
 
   return (
     <Flex background={'white'}>
