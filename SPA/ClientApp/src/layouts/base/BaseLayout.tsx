@@ -9,10 +9,10 @@ import { useUser } from './hooks';
 import React, { useMemo } from 'react';
 
 const BaseLayout: React.FC = () => {
-  const { user, setUser, removeUser, isLoading } = useUser();
+  const { user, setUser, removeUser, isLoading, isUserAuth } = useUser();
   const userProviderValues = useMemo(
-    () => ({ user, setUser, removeUser }),
-    [user, setUser, removeUser]
+    () => ({ user, setUser, removeUser, isAuthorized: isUserAuth }),
+    [user, setUser, removeUser, isUserAuth]
   );
   if (isLoading) return <LoadBar description={'Загружаем данные'} />;
   return (

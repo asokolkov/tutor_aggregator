@@ -22,6 +22,8 @@ import { Form, Formik } from 'formik';
 import { LoginSuggestion } from './components/LoginSuggestion';
 import AccountAPI, { V1RegisterDto } from '../../apis/account';
 import { AccountType } from '../../apis/currentUser';
+import { redirect } from 'react-router-dom';
+import { LOGIN_PAGE } from '../../route-paths';
 
 type FormikValuesProps = {
   name: string;
@@ -56,6 +58,7 @@ export const SignupPage = () => {
     };
 
     await AccountAPI.register(registerData);
+    redirect(LOGIN_PAGE);
   };
 
   return (

@@ -6,6 +6,7 @@ export function useUser() {
   const [isLoading, setLoading] = useState(true);
 
   const removeUser = () => setUser(undefined);
+  const isUserAuth = user !== undefined;
 
   useEffect(() => {
     UserAPI.getCurrentUser()
@@ -19,5 +20,5 @@ export function useUser() {
       });
   }, []);
 
-  return { user, isLoading, setUser, removeUser };
+  return { user, isLoading, setUser, removeUser, isUserAuth };
 }

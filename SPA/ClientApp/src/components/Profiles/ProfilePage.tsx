@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext, useMemo } from 'react';
-import { AccountInfo } from './components/AccountInfo';
+import { AccountInfo } from './AccountInfo';
 import { TutorCard } from './TutorCard';
 import { VStack } from '@chakra-ui/react';
 import { UserContext } from '../../contexts/UserContext';
@@ -8,10 +8,17 @@ import { StudentCard } from './StudentCard';
 import { AccountType } from '../../apis/currentUser';
 import { useProfileInfo } from './hooks';
 import { ProfileContext } from '../../contexts/ProfileContext';
+import { Navigate } from 'react-router-dom';
+import { LOGIN_PAGE } from '../../route-paths';
 import { LoadBar } from '../shared/LoadBar';
 
 export const ProfilePage = () => {
   const userContext = useContext(UserContext);
+
+  if (!userContext.isAuthorized) {
+    return <Navigate to={LOGIN_PAGE} />;
+  }
+
   const { isLoading, tutorProfile, studentProfile } = useProfileInfo(
     userContext.user.type
   );

@@ -12,11 +12,20 @@ import { UserContext } from '../../contexts/UserContext';
 import { AccountType } from '../../apis/currentUser';
 import { ProfileContext } from '../../contexts/ProfileContext';
 import AccountAPI from '../../apis/account';
+import { LOGIN_PAGE } from '../../route-paths';
+import { useNavigate } from 'react-router-dom';
 
 export const AccountInfo = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   const userContext = useContext(UserContext);
   const isTutor = userContext.user.type === AccountType.Tutor;
+  const navigate = useNavigate();
+
+  const signOut = async () => {
+    await AccountAPI.signOut();
+    userContext.removeUser();
+    navigate(LOGIN_PAGE);
+  };
 
   const profileContext = useContext(ProfileContext);
   if (profileContext.isLoading) return <></>;
@@ -58,7 +67,7 @@ export const AccountInfo = () => {
             />
           </Flex>
           <Button
-            onClick={AccountAPI.signOut}
+            onClick={signOut}
             color={'red'}
             as={'u'}
             w={'100%'}
