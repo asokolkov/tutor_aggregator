@@ -20,8 +20,10 @@ import { PhoneNumberField } from './components/PhoneNumberField';
 import { NameSurnameField } from './components/NameSurnameField';
 import { Form, Formik } from 'formik';
 import { LoginSuggestion } from './components/LoginSuggestion';
-import AuthAPI, { V1RegisterDto } from '../../apis/auth';
+import AccountAPI, { V1RegisterDto } from '../../apis/account';
 import { AccountType } from '../../apis/currentUser';
+import { redirect } from 'react-router-dom';
+import { LOGIN_PAGE } from '../../route-paths';
 
 type FormikValuesProps = {
   name: string;
@@ -55,7 +57,8 @@ export const SignupPage = () => {
       phone: values.phoneNumber,
     };
 
-    await AuthAPI.register(registerData);
+    await AccountAPI.register(registerData);
+    redirect(LOGIN_PAGE);
   };
 
   return (

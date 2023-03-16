@@ -7,7 +7,7 @@ import {
   Stack,
   useBreakpointValue,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useContext } from 'react';
 import { PasswordField } from './components/PasswordField';
 import { OAuthButtons } from './components/OAuthButtons';
 import { Header } from './components/Header';
@@ -17,7 +17,11 @@ import { DividerWithOr } from './components/DividerWithOr';
 import { EmailField } from './components/EmailField';
 import { Form, Formik } from 'formik';
 import { RememberMeCheckbox } from './components/RememberMeCheckbox';
-import AuthAPI, { V1LoginDto } from '../../apis/auth';
+import AccountAPI, { V1LoginDto } from '../../apis/account';
+import { UserContext } from '../../contexts/UserContext';
+import UserAPI from '../../apis/currentUser';
+import { useNavigate } from 'react-router-dom';
+import { SEARCH_PAGE } from '../../route-paths';
 
 type FormikValuesProps = {
   email: string;
@@ -32,6 +36,9 @@ const initialValues: FormikValuesProps = {
 
 export const LoginPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
+  const userContext = useContext(UserContext);
+  const navigate = useNavigate();
+
   const onFormSubmit = async (values: FormikValuesProps) => {
     const loginData: V1LoginDto = {
       rememberMe: values.remember,
@@ -39,7 +46,10 @@ export const LoginPage = () => {
       password: values.password,
     };
 
-    await AuthAPI.login(loginData);
+    await AccountAPI.login(loginData);
+    const user = await UserAPI.getCurrentUser();
+    userContext.setUser(user);
+    navigate(SEARCH_PAGE);
   };
 
   return (

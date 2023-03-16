@@ -24,22 +24,24 @@ export type V1RegisterViaExternalDto = {
   accountType: AccountType;
 };
 
-export default class AuthAPI {
-  static async login(loginDto: V1LoginDto): Promise<undefined> {
+export default class AccountAPI {
+  static async login(loginDto: V1LoginDto) {
     await axiosInstance.post('account/signin', loginDto);
-    return undefined;
   }
 
   static async register(registerDto: V1RegisterDto) {
     await axiosInstance.post('account/signup', registerDto);
   }
 
+  static async signOut() {
+    await axiosInstance.get('account/sign-out');
+  }
+
   static async loginViaExternal(
     provider: string,
     returnUrl: string
   ): Promise<undefined> {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const response = await axiosInstance
+    await axiosInstance
       .get(`account/signin-external`, {
         params: { provider: provider, returnUrl: returnUrl },
       })
@@ -58,8 +60,7 @@ export default class AuthAPI {
   static async registerViaExternal(
     registerViaExternalDto: V1RegisterViaExternalDto
   ): Promise<undefined> {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const response = await axiosInstance.post(
+    await axiosInstance.post(
       `/account/signup-external`,
       registerViaExternalDto
     );
