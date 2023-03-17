@@ -58,19 +58,30 @@ internal sealed class TutorsRepository : ITutorsRepository
             tutorEntity.LastName = tutor.LastName;
             tutorEntity.Description = tutor.Description;
             tutorEntity.Job = tutor.Job;
-            tutorEntity.Contacts = tutor.Contacts;
             tutorEntity.Educations = tutor.Educations;
             tutorEntity.Awards = tutor.Awards;
             tutorEntity.Requirements = tutor.Requirements;
             
-            var locationEntity = mapper.Map<LocationEntity>(tutor.Location);
-            var location = await context.Locations.FindAsync(locationEntity.Id);
-            if (location is null)
-                context.Locations.Add(locationEntity);
-            else
-                locationEntity = location;
-            tutorEntity.Location = locationEntity;
-            
+            var contactsEntities = mapper.Map<ICollection<TutorContactEntity>>(tutor.Contacts).ToList();
+            foreach (var contactEntity in contactsEntities)
+            {
+                var contact = await context.TutorsContacts.FindAsync(contactEntity.Id);
+                if (contact is null)
+                    context.TutorsContacts.Add(contactEntity);
+            }
+            tutorEntity.Contacts = contactsEntities;
+
+            if (tutor.Location != null)
+            {
+                var locationEntity = mapper.Map<LocationEntity>(tutor.Location);
+                var location = await context.Locations.FindAsync(locationEntity.Id);
+                if (location is null)
+                    context.Locations.Add(locationEntity);
+                else
+                    locationEntity = location;
+                tutorEntity.Location = locationEntity;
+            }
+
             var subjectsEntities = mapper.Map<ICollection<SubjectEntity>>(tutor.Subjects).ToList();
             for (var i = 0; i < subjectsEntities.Count; i++)
             {

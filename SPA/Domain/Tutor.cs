@@ -1,6 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿namespace SPA.Domain;
 
-namespace SPA.Domain;
+#nullable enable
 
 public sealed class Tutor
 {
@@ -12,19 +12,19 @@ public sealed class Tutor
 
     public double Rating { get; set; }
     
-    [CanBeNull] public Location Location { get; set; }
+    public Location? Location { get; set; }
 
-    [CanBeNull] public string Requirements { get; set; }
+    public string? Requirements { get; set; }
 
-    [CanBeNull] public string Job { get; set; }
+    public string? Job { get; set; }
     
-    [CanBeNull] public string Educations { get; set; }
+    public string? Educations { get; set; }
 
-    [CanBeNull] public string Awards { get; set; }
+    public string? Awards { get; set; }
+
+    public string? Description { get; set; }
     
-    [CanBeNull] public string Contacts { get; init; }
-    
-    [CanBeNull] public string Description { get; set; }
+    public ICollection<TutorContact> Contacts { get; init; }
 
     public ICollection<Subject> Subjects { get; init; }
     

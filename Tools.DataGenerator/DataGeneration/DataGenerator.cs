@@ -163,7 +163,7 @@ internal sealed class DataGenerator : IDataGenerator
             Id = user.Id,
             FirstName = user.FirstName,
             LastName = user.LastName,
-            Contacts = contacts[random.Next(contacts.Length)],
+            //Contacts = contacts[random.Next(contacts.Length)], TODO
             Description = descriptions[random.Next(descriptions.Length)]
         };
     }
@@ -177,7 +177,7 @@ internal sealed class DataGenerator : IDataGenerator
             LastName = user.LastName,
             Location = locationEntity,
             Subjects = subjects,
-            Contacts = contacts[random.Next(contacts.Length)],
+            //Contacts = contacts[random.Next(contacts.Length)], TODO
             Requirements = requirements[random.Next(requirements.Length)],
             Job = jobs[random.Next(jobs.Length)],
             Educations = educations[random.Next(educations.Length)],

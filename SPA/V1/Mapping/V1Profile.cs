@@ -35,6 +35,9 @@ internal sealed class V1Profile : Profile
         CreateMap<SubjectEntity, Subject>().ReverseMap();
         CreateMap<Subject, V1SubjectDto>().ReverseMap();
         CreateMap<Page<Subject>, V1PageDto<V1SubjectDto>>().ReverseMap();
+        
+        CreateMap<TutorContactEntity, TutorContact>().ReverseMap();
+        CreateMap<TutorContact, V1TutorContactDto>().ReverseMap();
 
         CreateMap<User, V1UserDto>();
 

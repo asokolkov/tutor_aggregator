@@ -45,7 +45,7 @@ internal sealed class StudentsRepository : IStudentsRepository
             FirstName = student.FirstName,
             LastName = student.LastName,
             Age = student.Age,
-            Contacts = student.Contacts,
+            //Contacts = student.Contacts, //TODO
             Description = student.Description
         };
         

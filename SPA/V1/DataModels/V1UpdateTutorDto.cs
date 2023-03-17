@@ -19,9 +19,6 @@ public sealed class V1UpdateTutorDto
     [JsonProperty("job")]
     public string Job { get; init; }
 
-    [JsonProperty("contacts")]
-    public string Contacts { get; init; }
-
     [JsonProperty("educations")]
     public string Educations { get; init; }
 
@@ -33,4 +30,7 @@ public sealed class V1UpdateTutorDto
     
     [JsonProperty("subjects")]
     public ICollection<V1SubjectDto> Subjects { get; init; }
+    
+    [JsonProperty("contacts")]
+    public ICollection<V1TutorContactDto> Contacts { get; init; }
 }

@@ -1,6 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿namespace SPA.Domain;
 
-namespace SPA.Domain;
+#nullable enable
 
 public sealed class Student
 {
@@ -12,9 +12,9 @@ public sealed class Student
     
     public int Age { get; set; }
 
-    [CanBeNull] public string Contacts { get; init; }
+    public string? Description { get; set; }
     
-    [CanBeNull] public string Description { get; set; }
+    public ICollection<StudentContact> Contacts { get; init; }
 
     public ICollection<Lesson> Lessons { get; init; }
 
