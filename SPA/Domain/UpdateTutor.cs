@@ -15,10 +15,10 @@ internal sealed class UpdateTutor
     public string Educations { get; set; }
 
     public string Awards { get; set; }
+
+    public string Description { get; set; }
     
     public ICollection<TutorContact> Contacts { get; set; }
-    
-    public string Description { get; set; }
 
     public ICollection<Subject> Subjects { get; init; }
 }

@@ -4,9 +4,9 @@ public sealed class StudentEntity
 {
     public Guid Id { get; init; }
 
-    public string FirstName { get; init; }
+    public string FirstName { get; set; }
 
-    public string LastName { get; init; }
+    public string LastName { get; set; }
     
     public int Age { get; set; }
 

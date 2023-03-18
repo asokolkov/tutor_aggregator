@@ -38,6 +38,9 @@ internal sealed class V1Profile : Profile
         
         CreateMap<TutorContactEntity, TutorContact>().ReverseMap();
         CreateMap<TutorContact, V1TutorContactDto>().ReverseMap();
+        
+        CreateMap<StudentContactEntity, StudentContact>().ReverseMap();
+        CreateMap<StudentContact, V1StudentContactDto>().ReverseMap();
 
         CreateMap<User, V1UserDto>();
 

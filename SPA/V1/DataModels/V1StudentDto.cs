@@ -16,9 +16,9 @@ public sealed class V1StudentDto
     [JsonProperty("age")]
     public int Age { get; init; }
 
-    [JsonProperty("contacts")]
-    public string Contacts { get; init; }
-    
     [JsonProperty("description")]
     public string Description { get; init; }
+    
+    [JsonProperty("contacts")]
+    public IReadOnlyCollection<V1StudentContactDto> Contacts { get; init; }
 }
