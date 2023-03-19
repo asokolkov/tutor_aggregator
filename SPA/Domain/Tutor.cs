@@ -14,15 +14,15 @@ public sealed class Tutor
     
     public Location? Location { get; set; }
 
-    public string? Requirements { get; set; }
-
     public string? Job { get; set; }
-    
-    public string? Educations { get; set; }
-
-    public string? Awards { get; set; }
 
     public string? Description { get; set; }
+    
+    public ICollection<Education> Educations { get; init; }
+    
+    public ICollection<Award> Awards { get; init; }
+    
+    public ICollection<Requirement> Requirements { get; init; }
     
     public ICollection<TutorContact> Contacts { get; init; }
 

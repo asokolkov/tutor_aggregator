@@ -13,13 +13,13 @@ public sealed class Program
             .AddUserSecrets<Program>()
             .Build();
 
-        var applciationConnectionString = configuration.GetConnectionString("Application");
+        var applicationConnectionString = configuration.GetConnectionString("Application");
         var identityConnectionString = configuration.GetConnectionString("Identity");
 
         var services = new ServiceCollection();
         services
             .AddIdentityContext(identityConnectionString)
-            .AddApplicationContext(applciationConnectionString);
+            .AddApplicationContext(applicationConnectionString);
 
         services.AddScoped<IDataGenerator, DataGenerator>();
 

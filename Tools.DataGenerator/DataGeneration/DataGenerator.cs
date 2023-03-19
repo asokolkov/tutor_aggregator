@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using Tools.DataGenerator.Services;
 
 namespace Tools.DataGenerator.DataGeneration;
 
-#nullable enable
 using EFCore.Postgres.Application.Contexts;
 using EFCore.Postgres.Application.Models.Entities;
 using EFCore.Postgres.Identity;
 using EFCore.Postgres.Identity.Models;
 using SPA.Identity.Models;
+
+#nullable enable
 
 internal sealed class DataGenerator : IDataGenerator
 {
@@ -45,6 +45,9 @@ internal sealed class DataGenerator : IDataGenerator
         {
             tutor.Contacts = await CreateTutorContacts();
             tutor.Subjects = await CreateSubjects();
+            tutor.Educations = await CreateEducations();
+            tutor.Awards = await CreateAwards();
+            tutor.Requirements = await CreateRequirements();
             tutor.Location = await CreateLocation();
         }
 
@@ -54,6 +57,60 @@ internal sealed class DataGenerator : IDataGenerator
 
         await identityContext.SaveChangesAsync();
         await applicationContext.SaveChangesAsync();
+    }
+
+    private async Task<ICollection<EducationEntity>> CreateEducations()
+    {
+        var result = new List<EducationEntity>();
+
+        for (var i = 0; i < extraction.GetNumber(MaxCollectionsLength); i++)
+        {
+            var entity = new EducationEntity
+            {
+                Id = Guid.NewGuid(),
+                Value = extraction.Get(data["tutorEducations"], false)!
+            };
+            var entry = await applicationContext.Educations.AddAsync(entity);
+            result.Add(entry.Entity);
+        }
+
+        return result;
+    }
+
+    private async Task<ICollection<AwardEntity>> CreateAwards()
+    {
+        var result = new List<AwardEntity>();
+
+        for (var i = 0; i < extraction.GetNumber(MaxCollectionsLength); i++)
+        {
+            var awardEntity = new AwardEntity
+            {
+                Id = Guid.NewGuid(),
+                Value = extraction.Get(data["awards"], false)!
+            };
+            var awardEntry = await applicationContext.Awards.AddAsync(awardEntity);
+            result.Add(awardEntry.Entity);
+        }
+
+        return result;
+    }
+
+    private async Task<ICollection<RequirementEntity>> CreateRequirements()
+    {
+        var result = new List<RequirementEntity>();
+
+        for (var i = 0; i < extraction.GetNumber(MaxCollectionsLength); i++)
+        {
+            var requirementEntity = new RequirementEntity
+            {
+                Id = Guid.NewGuid(),
+                Value = extraction.Get(data["requirements"], false)!
+            };
+            var requirementEntry = await applicationContext.Requirements.AddAsync(requirementEntity);
+            result.Add(requirementEntry.Entity);
+        }
+
+        return result;
     }
 
     private async Task CreateLessons(List<TutorEntity> tutors, List<StudentEntity> students)
@@ -197,10 +254,7 @@ internal sealed class DataGenerator : IDataGenerator
                 FirstName = user.FirstName!,
                 LastName = user.LastName!,
                 Description = extraction.Get(data["descriptions"]),
-                Requirements = extraction.Get(data["requirements"]),
-                Job = extraction.Get(data["jobs"]),
-                Educations = extraction.Get(data["tutorEducations"]),
-                Awards = extraction.Get(data["awards"])
+                Job = extraction.Get(data["jobs"])
             };
             var tutorEntry = await applicationContext.Tutors.AddAsync(tutorEntity);
             result.Add(tutorEntry.Entity);

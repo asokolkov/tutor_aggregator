@@ -58,9 +58,33 @@ internal sealed class TutorsRepository : ITutorsRepository
             tutorEntity.LastName = tutor.LastName;
             tutorEntity.Description = tutor.Description;
             tutorEntity.Job = tutor.Job;
-            tutorEntity.Educations = tutor.Educations;
-            tutorEntity.Awards = tutor.Awards;
-            tutorEntity.Requirements = tutor.Requirements;
+            
+            var educationsEntities = mapper.Map<ICollection<EducationEntity>>(tutor.Educations).ToList();
+            foreach (var educationEntity in educationsEntities)
+            {
+                var education = await context.Educations.FindAsync(educationEntity.Id);
+                if (education is null)
+                    context.Educations.Add(educationEntity);
+            }
+            tutorEntity.Educations = educationsEntities;
+            
+            var awardsEntities = mapper.Map<ICollection<AwardEntity>>(tutor.Awards).ToList();
+            foreach (var awardEntity in awardsEntities)
+            {
+                var award = await context.Awards.FindAsync(awardEntity.Id);
+                if (award is null)
+                    context.Awards.Add(awardEntity);
+            }
+            tutorEntity.Awards = awardsEntities;
+            
+            var requirementsEntities = mapper.Map<ICollection<RequirementEntity>>(tutor.Requirements).ToList();
+            foreach (var requirementEntity in requirementsEntities)
+            {
+                var requirement = await context.Requirements.FindAsync(requirementEntity.Id);
+                if (requirement is null)
+                    context.Requirements.Add(requirementEntity);
+            }
+            tutorEntity.Requirements = requirementsEntities;
             
             var contactsEntities = mapper.Map<ICollection<TutorContactEntity>>(tutor.Contacts).ToList();
             foreach (var contactEntity in contactsEntities)

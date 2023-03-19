@@ -10,23 +10,23 @@ public sealed class V1UpdateTutorDto
     [JsonProperty("lastName")]
     public string LastName { get; init; }
 
-    [JsonProperty("requirements")]
-    public string Requirements { get; init; }
-
     [JsonProperty("location")]
     public V1LocationDto Location { get; init; }
 
     [JsonProperty("job")]
     public string Job { get; init; }
 
-    [JsonProperty("educations")]
-    public string Educations { get; init; }
-
-    [JsonProperty("awards")]
-    public string Awards { get; init; }
-    
     [JsonProperty("description")]
     public string Description { get; init; }
+    
+    [JsonProperty("educations")]
+    public IReadOnlyCollection<V1EducationDto> Educations { get; init; }
+    
+    [JsonProperty("awards")]
+    public IReadOnlyCollection<V1AwardDto> Awards { get; init; }
+    
+    [JsonProperty("requirements")]
+    public IReadOnlyCollection<V1RequirementDto> Requirements { get; init; }
     
     [JsonProperty("subjects")]
     public ICollection<V1SubjectDto> Subjects { get; init; }
