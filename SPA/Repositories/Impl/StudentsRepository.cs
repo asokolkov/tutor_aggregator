@@ -51,6 +51,8 @@ internal sealed class StudentsRepository : IStudentsRepository
             studentEntity.LastName = student.LastName;
             studentEntity.Age = student.Age;
             studentEntity.Description = student.Description;
+            studentEntity.EducationPlace = student.EducationPlace;
+            studentEntity.Grade = student.Grade;
             
             var contactsEntities = mapper.Map<ICollection<StudentContactEntity>>(student.Contacts).ToList();
             foreach (var contactEntity in contactsEntities)

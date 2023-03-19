@@ -14,6 +14,10 @@ public sealed class Student
 
     public string? Description { get; set; }
     
+    public string? EducationPlace { get; set; }
+    
+    public int? Grade { get; set; }
+    
     public ICollection<StudentContact> Contacts { get; init; }
 
     public ICollection<Lesson> Lessons { get; init; }

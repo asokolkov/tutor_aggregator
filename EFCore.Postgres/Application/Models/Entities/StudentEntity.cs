@@ -12,6 +12,10 @@ public sealed class StudentEntity
 
     public string? Description { get; set; }
     
+    public string? EducationPlace { get; set; }
+    
+    public int? Grade { get; set; }
+    
     public ICollection<StudentContactEntity> Contacts { get; set; }
 
     public ICollection<LessonEntity> Lessons { get; init; }
