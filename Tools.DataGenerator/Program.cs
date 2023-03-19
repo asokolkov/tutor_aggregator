@@ -25,6 +25,6 @@ public sealed class Program
 
         var serviceProvider = services.BuildServiceProvider();
         var dataGenerator = serviceProvider.GetRequiredService<IDataGenerator>();
-        await dataGenerator.FillInDatabase();
+        await dataGenerator.FillDatabase();
     }
 }
