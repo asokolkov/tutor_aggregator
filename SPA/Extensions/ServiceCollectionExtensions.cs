@@ -38,39 +38,46 @@ internal static class ServiceCollectionExtensions
         services.AddAutoMapper(opt => opt.AddProfile<V1Profile>());
         services.AddMediatR(typeof(Program));
 
-        services.AddScoped<IRequestHandler<GetStudentsQuery, Page<Student>>, GetStudentsQueryHandler>();
-        services.AddScoped<IRequestHandler<GetStudentQuery, Student>, GetStudentQueryHandler>();
-        services.AddScoped<IRequestHandler<UpdateStudentCommand, Student>, UpdateStudentCommandHandler>();
+        services
+            .AddScoped<IRequestHandler<GetStudentsQuery, Page<Student>>, GetStudentsQueryHandler>()
+            .AddScoped<IRequestHandler<GetStudentQuery, Student>, GetStudentQueryHandler>()
+            .AddScoped<IRequestHandler<UpdateStudentCommand, Student>, UpdateStudentCommandHandler>();
 
-        services.AddScoped<IRequestHandler<GetTutorsQuery, Page<Tutor>>, GetTutorsQueryHandler>();
-        services.AddScoped<IRequestHandler<GetTutorQuery, Tutor>, GetTutorQueryHandler>();
-        services.AddScoped<IRequestHandler<UpdateTutorCommand, Tutor>, UpdateTutorCommandHandler>();
-        services.AddScoped<IRequestHandler<GetTutorReviewsQuery, Page<Review>>, GetReviewsCommandHandler>();
-        services.AddScoped<IRequestHandler<CreateReviewCommand, Review>, CreateReviewCommandHandler>();
+        services
+            .AddScoped<IRequestHandler<GetTutorsQuery, Page<Tutor>>, GetTutorsQueryHandler>()
+            .AddScoped<IRequestHandler<GetTutorQuery, Tutor>, GetTutorQueryHandler>()
+            .AddScoped<IRequestHandler<UpdateTutorCommand, Tutor>, UpdateTutorCommandHandler>()
+            .AddScoped<IRequestHandler<GetTutorReviewsQuery, Page<Review>>, GetReviewsCommandHandler>()
+            .AddScoped<IRequestHandler<CreateReviewCommand, Review>, CreateReviewCommandHandler>();
 
-        services.AddScoped<IRequestHandler<GetLocationsQuery, Page<Location>>, GetLocationsQueryHandler>();
-        services.AddScoped<IRequestHandler<GetLocationQuery, Location>, GetLocationQueryHandler>();
-        services.AddScoped<IRequestHandler<UpdateLocationCommand, Location>, UpdateLocationCommandHandler>();
+        services
+            .AddScoped<IRequestHandler<GetLocationsQuery, Page<Location>>, GetLocationsQueryHandler>()
+            .AddScoped<IRequestHandler<GetLocationQuery, Location>, GetLocationQueryHandler>()
+            .AddScoped<IRequestHandler<UpdateLocationCommand, Location>, UpdateLocationCommandHandler>();
 
-        services.AddScoped<IRequestHandler<GetSubjectsQuery, List<Subject>>, GetSubjectQueryHandler>();
+        services
+            .AddScoped<IRequestHandler<GetSubjectsQuery, List<Subject>>, GetSubjectQueryHandler>();
 
-        services.AddScoped<IRequestHandler<GetUserQuery, User>, GetUserQueryHandler>();
+        services
+            .AddScoped<IRequestHandler<GetUserQuery, User>, GetUserQueryHandler>();
 
-        services.AddScoped<IRequestHandler<GetAvatarQuery, byte[]>, GetAvatarQueryHandler>();
-        services.AddScoped<IRequestHandler<CreateAvatarCommand, byte[]>, CreateAvatarCommandHandler>();
+        services
+            .AddScoped<IRequestHandler<GetAvatarQuery, byte[]>, GetAvatarQueryHandler>()
+            .AddScoped<IRequestHandler<CreateAvatarCommand, byte[]>, CreateAvatarCommandHandler>();
 
         services
             .AddScoped<IRequestHandler<GetStudentLessonsQuery, ICollection<Lesson>>, GetStudentLessonsQueryHandler>();
 
-        services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<ITutorsRepository, TutorsRepository>();
-        services.AddScoped<IStudentsRepository, StudentsRepository>();
-        services.AddScoped<ILocationsRepository, LocationsRepository>();
-        services.AddScoped<ISubjectsRepository, SubjectsRepository>();
-        services.AddScoped<IReviewsRepository, ReviewsRepository>();
-        services.AddScoped<IAvatarsRepository, AvatarsRepository>();
-        services.AddScoped<ILessonRepository, LessonRepository>();
+        services
+            .AddScoped<IUserService, UserService>()
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<ITutorsRepository, TutorsRepository>()
+            .AddScoped<IStudentsRepository, StudentsRepository>()
+            .AddScoped<ILocationsRepository, LocationsRepository>()
+            .AddScoped<ISubjectsRepository, SubjectsRepository>()
+            .AddScoped<IReviewsRepository, ReviewsRepository>()
+            .AddScoped<IAvatarsRepository, AvatarsRepository>()
+            .AddScoped<ILessonRepository, LessonRepository>();
 
         services
             .AddScoped<IAuthorizationHandler, CancelLessonAuthorizationHadnler>()
