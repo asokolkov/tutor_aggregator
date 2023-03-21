@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import UserAPI, { User } from '../../apis/currentUser';
+import UserAPI, { User } from '../../api/currentUser';
 
 export function useUser() {
   const [user, setUser] = useState<User>();

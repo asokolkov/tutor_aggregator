@@ -5,13 +5,13 @@ const rootElement = document.getElementById('root');
 import { createRoot } from 'react-dom/client';
 
 import { RouterProvider } from 'react-router-dom';
-import router from './routes';
+import router from './routes/browserRouter';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './assets/theme/index';
 
 const useMock = false;
 if (useMock) {
-  require('./apis/mocks/index');
+  require('./api/mocks/index');
 }
 
 const root = createRoot(rootElement);
