@@ -1,5 +1,5 @@
-import { Student } from '../apis/students';
-import { Tutor } from '../apis/tutors';
+import { Student } from '../api/students';
+import { Tutor } from '../api/tutors';
 import React from 'react';
 
 type ContextType = {
