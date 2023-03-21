@@ -1,17 +1,12 @@
 import { SimpleGrid, VStack } from '@chakra-ui/react';
 import SearchCardInfo from './components/SearchCardInfo';
-import TutorsAPI from '../../api/tutors';
 import SearchParamsSection from './SearchParamsSection';
 import './SearchPage.css';
-import { LoadBar } from '../shared/LoadBar';
-import { useQuery } from 'react-query';
-import { searchKey } from '../../query/queryKeys';
+import { LoadBar } from '../sharedComponents/LoadBar';
+import { useSearchPageQuery } from '../../query/useSearchPageQuery';
 
 export const SearchPage = () => {
-  const { isLoading, data } = useQuery({
-    queryKey: [searchKey],
-    queryFn: () => TutorsAPI.getAllTutors(0, 10),
-  });
+  const { isLoading, data } = useSearchPageQuery();
 
   if (isLoading)
     return <LoadBar description={'Загружаем список преподавателей'} />;

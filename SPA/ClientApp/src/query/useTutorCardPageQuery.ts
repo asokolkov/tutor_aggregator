@@ -1,7 +1,7 @@
 import { useQueries, UseQueryResult } from 'react-query';
-import { awardKey, tutorCardKey } from '../../query/queryKeys';
-import TutorsAPI, { ReviewList, Tutor } from '../../api/tutors';
-import { useTutorId } from '../../routes/params';
+import { awardKey, tutorCardKey } from './queryKeys';
+import TutorsAPI, { ReviewList, Tutor } from '../api/tutors';
+import { useTutorId } from '../routes/params';
 
 export function useTutorCardPageQuery() {
   const tutorId = useTutorId();

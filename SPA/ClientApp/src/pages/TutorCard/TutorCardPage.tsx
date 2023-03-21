@@ -2,8 +2,8 @@ import { ChakraProvider, VStack } from '@chakra-ui/react';
 import Theme from '../../assets/theme/index';
 import { CardInfo } from './CardInfo';
 import { ReviewSection } from './ReviewSection';
-import { LoadBar } from '../shared/LoadBar';
-import { useTutorCardPageQuery } from './useTutorCardPageQuery';
+import { LoadBar } from '../sharedComponents/LoadBar';
+import { useTutorCardPageQuery } from '../../query/useTutorCardPageQuery';
 
 export const TutorCardPage = () => {
   const { tutorQuery, reviewQuery } = useTutorCardPageQuery();
