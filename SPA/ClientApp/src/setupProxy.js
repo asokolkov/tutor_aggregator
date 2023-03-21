@@ -15,7 +15,6 @@ const context = [
   '/signin-vk',
 ];
 
-// @ts-ignore
 module.exports = function (app) {
   const appProxy = createProxyMiddleware(context, {
     target: target,
