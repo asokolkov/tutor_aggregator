@@ -6,11 +6,11 @@ import { VStack } from '@chakra-ui/react';
 import { UserContext } from '../../contexts/UserContext';
 import { StudentCard } from './StudentCard';
 import { AccountType } from '../../api/currentUser';
-import { useProfileInfo } from './hooks';
+import { useProfileInfo } from '../../query/useProfilePageQuery';
 import { ProfileContext } from '../../contexts/ProfileContext';
 import { Navigate } from 'react-router-dom';
-import { LOGIN_PAGE } from '../../routes/route-paths';
-import { LoadBar } from '../shared/LoadBar';
+import { LOGIN_PAGE } from '../../routes/routePaths';
+import { LoadBar } from '../sharedComponents/LoadBar';
 
 export const ProfilePage = () => {
   const userContext = useContext(UserContext);

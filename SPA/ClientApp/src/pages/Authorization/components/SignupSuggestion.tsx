@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, HStack, Link, Text } from '@chakra-ui/react';
 import { Link as ReactLink } from 'react-router-dom';
-import { SIGNUP_PAGE } from '../../../routes/route-paths';
+import { SIGNUP_PAGE } from '../../../routes/routePaths';
 
 export const SignupSuggestion: React.FC = () => {
   return (

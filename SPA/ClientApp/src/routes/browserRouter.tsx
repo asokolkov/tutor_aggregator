@@ -9,7 +9,7 @@ import {
   FORGOT_PASSWORD_PAGE,
   TUTOR_PAGE,
   LESSONS_PAGE,
-} from './route-paths';
+} from './routePaths';
 import BaseLayout from '../layouts/base/BaseLayout';
 import { TutorCardPage } from '../pages/TutorCard/TutorCardPage';
 import { SearchPage } from '../pages/Search/SearchPage';

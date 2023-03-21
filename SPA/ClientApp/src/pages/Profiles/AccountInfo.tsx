@@ -12,7 +12,7 @@ import { UserContext } from '../../contexts/UserContext';
 import { AccountType } from '../../api/currentUser';
 import { ProfileContext } from '../../contexts/ProfileContext';
 import AccountAPI from '../../api/account';
-import { LOGIN_PAGE } from '../../routes/route-paths';
+import { LOGIN_PAGE } from '../../routes/routePaths';
 import { useNavigate } from 'react-router-dom';
 
 export const AccountInfo = () => {

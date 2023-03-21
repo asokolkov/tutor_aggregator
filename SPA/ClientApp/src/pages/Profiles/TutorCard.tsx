@@ -15,7 +15,7 @@ import { ProfilePageTextAreaRow } from './components/ProfilePageTextAreaRow';
 import { SubmitButton } from './components/SubmitButton';
 import { ProfilePageCheckboxesRow } from './components/ProfilePageCheckboxesRow';
 import profileIcon from '../../assets/images/profile_icon_bg.png';
-import { LoadBar } from '../shared/LoadBar';
+import { LoadBar } from '../sharedComponents/LoadBar';
 import { ProfileContext } from '../../contexts/ProfileContext';
 import { useContext } from 'react';
 import { Form, Formik, FormikValues } from 'formik';

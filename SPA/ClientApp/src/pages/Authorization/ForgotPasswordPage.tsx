@@ -21,7 +21,7 @@ import {
 import React, { useState } from 'react';
 import Theme from '../../assets/theme/index';
 import { Link as RLink } from 'react-router-dom';
-import { LOGIN_PAGE } from '../../routes/route-paths';
+import { LOGIN_PAGE } from '../../routes/routePaths';
 
 export const ForgotPasswordPage = () => {
   const [isError] = useState(false);

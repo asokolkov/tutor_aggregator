@@ -23,7 +23,7 @@ import { LoginSuggestion } from './components/LoginSuggestion';
 import AccountAPI, { V1RegisterDto } from '../../api/account';
 import { AccountType } from '../../api/currentUser';
 import { redirect } from 'react-router-dom';
-import { LOGIN_PAGE } from '../../routes/route-paths';
+import { LOGIN_PAGE } from '../../routes/routePaths';
 
 type FormikValuesProps = {
   name: string;

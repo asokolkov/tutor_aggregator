@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Box, Flex, useBreakpointValue, Heading } from '@chakra-ui/react';
 import { LessonsBoxRow } from './LessonsBoxRow';
-import { PROFILE_PAGE } from '../../../routes/route-paths';
+import { PROFILE_PAGE } from '../../../routes/routePaths';
 export const ActiveStudentLessons = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   return (

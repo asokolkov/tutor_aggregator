@@ -8,7 +8,7 @@ import { ArchiveTutorLessons } from './components/ArchiveTutorLessons';
 import { useContext, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
-import { LOGIN_PAGE } from '../../routes/route-paths';
+import { LOGIN_PAGE } from '../../routes/routePaths';
 
 export const LessonsPage = () => {
   const userContext = useContext(UserContext);

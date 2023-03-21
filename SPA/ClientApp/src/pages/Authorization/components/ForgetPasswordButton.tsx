@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, Link } from '@chakra-ui/react';
 import { Link as ReactLink } from 'react-router-dom';
-import { FORGOT_PASSWORD_PAGE } from '../../../routes/route-paths';
+import { FORGOT_PASSWORD_PAGE } from '../../../routes/routePaths';
 
 export const ForgetPasswordButton: React.FC = () => {
   return (

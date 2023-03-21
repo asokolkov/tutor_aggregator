@@ -2,36 +2,17 @@ import { ChakraProvider, VStack } from '@chakra-ui/react';
 import Theme from '../../assets/theme/index';
 import { CardInfo } from './CardInfo';
 import { ReviewSection } from './ReviewSection';
-import { useEffect, useState } from 'react';
-import TutorsAPI, { Tutor, ReviewList } from '../../api/tutors';
-import { LoadBar } from '../shared/LoadBar';
-import { useTutorId } from '../../routes/params';
+import { LoadBar } from '../sharedComponents/LoadBar';
+import { useTutorCardPageQuery } from '../../query/useTutorCardPageQuery';
 
 export const TutorCardPage = () => {
-  const [, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [tutorState, setTutorState] = useState<Tutor>();
-  const [reviewsState, setReviewState] = useState<ReviewList>();
-  const tutorId = useTutorId();
+  const { tutorQuery, reviewQuery } = useTutorCardPageQuery();
 
-  useEffect(() => {
-    Promise.all([
-      TutorsAPI.getTutorById(tutorId),
-      TutorsAPI.getReviewsByTutorId(tutorId),
-    ]).then(
-      (result) => {
-        setIsLoaded(true);
-        setTutorState(result[0]);
-        setReviewState(result[1]);
-      },
-      (e) => {
-        setIsLoaded(true);
-        setError(e);
-      }
-    );
-  }, []);
-  if (!isLoaded)
+  if (tutorQuery.isLoading || reviewQuery.isLoading)
     return <LoadBar description={'Загружаем карточку преподавателя'} />;
+
+  const tutorState = tutorQuery.data;
+  const reviewsState = reviewQuery.data;
 
   return (
     <ChakraProvider theme={Theme}>
