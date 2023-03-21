@@ -1,30 +1,19 @@
-import { VStack, SimpleGrid } from '@chakra-ui/react';
+import { SimpleGrid, VStack } from '@chakra-ui/react';
 import SearchCardInfo from './components/SearchCardInfo';
-import { useEffect, useState } from 'react';
-import TutorsAPI, { Tutor } from '../../api/tutors';
+import TutorsAPI from '../../api/tutors';
 import SearchParamsSection from './SearchParamsSection';
 import './SearchPage.css';
 import { LoadBar } from '../shared/LoadBar';
+import { useQuery } from 'react-query';
+import { searchKey } from '../../query/queryKeys';
 
 export const SearchPage = () => {
-  const [, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState<Tutor[]>([]);
+  const { isLoading, data } = useQuery({
+    queryKey: [searchKey],
+    queryFn: () => TutorsAPI.getAllTutors(0, 10),
+  });
 
-  useEffect(() => {
-    TutorsAPI.getAllTutors(0, 10).then(
-      (result) => {
-        setIsLoaded(true);
-        setItems(result.items);
-      },
-      (e) => {
-        setIsLoaded(true);
-        setError(e);
-      }
-    );
-  }, []);
-
-  if (!isLoaded)
+  if (isLoading)
     return <LoadBar description={'Загружаем список преподавателей'} />;
   return (
     <VStack spacing={'32px'} align={'start'}>
@@ -34,7 +23,7 @@ export const SearchPage = () => {
         minChildWidth="390px"
         width={'100%'}
       >
-        {items.map((item) => (
+        {data.items.map((item) => (
           <SearchCardInfo
             name={item.firstName + ' ' + item.lastName}
             imgSrc={item.avatar}

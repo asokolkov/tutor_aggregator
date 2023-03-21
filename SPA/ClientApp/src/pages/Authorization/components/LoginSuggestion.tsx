@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, HStack, Link, Text } from '@chakra-ui/react';
 import { Link as ReactLink } from 'react-router-dom';
-import { LOGIN_PAGE } from '../../../routes/route-paths';
+import { LOGIN_PAGE } from '../../../routes/routePaths';
 
 export const LoginSuggestion: React.FC = () => {
   return (

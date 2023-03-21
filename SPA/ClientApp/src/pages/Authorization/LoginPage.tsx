@@ -21,7 +21,7 @@ import AccountAPI, { V1LoginDto } from '../../api/account';
 import { UserContext } from '../../contexts/UserContext';
 import UserAPI from '../../api/currentUser';
 import { useNavigate } from 'react-router-dom';
-import { SEARCH_PAGE } from '../../routes/route-paths';
+import { SEARCH_PAGE } from '../../routes/routePaths';
 
 type FormikValuesProps = {
   email: string;

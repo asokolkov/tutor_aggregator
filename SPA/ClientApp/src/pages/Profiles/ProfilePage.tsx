@@ -9,7 +9,7 @@ import { AccountType } from '../../api/currentUser';
 import { useProfileInfo } from './hooks';
 import { ProfileContext } from '../../contexts/ProfileContext';
 import { Navigate } from 'react-router-dom';
-import { LOGIN_PAGE } from '../../routes/route-paths';
+import { LOGIN_PAGE } from '../../routes/routePaths';
 import { LoadBar } from '../shared/LoadBar';
 
 export const ProfilePage = () => {
