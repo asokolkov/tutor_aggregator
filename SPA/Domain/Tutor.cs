@@ -11,12 +11,12 @@ public sealed class Tutor
     public string LastName { get; set; }
 
     public double Rating { get; set; }
-    
-    public Location? Location { get; set; }
 
     public string? Job { get; set; }
 
     public string? Description { get; set; }
+    
+    public Location? Location { get; set; }
     
     public ICollection<Education> Educations { get; init; }
     

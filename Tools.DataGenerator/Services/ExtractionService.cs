@@ -1,50 +1,45 @@
 ﻿namespace Tools.DataGenerator.Services;
 
-public class ExtractionService
+public static class ExtractionService
 {
     private static readonly Random Random = new();
-    private readonly int maxCollectionLength;
+    private const int MaxCollectionLength = 4;
+    private const double NullChance = 0.1;
 
-    public ExtractionService(int maxCollectionLength)
+    public static T? Get<T>(IEnumerable<T> elements, bool withNull = false)
     {
-        this.maxCollectionLength = maxCollectionLength;
-    }
-    
-    public T Get<T>(IEnumerable<T> elements, bool withNullable = true)
-    {
-        return elements
-            .Where(x => withNullable || x != null)
-            .OrderBy(_ => Random.Next())
-            .Take(1)
-            .ToList()
-            .First();
+        return withNull && GetDouble() < NullChance 
+            ? default
+            : elements
+                .OrderBy(_ => Random.Next())
+                .Take(1)
+                .First();
     }
 
-    public List<T> GetCollection<T>(IEnumerable<T> elements, bool withNullable = true)
+    public static List<T> GetCollection<T>(IEnumerable<T> elements)
     {
         return elements
-            .Where(x => withNullable || x != null)
             .OrderBy(_ => Random.Next())
-            .Take(Random.Next(maxCollectionLength))
+            .Take(Random.Next(MaxCollectionLength))
             .ToList();
     }
 
-    public int GetNumber(int max)
+    public static int GetNumber(int max = MaxCollectionLength, bool withNull = false)
     {
-        return Random.Next(max);
+        return withNull && GetDouble() < NullChance ? default : Random.Next(max);
     }
     
-    public double GetDouble()
+    public static double GetDouble()
     {
         return Random.NextDouble();
     }
     
-    public DateTimeOffset GetTime()
+    public static DateTimeOffset GetTime()
     {
         return DateTimeOffset.FromUnixTimeSeconds(Random.Next(100000, 1000000));
     }
     
-    public bool GetBoolean()
+    public static bool GetBoolean()
     {
         return Random.NextDouble() < 0.5;
     }
