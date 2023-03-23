@@ -10,11 +10,6 @@ import { ChakraProvider } from '@chakra-ui/react';
 import theme from './assets/theme/index';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
-const useMock = false;
-if (useMock) {
-  require('./api/mocks/index');
-}
-
 const root = createRoot(rootElement);
 const queryClient = new QueryClient();
 
