@@ -51,8 +51,17 @@ internal sealed class StudentsRepository : IStudentsRepository
             studentEntity.LastName = student.LastName;
             studentEntity.Age = student.Age;
             studentEntity.Description = student.Description;
-            studentEntity.EducationPlace = student.EducationPlace;
-            studentEntity.Grade = student.Grade;
+            
+            if (student.Education != null)
+            {
+                var educationEntity = mapper.Map<StudentEducationEntity>(student.Education);
+                var education = await context.StudentEducations.FindAsync(educationEntity.Id);
+                if (education is null)
+                    context.StudentEducations.Add(educationEntity);
+                else
+                    educationEntity = education;
+                studentEntity.Education = educationEntity;
+            }
             
             var contactsEntities = mapper.Map<ICollection<StudentContactEntity>>(student.Contacts).ToList();
             foreach (var contactEntity in contactsEntities)

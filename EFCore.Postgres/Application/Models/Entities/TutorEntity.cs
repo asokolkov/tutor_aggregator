@@ -7,16 +7,18 @@ public sealed class TutorEntity
     public string FirstName { get; set; }
 
     public string LastName { get; set; }
+    
+    public int? Age { get; set; }
 
     public double Rating { get; set; }
-
-    public LocationEntity? Location { get; set; }
 
     public string? Job { get; set; }
 
     public string? Description { get; set; }
     
-    public ICollection<EducationEntity> Educations { get; set; }
+    public LocationEntity? Location { get; set; }
+    
+    public ICollection<TutorEducationEntity> Educations { get; set; }
     
     public ICollection<AwardEntity> Awards { get; set; }
     

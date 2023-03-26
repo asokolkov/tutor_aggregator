@@ -13,10 +13,8 @@ public sealed class Student
     public int? Age { get; set; }
 
     public string? Description { get; set; }
-    
-    public string? EducationPlace { get; set; }
-    
-    public int? Grade { get; set; }
+
+    public StudentEducation? Education { get; set; }
     
     public ICollection<StudentContact> Contacts { get; init; }
 

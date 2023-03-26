@@ -16,7 +16,8 @@ public sealed class ApplicationContext : DbContext
     public DbSet<StudentContactEntity> StudentsContacts { get; set; } = null!;
     public DbSet<RequirementEntity> Requirements { get; set; } = null!;
     public DbSet<AwardEntity> Awards { get; set; } = null!;
-    public DbSet<EducationEntity> Educations { get; set; } = null!;
+    public DbSet<TutorEducationEntity> TutorEducations { get; set; } = null!;
+    public DbSet<StudentEducationEntity> StudentEducations { get; set; } = null!;
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
     {
@@ -66,6 +67,9 @@ public sealed class ApplicationContext : DbContext
             .WithOne(e => e.Student);
         modelBuilder.Entity<StudentEntity>()
             .Navigation(e => e.Contacts)
+            .AutoInclude();
+        modelBuilder.Entity<StudentEntity>()
+            .Navigation(e => e.Education)
             .AutoInclude();
 
         modelBuilder.Entity<ReviewEntity>()

@@ -9,6 +9,8 @@ public sealed class Tutor
     public string FirstName { get; set; }
 
     public string LastName { get; set; }
+    
+    public int? Age { get; set; }
 
     public double Rating { get; set; }
 
@@ -18,7 +20,7 @@ public sealed class Tutor
     
     public Location? Location { get; set; }
     
-    public ICollection<Education> Educations { get; init; }
+    public ICollection<TutorEducation> Educations { get; init; }
     
     public ICollection<Award> Awards { get; init; }
     

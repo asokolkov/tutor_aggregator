@@ -50,8 +50,11 @@ internal sealed class V1Profile : Profile
         CreateMap<V1UpdateStudentDto, UpdateStudent>();
         CreateMap<UpdateStudent, StudentEntity>();
         
-        CreateMap<EducationEntity, Education>().ReverseMap();
-        CreateMap<Education, V1EducationDto>().ReverseMap();
+        CreateMap<TutorEducationEntity, TutorEducation>().ReverseMap();
+        CreateMap<TutorEducation, V1TutorEducationDto>().ReverseMap();
+        
+        CreateMap<StudentEducationEntity, StudentEducation>().ReverseMap();
+        CreateMap<StudentEducation, V1StudentEducationDto>().ReverseMap();
         
         CreateMap<AwardEntity, Award>().ReverseMap();
         CreateMap<Award, V1AwardDto>().ReverseMap();
