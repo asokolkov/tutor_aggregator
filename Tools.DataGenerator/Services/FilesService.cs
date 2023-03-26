@@ -4,12 +4,11 @@ namespace Tools.DataGenerator.Services;
 
 public class FilesService
 {
-    private const string JsonName = "data.json";
+    private const string DataFileName = "data.json";
     
     public Dictionary<string, List<string?>> GetDataFromJson()
     {
-        var path = Directory.GetParent(Environment.CurrentDirectory)!.Parent!.Parent!.FullName;
-        var json = File.ReadAllText($"{path}\\{JsonName}");
+        var json = File.ReadAllText(DataFileName);
         return JsonConvert.DeserializeObject<Dictionary<string, List<string?>>>(json)!;
     }
 }
