@@ -1,12 +1,16 @@
 import { FormControl, FormLabel, Select } from '@chakra-ui/react';
 import * as React from 'react';
+import { useField } from 'formik';
 
-export const SelectOptions = (props: SelectOptionsProps) => {
+export const SelectOptions: React.FC<SelectOptionsProps> = (props) => {
   const options = props.options.map((option) => (
     <option value={option[1]} key={option[1]}>
       {option[0]}
     </option>
   ));
+
+  const [field] = useField({ name: props.name });
+
   return (
     <FormControl display={'flex'} alignItems={'center'}>
       <FormLabel
@@ -18,6 +22,7 @@ export const SelectOptions = (props: SelectOptionsProps) => {
         {props.label}
       </FormLabel>
       <Select
+        {...field}
         bg="white"
         color="black"
         width={'100%'}
@@ -36,4 +41,5 @@ type SelectOptionsProps = {
   options: Array<Array<string>>;
   label: string;
   updateState: (newState: string) => void;
+  name: string;
 };
