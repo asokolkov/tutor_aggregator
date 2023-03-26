@@ -10,7 +10,7 @@ export const ReviewStarWithStats = (props: ReviewStarWithStatsProps) => {
       </Flex>
       <Flex>
         <Text fontSize="m" textAlign={'center'}>
-          Оценка: {props.rating}
+          Оценка: {props.rating.toFixed(2)}
         </Text>
       </Flex>
     </Flex>

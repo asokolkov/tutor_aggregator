@@ -47,12 +47,11 @@ export const SignupPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
 
   const onSubmit = async (values: FormikValuesProps) => {
-    const [firstName, lastName] = values.name.split(' ');
     const registerData: V1RegisterDto = {
       accountType: values.isTutor ? AccountType.Tutor : AccountType.Student,
       email: values.email,
-      firstName: firstName,
-      lastName: lastName,
+      firstName: values.name,
+      lastName: values.surname,
       password: values.password,
       phone: values.phoneNumber,
     };

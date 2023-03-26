@@ -1,6 +1,5 @@
 import axiosInstance, {
   Award,
-  Contact,
   Education,
   PaginatedResponse,
   Person,
@@ -13,12 +12,10 @@ export interface Tutor extends Person {
   rating: number;
   location: Location;
   job: string;
-  description: string;
   educations: Education[];
   awards: Award[];
   requirements: Requirements[];
   subjects: Subject[];
-  contacts: Contact[];
 }
 
 export interface TutorList extends PaginatedResponse<Tutor> {}
@@ -68,6 +65,10 @@ class TutorsAPI {
   static async getCurrentProfileInfo(): Promise<Tutor> {
     const response = await axiosInstance.get<Tutor>('/api/v1/tutors/profile');
     return response.data;
+  }
+
+  static async putCurrentProfileValues(tutor: Tutor) {
+    await axiosInstance.put('api/v1/tutors', { ...tutor });
   }
 }
 

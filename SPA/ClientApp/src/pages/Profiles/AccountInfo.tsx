@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 export const AccountInfo = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   const userContext = useContext(UserContext);
-  const isTutor = userContext.user.type === AccountType.Tutor;
+  const isTutor = userContext.user.accountType === AccountType.Tutor;
   const navigate = useNavigate();
 
   const signOut = async () => {

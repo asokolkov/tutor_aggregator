@@ -28,10 +28,12 @@ axiosInstance.interceptors.response.use((response) => {
 export default axiosInstance;
 
 export interface Person {
-  id: string;
+  id?: string;
   firstName: string;
   lastName: string;
   avatar: string;
+  contacts: Contact[];
+  description: string;
 }
 
 export interface PaginatedResponse<T> {
@@ -39,12 +41,12 @@ export interface PaginatedResponse<T> {
 }
 
 export interface IValuable {
-  id: string;
+  id?: string;
   value: string;
 }
 
 export interface Subject {
-  id: string;
+  id?: string;
   description: string;
 }
 

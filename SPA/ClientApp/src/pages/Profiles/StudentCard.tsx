@@ -16,7 +16,12 @@ import { ProfilePageSelectOptionsRow } from './components/ProfilePageSelectOptio
 import { ProfileContext } from '../../contexts/ProfileContext';
 import { useContext } from 'react';
 import { Form, Formik, FormikValues } from 'formik';
-import { getStudentInitialValues, SexOptions } from './FormHelper';
+import {
+  mapStudentToFormikValues,
+  SexOptions,
+  updateStudentFromFormikValues,
+} from './FormHelper';
+import StudentAPI from '../../api/students';
 
 export const StudentCard: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
@@ -25,7 +30,10 @@ export const StudentCard: React.FC = () => {
   if (profileContext.isLoading) return <></>;
   const student = profileContext.studentProfile;
 
-  const onSubmit = (values: FormikValues) => console.log(values);
+  const onSubmit = async (values: FormikValues) => {
+    const newStudent = updateStudentFromFormikValues(student, values);
+    await StudentAPI.putCurrentProfileValues(newStudent);
+  };
   return (
     <Box
       width={'100%'}
@@ -39,7 +47,7 @@ export const StudentCard: React.FC = () => {
       backgroundSize={'14em'}
     >
       <Formik
-        initialValues={getStudentInitialValues(student)}
+        initialValues={mapStudentToFormikValues(student)}
         onSubmit={onSubmit}
       >
         <Form>

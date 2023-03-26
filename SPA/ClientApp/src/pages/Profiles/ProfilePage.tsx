@@ -20,7 +20,7 @@ export const ProfilePage = () => {
   }
 
   const { isLoading, tutorProfile, studentProfile } = useProfileInfo(
-    userContext.user.type
+    userContext.user.accountType
   );
 
   const providerValues = useMemo(
@@ -28,7 +28,7 @@ export const ProfilePage = () => {
     [isLoading, studentProfile, tutorProfile]
   );
 
-  const isTutor = userContext.user.type === AccountType.Tutor;
+  const isTutor = userContext.user.accountType === AccountType.Tutor;
   if (isLoading)
     return <LoadBar description={'Загружаем данные вашего профиля'} />;
 

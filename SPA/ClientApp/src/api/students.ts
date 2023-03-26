@@ -1,6 +1,10 @@
 import axiosInstance, { PaginatedResponse, Person } from './_share';
 
-export interface Student extends Person {}
+export interface Student extends Person {
+  age: number;
+  educationPlace: string;
+  grade: number;
+}
 
 export interface StudentList extends PaginatedResponse<Student> {}
 
@@ -25,5 +29,9 @@ export default class StudentAPI {
       'api/v1/students/profile'
     );
     return response.data;
+  }
+
+  static async putCurrentProfileValues(student: Student) {
+    await axiosInstance.put('api/v1/student', { ...student });
   }
 }
