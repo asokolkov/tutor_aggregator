@@ -15,8 +15,9 @@ internal sealed class DataGenerator : IDataGenerator
 {
     private readonly ApplicationContext applicationContext;
     private readonly ApplicationIdentityContext identityContext;
-    private static Dictionary<string, List<string?>> data = null!;
-    
+    private readonly Dictionary<string, List<string?>> data;
+    private readonly ExtractionService extraction;
+
     private const int TutorsAmount = 50;
     private const int StudentsAmount = 50;
 
@@ -24,7 +25,8 @@ internal sealed class DataGenerator : IDataGenerator
     {
         this.applicationContext = applicationContext;
         this.identityContext = identityContext;
-        data = FilesService.GetDataFromJson();
+        data = new FilesService().GetDataFromJson();
+        extraction = new ExtractionService();
     }
 
     public async Task FillDatabase()
@@ -59,12 +61,12 @@ internal sealed class DataGenerator : IDataGenerator
     {
         var result = new List<EducationEntity>();
 
-        for (var i = 0; i < ExtractionService.GetNumber(); i++)
+        for (var i = 0; i < extraction.GetNumber(); i++)
         {
             var entity = new EducationEntity
             {
                 Id = Guid.NewGuid(),
-                Value = ExtractionService.Get(data["tutorEducations"])!
+                Value = extraction.Get(data["tutorEducations"])!
             };
             var entry = await applicationContext.Educations.AddAsync(entity);
             result.Add(entry.Entity);
@@ -77,12 +79,12 @@ internal sealed class DataGenerator : IDataGenerator
     {
         var result = new List<AwardEntity>();
 
-        for (var i = 0; i < ExtractionService.GetNumber(); i++)
+        for (var i = 0; i < extraction.GetNumber(); i++)
         {
             var awardEntity = new AwardEntity
             {
                 Id = Guid.NewGuid(),
-                Value = ExtractionService.Get(data["awards"])!
+                Value = extraction.Get(data["awards"])!
             };
             var awardEntry = await applicationContext.Awards.AddAsync(awardEntity);
             result.Add(awardEntry.Entity);
@@ -95,12 +97,12 @@ internal sealed class DataGenerator : IDataGenerator
     {
         var result = new List<RequirementEntity>();
 
-        for (var i = 0; i < ExtractionService.GetNumber(); i++)
+        for (var i = 0; i < extraction.GetNumber(); i++)
         {
             var requirementEntity = new RequirementEntity
             {
                 Id = Guid.NewGuid(),
-                Value = ExtractionService.Get(data["requirements"])!
+                Value = extraction.Get(data["requirements"])!
             };
             var requirementEntry = await applicationContext.Requirements.AddAsync(requirementEntity);
             result.Add(requirementEntry.Entity);
@@ -112,20 +114,20 @@ internal sealed class DataGenerator : IDataGenerator
     private async Task CreateLessons(List<TutorEntity> tutors, IReadOnlyCollection<StudentEntity> students)
     {
         foreach (var tutor in tutors)
-            for (var i = 0; i < ExtractionService.GetNumber(); i++)
+            for (var i = 0; i < extraction.GetNumber(); i++)
             {
-                var startTime = ExtractionService.GetTime();
-                var studentExists = ExtractionService.GetDouble() < 0.2;
+                var startTime = extraction.GetTime();
+                var studentExists = extraction.GetDouble() < 0.2;
                 var lesson = new LessonEntity
                 {
                     Id = Guid.NewGuid(),
                     Tutor = tutor,
-                    Student = studentExists ? ExtractionService.Get(students) : null,
-                    Price = ExtractionService.GetDouble() * 1000,
-                    Status = studentExists ? (LessonStatus)ExtractionService.GetNumber(2) : LessonStatus.Scheduled,
-                    Type = (LessonType)ExtractionService.GetNumber(2),
+                    Student = studentExists ? extraction.Get(students) : null,
+                    Price = extraction.GetDouble() * 1000,
+                    Status = studentExists ? (LessonStatus)extraction.GetNumber(2) : LessonStatus.Scheduled,
+                    Type = (LessonType)extraction.GetNumber(2),
                     Start = startTime,
-                    End = startTime + TimeSpan.FromHours(ExtractionService.GetDouble() * 5)
+                    End = startTime + TimeSpan.FromHours(extraction.GetDouble() * 5)
                 };
 
                 await applicationContext.Lessons.AddAsync(lesson);
@@ -141,21 +143,21 @@ internal sealed class DataGenerator : IDataGenerator
     private async Task CreateReviews(List<TutorEntity> tutors, IReadOnlyCollection<StudentEntity> students)
     {
         foreach (var tutor in tutors)
-            for (var i = 0; i < ExtractionService.GetNumber(); i++)
+            for (var i = 0; i < extraction.GetNumber(); i++)
                 await applicationContext.AddAsync(new ReviewEntity
                 {
                     Id = Guid.NewGuid(),
                     Description = Guid.NewGuid().ToString(),
                     Tutor = tutor,
-                    Student = ExtractionService.Get(students)!,
-                    Rating = ExtractionService.GetDouble() * 10,
-                    UpdatedAt = ExtractionService.GetTime()
+                    Student = extraction.Get(students)!,
+                    Rating = extraction.GetDouble() * 10,
+                    UpdatedAt = extraction.GetTime()
                 });
     }
 
     private async Task<LocationEntity?> CreateLocation()
     {
-        var district = ExtractionService.Get(data["districts"], true);
+        var district = extraction.Get(data["districts"], true);
         if (district == null)
             return null;
         
@@ -166,7 +168,7 @@ internal sealed class DataGenerator : IDataGenerator
         var locationEntry = await applicationContext.Locations.AddAsync(new LocationEntity
         {
             Id = Guid.NewGuid(),
-            City = ExtractionService.Get(data["cities"])!,
+            City = extraction.Get(data["cities"])!,
             District = district
         });
 
@@ -176,7 +178,7 @@ internal sealed class DataGenerator : IDataGenerator
     private async Task<ICollection<SubjectEntity>> CreateSubjects()
     {
         var result = new List<SubjectEntity>();
-        foreach (var subject in ExtractionService.GetCollection(data["subjects"]))
+        foreach (var subject in extraction.GetCollection(data["subjects"]))
         {
             var subjectEntity = await applicationContext.Subjects.FirstOrDefaultAsync(x => x.Description == subject);
             if (subjectEntity != null)
@@ -199,14 +201,14 @@ internal sealed class DataGenerator : IDataGenerator
     private async Task<List<TutorContactEntity>> CreateTutorContacts()
     {
         var result = new List<TutorContactEntity>();
-        for (var i = 0; i < ExtractionService.GetNumber(); i++)
+        for (var i = 0; i < extraction.GetNumber(); i++)
         {
-            var usePhones = ExtractionService.GetBoolean();
+            var usePhones = extraction.GetBoolean();
             var contactEntity = new TutorContactEntity
             {
                 Id = Guid.NewGuid(),
                 Type = usePhones ? ContactType.Phone : ContactType.Email,
-                Value = ExtractionService.Get(usePhones ? data["phones"] : data["emails"])!
+                Value = extraction.Get(usePhones ? data["phones"] : data["emails"])!
             };
             var contactEntry = await applicationContext.TutorsContacts.AddAsync(contactEntity);
             result.Add(contactEntry.Entity);
@@ -218,14 +220,14 @@ internal sealed class DataGenerator : IDataGenerator
     private async Task<List<StudentContactEntity>> CreateStudentContacts()
     {
         var result = new List<StudentContactEntity>();
-        for (var i = 0; i < ExtractionService.GetNumber(); i++)
+        for (var i = 0; i < extraction.GetNumber(); i++)
         {
-            var usePhones = ExtractionService.GetBoolean();
+            var usePhones = extraction.GetBoolean();
             var contactEntity = new StudentContactEntity
             {
                 Id = Guid.NewGuid(),
                 Type = usePhones ? ContactType.Phone : ContactType.Email,
-                Value = ExtractionService.Get(usePhones ? data["phones"] : data["emails"])!
+                Value = extraction.Get(usePhones ? data["phones"] : data["emails"])!
             };
             var contactEntry = await applicationContext.StudentsContacts.AddAsync(contactEntity);
             result.Add(contactEntry.Entity);
@@ -247,9 +249,10 @@ internal sealed class DataGenerator : IDataGenerator
             {
                 Id = user.Id,
                 FirstName = user.FirstName!,
+                Age = extraction.GetNumber(100, true),
                 LastName = user.LastName!,
-                Description = ExtractionService.Get(data["descriptions"], true),
-                Job = ExtractionService.Get(data["jobs"], true)
+                Description = extraction.Get(data["descriptions"], true),
+                Job = extraction.Get(data["jobs"], true)
             };
             var tutorEntry = await applicationContext.Tutors.AddAsync(tutorEntity);
             result.Add(tutorEntry.Entity);
@@ -272,10 +275,10 @@ internal sealed class DataGenerator : IDataGenerator
                 Id = user.Id,
                 FirstName = user.FirstName!,
                 LastName = user.LastName!,
-                Age = ExtractionService.GetNumber(100, true),
-                Description = ExtractionService.Get(data["descriptions"], true),
-                EducationPlace = ExtractionService.Get(data["studentEducations"], true),
-                Grade = ExtractionService.GetNumber(10, true)
+                Age = extraction.GetNumber(100, true),
+                Description = extraction.Get(data["descriptions"], true),
+                EducationPlace = extraction.Get(data["studentEducations"], true),
+                Grade = extraction.GetNumber(10, true)
             };
             var studentEntry = await applicationContext.Students.AddAsync(studentEntity);
             result.Add(studentEntry.Entity);
@@ -289,9 +292,9 @@ internal sealed class DataGenerator : IDataGenerator
         return new ApplicationUser
         {
             Id = Guid.NewGuid(),
-            Email = ExtractionService.Get(data["emails"]),
-            FirstName = ExtractionService.Get(data["firstNames"]),
-            LastName = ExtractionService.Get(data["lastNames"]),
+            Email = extraction.Get(data["emails"]),
+            FirstName = extraction.Get(data["firstNames"]),
+            LastName = extraction.Get(data["lastNames"]),
             AccountType = accountType
         };
     }
