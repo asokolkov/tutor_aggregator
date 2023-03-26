@@ -37,6 +37,7 @@ internal sealed class DataGenerator : IDataGenerator
         foreach (var student in students)
         {
             student.Contacts = await CreateStudentContacts();
+            student.Education = await CreateEducation();
         }
 
         foreach (var tutor in tutors)
@@ -57,18 +58,34 @@ internal sealed class DataGenerator : IDataGenerator
         await applicationContext.SaveChangesAsync();
     }
 
-    private async Task<ICollection<EducationEntity>> CreateTutorEducations()
+    private async Task<StudentEducationEntity?> CreateEducation()
     {
-        var result = new List<EducationEntity>();
+        var education = extraction.Get(data["studentEducations"], true);
+        if (education == null)
+            return null;
+
+        var educationEntry = await applicationContext.StudentEducations.AddAsync(new StudentEducationEntity
+        {
+            Id = Guid.NewGuid(),
+            Value = education,
+            Grade = extraction.GetNumber(100)
+        });
+
+        return educationEntry.Entity;
+    }
+
+    private async Task<ICollection<TutorEducationEntity>> CreateTutorEducations()
+    {
+        var result = new List<TutorEducationEntity>();
 
         for (var i = 0; i < extraction.GetNumber(); i++)
         {
-            var entity = new EducationEntity
+            var entity = new TutorEducationEntity
             {
                 Id = Guid.NewGuid(),
                 Value = extraction.Get(data["tutorEducations"])!
             };
-            var entry = await applicationContext.Educations.AddAsync(entity);
+            var entry = await applicationContext.TutorEducations.AddAsync(entity);
             result.Add(entry.Entity);
         }
 
@@ -276,9 +293,7 @@ internal sealed class DataGenerator : IDataGenerator
                 FirstName = user.FirstName!,
                 LastName = user.LastName!,
                 Age = extraction.GetNumber(100, true),
-                Description = extraction.Get(data["descriptions"], true),
-                EducationPlace = extraction.Get(data["studentEducations"], true),
-                Grade = extraction.GetNumber(10, true)
+                Description = extraction.Get(data["descriptions"], true)
             };
             var studentEntry = await applicationContext.Students.AddAsync(studentEntity);
             result.Add(studentEntry.Entity);

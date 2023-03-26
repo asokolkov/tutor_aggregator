@@ -23,7 +23,7 @@ public sealed class V1UpdateTutorDto
     public string Description { get; init; }
     
     [JsonProperty("educations")]
-    public IReadOnlyCollection<V1EducationDto> Educations { get; init; }
+    public IReadOnlyCollection<V1TutorEducationDto> Educations { get; init; }
     
     [JsonProperty("awards")]
     public IReadOnlyCollection<V1AwardDto> Awards { get; init; }

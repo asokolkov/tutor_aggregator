@@ -11,10 +11,8 @@ public sealed class StudentEntity
     public int? Age { get; set; }
 
     public string? Description { get; set; }
-    
-    public string? EducationPlace { get; set; }
-    
-    public int? Grade { get; set; }
+
+    public StudentEducationEntity? Education { get; set; }
     
     public ICollection<StudentContactEntity> Contacts { get; set; }
 

@@ -59,12 +59,12 @@ internal sealed class TutorsRepository : ITutorsRepository
             tutorEntity.Description = tutor.Description;
             tutorEntity.Job = tutor.Job;
             
-            var educationsEntities = mapper.Map<ICollection<EducationEntity>>(tutor.Educations).ToList();
+            var educationsEntities = mapper.Map<ICollection<TutorEducationEntity>>(tutor.Educations).ToList();
             foreach (var educationEntity in educationsEntities)
             {
-                var education = await context.Educations.FindAsync(educationEntity.Id);
+                var education = await context.TutorEducations.FindAsync(educationEntity.Id);
                 if (education is null)
-                    context.Educations.Add(educationEntity);
+                    context.TutorEducations.Add(educationEntity);
             }
             tutorEntity.Educations = educationsEntities;
             

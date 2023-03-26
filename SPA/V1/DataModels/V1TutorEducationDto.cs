@@ -2,7 +2,7 @@
 
 namespace SPA.V1.DataModels;
 
-public class V1EducationDto
+public class V1TutorEducationDto
 {
     [JsonProperty("id")]
     public string Id { get; init; }

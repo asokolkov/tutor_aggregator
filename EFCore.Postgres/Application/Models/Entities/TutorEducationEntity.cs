@@ -1,6 +1,6 @@
 ﻿namespace EFCore.Postgres.Application.Models.Entities;
 
-public sealed class EducationEntity
+public sealed class TutorEducationEntity
 {
     public Guid Id { get; init; }
     
