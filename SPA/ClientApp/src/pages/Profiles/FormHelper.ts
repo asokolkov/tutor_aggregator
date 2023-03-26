@@ -14,9 +14,9 @@ export enum SexOptions {
 export const getTutorInitialValues = (tutor: Tutor) => ({
   name: mapToFullName(tutor.firstName, tutor.lastName),
   district: 'Уралмаш',
-  education: tutor.educations.map((e) => e.description).join('\n'),
+  education: tutor.educations.map((e) => e.value).join('\n'),
   job: tutor.job,
-  awards: tutor.awards.map((a) => a.description).join('\n'),
+  awards: tutor.awards.map((a) => a.value).join('\n'),
   requirements: tutor.requirements,
   contacts: tutor.contacts,
   about: '',

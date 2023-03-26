@@ -9,9 +9,7 @@ const AwardSection: React.FC<AwardSectionProps> = (props) => {
         Награды
       </Text>
       {props.awards.map((a) => (
-        <Text key={a.id}>
-          • {a.description}, {a.year} год
-        </Text>
+        <Text key={a.id}>• {a.value}</Text>
       ))}
     </VStack>
   );

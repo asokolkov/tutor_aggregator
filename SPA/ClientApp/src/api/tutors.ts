@@ -1,24 +1,24 @@
 import axiosInstance, {
   Award,
+  Contact,
   Education,
-  Job,
-  Lesson,
   PaginatedResponse,
   Person,
+  Requirements,
   Subject,
 } from './_share';
 import { Location } from './locations';
 
 export interface Tutor extends Person {
+  rating: number;
   location: Location;
-  job: Job;
-  subjects: Subject[];
-  contacts: string;
+  job: string;
+  description: string;
   educations: Education[];
   awards: Award[];
-  lessons: Lesson[];
-  requirements: string;
-  rating: number;
+  requirements: Requirements[];
+  subjects: Subject[];
+  contacts: Contact[];
 }
 
 export interface TutorList extends PaginatedResponse<Tutor> {}

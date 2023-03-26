@@ -19,15 +19,7 @@ export const SearchPage = () => {
         width={'100%'}
       >
         {data.items.map((item) => (
-          <SearchCardInfo
-            name={item.firstName + ' ' + item.lastName}
-            imgSrc={item.avatar}
-            education={item.educations}
-            job={item.job.place}
-            rating={item.rating}
-            id={item.id}
-            key={item.id}
-          ></SearchCardInfo>
+          <SearchCardInfo tutor={item}></SearchCardInfo>
         ))}
       </SimpleGrid>
     </VStack>

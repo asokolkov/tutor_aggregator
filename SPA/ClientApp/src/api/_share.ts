@@ -31,7 +31,6 @@ export interface Person {
   id: string;
   firstName: string;
   lastName: string;
-  middleName: string;
   avatar: string;
 }
 
@@ -39,10 +38,9 @@ export interface PaginatedResponse<T> {
   items: T[];
 }
 
-export interface Job {
+export interface IValuable {
   id: string;
-  place: string;
-  post: string;
+  value: string;
 }
 
 export interface Subject {
@@ -50,22 +48,18 @@ export interface Subject {
   description: string;
 }
 
-export interface Education {
-  id: string;
-  description: string;
-  graduationYear: number;
+export interface Education extends IValuable {}
+
+export interface Award extends IValuable {}
+
+export interface Requirements extends IValuable {}
+
+export interface Contact extends IValuable {
+  type: ContactType;
 }
 
-export interface Award {
-  id: string;
-  description: string;
-  year: number;
-}
-
-export interface Lesson {
-  id: string;
-  price: number;
-  confirmed: boolean;
-  startTime: Date;
-  endTime: Date;
+export enum ContactType {
+  Phone,
+  Email,
+  Telegram,
 }

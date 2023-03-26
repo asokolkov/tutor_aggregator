@@ -17,33 +17,35 @@ import categoryIcon from '../../assets/images/category-icon.png';
 import locationIcon from '../../assets/images/location-icon.png';
 import educationIcon from '../../assets/images/educations-icon.png';
 import requirementsIcon from '../../assets/images/requirements-icon.png';
-import ageIcon from '../../assets/images/age-icon.png';
 import aboutIcon from '../../assets/images/about-icon.png';
 import awardsIcon from '../../assets/images/awards-icon.png';
-import { Award, Education } from '../../api/_share';
 import RegisterModal from './modal/RegisterModal';
 import ContactsPopoverButton from './components/ContactsPopoverButton';
 import { ReviewStarWithStats } from './components/ReviewStarWithStats';
 import React from 'react';
+import { Tutor } from '../../api/tutors';
 
-function getTextToAge(age: number): string {
-  const lastDigit = age % 10;
-  const texts = [
-    'лет',
-    'год',
-    'года',
-    'года',
-    'года',
-    'лет',
-    'лет',
-    'лет',
-    'лет',
-    'лет',
-  ];
-  return texts[lastDigit];
-}
+export const CardInfo = ({ tutor }: CardInfoProps) => {
+  const {
+    job,
+    awards,
+    requirements,
+    rating,
+    educations,
+    contacts,
+    avatar,
+    firstName,
+    lastName,
+    location,
+    description,
+    subjects,
+  } = tutor;
 
-export const CardInfo = (props: CardInfoProps) => {
+  const fullName = `${firstName} ${lastName}`;
+  const mapCollectionToString = (collection: string[]) => {
+    return collection.join(', ');
+  };
+
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   const {
     isOpen: isOpenRegister,
@@ -66,13 +68,13 @@ export const CardInfo = (props: CardInfoProps) => {
       >
         <HStack spacing={'40px'}>
           <WrapItem>
-            <Avatar name={props.name} src={props.avatar} size="2xl" />
+            <Avatar name={fullName} src={avatar} size="2xl" />
           </WrapItem>
           <VStack align={'left'} spacing={'2px'}>
             <Text as="b" fontSize={nameSize}>
-              {props.name}
+              {fullName}
             </Text>
-            <Text fontSize={jobSize}>{props.job}</Text>
+            <Text fontSize={jobSize}>{job}</Text>
           </VStack>
         </HStack>
         <Flex
@@ -93,38 +95,33 @@ export const CardInfo = (props: CardInfoProps) => {
             <BottomCardDescription
               icon={locationIcon}
               categoryText={isDesktop ? 'Район:' : ''}
-              text={props.location}
+              text={`${location.city} ${location.district}`}
             />
             <BottomCardDescription
               icon={educationIcon}
               categoryText={isDesktop ? 'Образование:' : ''}
-              text={props.educations[0].description}
+              text={mapCollectionToString(educations.map((e) => e.value))}
             />
             <BottomCardDescription
               icon={categoryIcon}
               categoryText={isDesktop ? 'Предметы:' : ''}
-              text={props.subjects}
-            />
-            <BottomCardDescription
-              icon={ageIcon}
-              categoryText={isDesktop ? 'Возраст:' : ''}
-              text={`${props.age.toString()} ${getTextToAge(props.age)}`}
+              text={mapCollectionToString(subjects.map((s) => s.description))}
             />
             <Divider colorScheme={'black'} margin={'0 0 8px 0'} />
             <BottomCardDescription
               icon={aboutIcon}
               categoryText={isDesktop ? `О себе:` : ''}
-              text={props.about}
+              text={description}
             />
             <AwardsRow
               icon={awardsIcon}
               categoryText={isDesktop ? 'Награды:' : ''}
-              awards={props.awards}
+              awards={awards}
             />
             <BottomCardDescription
               icon={requirementsIcon}
               categoryText={isDesktop ? 'Требования:' : ''}
-              text={props.requirements}
+              text={mapCollectionToString(requirements.map((r) => r.value))}
             />
           </Flex>
           <Flex width={'100%'} direction={isDesktop ? 'row' : 'column'}>
@@ -134,9 +131,11 @@ export const CardInfo = (props: CardInfoProps) => {
               justify={'center'}
               margin={isDesktop ? 'auto' : '0 0 1em 0'}
             >
-              <ReviewStarWithStats rating={props.rating} />
+              <ReviewStarWithStats rating={rating} />
             </Flex>
-            <ContactsPopoverButton contacts={props.contacts} />
+            <ContactsPopoverButton
+              contacts={mapCollectionToString(contacts.map((c) => c.value))}
+            />
             <Button
               size={'md'}
               colorScheme={'green'}
@@ -154,16 +153,5 @@ export const CardInfo = (props: CardInfoProps) => {
 };
 
 type CardInfoProps = {
-  name: string;
-  job: string;
-  subjects: string;
-  educations: Education[];
-  location: string;
-  avatar: string;
-  requirements: string;
-  awards: Award[];
-  contacts: string;
-  rating: number;
-  age: number;
-  about: string;
+  tutor: Tutor;
 };
