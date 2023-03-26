@@ -13,6 +13,15 @@ public sealed class V1UpdateStudentDto
     [JsonProperty("age")]
     public int Age { get; init; }
 
+    [JsonProperty("description")]
+    public string Description { get; init; }
+    
+    [JsonProperty("educationPlace")]
+    public string EducationPlace { get; init; }
+    
+    [JsonProperty("grade")]
+    public int Grade { get; init; }
+    
     [JsonProperty("contacts")]
-    public string Contacts { get; init; }
+    public ICollection<V1StudentContactDto> Contacts { get; init; }
 }

@@ -2,5 +2,5 @@
 
 public interface IDataGenerator
 {
-    Task FillInDatabase();
+    Task FillDatabase();
 }

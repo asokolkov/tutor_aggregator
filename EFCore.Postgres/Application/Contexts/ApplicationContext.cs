@@ -11,8 +11,12 @@ public sealed class ApplicationContext : DbContext
     public DbSet<ReviewEntity> Reviews { get; set; } = null!;
     public DbSet<LocationEntity> Locations { get; set; } = null!;
     public DbSet<SubjectEntity> Subjects { get; set; } = null!;
-    
     public DbSet<AvatarEntity> Avatars { get; set; } = null!;
+    public DbSet<TutorContactEntity> TutorsContacts { get; set; } = null!;
+    public DbSet<StudentContactEntity> StudentsContacts { get; set; } = null!;
+    public DbSet<RequirementEntity> Requirements { get; set; } = null!;
+    public DbSet<AwardEntity> Awards { get; set; } = null!;
+    public DbSet<EducationEntity> Educations { get; set; } = null!;
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
     {
@@ -33,6 +37,9 @@ public sealed class ApplicationContext : DbContext
             .HasMany(e => e.Lessons)
             .WithOne(e => e.Tutor);
         modelBuilder.Entity<TutorEntity>()
+            .Navigation(e => e.Contacts)
+            .AutoInclude();
+        modelBuilder.Entity<TutorEntity>()
             .Navigation(e => e.Reviews)
             .AutoInclude();
         modelBuilder.Entity<TutorEntity>()
@@ -41,13 +48,25 @@ public sealed class ApplicationContext : DbContext
         modelBuilder.Entity<TutorEntity>()
             .Navigation(e => e.Subjects)
             .AutoInclude();
-        
+        modelBuilder.Entity<TutorEntity>()
+            .Navigation(e => e.Educations)
+            .AutoInclude();
+        modelBuilder.Entity<TutorEntity>()
+            .Navigation(e => e.Awards)
+            .AutoInclude();
+        modelBuilder.Entity<TutorEntity>()
+            .Navigation(e => e.Requirements)
+            .AutoInclude();
+
         modelBuilder.Entity<StudentEntity>()
             .HasMany(e => e.Lessons)
             .WithOne(e => e.Student);
         modelBuilder.Entity<StudentEntity>()
             .HasMany(e => e.Reviews)
             .WithOne(e => e.Student);
+        modelBuilder.Entity<StudentEntity>()
+            .Navigation(e => e.Contacts)
+            .AutoInclude();
 
         modelBuilder.Entity<ReviewEntity>()
             .Navigation(e => e.Student)

@@ -34,7 +34,7 @@ public sealed class V1LessonsController : ControllerBase
         if (tutorId is null)
             return Unauthorized();
         var getTutorQuery = new CreateLessonCommand(tutorId.Value, createLessonDto.Start, createLessonDto.End,
-            createLessonDto.Price);
+            createLessonDto.Price, createLessonDto.Type);
         var lesson = await mediator.Send(getTutorQuery);
         if (lesson is null)
             return BadRequest();

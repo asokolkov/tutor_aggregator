@@ -35,6 +35,12 @@ internal sealed class V1Profile : Profile
         CreateMap<SubjectEntity, Subject>().ReverseMap();
         CreateMap<Subject, V1SubjectDto>().ReverseMap();
         CreateMap<Page<Subject>, V1PageDto<V1SubjectDto>>().ReverseMap();
+        
+        CreateMap<TutorContactEntity, TutorContact>().ReverseMap();
+        CreateMap<TutorContact, V1TutorContactDto>().ReverseMap();
+        
+        CreateMap<StudentContactEntity, StudentContact>().ReverseMap();
+        CreateMap<StudentContact, V1StudentContactDto>().ReverseMap();
 
         CreateMap<User, V1UserDto>();
 
@@ -43,5 +49,14 @@ internal sealed class V1Profile : Profile
         
         CreateMap<V1UpdateStudentDto, UpdateStudent>();
         CreateMap<UpdateStudent, StudentEntity>();
+        
+        CreateMap<EducationEntity, Education>().ReverseMap();
+        CreateMap<Education, V1EducationDto>().ReverseMap();
+        
+        CreateMap<AwardEntity, Award>().ReverseMap();
+        CreateMap<Award, V1AwardDto>().ReverseMap();
+        
+        CreateMap<RequirementEntity, Requirement>().ReverseMap();
+        CreateMap<Requirement, V1RequirementDto>().ReverseMap();
     }
 }

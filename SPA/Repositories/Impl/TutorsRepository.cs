@@ -56,20 +56,56 @@ internal sealed class TutorsRepository : ITutorsRepository
             
             tutorEntity.FirstName = tutor.FirstName;
             tutorEntity.LastName = tutor.LastName;
+            tutorEntity.Description = tutor.Description;
             tutorEntity.Job = tutor.Job;
-            tutorEntity.Contacts = tutor.Contacts;
-            tutorEntity.Educations = tutor.Educations;
-            tutorEntity.Awards = tutor.Awards;
-            tutorEntity.Requirements = tutor.Requirements;
             
-            var locationEntity = mapper.Map<LocationEntity>(tutor.Location);
-            var location = await context.Locations.FindAsync(locationEntity.Id);
-            if (location is null)
-                context.Locations.Add(locationEntity);
-            else
-                locationEntity = location;
-            tutorEntity.Location = locationEntity;
+            var educationsEntities = mapper.Map<ICollection<EducationEntity>>(tutor.Educations).ToList();
+            foreach (var educationEntity in educationsEntities)
+            {
+                var education = await context.Educations.FindAsync(educationEntity.Id);
+                if (education is null)
+                    context.Educations.Add(educationEntity);
+            }
+            tutorEntity.Educations = educationsEntities;
             
+            var awardsEntities = mapper.Map<ICollection<AwardEntity>>(tutor.Awards).ToList();
+            foreach (var awardEntity in awardsEntities)
+            {
+                var award = await context.Awards.FindAsync(awardEntity.Id);
+                if (award is null)
+                    context.Awards.Add(awardEntity);
+            }
+            tutorEntity.Awards = awardsEntities;
+            
+            var requirementsEntities = mapper.Map<ICollection<RequirementEntity>>(tutor.Requirements).ToList();
+            foreach (var requirementEntity in requirementsEntities)
+            {
+                var requirement = await context.Requirements.FindAsync(requirementEntity.Id);
+                if (requirement is null)
+                    context.Requirements.Add(requirementEntity);
+            }
+            tutorEntity.Requirements = requirementsEntities;
+            
+            var contactsEntities = mapper.Map<ICollection<TutorContactEntity>>(tutor.Contacts).ToList();
+            foreach (var contactEntity in contactsEntities)
+            {
+                var contact = await context.TutorsContacts.FindAsync(contactEntity.Id);
+                if (contact is null)
+                    context.TutorsContacts.Add(contactEntity);
+            }
+            tutorEntity.Contacts = contactsEntities;
+
+            if (tutor.Location != null)
+            {
+                var locationEntity = mapper.Map<LocationEntity>(tutor.Location);
+                var location = await context.Locations.FindAsync(locationEntity.Id);
+                if (location is null)
+                    context.Locations.Add(locationEntity);
+                else
+                    locationEntity = location;
+                tutorEntity.Location = locationEntity;
+            }
+
             var subjectsEntities = mapper.Map<ICollection<SubjectEntity>>(tutor.Subjects).ToList();
             for (var i = 0; i < subjectsEntities.Count; i++)
             {
