@@ -9,6 +9,9 @@ public sealed class V1UpdateTutorDto
 
     [JsonProperty("lastName")]
     public string LastName { get; init; }
+    
+    [JsonProperty("age")]
+    public int Age { get; init; }
 
     [JsonProperty("location")]
     public V1LocationDto Location { get; init; }

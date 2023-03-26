@@ -13,6 +13,9 @@ public sealed class V1TutorDto
 
     [JsonProperty("lastName")]
     public string LastName { get; init; }
+    
+    [JsonProperty("age")]
+    public int Age { get; init; }
 
     [JsonProperty("rating")]
     public double Rating { get; init; }
