@@ -1,24 +1,21 @@
 import axiosInstance, {
   Award,
   Education,
-  Job,
-  Lesson,
   PaginatedResponse,
   Person,
+  Requirements,
   Subject,
 } from './_share';
 import { Location } from './locations';
 
 export interface Tutor extends Person {
+  rating: number;
   location: Location;
-  job: Job;
-  subjects: Subject[];
-  contacts: string;
+  job: string;
   educations: Education[];
   awards: Award[];
-  lessons: Lesson[];
-  requirements: string;
-  rating: number;
+  requirements: Requirements[];
+  subjects: Subject[];
 }
 
 export interface TutorList extends PaginatedResponse<Tutor> {}
@@ -35,12 +32,31 @@ export interface Review {
 
 export interface ReviewList extends PaginatedResponse<Review> {}
 
+export interface TutorSearchParams {
+  subject: string;
+  city: string;
+  district: string;
+  maxPrice: number;
+  rating: number;
+}
+
 class TutorsAPI {
-  static async getAllTutors(page = 0, size = 30): Promise<TutorList> {
+  static async getAllTutors(
+    searchParams: TutorSearchParams = {
+      city: null,
+      district: null,
+      maxPrice: -1,
+      rating: -1,
+      subject: null,
+    },
+    page = 1,
+    size = 30
+  ): Promise<TutorList> {
     const response = await axiosInstance.get<TutorList>('/api/v1/tutors', {
       params: {
-        page: page,
-        size: size,
+        page,
+        size,
+        ...searchParams,
       },
     });
     return response.data;
@@ -68,6 +84,10 @@ class TutorsAPI {
   static async getCurrentProfileInfo(): Promise<Tutor> {
     const response = await axiosInstance.get<Tutor>('/api/v1/tutors/profile');
     return response.data;
+  }
+
+  static async putCurrentProfileValues(tutor: Tutor) {
+    await axiosInstance.put('api/v1/tutors', { ...tutor });
   }
 }
 

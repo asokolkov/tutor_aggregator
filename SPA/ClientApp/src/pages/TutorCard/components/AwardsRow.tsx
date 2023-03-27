@@ -37,9 +37,7 @@ const AwardsRow: React.FC<AwardsRowProps> = ({
       </Flex>
       <Flex direction={'column'} width={'100%'}>
         {awards.map((a) => (
-          <Text key={a.id}>
-            • {a.description}, {a.year} г.
-          </Text>
+          <Text key={a.id}>• {a.value}</Text>
         ))}
       </Flex>
     </Flex>

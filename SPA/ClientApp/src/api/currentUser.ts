@@ -5,7 +5,7 @@ export interface User {
   name: string;
   surname: string;
   avatar: string;
-  type: AccountType;
+  accountType: AccountType;
 }
 
 export enum AccountType {

@@ -28,44 +28,40 @@ axiosInstance.interceptors.response.use((response) => {
 export default axiosInstance;
 
 export interface Person {
-  id: string;
+  id?: string;
   firstName: string;
   lastName: string;
-  middleName: string;
   avatar: string;
+  contacts: Contact[];
+  description: string;
 }
 
 export interface PaginatedResponse<T> {
   items: T[];
 }
 
-export interface Job {
-  id: string;
-  place: string;
-  post: string;
+export interface IValuable {
+  id?: string;
+  value: string;
 }
 
 export interface Subject {
-  id: string;
+  id?: string;
   description: string;
 }
 
-export interface Education {
-  id: string;
-  description: string;
-  graduationYear: number;
+export interface Education extends IValuable {}
+
+export interface Award extends IValuable {}
+
+export interface Requirements extends IValuable {}
+
+export interface Contact extends IValuable {
+  type: ContactType;
 }
 
-export interface Award {
-  id: string;
-  description: string;
-  year: number;
-}
-
-export interface Lesson {
-  id: string;
-  price: number;
-  confirmed: boolean;
-  startTime: Date;
-  endTime: Date;
+export enum ContactType {
+  Phone,
+  Email,
+  Telegram,
 }

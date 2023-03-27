@@ -5,17 +5,12 @@ import { ReviewStarWithStats } from '../../TutorCard/components/ReviewStarWithSt
 import categoryIcon from '../../../assets/images/category-icon.png';
 import jobIcon from '../../../assets/images/job-icon.png';
 import SearchCardInfoRow from './SearchCardInfoRow';
-import { Education } from '../../../api/_share';
 import { getTutorCardByIdPath } from '../../../routes/routes';
+import { Tutor } from '../../../api/tutors';
 
-const SearchCardInfo: React.FC<SearchCardInfoProps> = ({
-  id,
-  name,
-  imgSrc,
-  education,
-  job,
-  rating,
-}) => {
+const SearchCardInfo: React.FC<SearchCardInfoProps> = ({ tutor }) => {
+  const { avatar, firstName, lastName, educations, job, rating, id } = tutor;
+  const fullName = `${firstName} ${lastName}`;
   return (
     <VStack
       w={'auto'}
@@ -25,14 +20,14 @@ const SearchCardInfo: React.FC<SearchCardInfoProps> = ({
       padding={'16px'}
       spacing={'8px'}
     >
-      <Avatar name={name} border={'0px'} src={imgSrc} size="2xl" />
+      <Avatar name={fullName} border={'0px'} src={avatar} size="2xl" />
       <Flex h={'auto'} direction={'column'}>
         <Heading as="h4" size="lg" textAlign={'center'} margin={'0 0 12px 0'}>
-          {name}
+          {fullName}
         </Heading>
         <SearchCardInfoRow
           icon={categoryIcon}
-          text={education.map((e) => e.description).join(', ')}
+          text={educations.map((e) => e.value).join(', ')}
           categoryText={''}
         />
         <SearchCardInfoRow icon={jobIcon} text={job} categoryText={''} />
@@ -52,10 +47,5 @@ const SearchCardInfo: React.FC<SearchCardInfoProps> = ({
 export default SearchCardInfo;
 
 export type SearchCardInfoProps = {
-  id: string;
-  name: string;
-  imgSrc: string;
-  education: Education[];
-  job: string;
-  rating: number;
+  tutor: Tutor;
 };

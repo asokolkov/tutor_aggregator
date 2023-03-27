@@ -13,13 +13,16 @@ import { ProfilePageSelectOptionsRow } from './components/ProfilePageSelectOptio
 import { ProfilePageInputRow } from './components/ProfilePageInputRow';
 import { ProfilePageTextAreaRow } from './components/ProfilePageTextAreaRow';
 import { SubmitButton } from './components/SubmitButton';
-import { ProfilePageCheckboxesRow } from './components/ProfilePageCheckboxesRow';
 import profileIcon from '../../assets/images/profile_icon_bg.png';
 import { LoadBar } from '../sharedComponents/LoadBar';
 import { ProfileContext } from '../../contexts/ProfileContext';
 import { useContext } from 'react';
 import { Form, Formik, FormikValues } from 'formik';
-import { getTutorInitialValues } from './FormHelper';
+import {
+  mapTutorToFormikValues,
+  updateTutorFromFormikValues,
+} from './FormHelper';
+import TutorsAPI from '../../api/tutors';
 
 export const TutorCard: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
@@ -27,7 +30,10 @@ export const TutorCard: React.FC = () => {
 
   if (profileContext.isLoading) return <LoadBar />;
   const tutor = profileContext.tutorProfile;
-  const onSubmit = (values: FormikValues) => console.log(values);
+  const onSubmit = async (values: FormikValues) => {
+    const newTutor = updateTutorFromFormikValues(tutor, values);
+    await TutorsAPI.putCurrentProfileValues(newTutor);
+  };
 
   return (
     <Box
@@ -41,7 +47,7 @@ export const TutorCard: React.FC = () => {
       backgroundRepeat={'no-repeat'}
       backgroundSize={'14em'}
     >
-      <Formik initialValues={getTutorInitialValues(tutor)} onSubmit={onSubmit}>
+      <Formik initialValues={mapTutorToFormikValues(tutor)} onSubmit={onSubmit}>
         <Form>
           <Flex
             padding={isDesktop ? '1.5em 5em 1.5em 3em' : '1em 1em 1em 1em'}
@@ -164,25 +170,25 @@ export const TutorCard: React.FC = () => {
                 ]}
               />
               <Divider color={'gray'} margin={'0 0 10px 0'} />
-              <ProfilePageCheckboxesRow
-                label={'Предметы'}
-                isRequired={true}
-                options={[
-                  'Математика',
-                  'Программирование',
-                  'Русский язык',
-                  'Дискретная математика',
-                ]}
-                checkedOptions={['Программирование', 'Русский язык']}
-                tooltip={[
-                  <Tooltip
-                    label="Выберите предметы, по которым вы будете репетиторствовать"
-                    placement={'left-start'}
-                  >
-                    <InfoIcon margin={'0 0 0 10px'} />
-                  </Tooltip>,
-                ]}
-              />
+              {/*<ProfilePageCheckboxesRow*/}
+              {/*  label={'Предметы'}*/}
+              {/*  isRequired={true}*/}
+              {/*  options={[*/}
+              {/*    'Математика',*/}
+              {/*    'Программирование',*/}
+              {/*    'Русский язык',*/}
+              {/*    'Дискретная математика',*/}
+              {/*  ]}*/}
+              {/*  checkedOptions={['Программирование', 'Русский язык']}*/}
+              {/*  tooltip={[*/}
+              {/*    <Tooltip*/}
+              {/*      label="Выберите предметы, по которым вы будете репетиторствовать"*/}
+              {/*      placement={'left-start'}*/}
+              {/*    >*/}
+              {/*      <InfoIcon margin={'0 0 0 10px'} />*/}
+              {/*    </Tooltip>,*/}
+              {/*  ]}*/}
+              {/*/>*/}
               <ProfilePageInputRow
                 label={'Требования'}
                 name={'requirements'}
