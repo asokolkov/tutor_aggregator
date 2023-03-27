@@ -9,7 +9,7 @@ import {
   useBreakpointValue,
   VStack,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useContext } from 'react';
 import { PasswordField } from './components/PasswordField';
 import { OAuthButtons } from './components/OAuthButtons';
 import { Header } from './components/Header';
@@ -21,9 +21,10 @@ import { NameSurnameField } from './components/NameSurnameField';
 import { Form, Formik } from 'formik';
 import { LoginSuggestion } from './components/LoginSuggestion';
 import AccountAPI, { V1RegisterDto } from '../../api/account';
-import { AccountType } from '../../api/currentUser';
-import { redirect } from 'react-router-dom';
-import { LOGIN_PAGE } from '../../routes/routePaths';
+import UserAPI, { AccountType } from '../../api/currentUser';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../contexts/UserContext';
+import { SEARCH_PAGE } from '../../routes/routePaths';
 
 type FormikValuesProps = {
   name: string;
@@ -45,6 +46,8 @@ const initialValues: FormikValuesProps = {
 
 export const SignupPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
+  const navigate = useNavigate();
+  const userContext = useContext(UserContext);
 
   const onSubmit = async (values: FormikValuesProps) => {
     const registerData: V1RegisterDto = {
@@ -57,7 +60,9 @@ export const SignupPage = () => {
     };
 
     await AccountAPI.register(registerData);
-    redirect(LOGIN_PAGE);
+    const user = await UserAPI.getCurrentUser();
+    userContext.setUser(user);
+    navigate(SEARCH_PAGE);
   };
 
   return (
