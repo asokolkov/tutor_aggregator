@@ -1,20 +1,16 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import {
   Avatar,
   Box,
+  Button,
   Flex,
   useBreakpointValue,
-  Button,
-  Tooltip,
 } from '@chakra-ui/react';
-import { LockIcon, InfoIcon } from '@chakra-ui/icons';
-import { TextAreaRow } from './components/TextAreaRow';
 import { SubmitButton } from './components/SubmitButton';
 import profileIcon from '../../assets/images/profile_icon_bg.png';
 import { InputRow } from './components/InputRow';
-import { SelectOptionsRow } from './components/SelectOptionsRow';
 import { ProfileContext } from '../../contexts/ProfileContext';
-import { useContext } from 'react';
 import { Form, Formik, FormikValues } from 'formik';
 import {
   mapStudentToFormikValues,
@@ -22,6 +18,9 @@ import {
   updateStudentFromFormikValues,
 } from './FormHelper';
 import StudentAPI from '../../api/students';
+import { TooltipType } from './components/_shared';
+import { SelectOptionsRow } from './components/SelectOptionsRow';
+import { TextAreaRow } from './components/TextAreaRow';
 
 export const StudentCard: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
@@ -82,14 +81,10 @@ export const StudentCard: React.FC = () => {
                 name={'name'}
                 isDisabled
                 isRequired
-                tooltip={[
-                  <Tooltip
-                    label="Чтобы изменить ФИО, напишите в поддержку сайта"
-                    placement={'left-start'}
-                  >
-                    <LockIcon margin={'0 0 0 10px'} />
-                  </Tooltip>,
-                ]}
+                tooltip={{
+                  label: 'Чтобы изменить ФИО, напишите в поддержку сайта',
+                  type: TooltipType.Lock,
+                }}
               />
               <SelectOptionsRow
                 label={'Город'}
@@ -98,14 +93,10 @@ export const StudentCard: React.FC = () => {
                 optionLabels={['Екатеринбург']}
                 optionValues={['Екатеринбург']}
                 name={'city'}
-                tooltip={[
-                  <Tooltip
-                    label="Мы пока работаем только в одном городе"
-                    placement={'left-start'}
-                  >
-                    <LockIcon margin={'0 0 0 10px'} />
-                  </Tooltip>,
-                ]}
+                tooltip={{
+                  label: 'Мы пока работаем только в одном городе',
+                  type: TooltipType.Lock,
+                }}
               />
               <SelectOptionsRow
                 label={'Пол'}
@@ -116,34 +107,23 @@ export const StudentCard: React.FC = () => {
                   SexOptions.Other,
                 ]}
                 name={'sex'}
-                tooltip={[
-                  <Tooltip label="Укажите пол" placement={'left-start'}>
-                    <InfoIcon margin={'0 0 0 10px'} />
-                  </Tooltip>,
-                ]}
+                tooltip={{ label: 'Укажите пол', type: TooltipType.Info }}
               />
               <InputRow
                 label={'Возраст'}
                 placeholder={'23'}
                 name={'age'}
-                tooltip={[
-                  <Tooltip label="Укажите возраст" placement={'left-start'}>
-                    <InfoIcon margin={'0 0 0 10px'} />
-                  </Tooltip>,
-                ]}
+                tooltip={{ label: 'Укажите возраст', type: TooltipType.Info }}
               />
               <TextAreaRow
                 label={'О себе'}
                 placeholder={'Увлекаюсь горными лыжами и версткой сайтов'}
                 name={'about'}
-                tooltip={[
-                  <Tooltip
-                    label="Напишите небольшое описание, которое будет отображаться на вашей карточке"
-                    placement={'left-start'}
-                  >
-                    <InfoIcon margin={'0 0 0 10px'} />
-                  </Tooltip>,
-                ]}
+                tooltip={{
+                  label:
+                    'Напишите небольшое описание, которое будет отображаться на вашей карточке',
+                  type: TooltipType.Info,
+                }}
               />
               <SubmitButton buttonText={'Сохранить'} />
             </Flex>

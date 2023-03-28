@@ -1,20 +1,22 @@
 import * as React from 'react';
 import { FormControl, FormLabel, Flex, Select } from '@chakra-ui/react';
 import { useField } from 'formik';
-import { ProfilePageProps } from './share';
+import { ProfilePageProps, TooltipType } from './_shared';
+import { ProfileTip } from './ProfileTip';
 
 type Props = ProfilePageProps & {
   optionLabels: string[];
   optionValues: string[];
   label: string;
-  tooltip: JSX.Element[];
   value?: string;
 };
 
 export const SelectOptionsRow: React.FC<Props> = (props) => {
   const [field] = useField({ name: props.name });
   const options = props.optionLabels.map((option, i) => (
-    <option value={props.optionValues[i]}>{option}</option>
+    <option value={props.optionValues[i]} key={props.optionLabels[i]}>
+      {option}
+    </option>
   ));
   return (
     <Flex width={'100%'} margin={'0 0 10px 0'}>
@@ -42,7 +44,10 @@ export const SelectOptionsRow: React.FC<Props> = (props) => {
         >
           {options}
         </Select>
-        {props.tooltip}
+        <ProfileTip
+          label={props.tooltip.label}
+          isLockIcon={props.tooltip.type === TooltipType.Lock}
+        />
       </FormControl>
     </Flex>
   );
