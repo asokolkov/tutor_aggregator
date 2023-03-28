@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Button, HStack, Link, Text } from '@chakra-ui/react';
-import { Link as ReactLink } from 'react-router-dom';
+import { Button, HStack, Text } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import { LOGIN_PAGE } from '../../../routes/routePaths';
 
 export const LoginSuggestion: React.FC = () => {
@@ -8,9 +8,7 @@ export const LoginSuggestion: React.FC = () => {
     <HStack spacing="1" justify="center">
       <Text color="muted">Уже есть аккаунт?</Text>
       <Button variant="link" colorScheme="blue">
-        <Link>
-          <ReactLink to={LOGIN_PAGE}>Войти</ReactLink>
-        </Link>
+        <Link to={LOGIN_PAGE}>Войти</Link>
       </Button>
     </HStack>
   );

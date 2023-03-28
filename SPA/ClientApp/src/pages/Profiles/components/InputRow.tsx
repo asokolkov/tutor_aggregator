@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { FormControl, FormLabel, Flex, Input } from '@chakra-ui/react';
 import { useField } from 'formik';
-import { ProfilePageProps } from './share';
+import { ProfilePageProps, TooltipType } from './_shared';
+import { ProfileTip } from './ProfileTip';
 
 type Props = ProfilePageProps & {
   placeholder?: string;
   label: string;
-  tooltip: JSX.Element[];
   value?: string;
 };
 
@@ -38,7 +38,10 @@ export const InputRow: React.FC<Props> = (props) => {
           isDisabled={props.isDisabled}
           {...field}
         />
-        {props.tooltip}
+        <ProfileTip
+          label={props.tooltip.label}
+          isLockIcon={props.tooltip.type === TooltipType.Lock}
+        />
       </FormControl>
     </Flex>
   );

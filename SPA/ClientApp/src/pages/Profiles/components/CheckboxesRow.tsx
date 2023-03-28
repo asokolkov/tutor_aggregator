@@ -1,25 +1,25 @@
 import * as React from 'react';
 import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Checkbox,
+  CheckboxGroup,
+  Flex,
   FormControl,
   FormLabel,
-  Flex,
   Stack,
-  CheckboxGroup,
-  Checkbox,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  Box,
-  AccordionIcon,
-  AccordionPanel,
 } from '@chakra-ui/react';
-import { ProfilePageProps } from './share';
+import { ProfilePageProps, TooltipType } from './_shared';
+import { ProfileTip } from './ProfileTip';
 
 type Props = ProfilePageProps & {
   options: Array<string>;
   label: string;
   checkedOptions: Array<string>;
-  tooltip: JSX.Element[];
 };
 
 export const CheckboxesRow: React.FC<Props> = (props) => {
@@ -74,7 +74,10 @@ export const CheckboxesRow: React.FC<Props> = (props) => {
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
-        {props.tooltip}
+        <ProfileTip
+          label={props.tooltip.label}
+          isLockIcon={props.tooltip.type === TooltipType.Lock}
+        />
       </FormControl>
     </Flex>
   );
