@@ -13,8 +13,16 @@ import {
   AccordionIcon,
   AccordionPanel,
 } from '@chakra-ui/react';
+import { ProfilePageProps } from './share';
 
-export const ProfilePageCheckboxesRow = (props: ProfilePageCheckboxesProps) => {
+type Props = ProfilePageProps & {
+  options: Array<string>;
+  label: string;
+  checkedOptions: Array<string>;
+  tooltip: JSX.Element[];
+};
+
+export const CheckboxesRow: React.FC<Props> = (props) => {
   const options = props.options.map((option) => (
     <Checkbox value={option} color={'#000000'}>
       {option}
@@ -70,12 +78,4 @@ export const ProfilePageCheckboxesRow = (props: ProfilePageCheckboxesProps) => {
       </FormControl>
     </Flex>
   );
-};
-
-type ProfilePageCheckboxesProps = {
-  options: Array<string>;
-  label: string;
-  checkedOptions: Array<string>;
-  isRequired: boolean;
-  tooltip: JSX.Element[];
 };
