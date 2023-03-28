@@ -1,16 +1,19 @@
 import * as React from 'react';
-import { FormControl, FormLabel, Flex, Input } from '@chakra-ui/react';
+import { FormControl, FormLabel, Flex, Textarea } from '@chakra-ui/react';
 import { useField } from 'formik';
+import { ProfilePageProps } from './share';
 
-export const ProfilePageInputRow = (props: ProfilePageInputProps) => {
+type Props = ProfilePageProps & {
+  placeholder: string;
+  label: string;
+  tooltip: JSX.Element[];
+};
+
+export const TextAreaRow: React.FC<Props> = (props) => {
   const [field] = useField({ name: props.name });
   return (
-    <Flex width={'100%'} margin={'0 0 10px 0'} align={'center'}>
-      <FormControl
-        display={'flex'}
-        alignItems={'center'}
-        isRequired={props.isRequired}
-      >
+    <Flex align={'start'} margin={'0 0 10px 0'}>
+      <FormControl display={'flex'} alignItems={'center'}>
         <FormLabel
           fontSize={'xl'}
           margin={'auto 10px auto 0'}
@@ -19,14 +22,15 @@ export const ProfilePageInputRow = (props: ProfilePageInputProps) => {
         >
           {props.label}
         </FormLabel>
-        <Input
+        <Textarea
           placeholder={props.placeholder}
-          value={props.value}
           bg="white"
-          color={'#000000'}
+          color="black"
           width={'100%'}
+          height={'13vh'}
           fontSize={'lg'}
           size={'md'}
+          resize={'vertical'}
           isDisabled={props.isDisabled}
           {...field}
         />
@@ -34,14 +38,4 @@ export const ProfilePageInputRow = (props: ProfilePageInputProps) => {
       </FormControl>
     </Flex>
   );
-};
-
-type ProfilePageInputProps = {
-  placeholder?: string;
-  label: string;
-  isDisabled: boolean;
-  isRequired: boolean;
-  tooltip: JSX.Element[];
-  value?: string;
-  name: string;
 };

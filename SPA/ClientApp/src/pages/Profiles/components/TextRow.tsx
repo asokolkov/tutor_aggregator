@@ -1,7 +1,12 @@
 import * as React from 'react';
 import { FormControl, FormLabel, Flex, Text } from '@chakra-ui/react';
 
-export const ProfilePageTextRow = (props: ProfilePageTextProps) => {
+type Props = {
+  label: string;
+  text: string;
+};
+
+export const TextRow: React.FC<Props> = (props) => {
   return (
     <Flex margin={'0 0 10px 0'}>
       <FormControl display={'flex'}>
@@ -26,9 +31,4 @@ export const ProfilePageTextRow = (props: ProfilePageTextProps) => {
       </FormControl>
     </Flex>
   );
-};
-
-type ProfilePageTextProps = {
-  label: string;
-  text: string;
 };

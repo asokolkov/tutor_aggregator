@@ -7,7 +7,7 @@ import {
   Heading,
   useBreakpointValue,
 } from '@chakra-ui/react';
-import { ProfilePageTextRow } from './components/ProfilePageTextRow';
+import { TextRow } from './components/TextRow';
 import { UserContext } from '../../contexts/UserContext';
 import { AccountType } from '../../api/currentUser';
 import { ProfileContext } from '../../contexts/ProfileContext';
@@ -53,18 +53,12 @@ export const AccountInfo = () => {
             direction={'column'}
             margin={isDesktop ? '0 0 0 15em' : '0 0 0 0'}
           >
-            <ProfilePageTextRow
+            <TextRow
               label={'Тип профиля'}
               text={isTutor ? 'репетитор' : 'ученик'}
             />
-            <ProfilePageTextRow
-              label={'Почта'}
-              text={'Почта не прикручена в апишке'}
-            />
-            <ProfilePageTextRow
-              label={'Телефон'}
-              text={'Телефон не прикручен в апишке'}
-            />
+            <TextRow label={'Почта'} text={'Почта не прикручена в апишке'} />
+            <TextRow label={'Телефон'} text={'Телефон не прикручен в апишке'} />
           </Flex>
           <Button
             onClick={signOut}
