@@ -1,7 +1,12 @@
 import * as React from 'react';
 import { Flex, Button } from '@chakra-ui/react';
 
-export const SubmitButton = (props: ProfilePageButtonProps) => {
+type Props = {
+  buttonText: string;
+  isDisabled?: boolean;
+};
+
+export const SubmitButton: React.FC<Props> = (props) => {
   return (
     <Flex align={'start'} padding={'0 0 0 140px'}>
       <Button
@@ -17,9 +22,4 @@ export const SubmitButton = (props: ProfilePageButtonProps) => {
       </Button>
     </Flex>
   );
-};
-
-type ProfilePageButtonProps = {
-  buttonText: string;
-  isDisabled: boolean;
 };

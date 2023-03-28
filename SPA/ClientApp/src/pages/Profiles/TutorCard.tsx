@@ -9,9 +9,9 @@ import {
   Divider,
 } from '@chakra-ui/react';
 import { LockIcon, InfoIcon } from '@chakra-ui/icons';
-import { ProfilePageSelectOptionsRow } from './components/ProfilePageSelectOptionsRow';
-import { ProfilePageInputRow } from './components/ProfilePageInputRow';
-import { ProfilePageTextAreaRow } from './components/ProfilePageTextAreaRow';
+import { SelectOptionsRow } from './components/SelectOptionsRow';
+import { InputRow } from './components/InputRow';
+import { TextAreaRow } from './components/TextAreaRow';
 import { SubmitButton } from './components/SubmitButton';
 import profileIcon from '../../assets/images/profile_icon_bg.png';
 import { LoadBar } from '../sharedComponents/LoadBar';
@@ -59,7 +59,7 @@ export const TutorCard: React.FC = () => {
                 h={'10em'}
                 margin={'0 0 10px 0'}
                 colorScheme={'blue'}
-                showBorder={true}
+                showBorder
               ></Avatar>
               <Button
                 size={'xs'}
@@ -75,10 +75,10 @@ export const TutorCard: React.FC = () => {
               direction={'column'}
               margin={isDesktop ? '0 0 0 3em' : '0 0 0 0'}
             >
-              <ProfilePageInputRow
+              <InputRow
                 label={'ФИО'}
-                isDisabled={true}
-                isRequired={true}
+                isDisabled
+                isRequired
                 name={'name'}
                 tooltip={[
                   <Tooltip
@@ -89,10 +89,10 @@ export const TutorCard: React.FC = () => {
                   </Tooltip>,
                 ]}
               />
-              <ProfilePageSelectOptionsRow
+              <SelectOptionsRow
                 label={'Город'}
-                isDisabled={true}
-                isRequired={true}
+                isDisabled
+                isRequired
                 optionLabels={['Екатеринбург']}
                 optionValues={['Екатеринбург']}
                 name={'city'}
@@ -105,10 +105,9 @@ export const TutorCard: React.FC = () => {
                   </Tooltip>,
                 ]}
               />
-              <ProfilePageSelectOptionsRow
+              <SelectOptionsRow
                 label={'Район'}
-                isDisabled={false}
-                isRequired={true}
+                isRequired
                 optionLabels={['Уралмаш', 'Академический', 'Ленинский']}
                 optionValues={['Уралмаш', 'Академический', 'Ленинский']}
                 name={'district'}
@@ -122,10 +121,8 @@ export const TutorCard: React.FC = () => {
                 ]}
               />
               <Divider color={'gray'} margin={'0 0 10px 0'} />
-              <ProfilePageInputRow
+              <InputRow
                 label={'Образование'}
-                isDisabled={false}
-                isRequired={false}
                 name={'education'}
                 tooltip={[
                   <Tooltip
@@ -136,11 +133,9 @@ export const TutorCard: React.FC = () => {
                   </Tooltip>,
                 ]}
               />
-              <ProfilePageInputRow
+              <InputRow
                 label={'Работа'}
                 placeholder={'СКБ Контур'}
-                isDisabled={false}
-                isRequired={false}
                 name={'job'}
                 tooltip={[
                   <Tooltip
@@ -151,14 +146,13 @@ export const TutorCard: React.FC = () => {
                   </Tooltip>,
                 ]}
               />
-              <ProfilePageTextAreaRow
+              <TextAreaRow
                 label={'Награды'}
                 placeholder={
                   // eslint-disable-next-line max-len
                   'Сертификат о прохождении курса по бэкенду от ТЮМГУ (2018)\n' +
                   'Лауреат «Работник службы поддержки года», г. Тюмень (2022)'
                 }
-                isDisabled={false}
                 name={'awards'}
                 tooltip={[
                   <Tooltip
@@ -189,14 +183,12 @@ export const TutorCard: React.FC = () => {
               {/*    </Tooltip>,*/}
               {/*  ]}*/}
               {/*/>*/}
-              <ProfilePageInputRow
+              <InputRow
                 label={'Требования'}
                 name={'requirements'}
                 placeholder={
                   'Базовые школьные знания, усидчивость, время на домашнюю работу'
                 }
-                isDisabled={false}
-                isRequired={false}
                 tooltip={[
                   <Tooltip
                     label="Кратко напишите о знаниях и качествах учеников, с которыми вы работаете"
@@ -206,14 +198,13 @@ export const TutorCard: React.FC = () => {
                   </Tooltip>,
                 ]}
               />
-              <ProfilePageInputRow
+              <InputRow
                 label={'Контакты'}
                 name={'contacts'}
                 placeholder={
                   'По телефону: +7999565815. В Телеграме @theoilside'
                 }
-                isDisabled={false}
-                isRequired={true}
+                isRequired
                 tooltip={[
                   <Tooltip
                     label="Укажите контакты, по которым с вами будут связываться ученики"
@@ -224,14 +215,13 @@ export const TutorCard: React.FC = () => {
                 ]}
               />
               <Divider color={'gray'} margin={'0 0 10px 0'} />
-              <ProfilePageTextAreaRow
+              <TextAreaRow
                 label={'О себе'}
                 name={'about'}
                 placeholder={
                   'Всегда любил объяснять сложные вещи простыми словами.' +
                   'Пробую себя в репетиторстве. У меня дома есть котик'
                 }
-                isDisabled={false}
                 tooltip={[
                   <Tooltip
                     label="Напишите небольшое описание, которое будет отображаться на вашей карточке"
@@ -241,7 +231,7 @@ export const TutorCard: React.FC = () => {
                   </Tooltip>,
                 ]}
               />
-              <SubmitButton buttonText={'Сохранить'} isDisabled={false} />
+              <SubmitButton buttonText={'Сохранить'} />
             </Flex>
           </Flex>
         </Form>

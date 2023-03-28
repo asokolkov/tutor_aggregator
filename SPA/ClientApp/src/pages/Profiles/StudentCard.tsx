@@ -8,11 +8,11 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import { LockIcon, InfoIcon } from '@chakra-ui/icons';
-import { ProfilePageTextAreaRow } from './components/ProfilePageTextAreaRow';
+import { TextAreaRow } from './components/TextAreaRow';
 import { SubmitButton } from './components/SubmitButton';
 import profileIcon from '../../assets/images/profile_icon_bg.png';
-import { ProfilePageInputRow } from './components/ProfilePageInputRow';
-import { ProfilePageSelectOptionsRow } from './components/ProfilePageSelectOptionsRow';
+import { InputRow } from './components/InputRow';
+import { SelectOptionsRow } from './components/SelectOptionsRow';
 import { ProfileContext } from '../../contexts/ProfileContext';
 import { useContext } from 'react';
 import { Form, Formik, FormikValues } from 'formik';
@@ -61,7 +61,7 @@ export const StudentCard: React.FC = () => {
                 h={'10em'}
                 margin={'0 0 10px 0'}
                 colorScheme={'blue'}
-                showBorder={true}
+                showBorder
               ></Avatar>
               <Button
                 size={'xs'}
@@ -77,11 +77,11 @@ export const StudentCard: React.FC = () => {
               direction={'column'}
               margin={isDesktop ? '0 0 0 3em' : '0 0 0 0'}
             >
-              <ProfilePageInputRow
+              <InputRow
                 label={'ФИО'}
                 name={'name'}
-                isDisabled={true}
-                isRequired={true}
+                isDisabled
+                isRequired
                 tooltip={[
                   <Tooltip
                     label="Чтобы изменить ФИО, напишите в поддержку сайта"
@@ -91,10 +91,10 @@ export const StudentCard: React.FC = () => {
                   </Tooltip>,
                 ]}
               />
-              <ProfilePageSelectOptionsRow
+              <SelectOptionsRow
                 label={'Город'}
-                isDisabled={true}
-                isRequired={true}
+                isDisabled
+                isRequired
                 optionLabels={['Екатеринбург']}
                 optionValues={['Екатеринбург']}
                 name={'city'}
@@ -107,10 +107,8 @@ export const StudentCard: React.FC = () => {
                   </Tooltip>,
                 ]}
               />
-              <ProfilePageSelectOptionsRow
+              <SelectOptionsRow
                 label={'Пол'}
-                isDisabled={false}
-                isRequired={false}
                 optionLabels={['Мужской', 'Женский', 'Другое']}
                 optionValues={[
                   SexOptions.Male,
@@ -124,11 +122,9 @@ export const StudentCard: React.FC = () => {
                   </Tooltip>,
                 ]}
               />
-              <ProfilePageInputRow
+              <InputRow
                 label={'Возраст'}
                 placeholder={'23'}
-                isDisabled={false}
-                isRequired={false}
                 name={'age'}
                 tooltip={[
                   <Tooltip label="Укажите возраст" placement={'left-start'}>
@@ -136,10 +132,9 @@ export const StudentCard: React.FC = () => {
                   </Tooltip>,
                 ]}
               />
-              <ProfilePageTextAreaRow
+              <TextAreaRow
                 label={'О себе'}
                 placeholder={'Увлекаюсь горными лыжами и версткой сайтов'}
-                isDisabled={false}
                 name={'about'}
                 tooltip={[
                   <Tooltip
@@ -150,7 +145,7 @@ export const StudentCard: React.FC = () => {
                   </Tooltip>,
                 ]}
               />
-              <SubmitButton buttonText={'Сохранить'} isDisabled={false} />
+              <SubmitButton buttonText={'Сохранить'} />
             </Flex>
           </Flex>
         </Form>
