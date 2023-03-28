@@ -45,7 +45,7 @@ export const SearchPage = () => {
   return (
     <VStack spacing={'32px'} align={'start'}>
       <Formik initialValues={initValues} onSubmit={onSearch}>
-        <Form>
+        <Form style={{ width: '100%' }}>
           <SearchParamsSection />
         </Form>
       </Formik>
@@ -55,7 +55,7 @@ export const SearchPage = () => {
         width={'100%'}
       >
         {data.items.map((item) => (
-          <SearchCardInfo tutor={item}></SearchCardInfo>
+          <SearchCardInfo tutor={item} key={item.id}></SearchCardInfo>
         ))}
       </SimpleGrid>
     </VStack>

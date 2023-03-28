@@ -5,7 +5,6 @@ import {
   Flex,
   FormControl,
   FormLabel,
-  Link,
   Heading,
   VStack,
   HStack,
@@ -20,7 +19,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import Theme from '../../assets/theme/index';
-import { Link as RLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { LOGIN_PAGE } from '../../routes/routePaths';
 
 export const ForgotPasswordPage = () => {
@@ -65,9 +64,7 @@ export const ForgotPasswordPage = () => {
                   Восстановили пароль?
                 </Text>
                 <Button variant="link" colorScheme="blue" size="md">
-                  <Link>
-                    <RLink to={LOGIN_PAGE}>Войти</RLink>
-                  </Link>
+                  <Link to={LOGIN_PAGE}>Войти</Link>
                 </Button>
               </HStack>
             </Stack>
