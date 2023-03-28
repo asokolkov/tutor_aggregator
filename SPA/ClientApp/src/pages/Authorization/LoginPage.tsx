@@ -22,6 +22,9 @@ import { UserContext } from '../../contexts/UserContext';
 import UserAPI from '../../api/currentUser';
 import { useNavigate } from 'react-router-dom';
 import { SEARCH_PAGE } from '../../routes/routePaths';
+import { AuthorizationContext } from '../../contexts/AuthorizationContext';
+import { AxiosError } from 'axios';
+import { useAuthContextValue } from './useAuthContextValue';
 
 type FormikValuesProps = {
   email: string;
@@ -34,10 +37,14 @@ const initialValues: FormikValuesProps = {
   remember: true,
 };
 
+const LOGIN_FAIL_ERROR_MESSAGE = 'Проверьте правильность логина и пароля';
+
 export const LoginPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
-  const userContext = useContext(UserContext);
   const navigate = useNavigate();
+
+  const userContext = useContext(UserContext);
+  const authContextValue = useAuthContextValue();
 
   const onFormSubmit = async (values: FormikValuesProps) => {
     const loginData: V1LoginDto = {
@@ -46,10 +53,17 @@ export const LoginPage = () => {
       password: values.password,
     };
 
-    await AccountAPI.login(loginData);
-    const user = await UserAPI.getCurrentUser();
-    userContext.setUser(user);
-    navigate(SEARCH_PAGE);
+    AccountAPI.login(loginData)
+      .then(async () => {
+        const user = await UserAPI.getCurrentUser();
+        userContext.setUser(user);
+        navigate(SEARCH_PAGE);
+      })
+      .catch((err: AxiosError) => {
+        if (err.response.status === 401) {
+          authContextValue.setError(LOGIN_FAIL_ERROR_MESSAGE);
+        }
+      });
   };
 
   return (
@@ -70,8 +84,10 @@ export const LoginPage = () => {
             <Form>
               <Stack spacing="6">
                 <Stack spacing="5">
-                  <EmailField />
-                  <PasswordField />
+                  <AuthorizationContext.Provider value={authContextValue}>
+                    <EmailField />
+                    <PasswordField />
+                  </AuthorizationContext.Provider>
                 </Stack>
                 <HStack justify={'space-between'}>
                   <RememberMeCheckbox />
