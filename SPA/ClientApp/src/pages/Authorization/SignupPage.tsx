@@ -25,6 +25,9 @@ import UserAPI, { AccountType } from '../../api/currentUser';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
 import { SEARCH_PAGE } from '../../routes/routePaths';
+import { AuthorizationContext } from '../../contexts/AuthorizationContext';
+import { AxiosError } from 'axios';
+import { useAuthContextValue } from './useAuthContextValue';
 
 type FormikValuesProps = {
   name: string;
@@ -47,7 +50,9 @@ const initialValues: FormikValuesProps = {
 export const SignupPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   const navigate = useNavigate();
+
   const userContext = useContext(UserContext);
+  const authContextValue = useAuthContextValue();
 
   const onSubmit = async (values: FormikValuesProps) => {
     const registerData: V1RegisterDto = {
@@ -59,10 +64,17 @@ export const SignupPage = () => {
       phone: values.phoneNumber,
     };
 
-    await AccountAPI.register(registerData);
-    const user = await UserAPI.getCurrentUser();
-    userContext.setUser(user);
-    navigate(SEARCH_PAGE);
+    AccountAPI.register(registerData)
+      .then(async () => {
+        const user = await UserAPI.getCurrentUser();
+        userContext.setUser(user);
+        navigate(SEARCH_PAGE);
+      })
+      .catch((err: AxiosError) => {
+        if (err.response.status === 400) {
+          authContextValue.setError(err.response.data.toString());
+        }
+      });
   };
 
   return (
@@ -86,8 +98,10 @@ export const SignupPage = () => {
               <TutorOrStudentSwitchField />
               <Stack spacing="6">
                 <Stack spacing="5">
-                  <EmailField />
-                  <PasswordField />
+                  <AuthorizationContext.Provider value={authContextValue}>
+                    <EmailField />
+                    <PasswordField />
+                  </AuthorizationContext.Provider>
                 </Stack>
                 <HStack justify="space-between">
                   <Checkbox>

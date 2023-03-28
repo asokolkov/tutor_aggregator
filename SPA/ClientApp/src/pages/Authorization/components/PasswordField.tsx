@@ -1,5 +1,6 @@
 import {
   FormControl,
+  FormErrorMessage,
   FormLabel,
   IconButton,
   Input,
@@ -10,14 +11,18 @@ import {
 import * as React from 'react';
 import { GoEye, GoEyeClosed } from 'react-icons/go';
 import { useField } from 'formik';
+import { useContext } from 'react';
+import { AuthorizationContext } from '../../../contexts/AuthorizationContext';
 
 export const PasswordField: React.FC = () => {
   const { isOpen, onToggle } = useDisclosure();
   const onClickReveal = () => onToggle();
   const [field] = useField({ name: 'password' });
 
+  const authContext = useContext(AuthorizationContext);
+
   return (
-    <FormControl>
+    <FormControl isInvalid={authContext.hasError}>
       <FormLabel htmlFor="password">Пароль</FormLabel>
       <InputGroup>
         <InputRightElement>
@@ -37,6 +42,7 @@ export const PasswordField: React.FC = () => {
           required
         />
       </InputGroup>
+      <FormErrorMessage>{authContext.errorMessage}</FormErrorMessage>
     </FormControl>
   );
 };
