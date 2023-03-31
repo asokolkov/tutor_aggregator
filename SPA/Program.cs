@@ -11,6 +11,7 @@ using Newtonsoft.Json.Converters;
 using SPA.Authorization;
 using SPA.Authorization.Requirements;
 using SPA.Extensions;
+using SPA.Identity;
 using SPA.Startup;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +34,7 @@ builder.Services
 builder.Services
     .AddIdentityContext(builder.Configuration.GetConnectionString("Identity"))
     .AddIdentity<ApplicationUser, IdentityRole<Guid>>()
+    .AddErrorDescriber<CustomIdentityErrorDescriber>()
     .AddEntityFrameworkStores<ApplicationIdentityContext>();
 
 builder.Services.ConfigureApplicationCookie(options =>
