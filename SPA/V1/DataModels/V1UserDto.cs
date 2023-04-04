@@ -2,7 +2,6 @@
 
 namespace SPA.V1.DataModels;
 
-using System.Text.Json.Serialization;
 using Identity.Models;
 using JetBrains.Annotations;
 
