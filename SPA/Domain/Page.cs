@@ -6,9 +6,9 @@ public sealed class Page<T>
     
     public long TotalCount { get; }
     
-    public Page(ICollection<T> items)
+    public Page(ICollection<T> items, int totalCount)
     {
         Items = items;
-        TotalCount = items.Count;
+        TotalCount = totalCount;
     }
 }

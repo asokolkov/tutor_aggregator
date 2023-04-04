@@ -27,16 +27,16 @@ internal sealed class TutorsRepository : ITutorsRepository
         var tutorsEntities = await table
             .OrderBy(x => x)
             .Where(x => (int)x.Rating == rating || rating == -1)
-            .Where(x => x.Location.City == city || city == "")
-            .Where(x => x.Location.District == district || district == "")
+            .Where(x => (x.Location != null ? x.Location.City : null) == city || city == "")
+            .Where(x => (x.Location != null ? x.Location.District : null) == district || district == "")
             .Where(x => x.Subjects.FirstOrDefault(y => y.Description == subject) != null || subject == "")
             .Where(x => x.Lessons.Max(y => y.Price) <= maxPrice || maxPrice == -1)
             .Skip(page * size)
             .Take(size)
             .ToListAsync();
-
         var tutors = mapper.Map<List<Tutor>>(tutorsEntities);
-        return new Page<Tutor>(tutors);
+        
+        return new Page<Tutor>(tutors, table.Count());
     }
 
     public async Task<Tutor?> Get(Guid id)
@@ -152,14 +152,14 @@ internal sealed class TutorsRepository : ITutorsRepository
         var tutor = await context.Tutors.FindAsync(id);
         
         if (tutor?.Reviews is null)
-            return new Page<Review>(Array.Empty<Review>());
+            return new Page<Review>(Array.Empty<Review>(), 0);
         
         var reviewsEntities = tutor.Reviews
-            .ToList()
             .Skip(page * size)
             .Take(size)
             .ToList();
         var reviews = mapper.Map<List<Review>>(reviewsEntities);
-        return new Page<Review>(reviews);
+        
+        return new Page<Review>(reviews, tutor.Reviews.Count);
     }
 }
