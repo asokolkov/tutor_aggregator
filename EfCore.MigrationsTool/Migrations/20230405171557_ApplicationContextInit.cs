@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EfCore.MigrationsTool.Migrations
 {
-    public partial class Test : Migration
+    public partial class ApplicationContextInit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,20 +35,16 @@ namespace EfCore.MigrationsTool.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Students",
+                name: "StudentEducations",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    FirstName = table.Column<string>(type: "text", nullable: false),
-                    LastName = table.Column<string>(type: "text", nullable: false),
-                    Age = table.Column<int>(type: "integer", nullable: true),
-                    Description = table.Column<string>(type: "text", nullable: true),
-                    EducationPlace = table.Column<string>(type: "text", nullable: true),
-                    Grade = table.Column<int>(type: "integer", nullable: true)
+                    Value = table.Column<string>(type: "text", nullable: false),
+                    Grade = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Students", x => x.Id);
+                    table.PrimaryKey("PK_StudentEducations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -70,10 +66,11 @@ namespace EfCore.MigrationsTool.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
+                    Age = table.Column<int>(type: "integer", nullable: true),
                     Rating = table.Column<double>(type: "double precision", nullable: false),
-                    LocationId = table.Column<Guid>(type: "uuid", nullable: true),
                     Job = table.Column<string>(type: "text", nullable: true),
-                    Description = table.Column<string>(type: "text", nullable: true)
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    LocationId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -86,21 +83,23 @@ namespace EfCore.MigrationsTool.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StudentsContacts",
+                name: "Students",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Type = table.Column<byte>(type: "smallint", nullable: false),
-                    Value = table.Column<string>(type: "text", nullable: false),
-                    StudentEntityId = table.Column<Guid>(type: "uuid", nullable: true)
+                    FirstName = table.Column<string>(type: "text", nullable: false),
+                    LastName = table.Column<string>(type: "text", nullable: false),
+                    Age = table.Column<int>(type: "integer", nullable: true),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    EducationId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StudentsContacts", x => x.Id);
+                    table.PrimaryKey("PK_Students", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StudentsContacts_Students_StudentEntityId",
-                        column: x => x.StudentEntityId,
-                        principalTable: "Students",
+                        name: "FK_Students_StudentEducations_EducationId",
+                        column: x => x.EducationId,
+                        principalTable: "StudentEducations",
                         principalColumn: "Id");
                 });
 
@@ -123,7 +122,7 @@ namespace EfCore.MigrationsTool.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Educations",
+                name: "Requirements",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -132,9 +131,70 @@ namespace EfCore.MigrationsTool.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Educations", x => x.Id);
+                    table.PrimaryKey("PK_Requirements", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Educations_Tutors_TutorEntityId",
+                        name: "FK_Requirements_Tutors_TutorEntityId",
+                        column: x => x.TutorEntityId,
+                        principalTable: "Tutors",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SubjectEntityTutorEntity",
+                columns: table => new
+                {
+                    SubjectsId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TutorsId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubjectEntityTutorEntity", x => new { x.SubjectsId, x.TutorsId });
+                    table.ForeignKey(
+                        name: "FK_SubjectEntityTutorEntity_Subjects_SubjectsId",
+                        column: x => x.SubjectsId,
+                        principalTable: "Subjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SubjectEntityTutorEntity_Tutors_TutorsId",
+                        column: x => x.TutorsId,
+                        principalTable: "Tutors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TutorEducations",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Value = table.Column<string>(type: "text", nullable: false),
+                    TutorEntityId = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TutorEducations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TutorEducations_Tutors_TutorEntityId",
+                        column: x => x.TutorEntityId,
+                        principalTable: "Tutors",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TutorsContacts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Type = table.Column<byte>(type: "smallint", nullable: false),
+                    Value = table.Column<string>(type: "text", nullable: false),
+                    TutorEntityId = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TutorsContacts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TutorsContacts_Tutors_TutorEntityId",
                         column: x => x.TutorEntityId,
                         principalTable: "Tutors",
                         principalColumn: "Id");
@@ -170,24 +230,6 @@ namespace EfCore.MigrationsTool.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Requirements",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Value = table.Column<string>(type: "text", nullable: false),
-                    TutorEntityId = table.Column<Guid>(type: "uuid", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Requirements", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Requirements_Tutors_TutorEntityId",
-                        column: x => x.TutorEntityId,
-                        principalTable: "Tutors",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Reviews",
                 columns: table => new
                 {
@@ -216,56 +258,27 @@ namespace EfCore.MigrationsTool.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SubjectEntityTutorEntity",
-                columns: table => new
-                {
-                    SubjectsId = table.Column<Guid>(type: "uuid", nullable: false),
-                    TutorsId = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SubjectEntityTutorEntity", x => new { x.SubjectsId, x.TutorsId });
-                    table.ForeignKey(
-                        name: "FK_SubjectEntityTutorEntity_Subjects_SubjectsId",
-                        column: x => x.SubjectsId,
-                        principalTable: "Subjects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_SubjectEntityTutorEntity_Tutors_TutorsId",
-                        column: x => x.TutorsId,
-                        principalTable: "Tutors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TutorsContacts",
+                name: "StudentsContacts",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Type = table.Column<byte>(type: "smallint", nullable: false),
                     Value = table.Column<string>(type: "text", nullable: false),
-                    TutorEntityId = table.Column<Guid>(type: "uuid", nullable: true)
+                    StudentEntityId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TutorsContacts", x => x.Id);
+                    table.PrimaryKey("PK_StudentsContacts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TutorsContacts_Tutors_TutorEntityId",
-                        column: x => x.TutorEntityId,
-                        principalTable: "Tutors",
+                        name: "FK_StudentsContacts_Students_StudentEntityId",
+                        column: x => x.StudentEntityId,
+                        principalTable: "Students",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Awards_TutorEntityId",
                 table: "Awards",
-                column: "TutorEntityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Educations_TutorEntityId",
-                table: "Educations",
                 column: "TutorEntityId");
 
             migrationBuilder.CreateIndex(
@@ -294,6 +307,11 @@ namespace EfCore.MigrationsTool.Migrations
                 column: "TutorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Students_EducationId",
+                table: "Students",
+                column: "EducationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StudentsContacts_StudentEntityId",
                 table: "StudentsContacts",
                 column: "StudentEntityId");
@@ -302,6 +320,11 @@ namespace EfCore.MigrationsTool.Migrations
                 name: "IX_SubjectEntityTutorEntity_TutorsId",
                 table: "SubjectEntityTutorEntity",
                 column: "TutorsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TutorEducations_TutorEntityId",
+                table: "TutorEducations",
+                column: "TutorEntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tutors_LocationId",
@@ -323,9 +346,6 @@ namespace EfCore.MigrationsTool.Migrations
                 name: "Awards");
 
             migrationBuilder.DropTable(
-                name: "Educations");
-
-            migrationBuilder.DropTable(
                 name: "Lessons");
 
             migrationBuilder.DropTable(
@@ -341,6 +361,9 @@ namespace EfCore.MigrationsTool.Migrations
                 name: "SubjectEntityTutorEntity");
 
             migrationBuilder.DropTable(
+                name: "TutorEducations");
+
+            migrationBuilder.DropTable(
                 name: "TutorsContacts");
 
             migrationBuilder.DropTable(
@@ -351,6 +374,9 @@ namespace EfCore.MigrationsTool.Migrations
 
             migrationBuilder.DropTable(
                 name: "Tutors");
+
+            migrationBuilder.DropTable(
+                name: "StudentEducations");
 
             migrationBuilder.DropTable(
                 name: "Locations");

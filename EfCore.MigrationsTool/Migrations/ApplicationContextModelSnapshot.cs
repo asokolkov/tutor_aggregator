@@ -57,26 +57,6 @@ namespace EfCore.MigrationsTool.Migrations
                     b.ToTable("Awards");
                 });
 
-            modelBuilder.Entity("EFCore.Postgres.Application.Models.Entities.EducationEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("TutorEntityId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TutorEntityId");
-
-                    b.ToTable("Educations");
-                });
-
             modelBuilder.Entity("EFCore.Postgres.Application.Models.Entities.LessonEntity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -206,6 +186,24 @@ namespace EfCore.MigrationsTool.Migrations
                     b.ToTable("StudentsContacts");
                 });
 
+            modelBuilder.Entity("EFCore.Postgres.Application.Models.Entities.StudentEducationEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Grade")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StudentEducations");
+                });
+
             modelBuilder.Entity("EFCore.Postgres.Application.Models.Entities.StudentEntity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -218,21 +216,20 @@ namespace EfCore.MigrationsTool.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<string>("EducationPlace")
-                        .HasColumnType("text");
+                    b.Property<Guid?>("EducationId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<int?>("Grade")
-                        .HasColumnType("integer");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EducationId");
 
                     b.ToTable("Students");
                 });
@@ -275,11 +272,34 @@ namespace EfCore.MigrationsTool.Migrations
                     b.ToTable("TutorsContacts");
                 });
 
+            modelBuilder.Entity("EFCore.Postgres.Application.Models.Entities.TutorEducationEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("TutorEntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TutorEntityId");
+
+                    b.ToTable("TutorEducations");
+                });
+
             modelBuilder.Entity("EFCore.Postgres.Application.Models.Entities.TutorEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<int?>("Age")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -327,13 +347,6 @@ namespace EfCore.MigrationsTool.Migrations
                 {
                     b.HasOne("EFCore.Postgres.Application.Models.Entities.TutorEntity", null)
                         .WithMany("Awards")
-                        .HasForeignKey("TutorEntityId");
-                });
-
-            modelBuilder.Entity("EFCore.Postgres.Application.Models.Entities.EducationEntity", b =>
-                {
-                    b.HasOne("EFCore.Postgres.Application.Models.Entities.TutorEntity", null)
-                        .WithMany("Educations")
                         .HasForeignKey("TutorEntityId");
                 });
 
@@ -387,10 +400,26 @@ namespace EfCore.MigrationsTool.Migrations
                         .HasForeignKey("StudentEntityId");
                 });
 
+            modelBuilder.Entity("EFCore.Postgres.Application.Models.Entities.StudentEntity", b =>
+                {
+                    b.HasOne("EFCore.Postgres.Application.Models.Entities.StudentEducationEntity", "Education")
+                        .WithMany()
+                        .HasForeignKey("EducationId");
+
+                    b.Navigation("Education");
+                });
+
             modelBuilder.Entity("EFCore.Postgres.Application.Models.Entities.TutorContactEntity", b =>
                 {
                     b.HasOne("EFCore.Postgres.Application.Models.Entities.TutorEntity", null)
                         .WithMany("Contacts")
+                        .HasForeignKey("TutorEntityId");
+                });
+
+            modelBuilder.Entity("EFCore.Postgres.Application.Models.Entities.TutorEducationEntity", b =>
+                {
+                    b.HasOne("EFCore.Postgres.Application.Models.Entities.TutorEntity", null)
+                        .WithMany("Educations")
                         .HasForeignKey("TutorEntityId");
                 });
 
