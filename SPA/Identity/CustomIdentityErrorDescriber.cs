@@ -90,7 +90,7 @@ internal sealed class CustomIdentityErrorDescriber : IdentityErrorDescriber
         return new IdentityError
         {
             Code = nameof(PasswordRequiresUniqueChars),
-            Description = $"Пароль должен содержать специальные символы"
+            Description = $"Пароль должен содержать цифры"
         };
     }
 
