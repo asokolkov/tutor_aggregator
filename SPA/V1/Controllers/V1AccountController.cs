@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SPA.Domain;
-using SPA.Identity.Models;
 
 namespace SPA.V1.Controllers;
 

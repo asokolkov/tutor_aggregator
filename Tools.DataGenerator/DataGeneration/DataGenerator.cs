@@ -7,7 +7,6 @@ using EFCore.Postgres.Application.Contexts;
 using EFCore.Postgres.Application.Models.Entities;
 using EFCore.Postgres.Identity;
 using EFCore.Postgres.Identity.Models;
-using SPA.Identity.Models;
 
 #nullable enable
 

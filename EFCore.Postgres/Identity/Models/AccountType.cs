@@ -1,4 +1,4 @@
-namespace SPA.Identity.Models;
+namespace EFCore.Postgres.Identity.Models;
 
 public enum AccountType : byte
 {

@@ -43,7 +43,7 @@ public sealed class V1TutorsController : Controller
 
         var query = new GetTutorsQuery(page, size, subject, city, district, maxPrice, rating);
         var modelsPage = await mediator.Send(query);
-        return Ok(mapper.Map<V1PageDto<V1TutorDto>>(modelsPage));
+        return Ok(mapper.Map<V1PageDto<V1TutorInfoDto>>(modelsPage));
     }
 
     [HttpGet("{id:guid}")]
