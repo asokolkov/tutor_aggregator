@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Authorization;
 using Repositories;
 using Requirements;
 
-internal sealed class CancelLessonAuthorizationHadnler : AuthorizationHandler<ICancelLessonRequirement, HttpContext>
+internal sealed class CancelLessonAuthorizationHandler : AuthorizationHandler<ICancelLessonRequirement, HttpContext>
 {
     private readonly ILessonRepository repository;
 
-    public CancelLessonAuthorizationHadnler(ILessonRepository repository)
+    public CancelLessonAuthorizationHandler(ILessonRepository repository)
     {
         this.repository = repository;
     }

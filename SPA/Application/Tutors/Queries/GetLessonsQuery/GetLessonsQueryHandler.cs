@@ -15,6 +15,6 @@ internal sealed class GetTutorLessonsQueryHandler : IRequestHandler<GetTutorLess
 
     public async Task<ICollection<Lesson>> Handle(GetTutorLessonsQuery request, CancellationToken cancellationToken)
     {
-        return await repository.GetTutorLessonsAsync(request.TutorId);
+        return await repository.GetTutorLessonsAsync(request.TutorId, request.Start, request.End);
     }
 }

@@ -54,7 +54,7 @@ internal static class ServiceCollectionExtensions
             .AddScoped<IRequestHandler<GetLocationsQuery, Page<Location>>, GetLocationsQueryHandler>()
             .AddScoped<IRequestHandler<GetLocationQuery, Location>, GetLocationQueryHandler>()
             .AddScoped<IRequestHandler<UpdateLocationCommand, Location>, UpdateLocationCommandHandler>();
-
+        
         services
             .AddScoped<IRequestHandler<GetSubjectsQuery, List<Subject>>, GetSubjectQueryHandler>();
 
@@ -80,7 +80,7 @@ internal static class ServiceCollectionExtensions
             .AddScoped<ILessonRepository, LessonRepository>();
 
         services
-            .AddScoped<IAuthorizationHandler, CancelLessonAuthorizationHadnler>()
+            .AddScoped<IAuthorizationHandler, CancelLessonAuthorizationHandler>()
             .AddScoped<IAuthorizationHandler, CreateLessonAuthorizationHandler>()
             .AddScoped<IAuthorizationHandler, BookLessonAuthorizationHandler>()
             .AddScoped<IAuthorizationHandler, CreateReviewAuthorizationHandler>();

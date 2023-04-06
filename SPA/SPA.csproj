@@ -44,6 +44,7 @@
 
     <ItemGroup>
         <Folder Include="Application\Avatars\Queries" />
+        <Folder Include="Application\Lessons\Commands\" />
         <Folder Include="Application\Users\Queries" />
         <Folder Include="Data" />
     </ItemGroup>

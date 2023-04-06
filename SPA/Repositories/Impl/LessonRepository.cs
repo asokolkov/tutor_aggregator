@@ -28,12 +28,12 @@ internal sealed class LessonRepository : ILessonRepository
         return mapper.Map<Lesson>(lessonEntity);
     }
 
-    public async Task<ICollection<Lesson>> GetTutorLessonsAsync(Guid tutorId)
+    public async Task<ICollection<Lesson>> GetTutorLessonsAsync(Guid tutorId, DateTimeOffset start, DateTimeOffset end)
     {
         var entities = (ICollection<LessonEntity>) await context.Lessons
             .Include(e => e.Student)
             .Include(e => e.Tutor)
-            .Where(l => l.Tutor.Id == tutorId)
+            .Where(l => l.Tutor.Id == tutorId && start < l.Start && l.Start < end)
             .ToListAsync();
         return mapper.Map<ICollection<Lesson>>(entities);
     }

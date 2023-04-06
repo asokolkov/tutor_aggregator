@@ -13,7 +13,7 @@ namespace SPA.V1.Controllers;
 using Application.Lessons.CancelLessonCommand;
 using Authorization;
 
-[Route("api/v1")]
+[Route("api/v1/lessons")]
 public sealed class V1LessonsController : ControllerBase
 {
     private readonly IMediator mediator;
@@ -26,45 +26,53 @@ public sealed class V1LessonsController : ControllerBase
     }
 
     [Authorize(Policy = Policies.CreateLessonPolicy)]
-    [HttpPost("lessons")]
+    [HttpPost]
     [SwaggerResponse(200, "OK", typeof(ICollection<V1LessonDto>))]
     public async Task<IActionResult> CreateAsync([FromBody] V1CreateLessonDto createLessonDto)
     {
         var tutorId = User.GetId();
         if (tutorId is null)
             return Unauthorized();
+        
         var getTutorQuery = new CreateLessonCommand(tutorId.Value, createLessonDto.Start, createLessonDto.End,
             createLessonDto.Price, createLessonDto.Type);
+        
         var lesson = await mediator.Send(getTutorQuery);
         if (lesson is null)
             return BadRequest();
+        
         return Ok(mapper.Map<V1LessonDto>(lesson));
     }
 
     [Authorize(Policy = Policies.BookLessonPolicy)]
-    [HttpPost("lessons/{id:guid}/book")]
+    [HttpPost("{id:guid}/book")]
     [SwaggerResponse(200, "OK", typeof(V1LessonDto))]
     public async Task<IActionResult> BookAsync(Guid id)
     {
         var studentId = User.GetId();
         if (studentId is null)
             return Unauthorized();
+        
         var getTutorQuery = new BookLessonCommand(studentId.Value, id);
+        
         var lesson = await mediator.Send(getTutorQuery);
         if (lesson is null)
             return BadRequest();
+        
         return Ok(mapper.Map<V1LessonDto>(lesson));
     }
 
     [Authorize(Policy = Policies.CancelLessonPolicy)]
-    [HttpPost("lessons/{id:guid}/cancel")]
+    [HttpPost("{id:guid}/cancel")]
     [SwaggerResponse(200, "OK", typeof(V1LessonDto))]
     public async Task<IActionResult> CancelAsync(Guid id)
     {
         var cancelLessonCommand = new CancelLessonCommand(id);
+        
         var lesson = await mediator.Send(cancelLessonCommand);
         if (lesson is null)
             return BadRequest();
+        
         return Ok(mapper.Map<V1LessonDto>(lesson));
     }
 }
