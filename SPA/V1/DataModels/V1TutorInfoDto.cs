@@ -15,4 +15,10 @@ public class V1TutorInfoDto
 
     [JsonProperty("rating")] 
     public double Rating { get; init; }
+    
+    [JsonProperty("job")]
+    public string Job { get; init; }
+    
+    [JsonProperty("educations")]
+    public IReadOnlyCollection<V1TutorEducationDto> Educations { get; init; }
 }
