@@ -1,12 +1,6 @@
 import { extendTheme } from '@chakra-ui/react';
+import { colors } from './colors';
+import { fontSizes } from './fontSizes';
 
-// Global style overrides
-import Avatar from './avatar';
-
-const overrides = {
-  components: {
-    ...Avatar,
-  },
-};
-
-export default extendTheme(overrides);
+const theme = extendTheme({ colors, fontSizes });
+export default theme;
