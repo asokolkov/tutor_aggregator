@@ -95,7 +95,7 @@ export const CardInfo = ({ tutor }: CardInfoProps) => {
             <BottomCardDescription
               icon={locationIcon}
               categoryText={isDesktop ? 'Район:' : ''}
-              text={`${location.city} ${location.district}`}
+              text={`${location?.city} ${location?.district}`}
             />
             <BottomCardDescription
               icon={educationIcon}

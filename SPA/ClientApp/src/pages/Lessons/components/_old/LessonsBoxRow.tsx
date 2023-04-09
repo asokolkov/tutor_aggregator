@@ -10,8 +10,8 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { Link, To } from 'react-router-dom';
-import CancelLessonModal from '../modals/CancelLessonModal';
-import NewReviewModal from '../modals/NewReviewModal';
+import CancelLessonModal from '../../modals/CancelLessonModal';
+import NewReviewModal from '../../modals/NewReviewModal';
 
 const monthNames = [
   'января',
