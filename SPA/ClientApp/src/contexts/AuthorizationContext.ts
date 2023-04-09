@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import React from 'react';
 
 export type AuthContextProps = {
   errorMessage: string;
@@ -6,7 +6,7 @@ export type AuthContextProps = {
   setError: (error: string) => void;
 };
 
-export const AuthorizationContext = createContext<AuthContextProps>({
+export const AuthorizationContext = React.createContext<AuthContextProps>({
   hasError: false,
   errorMessage: '',
   setError: () => {},

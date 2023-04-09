@@ -8,21 +8,13 @@ const axiosInstance = axios.create({
     status === 200 || status === 300 || status === 302,
 });
 
-axiosInstance.interceptors.request.use((request) => {
-  request.headers = {
+axiosInstance.interceptors.request.use((config) => {
+  config.headers = {
     'Content-Type': 'application/json',
     'Referrer-Policy': 'no-referrer-when-downgrade',
     'Access-Control-Allow-Origin': '*',
   };
-  request.timeout = 100000000;
-  return request;
-});
-
-axiosInstance.interceptors.response.use((response) => {
-  if (response.status == 302) {
-    console.log(response.headers);
-  }
-  return response;
+  return config;
 });
 
 export default axiosInstance;
