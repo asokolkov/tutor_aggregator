@@ -115,9 +115,9 @@ public sealed class V1TutorsController : Controller
 
     [HttpGet("{id:guid}/lessons")]
     [SwaggerResponse(200, "OK", typeof(ICollection<V1LessonDto>))]
-    public async Task<IActionResult> GetLessonsAsync(Guid id, [FromQuery] DateTimeOffset start, [FromQuery] DateTimeOffset end)
+    public async Task<IActionResult> GetLessonsAsync(Guid id, [FromQuery] DateTimeOffset date)
     {
-        var getTutorQuery = new GetTutorLessonsQuery(id, start, end);
+        var getTutorQuery = new GetTutorLessonsQuery(id, date);
         var lessons = await mediator.Send(getTutorQuery);
         return Ok(mapper.Map<ICollection<V1LessonDto>>(lessons));
     }

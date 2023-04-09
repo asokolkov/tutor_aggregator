@@ -28,14 +28,22 @@ internal sealed class LessonRepository : ILessonRepository
         return mapper.Map<Lesson>(lessonEntity);
     }
 
-    public async Task<ICollection<Lesson>> GetTutorLessonsAsync(Guid tutorId, DateTimeOffset start, DateTimeOffset end)
+    public async Task<ICollection<Lesson>> GetTutorLessonsAsync(Guid tutorId, DateTimeOffset date)
     {
-        var entities = (ICollection<LessonEntity>) await context.Lessons
-            .Include(e => e.Student)
-            .Include(e => e.Tutor)
-            .Where(l => l.Tutor.Id == tutorId && start < l.Start && l.Start < end)
+        var zeroTimeZoneDate = date.ToOffset(TimeSpan.Zero).UtcDateTime.Date;
+        
+        var entities = await context.Lessons
+            .Where(l => l.Tutor.Id == tutorId && l.Start.UtcDateTime.Date == zeroTimeZoneDate)
             .ToListAsync();
-        return mapper.Map<ICollection<Lesson>>(entities);
+        var models = mapper.Map<ICollection<Lesson>>(entities);
+        
+        foreach (var model in models)
+        {
+            model.Start = model.Start.ToOffset(date.Offset);
+            model.End = model.End.ToOffset(date.Offset);
+        }
+        
+        return models;
     }
 
     public async Task<ICollection<Lesson>> GetStudentLessonsAsync(Guid studentId)
@@ -61,8 +69,8 @@ internal sealed class LessonRepository : ILessonRepository
             Price = lesson.Price,
             Status = mapper.Map<LessonStatus>(lesson.Status),
             Type = mapper.Map<LessonType>(lesson.Type),
-            Start = lesson.Start,
-            End = lesson.End
+            Start = lesson.Start.ToOffset(TimeSpan.Zero),
+            End = lesson.End.ToOffset(TimeSpan.Zero)
         };
 
         await using var transaction = await context.Database.BeginTransactionAsync();

@@ -10,9 +10,9 @@ public sealed class Lesson
     
     public LessonType Type { get; init; }
 
-    public DateTimeOffset Start { get; init; }
+    public DateTimeOffset Start { get; set; }
 
-    public DateTimeOffset End { get; init; }
+    public DateTimeOffset End { get; set; }
 
     public Student Student { get; init; }
 
