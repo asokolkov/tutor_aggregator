@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Box, Flex, useBreakpointValue, Heading } from '@chakra-ui/react';
 import { LessonsBoxRow } from './LessonsBoxRow';
-import { PROFILE_PAGE } from '../../../routes/routePaths';
-export const ActiveStudentLessons = () => {
+import { PROFILE_PAGE } from '../../../../routes/routePaths';
+export const ArchiveStudentLessons = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   return (
     <Box
@@ -10,39 +10,39 @@ export const ActiveStudentLessons = () => {
       shadow={'md'}
       borderRadius={'5px'}
       borderWidth={'1px'}
-      bg="#A1C0A0"
+      bg="#C4C4C4"
     >
       <Flex
         padding={isDesktop ? '1.5em' : '1em'}
         direction={isDesktop ? 'row' : 'column'}
       >
-        <Flex width={'100%'} align={'left'} direction={'column'}>
+        <Flex width={'100%'} align={'left'} direction={'column'} margin={'0'}>
           <Heading size={'md'} margin={'0 0 1em 0'}>
-            Записи к репетиторам
+            Архивные записи
           </Heading>
           <LessonsBoxRow
-            personName={'Павел Егоров'}
-            datetime={new Date(2023, 0, 25, 12, 0).getTime()}
+            personName={'Арсений Шур'}
+            datetime={new Date(2022, 11, 28, 11, 30).getTime()}
             isLink={true}
             linkTo={PROFILE_PAGE}
-            isCancellable={true}
-            isRatable={false}
+            isRatable={true}
+            isCancellable={false}
           />
           <LessonsBoxRow
-            personName={'Евгений Скворцов'}
-            datetime={new Date(2023, 0, 26, 13, 30).getTime()}
+            personName={'Дмитрий Косолобов'}
+            datetime={new Date(2022, 11, 25, 11, 30).getTime()}
             isLink={true}
             linkTo={PROFILE_PAGE}
-            isCancellable={true}
-            isRatable={false}
+            isRatable={true}
+            isCancellable={false}
           />
           <LessonsBoxRow
-            personName={'Юрий Окуловский'}
-            datetime={new Date(2023, 0, 28, 15, 30).getTime()}
+            personName={'Иван Симонов'}
+            datetime={new Date(2022, 11, 22, 10, 30).getTime()}
             isLink={true}
             linkTo={PROFILE_PAGE}
-            isCancellable={true}
-            isRatable={false}
+            isRatable={true}
+            isCancellable={false}
           />
         </Flex>
       </Flex>
