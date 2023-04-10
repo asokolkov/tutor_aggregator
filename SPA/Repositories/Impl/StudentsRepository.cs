@@ -21,7 +21,7 @@ internal sealed class StudentsRepository : IStudentsRepository
         table = context.Students;
     }
 
-    public async Task<Page<Student>> Get(int page, int size)
+    public async Task<Page<Student>> GetAsync(int page, int size)
     {
         var studentEntities = await table
             .OrderBy(e => e.Id)
@@ -33,7 +33,7 @@ internal sealed class StudentsRepository : IStudentsRepository
         return new Page<Student>(students, table.Count());
     }
 
-    public async Task<Student?> Get(Guid id)
+    public async Task<Student?> GetAsync(Guid id)
     {
         return mapper.Map<Student>(await table.FindAsync(id));
     }

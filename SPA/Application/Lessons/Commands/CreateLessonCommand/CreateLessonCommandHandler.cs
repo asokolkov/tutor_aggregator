@@ -1,32 +1,25 @@
-﻿using JetBrains.Annotations;
+﻿#nullable enable
+
+using JetBrains.Annotations;
 using MediatR;
 using SPA.Domain;
-using SPA.Repositories;
+using SPA.Services;
 
-namespace SPA.Application.Lessons.CreateLessonCommand;
+namespace SPA.Application.Lessons.Commands.CreateLessonCommand;
 
 [UsedImplicitly]
-internal sealed class CreateLessonCommandHandler : IRequestHandler<CreateLessonCommand, Lesson>
+internal sealed class
+    CreateLessonCommandHandler : IRequestHandler<CreateLessonCommand, Lesson?>
 {
-    private readonly ILessonRepository repository;
+    private readonly ILessonsManager lessonsManager;
 
-    public CreateLessonCommandHandler(ILessonRepository repository)
+    public CreateLessonCommandHandler(ILessonsManager lessonsManager)
     {
-        this.repository = repository;
+        this.lessonsManager = lessonsManager;
     }
 
-    public async Task<Lesson> Handle(CreateLessonCommand request, CancellationToken cancellationToken)
+    public async Task<Lesson?> Handle(CreateLessonCommand request, CancellationToken cancellationToken)
     {
-        var lesson = new Lesson
-        {
-            Id = Guid.NewGuid(),
-            Price = request.Price,
-            Status = LessonStatus.Scheduled,
-            Type = request.Type,
-            Start = request.Start,
-            End = request.End
-        };
-
-        return await repository.InsertAsync(request.TutorId, lesson);
+        return await lessonsManager.CreateAsync(request.TutorId, request.Price, request.Type, request.Start, request.End);
     }
 }

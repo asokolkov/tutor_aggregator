@@ -1,8 +1,7 @@
 ﻿using EFCore.Postgres.Identity.Models;
+using SPA.Domain;
 
-namespace SPA.Authorization.Requirements;
-
-using Domain;
+namespace SPA.Authorization.Requirements.Impl;
 
 internal sealed class CreateReviewRequirement : ICreateReviewRequirement
 {

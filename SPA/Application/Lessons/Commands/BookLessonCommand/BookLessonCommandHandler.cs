@@ -3,22 +3,22 @@
 using JetBrains.Annotations;
 using MediatR;
 using SPA.Domain;
-using SPA.Repositories;
+using SPA.Services;
 
-namespace SPA.Application.Lessons.PickLessonCommand;
+namespace SPA.Application.Lessons.Commands.BookLessonCommand;
 
 [UsedImplicitly]
-internal sealed class PickLessonCommandHandler : IRequestHandler<BookLessonCommand, Lesson?>
+internal sealed class BookLessonCommandHandler : IRequestHandler<BookLessonCommand, Lesson?>
 {
-    private readonly ILessonRepository repository;
+    private readonly ILessonsManager lessonsManager;
 
-    public PickLessonCommandHandler(ILessonRepository repository)
+    public BookLessonCommandHandler(ILessonsManager lessonsManager)
     {
-        this.repository = repository;
+        this.lessonsManager = lessonsManager;
     }
 
     public async Task<Lesson?> Handle(BookLessonCommand request, CancellationToken cancellationToken)
     {
-        return await repository.BookAsync(request.StudentId, request.LessonId);
+        return await lessonsManager.BookAsync(request.StudentId, request.LessonId);
     }
 }

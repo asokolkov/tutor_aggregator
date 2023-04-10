@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Converters;
 using SPA.Authorization;
 using SPA.Authorization.Requirements;
+using SPA.Authorization.Requirements.Impl;
 using SPA.Extensions;
 using SPA.Startup;
 
@@ -87,13 +88,8 @@ builder.Services.AddAuthorization(
             Policies.CreateLessonPolicy,
             policy => { policy.AddRequirements(new CreateLessonRequirement()); });
         authorization.AddPolicy(
-            Policies.CancelLessonPolicy,
-            policy =>
-            {
-                policy.AddRequirements(
-                    new CancelLessonStudentRequirement(),
-                    new CancelLessonTutorRequirement());
-            });
+            Policies.DeleteLessonPolicy,
+            policy => { policy.AddRequirements(new DeleteLessonRequirement()); });
         authorization.AddPolicy(
             Policies.BookLessonPolicy,
             policy => { policy.AddRequirements(new BookLessonRequirement()); });

@@ -1,10 +1,9 @@
-﻿namespace EFCore.Postgres.Extensions;
-
-using System.Reflection;
-using Application.Contexts;
-using Identity;
+﻿using EFCore.Postgres.Application.Contexts;
+using EFCore.Postgres.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+
+namespace EFCore.Postgres.Extensions;
 
 public static class ServiceCollectionExtensions
 {

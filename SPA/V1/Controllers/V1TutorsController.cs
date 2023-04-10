@@ -1,28 +1,27 @@
-using SPA.Application.Tutors.Commands.CreateReviewCommand;
-using SPA.Application.Tutors.Commands.UpdateTutorCommand;
-using SPA.Application.Tutors.Queries.GetLessonsQuery;
-using SPA.Application.Tutors.Queries.GetTutorQuery;
-using SPA.Application.Tutors.Queries.GetTutorsQuery;
-using Swashbuckle.AspNetCore.Annotations;
-
-namespace SPA.V1.Controllers;
-
-using Application.Tutors.Queries.GetReviewsQuery;
-using Authorization;
 using AutoMapper;
-using DataModels;
-using Domain;
-using Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SPA.Application.Tutors.Commands.CreateReviewCommand;
+using SPA.Application.Tutors.Commands.UpdateTutorCommand;
+using SPA.Application.Tutors.Queries.GetLessonsQuery;
+using SPA.Application.Tutors.Queries.GetReviewsQuery;
+using SPA.Application.Tutors.Queries.GetTutorQuery;
+using SPA.Application.Tutors.Queries.GetTutorsQuery;
+using SPA.Authorization;
+using SPA.Domain;
+using SPA.Extensions;
+using SPA.V1.DataModels;
+using Swashbuckle.AspNetCore.Annotations;
+
+namespace SPA.V1.Controllers;
 
 [ApiController]
 [Route("api/v1/tutors")]
 public sealed class V1TutorsController : Controller
 {
-    private readonly IMediator mediator;
     private readonly IMapper mapper;
+    private readonly IMediator mediator;
 
     public V1TutorsController(IMediator mediator, IMapper mapper)
     {

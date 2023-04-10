@@ -70,6 +70,9 @@ internal static class ServiceCollectionExtensions
 
         services
             .AddScoped<IUserService, UserService>()
+            .AddScoped<ILessonsManager, LessonsManager>();
+        
+        services
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<ITutorsRepository, TutorsRepository>()
             .AddScoped<IStudentsRepository, StudentsRepository>()
@@ -77,10 +80,10 @@ internal static class ServiceCollectionExtensions
             .AddScoped<ISubjectsRepository, SubjectsRepository>()
             .AddScoped<IReviewsRepository, ReviewsRepository>()
             .AddScoped<IAvatarsRepository, AvatarsRepository>()
-            .AddScoped<ILessonRepository, LessonRepository>();
+            .AddScoped<ILessonsRepository, LessonsRepository>();
 
         services
-            .AddScoped<IAuthorizationHandler, CancelLessonAuthorizationHandler>()
+            .AddScoped<IAuthorizationHandler, DeleteLessonAuthorizationHandler>()
             .AddScoped<IAuthorizationHandler, CreateLessonAuthorizationHandler>()
             .AddScoped<IAuthorizationHandler, BookLessonAuthorizationHandler>()
             .AddScoped<IAuthorizationHandler, CreateReviewAuthorizationHandler>();

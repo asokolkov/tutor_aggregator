@@ -2,7 +2,10 @@
 
 public enum LessonStatus : byte
 {
-    Canceled, 
-    Held, 
-    Scheduled
+    Empty,
+    Booked,
+    Finished,
+    Deleted,
+    ExpiredEmpty,
+    ExpiredBooked
 }
