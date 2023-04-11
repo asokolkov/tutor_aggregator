@@ -3,7 +3,7 @@
 using Domain;
 using Microsoft.AspNetCore.Authorization;
 
-public interface ICancelLessonRequirement : IAuthorizationRequirement
+public interface IDeleteLessonRequirement : IAuthorizationRequirement
 {
     bool IsUserAuthorized(Lesson lesson, Guid userId);
 }

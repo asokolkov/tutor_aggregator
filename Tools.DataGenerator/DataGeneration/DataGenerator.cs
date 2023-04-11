@@ -7,7 +7,6 @@ using EFCore.Postgres.Application.Contexts;
 using EFCore.Postgres.Application.Models.Entities;
 using EFCore.Postgres.Identity;
 using EFCore.Postgres.Identity.Models;
-using SPA.Identity.Models;
 
 #nullable enable
 
@@ -141,7 +140,7 @@ internal sealed class DataGenerator : IDataGenerator
                     Tutor = tutor,
                     Student = studentExists ? extraction.Get(students) : null,
                     Price = extraction.GetDouble() * 1000,
-                    Status = studentExists ? (LessonStatus)extraction.GetNumber(2) : LessonStatus.Scheduled,
+                    Status = LessonStatus.Empty,
                     Type = (LessonType)extraction.GetNumber(2),
                     Start = startTime,
                     End = startTime + TimeSpan.FromHours(extraction.GetDouble() * 5)

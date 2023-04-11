@@ -6,9 +6,9 @@ namespace SPA.Application.Students.Queries.GetLessonsQuery;
 
 internal sealed class GetStudentLessonsQueryHandler : IRequestHandler<GetStudentLessonsQuery, ICollection<Lesson>>
 {
-    private readonly ILessonRepository repository;
+    private readonly ILessonsRepository repository;
 
-    public GetStudentLessonsQueryHandler(ILessonRepository repository)
+    public GetStudentLessonsQueryHandler(ILessonsRepository repository)
     {
         this.repository = repository;
     }

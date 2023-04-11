@@ -2,7 +2,7 @@
 
 public enum ContactType : byte
 {
-    Phone, 
+    Phone,
     Email,
     Telegram
 }

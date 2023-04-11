@@ -1,8 +1,8 @@
-﻿namespace SPA.Authorization.Requirements;
-
-using Domain;
-using Identity.Models;
+﻿using EFCore.Postgres.Identity.Models;
 using JetBrains.Annotations;
+using SPA.Domain;
+
+namespace SPA.Authorization.Requirements.Impl;
 
 [UsedImplicitly]
 internal sealed class CreateLessonRequirement : ICreateLessonRequirement

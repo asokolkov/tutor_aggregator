@@ -11,7 +11,7 @@ internal sealed class V1Profile : Profile
     {
         CreateMap<TutorEntity, Tutor>().ReverseMap();
         CreateMap<Tutor, V1TutorDto>().ReverseMap();
-        CreateMap<Page<Tutor>, V1PageDto<V1TutorDto>>().ReverseMap();
+        CreateMap<Page<Tutor>, V1PageDto<V1TutorInfoDto>>().ReverseMap();
 
         CreateMap<LessonEntity, Lesson>().ReverseMap();
         CreateMap<Lesson, V1LessonDto>().ReverseMap();
