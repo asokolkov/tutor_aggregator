@@ -15,31 +15,18 @@ import { NewSlotInputTime } from '../DayColumn/NewSlotInputTime';
 import { NewSlotInputPrice } from '../DayColumn/NewSlotInputPrice';
 import { Form, Formik } from 'formik';
 import LessonsAPI, { LessonType } from '../../../../api/lessons';
-
-export interface DisclosureProps {
-  isOpen: boolean;
-  onOpen: () => void;
-  onClose: () => void;
-}
+import { DisclosureProps } from './_shared';
+import { slotInputValues, SlotInputValuesProps } from './_formikHelper';
+import { useState } from 'react';
 
 type Props = {
   disclosure: DisclosureProps;
   date: Date;
 };
 
-type SlotInputValues = {
-  startTime: string;
-  endTime: string;
-  price: number;
-};
-
 export const AddNewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
   const { isOpen, onClose } = disclosure;
-  const initialValues: SlotInputValues = {
-    startTime: '',
-    endTime: '',
-    price: 0,
-  };
+  const [isSubmitLoading, setSubmitLoading] = useState(false);
 
   const getHoursAndMinutes = (forInput: string) => {
     const [hours, minutes] = forInput.split(':');
@@ -47,11 +34,12 @@ export const AddNewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent>
         <Formik
-          onSubmit={async (values: SlotInputValues) => {
+          onSubmit={async (values: SlotInputValuesProps) => {
+            setSubmitLoading(true);
             const startValues = getHoursAndMinutes(values.startTime);
             const endValues = getHoursAndMinutes(values.endTime);
 
@@ -69,9 +57,10 @@ export const AddNewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
               values.price,
               LessonType.Offline
             );
+            setSubmitLoading(false);
             onClose();
           }}
-          initialValues={initialValues}
+          initialValues={slotInputValues}
         >
           <Form>
             <ModalBody>
@@ -100,7 +89,11 @@ export const AddNewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme="blue" type="submit">
+              <Button
+                colorScheme="blue"
+                type="submit"
+                isLoading={isSubmitLoading}
+              >
                 Добавить
               </Button>
               <Button variant="ghost" onClick={onClose}>

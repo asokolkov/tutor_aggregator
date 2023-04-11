@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Lesson } from '../../../../api/lessons';
+import { Lesson, LessonStatus } from '../../../../api/lessons';
 import { Button, useDisclosure, VStack } from '@chakra-ui/react';
 import { Title } from './Title';
 import { Slot } from '../Slot/Slot';
@@ -23,9 +23,11 @@ export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
           bookedCount={bookedCount}
         />
         <VStack spacing="16px" w="100%">
-          {lessons?.map((lesson) => (
-            <Slot lesson={lesson} />
-          ))}
+          {lessons
+            ?.filter((lesson) => lesson.status !== LessonStatus.Deleted)
+            .map((lesson) => (
+              <Slot lesson={lesson} />
+            ))}
           <Button
             color="white"
             bg="green.400"

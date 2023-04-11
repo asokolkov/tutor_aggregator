@@ -8,6 +8,7 @@ export type SlotContextProps = {
   price: number;
   studentName?: string;
   isBooked: boolean;
+  onDeleteModalOpen: () => void;
 };
 
 export const SlotContext = React.createContext<SlotContextProps>(null);

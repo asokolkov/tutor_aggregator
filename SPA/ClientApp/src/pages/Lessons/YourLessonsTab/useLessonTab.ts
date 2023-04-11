@@ -5,7 +5,6 @@ function datesForQuery(date: Date, count: number): Date[] {
   for (let i = 0; i < count; i++) {
     const newDate = new Date(date);
     newDate.setDate(newDate.getDate() + i);
-    newDate.setHours(0, 0, 0, 0);
     result.push(newDate);
   }
   return result;

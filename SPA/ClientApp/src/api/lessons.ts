@@ -12,9 +12,12 @@ export interface Lesson {
 }
 
 export enum LessonStatus {
-  Canceled,
-  Held,
-  Scheduled,
+  Empty = 'Empty',
+  Booked = 'Booked',
+  Finished = 'Finished',
+  Deleted = 'Deleted',
+  ExpiredEmpty = 'ExpiredEmpty',
+  ExpiredBooked = 'ExpiredBooked',
 }
 
 export enum LessonType {
@@ -53,5 +56,9 @@ export default class LessonsAPI {
       price,
       type,
     });
+  }
+
+  static async deleteLesson(lessonId: string) {
+    await axiosInstance.post(`api/v1/lessons/${lessonId}/delete`);
   }
 }

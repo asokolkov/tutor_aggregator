@@ -1,15 +1,19 @@
 import * as React from 'react';
-import { HStack } from '@chakra-ui/react';
+import { HStack, useDisclosure } from '@chakra-ui/react';
 import { TimeBox } from './TimeBox';
 import { SlotContext } from '../../../../contexts/SlotContext';
 import { SlotInfo } from './SlotInfo';
 import { Lesson } from '../../../../api/lessons';
 import { useMemo } from 'react';
 import './Slot.css';
+import { DeleteSlotModal } from '../modals/DeleteSlotModal';
 
 export const Slot: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
+  const disclosure = useDisclosure();
+
   const providerValue = useMemo(
     () => ({
+      onDeleteModalOpen: disclosure.onOpen,
       type: lesson.type,
       startDate: lesson.start,
       endDate: lesson.end,
@@ -23,11 +27,14 @@ export const Slot: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
   );
 
   return (
-    <SlotContext.Provider value={providerValue}>
-      <HStack className="Slot" w="100%" spacing="0">
-        <TimeBox />
-        <SlotInfo />
-      </HStack>
-    </SlotContext.Provider>
+    <>
+      <SlotContext.Provider value={providerValue}>
+        <HStack className="Slot" w="100%" spacing="0">
+          <TimeBox />
+          <SlotInfo />
+        </HStack>
+      </SlotContext.Provider>
+      <DeleteSlotModal disclosure={disclosure} lesson={lesson} />
+    </>
   );
 };
