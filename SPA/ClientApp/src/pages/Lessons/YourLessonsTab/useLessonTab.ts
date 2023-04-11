@@ -1,12 +1,22 @@
 import { useLessonsQuery } from '../../../query/useLessonsQuery';
 
+function datesForQuery(date: Date, count: number): Date[] {
+  const result = [];
+  for (let i = 0; i < count; i++) {
+    const newDate = new Date(date);
+    newDate.setDate(newDate.getDate() + i);
+    newDate.setHours(0, 0, 0, 0);
+    result.push(newDate);
+  }
+  return result;
+}
+
 export function useLessonTab(
   tutorId: string,
   columnCount: number,
   currentDate: Date
 ) {
-  const endDate = new Date(currentDate);
-  endDate.setDate(endDate.getDate() + columnCount - 1);
-  const query = useLessonsQuery(tutorId, currentDate, endDate);
-  return { query, endDate };
+  const dates = datesForQuery(currentDate, columnCount);
+  const queries = useLessonsQuery(tutorId, dates);
+  return { queries };
 }

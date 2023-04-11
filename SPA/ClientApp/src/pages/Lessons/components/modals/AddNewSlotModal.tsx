@@ -94,7 +94,7 @@ export const AddNewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
                 <NewSlotInputPrice
                   label={'₽ / час'}
                   placeholder={'1000 ₽'}
-                  name={'priceTime'}
+                  name={'price'}
                 />
               </HStack>
             </ModalBody>

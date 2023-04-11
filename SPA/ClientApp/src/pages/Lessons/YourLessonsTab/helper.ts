@@ -18,3 +18,9 @@ export const fullDate = (date: Date) => ('0' + date.getDate()).slice(-2);
 
 export const dayAndMonth = (date: Date) =>
   `${fullDate(date)}.${fullMonth(date)}`;
+
+export const dateShift = (date: Date, index: number) => {
+  const newDate = new Date(date);
+  newDate.setDate(date.getDate() + index);
+  return newDate;
+};

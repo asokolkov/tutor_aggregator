@@ -7,10 +7,10 @@ import { RouterProvider } from 'react-router-dom';
 import router from './routes/browserRouter';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './assets/theme/index';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { queryClient } from './query';
+import { QueryClientProvider } from 'react-query';
 
 const root = createRoot(rootElement);
-const queryClient = new QueryClient();
 
 root.render(
   <React.StrictMode>
