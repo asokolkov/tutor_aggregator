@@ -1,14 +1,27 @@
 import * as React from 'react';
 import { Flex, VStack, Text } from '@chakra-ui/react';
+import {
+  dayAndMonth,
+  russianDayOfTheWeekByIndex,
+} from '../../YourLessonsTab/helper';
 
-export const Title: React.FC = () => {
+type Props = {
+  date: Date;
+  bookedCount: number;
+  totalCount: number;
+};
+export const Title: React.FC<Props> = ({ date, bookedCount, totalCount }) => {
+  const dayOfTheWeek = () => russianDayOfTheWeekByIndex(date);
+
   return (
     <Flex justify={'space-between'} align={'center'} w="100%">
       <VStack spacing="0">
-        <Text variant="big-semibold">20.03</Text>
-        <Text>понедельник</Text>
+        <Text variant="big-semibold">{dayAndMonth(date)}</Text>
+        <Text>{dayOfTheWeek()}</Text>
       </VStack>
-      <Text>Занято: 3 / 5</Text>
+      <Text>
+        {totalCount ? `Занято: ${bookedCount} / ${totalCount}` : 'Нет слотов'}
+      </Text>
     </Flex>
   );
 };

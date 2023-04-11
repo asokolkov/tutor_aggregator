@@ -35,4 +35,18 @@ export default class LessonsAPI {
     );
     return response.data;
   }
+
+  static async createNewSlot(
+    start: Date,
+    end: Date,
+    price: number,
+    type: LessonType
+  ) {
+    await axiosInstance.post('api/v1/lessons', {
+      start,
+      end,
+      price,
+      type,
+    });
+  }
 }

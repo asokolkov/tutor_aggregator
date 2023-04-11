@@ -3,16 +3,8 @@ import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
 import { LOGIN_PAGE } from '../../routes/routePaths';
-import {
-  Tabs,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
-  HStack,
-  Divider,
-} from '@chakra-ui/react';
-import { YourLessonsTab } from './YourLessonsTab';
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react';
+import { YourLessonsTab } from './YourLessonsTab/YourLessonsTab';
 
 export const LessonsPage = () => {
   const userContext = useContext(UserContext);
@@ -30,11 +22,7 @@ export const LessonsPage = () => {
 
       <TabPanels>
         <TabPanel>
-          <HStack spacing="20px" align="stretch">
-            <YourLessonsTab />
-            <Divider orientation="vertical" style={{ marginBottom: 'auto' }} />
-            <YourLessonsTab />
-          </HStack>
+          <YourLessonsTab />
         </TabPanel>
         <TabPanel />
         <TabPanel />
