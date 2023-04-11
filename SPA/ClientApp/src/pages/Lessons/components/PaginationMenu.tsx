@@ -6,15 +6,27 @@ import { dayAndMonth } from '../YourLessonsTab/helper';
 type Props = {
   start: Date;
   end: Date;
+  onDateChange: (isForward: boolean) => void;
 };
-export const PaginationMenu: React.FC<Props> = ({ start, end }) => {
+export const PaginationMenu: React.FC<Props> = ({
+  start,
+  end,
+  onDateChange,
+}) => {
   return (
     <HStack width="100%" spacing="30px" justify="center" p="8px">
-      <Button leftIcon={<ArrowBackIcon />}>Предыдущий период</Button>
+      <Button leftIcon={<ArrowBackIcon />} onClick={() => onDateChange(false)}>
+        Предыдущий период
+      </Button>
       <Text variant="big-semibold">
         {dayAndMonth(start)} - {dayAndMonth(end)}
       </Text>
-      <Button rightIcon={<ArrowForwardIcon />}>Следующий период</Button>
+      <Button
+        rightIcon={<ArrowForwardIcon />}
+        onClick={() => onDateChange(true)}
+      >
+        Следующий период
+      </Button>
     </HStack>
   );
 };
