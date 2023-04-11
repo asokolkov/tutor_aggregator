@@ -27,9 +27,6 @@ export const YourLessonsTab: React.FC = () => {
   const { queries } = useLessonTab(userId, COLUMN_COUNT, currentDate);
   const isLoading = queries.some((query) => query.isLoading);
 
-  if (isLoading)
-    return <LoadBar description={'Загружаем данные ваших уроков'} />;
-
   return (
     <VStack spacing="20px">
       <PaginationMenu
@@ -37,14 +34,18 @@ export const YourLessonsTab: React.FC = () => {
         end={dateShift(currentDate, COLUMN_COUNT - 1)}
         onDateChange={changeDate}
       />
-      <HStack spacing="20px" align="stretch">
-        {queries.map((query, i) => (
-          <DayColumnWithSlots
-            lessons={query.data}
-            date={dateShift(currentDate, i)}
-          />
-        ))}
-      </HStack>
+      {isLoading ? (
+        <LoadBar description={'Загружаем данные ваших уроков'} />
+      ) : (
+        <HStack spacing="20px" align="stretch">
+          {queries.map((query, i) => (
+            <DayColumnWithSlots
+              lessons={query.data}
+              date={dateShift(currentDate, i)}
+            />
+          ))}
+        </HStack>
+      )}
     </VStack>
   );
 };

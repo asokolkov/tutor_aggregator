@@ -14,6 +14,8 @@ import { DisclosureProps } from './_shared';
 import LessonsAPI, { Lesson } from '../../../../api/lessons';
 import { getTimeFromDate } from '../Slot/_helpers';
 import { useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import { lessonsKey } from '../../../../query/queryKeys';
 
 type Props = {
   disclosure: DisclosureProps;
@@ -22,6 +24,20 @@ type Props = {
 export const DeleteSlotModal: React.FC<Props> = ({ disclosure, lesson }) => {
   const { isOpen, onClose } = disclosure;
   const [isSubmitLoading, setSubmitLoading] = useState(false);
+  const queryClient = useQueryClient();
+
+  const onSubmit = async () => {
+    setSubmitLoading(true);
+    await LessonsAPI.deleteLesson(lesson.id);
+    setSubmitLoading(false);
+    onClose();
+  };
+
+  const mutation = useMutation({
+    mutationFn: onSubmit,
+    onSuccess: () => queryClient.invalidateQueries([lessonsKey]),
+  });
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size="lg">
       <ModalOverlay />
@@ -41,12 +57,7 @@ export const DeleteSlotModal: React.FC<Props> = ({ disclosure, lesson }) => {
           <Button
             isLoading={isSubmitLoading}
             colorScheme="blue"
-            onClick={async () => {
-              setSubmitLoading(true);
-              await LessonsAPI.deleteLesson(lesson.id);
-              setSubmitLoading(false);
-              onClose();
-            }}
+            onClick={() => mutation.mutate()}
           >
             Удалить
           </Button>

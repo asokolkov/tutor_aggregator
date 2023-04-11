@@ -18,6 +18,8 @@ import LessonsAPI, { LessonType } from '../../../../api/lessons';
 import { DisclosureProps } from './_shared';
 import { slotInputValues, SlotInputValuesProps } from './_formikHelper';
 import { useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import { lessonsKey } from '../../../../query/queryKeys';
 
 type Props = {
   disclosure: DisclosureProps;
@@ -27,39 +29,47 @@ type Props = {
 export const AddNewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
   const { isOpen, onClose } = disclosure;
   const [isSubmitLoading, setSubmitLoading] = useState(false);
+  const queryClient = useQueryClient();
 
   const getHoursAndMinutes = (forInput: string) => {
     const [hours, minutes] = forInput.split(':');
     return { hours: +hours, minutes: +minutes };
   };
 
+  const onSubmit = async (values: SlotInputValuesProps) => {
+    setSubmitLoading(true);
+    const startValues = getHoursAndMinutes(values.startTime);
+    const endValues = getHoursAndMinutes(values.endTime);
+
+    const startDate = new Date(date);
+    startDate.setHours(startValues.hours);
+    startDate.setMinutes(startValues.minutes);
+
+    const endDate = new Date(date);
+    endDate.setHours(endValues.hours);
+    endDate.setMinutes(endValues.minutes);
+
+    await LessonsAPI.createNewSlot(
+      startDate,
+      endDate,
+      values.price,
+      LessonType.Offline
+    );
+    setSubmitLoading(false);
+    onClose();
+  };
+
+  const mutation = useMutation({
+    mutationFn: onSubmit,
+    onSuccess: () => queryClient.invalidateQueries([lessonsKey]),
+  });
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent>
         <Formik
-          onSubmit={async (values: SlotInputValuesProps) => {
-            setSubmitLoading(true);
-            const startValues = getHoursAndMinutes(values.startTime);
-            const endValues = getHoursAndMinutes(values.endTime);
-
-            const startDate = new Date(date);
-            startDate.setHours(startValues.hours);
-            startDate.setMinutes(startValues.minutes);
-
-            const endDate = new Date(date);
-            endDate.setHours(endValues.hours);
-            endDate.setMinutes(endValues.minutes);
-
-            await LessonsAPI.createNewSlot(
-              startDate,
-              endDate,
-              values.price,
-              LessonType.Offline
-            );
-            setSubmitLoading(false);
-            onClose();
-          }}
+          onSubmit={(v: SlotInputValuesProps) => mutation.mutate(v)}
           initialValues={slotInputValues}
         >
           <Form>

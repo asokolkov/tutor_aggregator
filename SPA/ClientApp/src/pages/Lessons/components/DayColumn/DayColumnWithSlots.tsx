@@ -11,6 +11,7 @@ type Props = {
   date: Date;
 };
 export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
+  lessons = lessons.filter((lesson) => lesson.status !== LessonStatus.Deleted);
   const bookedCount = lessons.filter((x) => x.student).length;
   const disclosure = useDisclosure();
 
@@ -23,11 +24,9 @@ export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
           bookedCount={bookedCount}
         />
         <VStack spacing="16px" w="100%">
-          {lessons
-            ?.filter((lesson) => lesson.status !== LessonStatus.Deleted)
-            .map((lesson) => (
-              <Slot lesson={lesson} />
-            ))}
+          {lessons.map((lesson) => (
+            <Slot lesson={lesson} />
+          ))}
           <Button
             color="white"
             bg="green.400"
