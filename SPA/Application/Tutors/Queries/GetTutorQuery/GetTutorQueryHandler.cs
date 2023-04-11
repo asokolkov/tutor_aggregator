@@ -18,6 +18,6 @@ internal class GetTutorQueryHandler : IRequestHandler<GetTutorQuery, Tutor>
 
     public async Task<Tutor> Handle(GetTutorQuery request, CancellationToken cancellationToken)
     {
-        return await repository.Get(request.Id);
+        return await repository.GetAsync(request.Id);
     }
 }

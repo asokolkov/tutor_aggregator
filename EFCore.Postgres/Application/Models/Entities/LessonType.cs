@@ -2,6 +2,6 @@
 
 public enum LessonType : byte
 {
-    Online, 
+    Online,
     Offline
 }

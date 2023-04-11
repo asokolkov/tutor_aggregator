@@ -2,7 +2,6 @@
 
 #nullable enable
 using Microsoft.AspNetCore.Identity;
-using SPA.Identity.Models;
 
 public class ApplicationUser : IdentityUser<Guid>
 {

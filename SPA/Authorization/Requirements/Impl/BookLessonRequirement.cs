@@ -1,7 +1,7 @@
-﻿namespace SPA.Authorization.Requirements;
+﻿using EFCore.Postgres.Identity.Models;
+using SPA.Domain;
 
-using Domain;
-using Identity.Models;
+namespace SPA.Authorization.Requirements.Impl;
 
 internal sealed class BookLessonRequirement : IBookLessonRequirement
 {

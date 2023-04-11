@@ -6,9 +6,9 @@ using Domain;
 
 internal interface ITutorsRepository
 {
-    Task<Page<Tutor>> Get(int page, int size, string subject, string city, string district, int maxPrice, int rating);
+    Task<Page<Tutor>> GetAsync(int page, int size, string subject, string city, string district, int maxPrice, int rating);
     
-    Task<Tutor?> Get(Guid id);
+    Task<Tutor?> GetAsync(Guid id);
 
     Task<Tutor?> Update(Guid id, UpdateTutor tutor);
 

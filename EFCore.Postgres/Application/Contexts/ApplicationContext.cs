@@ -78,6 +78,13 @@ public sealed class ApplicationContext : DbContext
         modelBuilder.Entity<ReviewEntity>()
             .Navigation(e => e.Tutor)
             .AutoInclude();
+        
+        modelBuilder.Entity<LessonEntity>()
+            .Navigation(e => e.Student)
+            .AutoInclude();
+        modelBuilder.Entity<LessonEntity>()
+            .Navigation(e => e.Tutor)
+            .AutoInclude();
 
         modelBuilder.UseSerialColumns();
     }

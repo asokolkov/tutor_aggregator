@@ -1,18 +1,18 @@
-﻿namespace SPA.Repositories.Impl;
+﻿#nullable enable
 
 using AutoMapper;
-using Domain;
 using EFCore.Postgres.Application.Contexts;
 using EFCore.Postgres.Application.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using SPA.Domain;
 
-#nullable enable
+namespace SPA.Repositories.Impl;
 
 internal sealed class TutorsRepository : ITutorsRepository
 {
     private readonly ApplicationContext context;
-    private readonly DbSet<TutorEntity> table;
     private readonly IMapper mapper;
+    private readonly DbSet<TutorEntity> table;
 
     public TutorsRepository(ApplicationContext context, IMapper mapper)
     {
@@ -21,25 +21,25 @@ internal sealed class TutorsRepository : ITutorsRepository
         table = context.Tutors;
     }
 
-    public async Task<Page<Tutor>> Get(int page, int size, string subject, string city, string district, int maxPrice,
+    public async Task<Page<Tutor>> GetAsync(int page, int size, string subject, string city, string district, int maxPrice,
         int rating)
     {
         var tutorsEntities = await table
             .OrderBy(x => x)
             .Where(x => (int)x.Rating == rating || rating == -1)
-            .Where(x => x.Location.City == city || city == "")
-            .Where(x => x.Location.District == district || district == "")
+            .Where(x => (x.Location != null ? x.Location.City : null) == city || city == "")
+            .Where(x => (x.Location != null ? x.Location.District : null) == district || district == "")
             .Where(x => x.Subjects.FirstOrDefault(y => y.Description == subject) != null || subject == "")
             .Where(x => x.Lessons.Max(y => y.Price) <= maxPrice || maxPrice == -1)
             .Skip(page * size)
             .Take(size)
             .ToListAsync();
-
         var tutors = mapper.Map<List<Tutor>>(tutorsEntities);
-        return new Page<Tutor>(tutors);
+
+        return new Page<Tutor>(tutors, table.Count());
     }
 
-    public async Task<Tutor?> Get(Guid id)
+    public async Task<Tutor?> GetAsync(Guid id)
     {
         return mapper.Map<Tutor>(await table.FindAsync(id));
     }
@@ -53,12 +53,12 @@ internal sealed class TutorsRepository : ITutorsRepository
             var tutorEntity = await table.FindAsync(id);
             if (tutorEntity is null)
                 return default;
-            
+
             tutorEntity.FirstName = tutor.FirstName;
             tutorEntity.LastName = tutor.LastName;
             tutorEntity.Description = tutor.Description;
             tutorEntity.Job = tutor.Job;
-            
+
             var educationsEntities = mapper.Map<ICollection<TutorEducationEntity>>(tutor.Educations).ToList();
             foreach (var educationEntity in educationsEntities)
             {
@@ -66,8 +66,9 @@ internal sealed class TutorsRepository : ITutorsRepository
                 if (education is null)
                     context.TutorEducations.Add(educationEntity);
             }
+
             tutorEntity.Educations = educationsEntities;
-            
+
             var awardsEntities = mapper.Map<ICollection<AwardEntity>>(tutor.Awards).ToList();
             foreach (var awardEntity in awardsEntities)
             {
@@ -75,8 +76,9 @@ internal sealed class TutorsRepository : ITutorsRepository
                 if (award is null)
                     context.Awards.Add(awardEntity);
             }
+
             tutorEntity.Awards = awardsEntities;
-            
+
             var requirementsEntities = mapper.Map<ICollection<RequirementEntity>>(tutor.Requirements).ToList();
             foreach (var requirementEntity in requirementsEntities)
             {
@@ -84,8 +86,9 @@ internal sealed class TutorsRepository : ITutorsRepository
                 if (requirement is null)
                     context.Requirements.Add(requirementEntity);
             }
+
             tutorEntity.Requirements = requirementsEntities;
-            
+
             var contactsEntities = mapper.Map<ICollection<TutorContactEntity>>(tutor.Contacts).ToList();
             foreach (var contactEntity in contactsEntities)
             {
@@ -93,6 +96,7 @@ internal sealed class TutorsRepository : ITutorsRepository
                 if (contact is null)
                     context.TutorsContacts.Add(contactEntity);
             }
+
             tutorEntity.Contacts = contactsEntities;
 
             if (tutor.Location != null)
@@ -115,8 +119,9 @@ internal sealed class TutorsRepository : ITutorsRepository
                 else
                     subjectsEntities[i] = subject;
             }
+
             tutorEntity.Subjects = subjectsEntities;
-            
+
             await context.SaveChangesAsync();
             await transaction.CommitAsync();
             return mapper.Map<Tutor>(tutorEntity);
@@ -150,16 +155,16 @@ internal sealed class TutorsRepository : ITutorsRepository
     public async Task<Page<Review>> GetTutorReviews(Guid id, int page, int size)
     {
         var tutor = await context.Tutors.FindAsync(id);
-        
+
         if (tutor?.Reviews is null)
-            return new Page<Review>(Array.Empty<Review>());
-        
+            return new Page<Review>(Array.Empty<Review>(), 0);
+
         var reviewsEntities = tutor.Reviews
-            .ToList()
             .Skip(page * size)
             .Take(size)
             .ToList();
         var reviews = mapper.Map<List<Review>>(reviewsEntities);
-        return new Page<Review>(reviews);
+
+        return new Page<Review>(reviews, tutor.Reviews.Count);
     }
 }

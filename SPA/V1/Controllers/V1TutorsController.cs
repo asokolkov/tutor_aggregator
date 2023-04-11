@@ -1,28 +1,27 @@
-using SPA.Application.Tutors.Commands.CreateReviewCommand;
-using SPA.Application.Tutors.Commands.UpdateTutorCommand;
-using SPA.Application.Tutors.Queries.GetLessonsQuery;
-using SPA.Application.Tutors.Queries.GetTutorQuery;
-using SPA.Application.Tutors.Queries.GetTutorsQuery;
-using Swashbuckle.AspNetCore.Annotations;
-
-namespace SPA.V1.Controllers;
-
-using Application.Tutors.Queries.GetReviewsQuery;
-using Authorization;
 using AutoMapper;
-using DataModels;
-using Domain;
-using Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SPA.Application.Tutors.Commands.CreateReviewCommand;
+using SPA.Application.Tutors.Commands.UpdateTutorCommand;
+using SPA.Application.Tutors.Queries.GetLessonsQuery;
+using SPA.Application.Tutors.Queries.GetReviewsQuery;
+using SPA.Application.Tutors.Queries.GetTutorQuery;
+using SPA.Application.Tutors.Queries.GetTutorsQuery;
+using SPA.Authorization;
+using SPA.Domain;
+using SPA.Extensions;
+using SPA.V1.DataModels;
+using Swashbuckle.AspNetCore.Annotations;
+
+namespace SPA.V1.Controllers;
 
 [ApiController]
 [Route("api/v1/tutors")]
 public sealed class V1TutorsController : Controller
 {
-    private readonly IMediator mediator;
     private readonly IMapper mapper;
+    private readonly IMediator mediator;
 
     public V1TutorsController(IMediator mediator, IMapper mapper)
     {
@@ -43,7 +42,7 @@ public sealed class V1TutorsController : Controller
 
         var query = new GetTutorsQuery(page, size, subject, city, district, maxPrice, rating);
         var modelsPage = await mediator.Send(query);
-        return Ok(mapper.Map<V1PageDto<V1TutorDto>>(modelsPage));
+        return Ok(mapper.Map<V1PageDto<V1TutorInfoDto>>(modelsPage));
     }
 
     [HttpGet("{id:guid}")]
@@ -115,9 +114,9 @@ public sealed class V1TutorsController : Controller
 
     [HttpGet("{id:guid}/lessons")]
     [SwaggerResponse(200, "OK", typeof(ICollection<V1LessonDto>))]
-    public async Task<IActionResult> GetLessonsAsync(Guid id)
+    public async Task<IActionResult> GetLessonsAsync(Guid id, [FromQuery] DateTimeOffset date)
     {
-        var getTutorQuery = new GetTutorLessonsQuery(id);
+        var getTutorQuery = new GetTutorLessonsQuery(id, date);
         var lessons = await mediator.Send(getTutorQuery);
         return Ok(mapper.Map<ICollection<V1LessonDto>>(lessons));
     }

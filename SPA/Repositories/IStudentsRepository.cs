@@ -4,9 +4,9 @@ using Domain;
 
 internal interface IStudentsRepository
 {
-    Task<Page<Student>> Get(int page, int size);
+    Task<Page<Student>> GetAsync(int page, int size);
     
-    Task<Student> Get(Guid id);
+    Task<Student> GetAsync(Guid id);
 
     Task<Student> Update(Guid id, UpdateStudent student);
     
