@@ -41,17 +41,17 @@ export const YourLessonsTab: React.FC = () => {
           <Center height="500px">
             <Divider orientation="vertical" />
           </Center>
-          {queries.map((query, i) => (
-            <>
-              <DayColumnWithSlots
-                lessons={query.data}
-                date={dateShift(currentDate, i)}
-              />
-              <Center height="500px">
-                <Divider orientation="vertical" />
-              </Center>
-            </>
-          ))}
+          {queries.map((query, i) => {
+            const date = dateShift(currentDate, i);
+            return (
+              <React.Fragment key={date.toString()}>
+                <DayColumnWithSlots lessons={query.data} date={date} />
+                <Center height="500px">
+                  <Divider orientation="vertical" />
+                </Center>
+              </React.Fragment>
+            );
+          })}
         </HStack>
       )}
     </VStack>

@@ -25,7 +25,7 @@ export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
         />
         <VStack spacing="16px" w="100%">
           {lessons.map((lesson) => (
-            <Slot lesson={lesson} forTutor={true} />
+            <Slot lesson={lesson} forTutor={true} key={lesson.id} />
           ))}
           <Button
             color="white"

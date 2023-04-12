@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {
+  Alert,
+  AlertIcon,
   Button,
   Modal,
   ModalBody,
@@ -9,6 +11,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  VStack,
 } from '@chakra-ui/react';
 import LessonsAPI from '../../../../api/lessons';
 import {
@@ -27,7 +30,7 @@ export const DeleteSlotModal: React.FC<Props> = ({ disclosure }) => {
   const { isOpen, onClose } = disclosure;
   const [isSubmitLoading, setSubmitLoading] = useState(false);
   const queryClient = useQueryClient();
-  const { lesson } = useContext(SlotContext);
+  const { lesson, studentName, isBooked } = useContext(SlotContext);
   const { id, start, end } = lesson;
 
   const onSubmit = async () => {
@@ -49,10 +52,23 @@ export const DeleteSlotModal: React.FC<Props> = ({ disclosure }) => {
         <ModalBody>
           <ModalHeader>Вы действительно хотите удалить слот?</ModalHeader>
           <ModalCloseButton />
-          <Text>Выбранный слот будет удален.</Text>
-          <Text variant="semibold">
-            {`Время: ${getTimeFromDate(start)} - ${getTimeFromDate(end)}`}
-          </Text>
+          <VStack align={'start'}>
+            {isBooked && (
+              <Alert status="warning">
+                <AlertIcon />
+                <Text>
+                  На данный слот записан ученик <b>{studentName}</b>. Запись
+                  будет отменена
+                </Text>
+              </Alert>
+            )}
+            <VStack align={'start'} pl="16px" spacing="0">
+              <Text>Выбранный слот будет удален.</Text>
+              <Text variant="semibold">
+                {`Время: ${getTimeFromDate(start)} - ${getTimeFromDate(end)}`}
+              </Text>
+            </VStack>
+          </VStack>
         </ModalBody>
 
         <ModalFooter>
