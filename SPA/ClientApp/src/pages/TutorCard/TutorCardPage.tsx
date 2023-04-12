@@ -1,25 +1,27 @@
-import { ChakraProvider, VStack } from '@chakra-ui/react';
-import Theme from '../../assets/theme/index';
+import { VStack } from '@chakra-ui/react';
 import { CardInfo } from './CardInfo';
 import { ReviewSection } from './ReviewSection';
 import { LoadBar } from '../sharedComponents/LoadBar';
 import { useTutorCardPageQuery } from '../../query/useTutorCardPageQuery';
+import { useMemo } from 'react';
+import { TutorCardContext } from '../../contexts/TutorCardContext';
 
 export const TutorCardPage = () => {
   const { tutorQuery, reviewQuery } = useTutorCardPageQuery();
 
+  const tutor = tutorQuery.data;
+  const reviews = reviewQuery.data;
+  const providerValue = useMemo(() => ({ tutor, reviews }), [tutor, reviews]);
+
   if (tutorQuery.isLoading || reviewQuery.isLoading)
     return <LoadBar description={'Загружаем карточку преподавателя'} />;
 
-  const tutorState = tutorQuery.data;
-  const reviewsState = reviewQuery.data;
-
   return (
-    <ChakraProvider theme={Theme}>
+    <TutorCardContext.Provider value={providerValue}>
       <VStack maxW={'100%'} spacing={'40px'}>
-        <CardInfo tutor={tutorState} />
-        <ReviewSection reviews={reviewsState.items} />
+        <CardInfo />
+        <ReviewSection />
       </VStack>
-    </ChakraProvider>
+    </TutorCardContext.Provider>
   );
 };

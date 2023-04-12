@@ -1,7 +1,7 @@
 import React from 'react';
 import { LessonType } from '../api/lessons';
 
-export type SlotContextProps = {
+type ContextProps = {
   type: LessonType;
   startDate: string;
   endDate: string;
@@ -11,4 +11,4 @@ export type SlotContextProps = {
   onDeleteModalOpen: () => void;
 };
 
-export const SlotContext = React.createContext<SlotContextProps>(null);
+export const SlotContext = React.createContext<ContextProps>(null);

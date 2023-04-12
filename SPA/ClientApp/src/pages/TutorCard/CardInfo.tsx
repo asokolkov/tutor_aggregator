@@ -18,26 +18,26 @@ import requirementsIcon from '../../assets/images/requirements-icon.png';
 import aboutIcon from '../../assets/images/about-icon.png';
 import awardsIcon from '../../assets/images/awards-icon.png';
 import { ReviewStarWithStats } from './components/ReviewStarWithStats';
-import React from 'react';
-import { Tutor } from '../../api/tutors';
+import React, { useContext } from 'react';
 import { ButtonSection } from './components/ButtonSection';
 import { mapCollectionToString } from './components/_helpers';
+import { TutorCardContext } from '../../contexts/TutorCardContext';
 
-export const CardInfo = ({ tutor }: CardInfoProps) => {
+export const CardInfo = () => {
+  const context = useContext(TutorCardContext);
   const {
     job,
     awards,
     requirements,
     rating,
     educations,
-    contacts,
     avatar,
     firstName,
     lastName,
     location,
     description,
     subjects,
-  } = tutor;
+  } = context.tutor;
 
   const fullName = `${firstName} ${lastName}`;
 
@@ -122,14 +122,10 @@ export const CardInfo = ({ tutor }: CardInfoProps) => {
             >
               <ReviewStarWithStats rating={rating} />
             </Flex>
-            <ButtonSection contacts={contacts} />
+            <ButtonSection />
           </Flex>
         </Flex>
       </Stack>
     </>
   );
-};
-
-type CardInfoProps = {
-  tutor: Tutor;
 };
