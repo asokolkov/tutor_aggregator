@@ -21,8 +21,8 @@ export enum LessonStatus {
 }
 
 export enum LessonType {
-  Online,
-  Offline,
+  Online = 'Online',
+  Offline = 'Offline',
 }
 
 interface Person {

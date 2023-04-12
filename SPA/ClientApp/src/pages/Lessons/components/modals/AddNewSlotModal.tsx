@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import {
   Button,
   HStack,
@@ -15,13 +16,13 @@ import { NewSlotInputPrice } from '../DayColumn/NewSlotInputPrice';
 import { Form, Formik } from 'formik';
 import LessonsAPI, { LessonType } from '../../../../api/lessons';
 import { slotInputValues, SlotInputValuesProps } from './_formikHelper';
-import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { lessonsKey } from '../../../../query/queryKeys';
 import {
   dayAndMonth,
   DisclosureProps,
 } from '../../../sharedComponents/Slot/_helpers';
+import { NewSlotInputSwitch } from '../DayColumn/NewSlotInputSwitch';
 
 type Props = {
   disclosure: DisclosureProps;
@@ -55,7 +56,7 @@ export const AddNewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
       startDate,
       endDate,
       values.price,
-      LessonType.Offline
+      values.isOnline ? LessonType.Online : LessonType.Offline
     );
     setSubmitLoading(false);
     onClose();
@@ -96,6 +97,11 @@ export const AddNewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
                   label={'₽ / час'}
                   placeholder={'1000 ₽'}
                   name={'price'}
+                />
+                <NewSlotInputSwitch
+                  label={'Онлайн'}
+                  placeholder={''}
+                  name={'isOnline'}
                 />
               </HStack>
             </ModalBody>
