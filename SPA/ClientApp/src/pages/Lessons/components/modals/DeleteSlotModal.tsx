@@ -25,11 +25,12 @@ export const DeleteSlotModal: React.FC<Props> = ({ disclosure }) => {
   const { isOpen, onClose } = disclosure;
   const [isSubmitLoading, setSubmitLoading] = useState(false);
   const queryClient = useQueryClient();
-  const context = useContext(SlotContext);
+  const { lesson } = useContext(SlotContext);
+  const { id, start, end } = lesson;
 
   const onSubmit = async () => {
     setSubmitLoading(true);
-    await LessonsAPI.deleteLesson(context.id);
+    await LessonsAPI.deleteLesson(id);
     setSubmitLoading(false);
     onClose();
   };
@@ -48,9 +49,7 @@ export const DeleteSlotModal: React.FC<Props> = ({ disclosure }) => {
           <ModalCloseButton />
           <Text>Выбранный слот будет удален.</Text>
           <Text variant="semibold">
-            {`Время: ${getTimeFromDate(context.startDate)} - ${getTimeFromDate(
-              context.endDate
-            )}`}
+            {`Время: ${getTimeFromDate(start)} - ${getTimeFromDate(end)}`}
           </Text>
         </ModalBody>
 

@@ -25,7 +25,8 @@ export const BookLessonModal: React.FC<Props> = ({ disclosure }) => {
   const { isOpen, onClose } = disclosure;
   const [isSubmitLoading, setSubmitLoading] = useState(false);
   const queryClient = useQueryClient();
-  const { tutorName, startDate, endDate, id } = useContext(SlotContext);
+  const { lesson, tutorName } = useContext(SlotContext);
+  const { start, end, id } = lesson;
 
   const onSubmit = async () => {
     setSubmitLoading(true);
@@ -52,9 +53,7 @@ export const BookLessonModal: React.FC<Props> = ({ disclosure }) => {
           <Text variant="semibold">{tutorName}</Text>
           <Text>Время занятия:</Text>
           <Text variant="semibold">
-            {`Время: ${getTimeFromDate(startDate)} - ${getTimeFromDate(
-              endDate
-            )}`}
+            {`Время: ${getTimeFromDate(start)} - ${getTimeFromDate(end)}`}
           </Text>
         </ModalBody>
 

@@ -7,7 +7,8 @@ import { BuildingHouseIcon } from '../../Lessons/components/Icons/BuildingHouseI
 import { LessonType } from '../../../api/lessons';
 
 export const PriceAndTypeInfo: React.FC = () => {
-  const { type, price } = useContext(SlotContext);
+  const { lesson } = useContext(SlotContext);
+  const { type, price } = lesson;
   const isOnline = type === LessonType.Online;
 
   return (

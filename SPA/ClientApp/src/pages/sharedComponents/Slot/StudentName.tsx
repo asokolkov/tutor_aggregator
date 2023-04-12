@@ -7,7 +7,7 @@ export const StudentName: React.FC = () => {
   const { studentName } = useContext(SlotContext);
   return (
     <Stack w="100%" p="4px 8px">
-      <Text variant="semibold">{studentName}</Text>;
+      <Text variant="semibold">{studentName ?? 'Неизвестно'}</Text>;
     </Stack>
   );
 };
