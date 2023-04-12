@@ -1,12 +1,12 @@
-﻿namespace SPA.Application.Tutors.Queries.GetReviewsQuery;
-
-using Domain;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using MediatR;
-using Repositories;
+using SPA.Domain;
+using SPA.Repositories;
+
+namespace SPA.Application.Tutors.Queries.GetReviewsQuery;
 
 [UsedImplicitly]
-internal class GetReviewsCommandHandler : IRequestHandler<GetTutorReviewsQuery, Page<Review>>
+internal class GetReviewsCommandHandler : IRequestHandler<GetReviewsQuery, Page<Review>>
 {
     private readonly ITutorsRepository repository;
 
@@ -15,7 +15,7 @@ internal class GetReviewsCommandHandler : IRequestHandler<GetTutorReviewsQuery, 
         this.repository = repository;
     }
 
-    public async Task<Page<Review>> Handle(GetTutorReviewsQuery request, CancellationToken cancellationToken)
+    public async Task<Page<Review>> Handle(GetReviewsQuery request, CancellationToken cancellationToken)
     {
         return await repository.GetTutorReviews(request.TutorId, request.PageNumber, request.PageSize);
     }

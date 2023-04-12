@@ -58,7 +58,7 @@ public sealed class V1TutorsController : Controller
     [SwaggerResponse(200, "OK", typeof(ICollection<V1ReviewDto>))]
     public async Task<IActionResult> GetReviewsAsync(Guid id, [FromQuery] int page = 0, [FromQuery] int size = 30)
     {
-        var command = new GetTutorReviewsQuery(id, page, size);
+        var command = new GetReviewsQuery(id, page, size);
         var model = await mediator.Send(command);
         return Ok(mapper.Map<V1PageDto<V1ReviewDto>>(model));
     }
@@ -68,7 +68,7 @@ public sealed class V1TutorsController : Controller
     [SwaggerResponse(200, "OK", typeof(V1ReviewDto))]
     [SwaggerResponse(401, "Unauthorized")]
     [SwaggerResponse(404, "NotFound")]
-    public async Task<IActionResult> CreateReviewAsync(Guid id, [FromBody] V1ReviewDto reviewDto)
+    public async Task<IActionResult> CreateReviewAsync(Guid id, [FromBody] V1CreateReviewDto reviewDto)
     {
         var studentId = User.GetId();
         if (studentId is null)
