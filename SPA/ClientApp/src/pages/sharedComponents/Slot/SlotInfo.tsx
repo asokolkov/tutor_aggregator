@@ -12,7 +12,7 @@ export const SlotInfo: React.FC = () => {
   return (
     <VStack w="100%" spacing="0px">
       <PriceAndTypeInfo />
-      {isBooked && <StudentName />}
+      {isBooked && isForTutor && <StudentName />}
       {isForTutor ? <ButtonGroupTutor /> : <ButtonGroupStudent />}
     </VStack>
   );
