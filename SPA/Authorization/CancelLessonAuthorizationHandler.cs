@@ -5,16 +5,16 @@ using SPA.Repositories;
 
 namespace SPA.Authorization;
 
-internal sealed class DeleteLessonAuthorizationHandler : AuthorizationHandler<IDeleteLessonRequirement, HttpContext>
+internal sealed class CancelLessonAuthorizationHandler : AuthorizationHandler<ICancelLessonRequirement, HttpContext>
 {
     private readonly ILessonsRepository repository;
 
-    public DeleteLessonAuthorizationHandler(ILessonsRepository repository)
+    public CancelLessonAuthorizationHandler(ILessonsRepository repository)
     {
         this.repository = repository;
     }
 
-    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, IDeleteLessonRequirement requirement, HttpContext resource)
+    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, ICancelLessonRequirement requirement, HttpContext resource)
     {
         var userId = context.User.GetId();
         if (userId is null)

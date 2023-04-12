@@ -42,4 +42,9 @@ internal sealed class LessonsManager : ILessonsManager
     {
         return await lessonsRepository.MakeDeletedAsync(id);
     }
+
+    public async Task<Lesson?> CancelAsync(Guid id)
+    {
+        return await lessonsRepository.MakeEmptyAsync(id);
+    }
 }

@@ -1,12 +1,11 @@
 ﻿#nullable enable
+
 using AutoMapper;
+using EFCore.Postgres.Application.Contexts;
+using EFCore.Postgres.Application.Models.Entities;
 using SPA.Domain;
 
 namespace SPA.Repositories.Impl;
-
-using EFCore.Postgres.Application.Contexts;
-using EFCore.Postgres.Application.Models.Entities;
-using Microsoft.EntityFrameworkCore;
 
 internal sealed class ReviewsRepository : IReviewsRepository
 {
@@ -21,15 +20,11 @@ internal sealed class ReviewsRepository : IReviewsRepository
 
     public async Task<Review?> Insert(Guid tutorId, Guid studentId, Review review)
     {
-        var tutor = await context.Tutors
-            .Include(x => x.Reviews)
-            .FirstOrDefaultAsync(x => x.Id == tutorId);
-
+        var tutor = await context.Tutors.FindAsync(tutorId);
         if (tutor is null)
             return null;
 
         var student = await context.Students.FindAsync(studentId);
-
         if (student is null)
             return null;
 
@@ -42,7 +37,7 @@ internal sealed class ReviewsRepository : IReviewsRepository
             Student = student,
             UpdatedAt = DateTimeOffset.Now.ToUniversalTime()
         };
-
+        
         await using var transaction = await context.Database.BeginTransactionAsync();
         await transaction.CreateSavepointAsync("BeforeInsert");
         try

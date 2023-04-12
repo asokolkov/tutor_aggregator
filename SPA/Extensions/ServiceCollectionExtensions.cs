@@ -47,7 +47,7 @@ internal static class ServiceCollectionExtensions
             .AddScoped<IRequestHandler<GetTutorsQuery, Page<Tutor>>, GetTutorsQueryHandler>()
             .AddScoped<IRequestHandler<GetTutorQuery, Tutor>, GetTutorQueryHandler>()
             .AddScoped<IRequestHandler<UpdateTutorCommand, Tutor>, UpdateTutorCommandHandler>()
-            .AddScoped<IRequestHandler<GetTutorReviewsQuery, Page<Review>>, GetReviewsCommandHandler>()
+            .AddScoped<IRequestHandler<GetReviewsQuery, Page<Review>>, GetReviewsCommandHandler>()
             .AddScoped<IRequestHandler<CreateReviewCommand, Review>, CreateReviewCommandHandler>();
 
         services
@@ -83,6 +83,7 @@ internal static class ServiceCollectionExtensions
             .AddScoped<ILessonsRepository, LessonsRepository>();
 
         services
+            .AddScoped<IAuthorizationHandler, CancelLessonAuthorizationHandler>()
             .AddScoped<IAuthorizationHandler, DeleteLessonAuthorizationHandler>()
             .AddScoped<IAuthorizationHandler, CreateLessonAuthorizationHandler>()
             .AddScoped<IAuthorizationHandler, BookLessonAuthorizationHandler>()
