@@ -39,7 +39,7 @@ internal sealed class LessonsRepository : ILessonsRepository
         var zeroTimeZoneDate = date.ToOffset(TimeSpan.Zero).UtcDateTime.Date;
 
         var entities = await context.Lessons
-            .Where(e => e.Tutor.Id == tutorId && e.Start.UtcDateTime.Date == zeroTimeZoneDate)
+            .Where(e => e.Tutor.Id == tutorId /* TODO && e.Start.UtcDateTime.Date == zeroTimeZoneDate*/)
             .ToListAsync();
         var models = mapper.Map<ICollection<Lesson>>(entities);
 
@@ -77,21 +77,26 @@ internal sealed class LessonsRepository : ILessonsRepository
         }
     }
 
-    public async Task<Lesson?> MakeBookedAsync(Student student, Lesson lesson)
+    public async Task<Lesson?> MakeBookedAsync(Guid studentId, Guid lessonId)
     {
-        var studentEntity = mapper.Map<StudentEntity>(student);
-        var lessonEntity = mapper.Map<LessonEntity>(lesson);
-        lessonEntity.Student = studentEntity;
-        lessonEntity.Status = LessonStatus.Booked;
+        var student = await context.Students.FindAsync(studentId);
+        if (student is null)
+            return null;
+
+        var lesson = await context.Lessons.FindAsync(lessonId);
+        if (lesson is null || lesson.Status != LessonStatus.Empty)
+            return null;
+        
+        lesson.Student = student;
+        lesson.Status = LessonStatus.Booked;
 
         await using var transaction = await context.Database.BeginTransactionAsync();
         await transaction.CreateSavepointAsync("BeforeInsert");
         try
         {
-            var entityEntry = context.Lessons.Update(lessonEntity);
             await context.SaveChangesAsync();
             await transaction.CommitAsync();
-            return mapper.Map<Lesson>(entityEntry.Entity);
+            return mapper.Map<Lesson>(lesson);
         }
         catch (Exception)
         {
