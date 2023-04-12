@@ -22,7 +22,7 @@ export const Slot: React.FC<Props> = ({ forTutor, lesson }) => {
       studentName: lesson.student
         ? `${lesson.student.firstName} ${lesson.student.lastName}`
         : undefined,
-      tutorName: `${lesson.tutor.firstName} ${lesson.student.lastName}`,
+      tutorName: `${lesson.tutor.firstName} ${lesson.tutor.lastName}`,
       dateRangeStr: `${getTimeFromDate(lesson.start)} - ${getTimeFromDate(
         lesson.end
       )}`,

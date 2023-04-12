@@ -5,36 +5,57 @@ import { useContext } from 'react';
 import { SlotContext } from '../../../contexts/SlotContext';
 import { BookLessonModal } from '../../TutorBook/modals/BookLessonModal';
 import { UserContext } from '../../../contexts/UserContext';
+import { CancelLessonModal } from '../../TutorBook/modals/CancelLessonModal';
 
 export const ButtonGroupStudent: React.FC = () => {
-  const { isBooked } = useContext(SlotContext);
-  const disclosure = useDisclosure();
+  const { isBooked, lesson } = useContext(SlotContext);
+  const bookDisclosure = useDisclosure();
+  const cancelDisclosure = useDisclosure();
   const { user } = useContext(UserContext);
 
-  // TODO: slot student id;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const isBookedByCurrent = user.id === '';
+  const isBookedByCurrent = user.id === lesson.student?.id;
+
+  const renderButton = () => {
+    if (isBookedByCurrent)
+      return (
+        <Button
+          rightIcon={<ChatIcon />}
+          w="100%"
+          bg="red"
+          color="white"
+          onClick={cancelDisclosure.onOpen}
+        >
+          Отменить запись
+        </Button>
+      );
+
+    if (isBooked)
+      return (
+        <Button w="100%" bg="gray.300" color="white">
+          Слот уже занят
+        </Button>
+      );
+
+    return (
+      <Button
+        rightIcon={<ChatIcon />}
+        w="100%"
+        bg="green.200"
+        color="white"
+        onClick={bookDisclosure.onOpen}
+      >
+        Записаться
+      </Button>
+    );
+  };
 
   return (
     <>
       <HStack w="100%" p="8px" spacing="4px">
-        {!isBooked ? (
-          <Button
-            rightIcon={<ChatIcon />}
-            w="100%"
-            bg="green.200"
-            color="white"
-            onClick={disclosure.onOpen}
-          >
-            Записаться
-          </Button>
-        ) : (
-          <Button w="100%" bg="gray.300" color="white">
-            Слот уже занят
-          </Button>
-        )}
+        {renderButton()}
       </HStack>
-      <BookLessonModal disclosure={disclosure} />
+      <BookLessonModal disclosure={bookDisclosure} />
+      <CancelLessonModal disclosure={cancelDisclosure} />
     </>
   );
 };

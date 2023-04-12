@@ -20,7 +20,7 @@ import {
 type Props = {
   disclosure: DisclosureProps;
 };
-export const BookLessonModal: React.FC<Props> = ({ disclosure }) => {
+export const CancelLessonModal: React.FC<Props> = ({ disclosure }) => {
   const { isOpen, onClose } = disclosure;
   const [isSubmitLoading, setSubmitLoading] = useState(false);
   const queryClient = useQueryClient();
@@ -28,7 +28,7 @@ export const BookLessonModal: React.FC<Props> = ({ disclosure }) => {
 
   const onSubmit = async () => {
     setSubmitLoading(true);
-    await LessonsAPI.bookLesson(lesson.id);
+    await LessonsAPI.cancelLesson(lesson.id);
     setSubmitLoading(false);
     onClose();
   };
@@ -44,10 +44,10 @@ export const BookLessonModal: React.FC<Props> = ({ disclosure }) => {
       <ModalContent>
         <ModalBody>
           <ModalHeader>
-            Вы действительно хотите записаться на занятие?
+            Вы действительно хотите отменить запись на занятие?
           </ModalHeader>
           <ModalCloseButton />
-          <Text>Вы записываетесь на занятие к преподавателю:</Text>
+          <Text>Будет отменена запись к преподвавателю:</Text>
           <Text variant="semibold">{tutorName}</Text>
           <Text>Время занятия:</Text>
           <Text variant="semibold">{`Время: ${dateRangeStr}`}</Text>
@@ -59,10 +59,10 @@ export const BookLessonModal: React.FC<Props> = ({ disclosure }) => {
             colorScheme="blue"
             onClick={() => mutation.mutate()}
           >
-            Записаться
+            Отменить
           </Button>
           <Button variant="ghost" onClick={onClose}>
-            Отмена
+            Закрыть без отмены
           </Button>
         </ModalFooter>
       </ModalContent>
