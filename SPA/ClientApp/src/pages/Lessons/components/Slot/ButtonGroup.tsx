@@ -5,7 +5,7 @@ import { SlotContext } from '../../../../contexts/SlotContext';
 import { ChatIcon, DeleteIcon } from '@chakra-ui/icons';
 
 export const ButtonGroup: React.FC = () => {
-  const { isBooked } = useContext(SlotContext);
+  const { isBooked, onDeleteModalOpen } = useContext(SlotContext);
 
   return (
     <HStack w="100%" p="8px" spacing="4px">
@@ -23,6 +23,7 @@ export const ButtonGroup: React.FC = () => {
         bg="red"
         color="white"
         aria-label="Удалить слот"
+        onClick={onDeleteModalOpen}
       />
     </HStack>
   );

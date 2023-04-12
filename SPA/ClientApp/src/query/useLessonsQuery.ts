@@ -1,10 +1,11 @@
-import { useQuery } from 'react-query';
+import { useQueries } from 'react-query';
 import { lessonsKey } from './queryKeys';
 import LessonsAPI from '../api/lessons';
 
-export function useLessonsQuery(tutorId: string) {
-  return useQuery({
-    queryKey: [lessonsKey, tutorId],
-    queryFn: () => LessonsAPI.getTutorLessons(tutorId),
-  });
+export function useLessonsQuery(tutorId: string, dates: Date[]) {
+  const queries = dates.map((date) => ({
+    queryKey: [lessonsKey, tutorId, date],
+    queryFn: () => LessonsAPI.getTutorLessons(tutorId, date),
+  }));
+  return useQueries(queries);
 }
