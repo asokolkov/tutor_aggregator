@@ -83,6 +83,7 @@ internal static class ServiceCollectionExtensions
             .AddScoped<ILessonsRepository, LessonsRepository>();
 
         services
+            .AddScoped<IAuthorizationHandler, CancelLessonAuthorizationHandler>()
             .AddScoped<IAuthorizationHandler, DeleteLessonAuthorizationHandler>()
             .AddScoped<IAuthorizationHandler, CreateLessonAuthorizationHandler>()
             .AddScoped<IAuthorizationHandler, BookLessonAuthorizationHandler>()

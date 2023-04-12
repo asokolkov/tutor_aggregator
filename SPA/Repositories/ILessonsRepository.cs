@@ -12,4 +12,5 @@ internal interface ILessonsRepository
     Task<Lesson?> InsertAsync(Guid tutor, Lesson lesson);
     Task<Lesson?> MakeBookedAsync(Guid studentId, Guid lessonId);
     Task<Lesson?> MakeDeletedAsync(Guid id);
+    Task<Lesson?> MakeEmptyAsync(Guid id);
 }

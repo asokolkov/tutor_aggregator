@@ -93,6 +93,9 @@ builder.Services.AddAuthorization(
             Policies.DeleteLessonPolicy,
             policy => { policy.AddRequirements(new DeleteLessonRequirement()); });
         authorization.AddPolicy(
+            Policies.CancelLessonPolicy,
+            policy => { policy.AddRequirements(new CancelLessonRequirement()); });
+        authorization.AddPolicy(
             Policies.BookLessonPolicy,
             policy => { policy.AddRequirements(new BookLessonRequirement()); });
         authorization.AddPolicy(

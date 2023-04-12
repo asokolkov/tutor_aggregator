@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SPA.Application.Lessons.Commands.BookLessonCommand;
+using SPA.Application.Lessons.Commands.CancelLessonCommand;
 using SPA.Application.Lessons.Commands.CreateLessonCommand;
 using SPA.Application.Lessons.Commands.DeleteLessonCommand;
 using SPA.Authorization;
@@ -44,7 +45,7 @@ public sealed class V1LessonsController : ControllerBase
     }
 
     [Authorize(Policy = Policies.BookLessonPolicy)]
-    [HttpPost("{id:guid}/book")]
+    [HttpPatch("{id:guid}/book")]
     [SwaggerResponse(200, "OK", typeof(V1LessonDto))]
     public async Task<IActionResult> BookAsync(Guid id)
     {
@@ -62,11 +63,25 @@ public sealed class V1LessonsController : ControllerBase
     }
 
     [Authorize(Policy = Policies.DeleteLessonPolicy)]
-    [HttpPost("{id:guid}/delete")]
+    [HttpPatch("{id:guid}/delete")]
+    [SwaggerResponse(200, "OK", typeof(V1LessonDto))]
+    public async Task<IActionResult> DeleteAsync(Guid id)
+    {
+        var command = new DeleteLessonCommand(id);
+        
+        var lesson = await mediator.Send(command);
+        if (lesson is null)
+            return BadRequest();
+        
+        return Ok(mapper.Map<V1LessonDto>(lesson));
+    }
+    
+    [Authorize(Policy = Policies.CancelLessonPolicy)]
+    [HttpPatch("{id:guid}/cancel")]
     [SwaggerResponse(200, "OK", typeof(V1LessonDto))]
     public async Task<IActionResult> CancelAsync(Guid id)
     {
-        var command = new DeleteLessonCommand(id);
+        var command = new CancelLessonCommand(id);
         
         var lesson = await mediator.Send(command);
         if (lesson is null)

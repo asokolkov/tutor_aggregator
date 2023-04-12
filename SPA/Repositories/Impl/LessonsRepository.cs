@@ -127,4 +127,27 @@ internal sealed class LessonsRepository : ILessonsRepository
             return default;
         }
     }
+    
+    public async Task<Lesson?> MakeEmptyAsync(Guid id)
+    {
+        var lessonEntity = await context.Lessons.FindAsync(id);
+        if (lessonEntity is null)
+            return null;
+        
+        lessonEntity.Status = LessonStatus.Empty;
+
+        await using var transaction = await context.Database.BeginTransactionAsync();
+        await transaction.CreateSavepointAsync("BeforeInsert");
+        try
+        {
+            await context.SaveChangesAsync();
+            await transaction.CommitAsync();
+            return mapper.Map<Lesson>(lessonEntity);
+        }
+        catch (Exception)
+        {
+            await transaction.RollbackToSavepointAsync("BeforeInsert");
+            return default;
+        }
+    }
 }
