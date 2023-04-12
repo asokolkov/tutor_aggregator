@@ -3,10 +3,10 @@ import { useState } from 'react';
 import { useLessonTab } from '../Lessons/YourLessonsTab/useLessonTab';
 import { Center, Divider, HStack, VStack } from '@chakra-ui/react';
 import { PaginationMenu } from '../Lessons/components/PaginationMenu';
-import { dateShift } from '../Lessons/YourLessonsTab/helper';
 import { LoadBar } from '../sharedComponents/LoadBar/LoadBar';
 import { useTutorId } from '../../routes/params';
 import { DayColumnWithSlots } from './components/DayColumnWithSlots';
+import { dateShift } from '../sharedComponents/Slot/_helpers';
 
 const COLUMN_COUNT = 4;
 

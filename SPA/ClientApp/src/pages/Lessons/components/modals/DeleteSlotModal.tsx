@@ -10,9 +10,11 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react';
-import { DisclosureProps } from './_shared';
 import LessonsAPI from '../../../../api/lessons';
-import { getTimeFromDate } from '../../../sharedComponents/Slot/_helpers';
+import {
+  DisclosureProps,
+  getTimeFromDate,
+} from '../../../sharedComponents/Slot/_helpers';
 import { useContext, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { lessonsKey } from '../../../../query/queryKeys';

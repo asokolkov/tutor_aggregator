@@ -10,16 +10,18 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
-import { dayAndMonth } from '../../YourLessonsTab/helper';
 import { NewSlotInputTime } from '../DayColumn/NewSlotInputTime';
 import { NewSlotInputPrice } from '../DayColumn/NewSlotInputPrice';
 import { Form, Formik } from 'formik';
 import LessonsAPI, { LessonType } from '../../../../api/lessons';
-import { DisclosureProps } from './_shared';
 import { slotInputValues, SlotInputValuesProps } from './_formikHelper';
 import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { lessonsKey } from '../../../../query/queryKeys';
+import {
+  dayAndMonth,
+  DisclosureProps,
+} from '../../../sharedComponents/Slot/_helpers';
 
 type Props = {
   disclosure: DisclosureProps;

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { DisclosureProps } from '../../Lessons/components/modals/_shared';
 import { useContext, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { SlotContext } from '../../../contexts/SlotContext';
@@ -16,6 +15,7 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react';
+import { DisclosureProps } from '../../sharedComponents/Slot/_helpers';
 
 type Props = {
   disclosure: DisclosureProps;

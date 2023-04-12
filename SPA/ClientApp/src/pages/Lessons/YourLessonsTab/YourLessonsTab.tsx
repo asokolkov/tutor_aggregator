@@ -6,7 +6,7 @@ import { LoadBar } from '../../sharedComponents/LoadBar/LoadBar';
 import { Center, Divider, HStack, VStack } from '@chakra-ui/react';
 import { useLessonTab } from './useLessonTab';
 import { PaginationMenu } from '../components/PaginationMenu';
-import { dateShift } from './helper';
+import { dateShift } from '../../sharedComponents/Slot/_helpers';
 
 const COLUMN_COUNT = 4;
 
