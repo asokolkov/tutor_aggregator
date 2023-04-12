@@ -10,6 +10,6 @@ internal interface ILessonsRepository
     Task<ICollection<Lesson>> GetStudentLessonsAsync(Guid studentId);
     Task<ICollection<Lesson>> GetTutorLessonsAsync(Guid tutorId, DateTimeOffset date);
     Task<Lesson?> InsertAsync(Guid tutor, Lesson lesson);
-    Task<Lesson?> MakeBookedAsync(Student student, Lesson lesson);
+    Task<Lesson?> MakeBookedAsync(Guid studentId, Guid lessonId);
     Task<Lesson?> MakeDeletedAsync(Guid id);
 }
