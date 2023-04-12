@@ -4,10 +4,8 @@ import {
   WrapItem,
   HStack,
   VStack,
-  Button,
   Stack,
   Flex,
-  useDisclosure,
   useBreakpointValue,
   Divider,
 } from '@chakra-ui/react';
@@ -19,11 +17,11 @@ import educationIcon from '../../assets/images/educations-icon.png';
 import requirementsIcon from '../../assets/images/requirements-icon.png';
 import aboutIcon from '../../assets/images/about-icon.png';
 import awardsIcon from '../../assets/images/awards-icon.png';
-import RegisterModal from './modal/RegisterModal';
-import ContactsPopoverButton from './components/ContactsPopoverButton';
 import { ReviewStarWithStats } from './components/ReviewStarWithStats';
 import React from 'react';
 import { Tutor } from '../../api/tutors';
+import { ButtonSection } from './components/ButtonSection';
+import { mapCollectionToString } from './components/_helpers';
 
 export const CardInfo = ({ tutor }: CardInfoProps) => {
   const {
@@ -42,21 +40,12 @@ export const CardInfo = ({ tutor }: CardInfoProps) => {
   } = tutor;
 
   const fullName = `${firstName} ${lastName}`;
-  const mapCollectionToString = (collection: string[]) => {
-    return collection.join(', ');
-  };
 
   const isDesktop = useBreakpointValue({ base: false, lg: true });
-  const {
-    isOpen: isOpenRegister,
-    onOpen: onOpenRegister,
-    onClose: onCloseRegister,
-  } = useDisclosure();
   const nameSize = isDesktop ? '3xl' : '2xl';
   const jobSize = isDesktop ? 'xl' : 'md';
   return (
     <>
-      <RegisterModal isOpen={isOpenRegister} onClose={onCloseRegister} />
       <Stack
         w="100%"
         bg={'#ffffff'}
@@ -133,18 +122,7 @@ export const CardInfo = ({ tutor }: CardInfoProps) => {
             >
               <ReviewStarWithStats rating={rating} />
             </Flex>
-            <ContactsPopoverButton
-              contacts={mapCollectionToString(contacts.map((c) => c.value))}
-            />
-            <Button
-              size={'md'}
-              colorScheme={'green'}
-              width={'100%'}
-              onClick={onOpenRegister}
-              margin={isDesktop ? '0 0 0 1em' : '8px 0 0 0'}
-            >
-              Записаться на занятие
-            </Button>
+            <ButtonSection contacts={contacts} />
           </Flex>
         </Flex>
       </Stack>
