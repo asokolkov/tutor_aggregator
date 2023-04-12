@@ -1,4 +1,10 @@
 import * as React from 'react';
+import { DisclosureProps } from '../../Lessons/components/modals/_shared';
+import { useContext, useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import { SlotContext } from '../../../contexts/SlotContext';
+import LessonsAPI from '../../../api/lessons';
+import { lessonsKey } from '../../../query/queryKeys';
 import {
   Button,
   Modal,
@@ -10,26 +16,20 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react';
-import { DisclosureProps } from './_shared';
-import LessonsAPI from '../../../../api/lessons';
-import { getTimeFromDate } from '../../../sharedComponents/Slot/_helpers';
-import { useContext, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
-import { lessonsKey } from '../../../../query/queryKeys';
-import { SlotContext } from '../../../../contexts/SlotContext';
+import { getTimeFromDate } from '../../sharedComponents/Slot/_helpers';
 
 type Props = {
   disclosure: DisclosureProps;
 };
-export const DeleteSlotModal: React.FC<Props> = ({ disclosure }) => {
+export const BookLessonModal: React.FC<Props> = ({ disclosure }) => {
   const { isOpen, onClose } = disclosure;
   const [isSubmitLoading, setSubmitLoading] = useState(false);
   const queryClient = useQueryClient();
-  const context = useContext(SlotContext);
+  const { tutorName, startDate, endDate, id } = useContext(SlotContext);
 
   const onSubmit = async () => {
     setSubmitLoading(true);
-    await LessonsAPI.deleteLesson(context.id);
+    await LessonsAPI.bookLesson(id);
     setSubmitLoading(false);
     onClose();
   };
@@ -44,12 +44,16 @@ export const DeleteSlotModal: React.FC<Props> = ({ disclosure }) => {
       <ModalOverlay />
       <ModalContent>
         <ModalBody>
-          <ModalHeader>Вы действительно хотите удалить слот?</ModalHeader>
+          <ModalHeader>
+            Вы действительно хотите записаться на занятие?
+          </ModalHeader>
           <ModalCloseButton />
-          <Text>Выбранный слот будет удален.</Text>
+          <Text>Вы записываетесь на занятие к преподавателю:</Text>
+          <Text variant="semibold">{tutorName}</Text>
+          <Text>Время занятия:</Text>
           <Text variant="semibold">
-            {`Время: ${getTimeFromDate(context.startDate)} - ${getTimeFromDate(
-              context.endDate
+            {`Время: ${getTimeFromDate(startDate)} - ${getTimeFromDate(
+              endDate
             )}`}
           </Text>
         </ModalBody>
@@ -60,7 +64,7 @@ export const DeleteSlotModal: React.FC<Props> = ({ disclosure }) => {
             colorScheme="blue"
             onClick={() => mutation.mutate()}
           >
-            Удалить
+            Записаться
           </Button>
           <Button variant="ghost" onClick={onClose}>
             Отмена

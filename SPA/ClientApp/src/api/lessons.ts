@@ -61,4 +61,14 @@ export default class LessonsAPI {
   static async deleteLesson(lessonId: string) {
     await axiosInstance.post(`api/v1/lessons/${lessonId}/delete`);
   }
+
+  static async bookLesson(lessonId: string) {
+    await axiosInstance.post(`api/v1/lessons/${lessonId}/delete`);
+  }
+
+  static async cancelLesson(lessonId: string) {
+    await axiosInstance.get(
+      `/api/v1/students/current/lessons/${lessonId}/cancel`
+    );
+  }
 }

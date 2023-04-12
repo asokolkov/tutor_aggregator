@@ -4,7 +4,7 @@ import Footer from './Footer';
 import { ChakraProvider, Container } from '@chakra-ui/react';
 import Theme from '../../assets/theme';
 import { UserContext } from '../../contexts/UserContext';
-import { LoadBar } from '../../pages/sharedComponents/LoadBar';
+import { LoadBar } from '../../pages/sharedComponents/LoadBar/LoadBar';
 import { useUser } from './hooks';
 import React, { useMemo } from 'react';
 

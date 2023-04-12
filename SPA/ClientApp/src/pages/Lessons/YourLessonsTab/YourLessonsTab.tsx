@@ -2,13 +2,13 @@ import * as React from 'react';
 import { useContext, useState } from 'react';
 import { UserContext } from '../../../contexts/UserContext';
 import { DayColumnWithSlots } from '../components/DayColumn/DayColumnWithSlots';
-import { LoadBar } from '../../sharedComponents/LoadBar';
-import { HStack, VStack } from '@chakra-ui/react';
+import { LoadBar } from '../../sharedComponents/LoadBar/LoadBar';
+import { Center, Divider, HStack, VStack } from '@chakra-ui/react';
 import { useLessonTab } from './useLessonTab';
 import { PaginationMenu } from '../components/PaginationMenu';
 import { dateShift } from './helper';
 
-const COLUMN_COUNT = 2;
+const COLUMN_COUNT = 4;
 
 export const YourLessonsTab: React.FC = () => {
   const { user } = useContext(UserContext);
@@ -38,11 +38,19 @@ export const YourLessonsTab: React.FC = () => {
         <LoadBar description={'Загружаем данные ваших уроков'} />
       ) : (
         <HStack spacing="20px" align="stretch">
+          <Center height="500px">
+            <Divider orientation="vertical" />
+          </Center>
           {queries.map((query, i) => (
-            <DayColumnWithSlots
-              lessons={query.data}
-              date={dateShift(currentDate, i)}
-            />
+            <>
+              <DayColumnWithSlots
+                lessons={query.data}
+                date={dateShift(currentDate, i)}
+              />
+              <Center height="500px">
+                <Divider orientation="vertical" />
+              </Center>
+            </>
           ))}
         </HStack>
       )}

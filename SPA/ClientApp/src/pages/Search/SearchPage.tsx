@@ -2,7 +2,7 @@ import { SimpleGrid, VStack } from '@chakra-ui/react';
 import SearchCardInfo from './components/SearchCardInfo';
 import { SearchParamsSection } from './SearchParamsSection';
 import './SearchPage.css';
-import { LoadBar } from '../sharedComponents/LoadBar';
+import { LoadBar } from '../sharedComponents/LoadBar/LoadBar';
 import { useSearchPageQuery } from '../../query/useSearchPageQuery';
 import { useMutation } from 'react-query';
 import TutorsAPI from '../../api/tutors';

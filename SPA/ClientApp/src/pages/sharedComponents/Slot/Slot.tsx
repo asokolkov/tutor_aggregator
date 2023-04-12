@@ -1,19 +1,22 @@
 import * as React from 'react';
-import { HStack, useDisclosure } from '@chakra-ui/react';
+import { HStack } from '@chakra-ui/react';
 import { TimeBox } from './TimeBox';
-import { SlotContext } from '../../../../contexts/SlotContext';
+import { SlotContext } from '../../../contexts/SlotContext';
 import { SlotInfo } from './SlotInfo';
-import { Lesson } from '../../../../api/lessons';
+import { Lesson } from '../../../api/lessons';
 import { useMemo } from 'react';
 import './Slot.css';
-import { DeleteSlotModal } from '../modals/DeleteSlotModal';
 
-export const Slot: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
-  const disclosure = useDisclosure();
+type Props = {
+  lesson: Lesson;
+  forTutor: boolean;
+};
 
+export const Slot: React.FC<Props> = ({ forTutor, lesson }) => {
   const providerValue = useMemo(
     () => ({
-      onDeleteModalOpen: disclosure.onOpen,
+      id: lesson.id,
+      isForTutor: forTutor,
       type: lesson.type,
       startDate: lesson.start,
       endDate: lesson.end,
@@ -22,6 +25,7 @@ export const Slot: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
       studentName: lesson.student
         ? `${lesson.student.firstName} ${lesson.student.lastName}`
         : undefined,
+      tutorName: `${lesson.tutor.firstName} ${lesson.tutor.lastName}`,
     }),
     [lesson]
   );
@@ -34,7 +38,6 @@ export const Slot: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
           <SlotInfo />
         </HStack>
       </SlotContext.Provider>
-      <DeleteSlotModal disclosure={disclosure} lesson={lesson} />
     </>
   );
 };
