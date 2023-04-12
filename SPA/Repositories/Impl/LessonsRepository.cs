@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 
 using AutoMapper;
 using EFCore.Postgres.Application.Contexts;
@@ -39,7 +39,7 @@ internal sealed class LessonsRepository : ILessonsRepository
         var zeroTimeZoneDate = date.ToOffset(TimeSpan.Zero).UtcDateTime.Date;
 
         var entities = await context.Lessons
-            .Where(e => e.Tutor.Id == tutorId /* TODO && e.Start.UtcDateTime.Date == zeroTimeZoneDate*/)
+            .Where(e => e.Tutor.Id == tutorId && e.Start.UtcDateTime.Date == zeroTimeZoneDate)
             .ToListAsync();
         var models = mapper.Map<ICollection<Lesson>>(entities);
 
