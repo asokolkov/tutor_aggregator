@@ -1,47 +1,32 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace SPA.Repositories.Impl;
-
+﻿using AutoMapper;
 using EFCore.Postgres.Application.Contexts;
 using EFCore.Postgres.Application.Models.Entities;
+using SPA.Domain;
+
+namespace SPA.Repositories.Impl;
 
 internal sealed class AvatarsRepository : IAvatarsRepository
 {
     private readonly ApplicationContext context;
-    private readonly DbSet<AvatarEntity> table;
+    private readonly IMapper mapper;
 
-    public AvatarsRepository(ApplicationContext context)
+    public AvatarsRepository(ApplicationContext context, IMapper mapper)
     {
         this.context = context;
-        table = context.Avatars;
+        this.mapper = mapper;
     }
-    
-    public async Task<byte[]> Get(Guid id)
+
+    public async Task<byte[]> GetAsync(Guid id)
     {
-        var entity = await table.FindAsync(id);
-        return entity?.Image;
+        var avatar = await context.Avatars.FindAsync(id);
+        return avatar?.Image;
     }
-    
-    public async Task<byte[]> Create(Guid id, byte[] image)
+
+    public async Task<byte[]> InsertAsync(Avatar avatar)
     {
-        await using var transaction = await context.Database.BeginTransactionAsync();
-        await transaction.CreateSavepointAsync("BeforeTransaction");
-        try
-        {
-            var avatarEntity = new AvatarEntity
-            {
-                Id = id,
-                Image = image
-            };
-            await table.AddAsync(avatarEntity);
-            await context.SaveChangesAsync();
-            await transaction.CommitAsync();
-            return image;
-        }
-        catch (Exception)
-        {
-            await transaction.RollbackToSavepointAsync("BeforeTransaction");
-            return default;
-        }
+        var t = mapper.Map<AvatarEntity>(avatar);
+        await context.Avatars.AddAsync(t);
+        await context.SaveChangesAsync();
+        return avatar.Image;
     }
 }

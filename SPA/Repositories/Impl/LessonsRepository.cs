@@ -22,8 +22,7 @@ internal sealed class LessonsRepository : ILessonsRepository
 
     public async Task<Lesson?> GetAsync(Guid id)
     {
-        var lessonEntity = await context.Lessons.FindAsync(id);
-        return mapper.Map<Lesson>(lessonEntity);
+        return mapper.Map<Lesson>(await context.Lessons.FindAsync(id));
     }
 
     public async Task<ICollection<Lesson>> GetStudentLessonsAsync(Guid studentId)
