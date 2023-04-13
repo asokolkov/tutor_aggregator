@@ -39,7 +39,10 @@ internal sealed class LessonsRepository : ILessonsRepository
         var zeroTimeZoneDate = date.ToOffset(TimeSpan.Zero).UtcDateTime.Date;
 
         var entities = await context.Lessons
-            .Where(e => e.Tutor.Id == tutorId && e.Start.UtcDateTime.Date == zeroTimeZoneDate)
+            .Where(e => 
+                e.Tutor.Id == tutorId && 
+                e.Start.UtcDateTime.Date == zeroTimeZoneDate &&
+                (e.Status == LessonStatus.Empty || e.Status == LessonStatus.Booked))
             .ToListAsync();
         var models = mapper.Map<ICollection<Lesson>>(entities);
 
@@ -60,21 +63,10 @@ internal sealed class LessonsRepository : ILessonsRepository
 
         var lessonEntity = mapper.Map<LessonEntity>(lesson);
         lessonEntity.Tutor = tutorEntity;
-
-        await using var transaction = await context.Database.BeginTransactionAsync();
-        await transaction.CreateSavepointAsync("BeforeInsert");
-        try
-        {
-            var entityEntry = await context.Lessons.AddAsync(lessonEntity);
-            await context.SaveChangesAsync();
-            await transaction.CommitAsync();
-            return mapper.Map<Lesson>(entityEntry.Entity);
-        }
-        catch (Exception)
-        {
-            await transaction.RollbackToSavepointAsync("BeforeInsert");
-            return default;
-        }
+        
+        await context.Lessons.AddAsync(lessonEntity);
+        await context.SaveChangesAsync();
+        return mapper.Map<Lesson>(lessonEntity);
     }
 
     public async Task<Lesson?> MakeBookedAsync(Guid studentId, Guid lessonId)
@@ -90,64 +82,32 @@ internal sealed class LessonsRepository : ILessonsRepository
         lesson.Student = student;
         lesson.Status = LessonStatus.Booked;
 
-        await using var transaction = await context.Database.BeginTransactionAsync();
-        await transaction.CreateSavepointAsync("BeforeInsert");
-        try
-        {
-            await context.SaveChangesAsync();
-            await transaction.CommitAsync();
-            return mapper.Map<Lesson>(lesson);
-        }
-        catch (Exception)
-        {
-            await transaction.RollbackToSavepointAsync("BeforeInsert");
-            return default;
-        }
+        await context.SaveChangesAsync();
+        return mapper.Map<Lesson>(lesson);
     }
 
     public async Task<Lesson?> MakeDeletedAsync(Guid id)
     {
-        var lessonEntity = await context.Lessons.FindAsync(id);
-        if (lessonEntity is null)
+        var lesson = await context.Lessons.FindAsync(id);
+        if (lesson is null || (lesson.Status != LessonStatus.Empty && lesson.Status != LessonStatus.Booked))
             return null;
         
-        lessonEntity.Status = LessonStatus.Deleted;
+        lesson.Status = LessonStatus.Deleted;
 
-        await using var transaction = await context.Database.BeginTransactionAsync();
-        await transaction.CreateSavepointAsync("BeforeInsert");
-        try
-        {
-            await context.SaveChangesAsync();
-            await transaction.CommitAsync();
-            return mapper.Map<Lesson>(lessonEntity);
-        }
-        catch (Exception)
-        {
-            await transaction.RollbackToSavepointAsync("BeforeInsert");
-            return default;
-        }
+        await context.SaveChangesAsync();
+        return mapper.Map<Lesson>(lesson);
     }
     
     public async Task<Lesson?> MakeEmptyAsync(Guid id)
     {
-        var lessonEntity = await context.Lessons.FindAsync(id);
-        if (lessonEntity is null)
+        var lesson = await context.Lessons.FindAsync(id);
+        if (lesson is null || lesson.Status != LessonStatus.Booked)
             return null;
         
-        lessonEntity.Status = LessonStatus.Empty;
+        lesson.Student = null;
+        lesson.Status = LessonStatus.Empty;
 
-        await using var transaction = await context.Database.BeginTransactionAsync();
-        await transaction.CreateSavepointAsync("BeforeInsert");
-        try
-        {
-            await context.SaveChangesAsync();
-            await transaction.CommitAsync();
-            return mapper.Map<Lesson>(lessonEntity);
-        }
-        catch (Exception)
-        {
-            await transaction.RollbackToSavepointAsync("BeforeInsert");
-            return default;
-        }
+        await context.SaveChangesAsync();
+        return mapper.Map<Lesson>(lesson);
     }
 }
