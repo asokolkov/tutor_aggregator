@@ -2,6 +2,8 @@ import * as React from 'react';
 import { useState } from 'react';
 import {
   Button,
+  FormControl,
+  FormErrorMessage,
   HStack,
   Modal,
   ModalBody,
@@ -29,20 +31,37 @@ type Props = {
   date: Date;
 };
 
+type TimeBoxValues = {
+  hours: number;
+  minutes: number;
+};
+
 export const AddNewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
   const { isOpen, onClose } = disclosure;
   const [isSubmitLoading, setSubmitLoading] = useState(false);
   const queryClient = useQueryClient();
+  const [formErrorMessage, setFormErrorMessage] = useState('');
 
   const getHoursAndMinutes = (forInput: string) => {
     const [hours, minutes] = forInput.split(':');
     return { hours: +hours, minutes: +minutes };
   };
 
+  const validateTime = (start: TimeBoxValues, end: TimeBoxValues) => {
+    if (start.hours > end.hours || start.minutes > end.minutes) {
+      setFormErrorMessage('Время начала должно быть не позже времени конца');
+      setSubmitLoading(false);
+      return false;
+    }
+    return true;
+  };
+
   const onSubmit = async (values: SlotInputValuesProps) => {
     setSubmitLoading(true);
     const startValues = getHoursAndMinutes(values.startTime);
     const endValues = getHoursAndMinutes(values.endTime);
+
+    if (!validateTime(startValues, endValues)) return;
 
     const startDate = new Date(date);
     startDate.setHours(startValues.hours);
@@ -81,29 +100,33 @@ export const AddNewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
                 Добавить новый слот на {dayAndMonth(date)}
               </ModalHeader>
               <ModalCloseButton />
-
-              <HStack>
-                <NewSlotInputTime
-                  label={'Начало'}
-                  placeholder={'9:00'}
-                  name={'startTime'}
-                />
-                <NewSlotInputTime
-                  label={'Конец'}
-                  placeholder={'10:30'}
-                  name={'endTime'}
-                />
-                <NewSlotInputPrice
-                  label={'₽ / час'}
-                  placeholder={'1000 ₽'}
-                  name={'price'}
-                />
-                <NewSlotInputSwitch
-                  label={'Онлайн'}
-                  placeholder={''}
-                  name={'isOnline'}
-                />
-              </HStack>
+              <FormControl isInvalid={!!formErrorMessage}>
+                <HStack>
+                  <NewSlotInputTime
+                    label={'Начало'}
+                    placeholder={'9:00'}
+                    name={'startTime'}
+                  />
+                  <NewSlotInputTime
+                    label={'Конец'}
+                    placeholder={'10:30'}
+                    name={'endTime'}
+                  />
+                  <NewSlotInputPrice
+                    label={'₽ / час'}
+                    placeholder={'1000 ₽'}
+                    name={'price'}
+                  />
+                  <NewSlotInputSwitch
+                    label={'Онлайн'}
+                    placeholder={''}
+                    name={'isOnline'}
+                  />
+                </HStack>
+                <FormErrorMessage color={'red'}>
+                  {formErrorMessage}
+                </FormErrorMessage>
+              </FormControl>
             </ModalBody>
 
             <ModalFooter>
