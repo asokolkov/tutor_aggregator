@@ -8,29 +8,14 @@ import {
 } from '@chakra-ui/react';
 import { SelectOptions } from './components/SelectOptions';
 import searchIcon from '../../assets/images/search_icon_bg.png';
-import { useSearchParams } from 'react-router-dom';
-
-const SearchParams = {
-  subject: 'subject',
-  district: 'district',
-  price: 'price',
-  rating: 'rating',
-};
+import { useLocationQuery } from '../../query/useLocationQuery';
+import { useSubjectQuery } from '../../query/useSubjectQuery';
 
 export const SearchParamsSection: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
-
-  const [searchParamsState, searchParamsSetState] = useSearchParams({
-    district: 'Уралмаш',
-    price: 'Любая',
-    rating: 'Любой',
-    subject: 'Математика',
-  });
-
-  const updateSearchParam = (paramName: string, newState: string) => {
-    searchParamsState.set(paramName, newState);
-    searchParamsSetState(searchParamsState);
-  };
+  const { locationsQuery } = useLocationQuery();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { subjectQuery } = useSubjectQuery();
 
   return (
     <Box
@@ -71,14 +56,10 @@ export const SearchParamsSection: React.FC = () => {
         <GridItem area={'subject'} alignItems={'center'}>
           <SelectOptions
             label={'Предмет'}
-            options={[
-              ['Математика', 'Математика'],
-              ['Программирование', 'Программирование'],
-              ['История', 'История'],
-            ]}
-            value={searchParamsState.get(SearchParams.subject)}
-            updateState={(newState) =>
-              updateSearchParam(SearchParams.subject, newState)
+            options={
+              locationsQuery.isLoading
+                ? []
+                : locationsQuery.data.items.map((location) => location.district)
             }
             name="subject"
           />
@@ -86,14 +67,10 @@ export const SearchParamsSection: React.FC = () => {
         <GridItem area={'district'}>
           <SelectOptions
             label={'Район'}
-            options={[
-              ['Уралмаш', 'Уралмаш'],
-              ['Ленинский', 'Ленинский'],
-              ['Ботанический', 'Ботанический'],
-            ]}
-            value={searchParamsState.get(SearchParams.district)}
-            updateState={(newState) =>
-              updateSearchParam(SearchParams.district, newState)
+            options={
+              locationsQuery.isLoading
+                ? []
+                : locationsQuery.data.items.map((location) => location.district)
             }
             name="district"
           />
@@ -102,32 +79,20 @@ export const SearchParamsSection: React.FC = () => {
           <SelectOptions
             label={'Цена'}
             options={[
-              ['Любая', '-1'],
-              ['< 1000 ₽ за час', '1000'],
-              ['< 800 ₽ за час', '800'],
-              ['< 700 ₽ за час', '700'],
-              ['< 600 ₽ за час', '600'],
-              ['< 500 ₽ за час', '500'],
+              'Любая',
+              '< 1000 ₽ за час',
+              '< 800 ₽ за час',
+              '< 700 ₽ за час',
+              '< 600 ₽ за час',
+              '< 500 ₽ за час',
             ]}
-            value={searchParamsState.get(SearchParams.price)}
-            updateState={(newState) =>
-              updateSearchParam(SearchParams.price, newState)
-            }
             name="price"
           />
         </GridItem>
         <GridItem area={'rating'}>
           <SelectOptions
             label={'Рейтинг'}
-            options={[
-              ['Любой', '-1'],
-              ['⭐⭐⭐⭐ и более', '4'],
-              ['⭐⭐⭐ и более', '3'],
-            ]}
-            value={searchParamsState.get(SearchParams.rating)}
-            updateState={(newState) =>
-              updateSearchParam(SearchParams.rating, newState)
-            }
+            options={['Любой', '⭐⭐⭐⭐ и более', '⭐⭐⭐ и более']}
             name="rating"
           />
         </GridItem>
