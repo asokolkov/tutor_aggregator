@@ -20,15 +20,7 @@ internal sealed class LessonsManager : ILessonsManager
     
     public async Task<Lesson?> BookAsync(Guid studentId, Guid lessonId)
     {
-        var student = await studentsRepository.GetAsync(studentId);
-        if (student is null)
-            return null;
-
-        var lesson = await lessonsRepository.GetAsync(lessonId);
-        if (lesson is null || lesson.Status != LessonStatus.Empty)
-            return null;
-        
-        return await lessonsRepository.MakeBookedAsync(student, lesson);
+        return await lessonsRepository.MakeBookedAsync(studentId, lessonId);
     }
 
     public async Task<Lesson?> CreateAsync(Guid tutorId, double price, LessonType type, DateTimeOffset start, DateTimeOffset end)
@@ -49,5 +41,10 @@ internal sealed class LessonsManager : ILessonsManager
     public async Task<Lesson?> DeleteAsync(Guid id)
     {
         return await lessonsRepository.MakeDeletedAsync(id);
+    }
+
+    public async Task<Lesson?> CancelAsync(Guid id)
+    {
+        return await lessonsRepository.MakeEmptyAsync(id);
     }
 }

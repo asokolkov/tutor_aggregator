@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {
+  Alert,
+  AlertIcon,
   Button,
   Modal,
   ModalBody,
@@ -9,26 +11,31 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  VStack,
 } from '@chakra-ui/react';
-import { DisclosureProps } from './_shared';
-import LessonsAPI, { Lesson } from '../../../../api/lessons';
-import { getTimeFromDate } from '../Slot/_helpers';
-import { useState } from 'react';
+import LessonsAPI from '../../../../api/lessons';
+import {
+  DisclosureProps,
+  getTimeFromDate,
+} from '../../../sharedComponents/Slot/_helpers';
+import { useContext, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { lessonsKey } from '../../../../query/queryKeys';
+import { SlotContext } from '../../../../contexts/SlotContext';
 
 type Props = {
   disclosure: DisclosureProps;
-  lesson: Lesson;
 };
-export const DeleteSlotModal: React.FC<Props> = ({ disclosure, lesson }) => {
+export const DeleteSlotModal: React.FC<Props> = ({ disclosure }) => {
   const { isOpen, onClose } = disclosure;
   const [isSubmitLoading, setSubmitLoading] = useState(false);
   const queryClient = useQueryClient();
+  const { lesson, studentName, isBooked } = useContext(SlotContext);
+  const { id, start, end } = lesson;
 
   const onSubmit = async () => {
     setSubmitLoading(true);
-    await LessonsAPI.deleteLesson(lesson.id);
+    await LessonsAPI.deleteLesson(id);
     setSubmitLoading(false);
     onClose();
   };
@@ -45,12 +52,23 @@ export const DeleteSlotModal: React.FC<Props> = ({ disclosure, lesson }) => {
         <ModalBody>
           <ModalHeader>Вы действительно хотите удалить слот?</ModalHeader>
           <ModalCloseButton />
-          <Text>Выбранный слот будет удален.</Text>
-          <Text variant="semibold">
-            {`Время: ${getTimeFromDate(lesson.start)} - ${getTimeFromDate(
-              lesson.end
-            )}`}
-          </Text>
+          <VStack align={'start'}>
+            {isBooked && (
+              <Alert status="warning">
+                <AlertIcon />
+                <Text>
+                  На данный слот записан ученик <b>{studentName}</b>. Запись
+                  будет отменена
+                </Text>
+              </Alert>
+            )}
+            <VStack align={'start'} pl="16px" spacing="0">
+              <Text>Выбранный слот будет удален.</Text>
+              <Text variant="semibold">
+                {`Время: ${getTimeFromDate(start)} - ${getTimeFromDate(end)}`}
+              </Text>
+            </VStack>
+          </VStack>
         </ModalBody>
 
         <ModalFooter>

@@ -28,5 +28,4 @@ internal sealed class DeleteLessonAuthorizationHandler : AuthorizationHandler<ID
         if (requirement.IsUserAuthorized(lesson, userId.Value))
             context.Succeed(requirement);
     }
-
 }

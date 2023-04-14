@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, HStack, Text } from '@chakra-ui/react';
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
-import { dayAndMonth } from '../YourLessonsTab/helper';
+import { dayAndMonth } from '../../sharedComponents/Slot/_helpers';
 
 type Props = {
   start: Date;

@@ -10,5 +10,4 @@ internal sealed class DeleteLessonRequirement : IDeleteLessonRequirement
     {
         return lesson.Tutor.Id == userId;
     }
-
 }

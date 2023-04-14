@@ -1,23 +1,28 @@
 import { Avatar, Text, HStack, VStack } from '@chakra-ui/react';
 import { ReviewStar } from './ReviewStar';
 import { Review } from '../../../api/tutors';
+import React from 'react';
 
-export const SingleReview = (props: Review) => {
+type Props = {
+  review: Review;
+};
+
+export const SingleReview: React.FC<Props> = ({ review }) => {
   return (
     <div>
       <HStack spacing={'16px'} align={'start'}>
         <Avatar
-          name={props.studentName}
+          name={review.studentName}
           showBorder={true}
-          src={props.studentAvatar}
+          src={review.studentAvatar}
           size="md"
         />
         <VStack spacing={'16px'} align={'start'}>
           <HStack spacing={'16px'}>
-            <Text as={'b'}>{props.studentName}</Text>
-            <ReviewStar starCount={props.rating} />
+            <Text as={'b'}>{review.studentName}</Text>
+            <ReviewStar starCount={review.rating} />
           </HStack>
-          <Text>{props.description}</Text>
+          <Text>{review.description}</Text>
         </VStack>
       </HStack>
     </div>

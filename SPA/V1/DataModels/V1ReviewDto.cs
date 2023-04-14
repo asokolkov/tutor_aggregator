@@ -9,4 +9,10 @@ public sealed class V1ReviewDto
     
     [JsonProperty("description")]
     public string Description { get; init; }
+    
+    [JsonProperty("student")]
+    public string Student { get; init; }
+    
+    [JsonProperty("updatedAt")]
+    public DateTimeOffset UpdatedAt { get; init; }
 }

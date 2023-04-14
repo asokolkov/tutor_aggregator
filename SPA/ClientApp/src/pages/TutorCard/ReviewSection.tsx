@@ -1,20 +1,18 @@
 import { SingleReview } from './components/SingleReview';
 import { Text, VStack } from '@chakra-ui/react';
-import { Review } from '../../api/tutors';
+import { useContext } from 'react';
+import { TutorCardContext } from '../../contexts/TutorCardContext';
 
-export const ReviewSection = ({ reviews }: ReviewSectionProps) => {
+export const ReviewSection = () => {
+  const context = useContext(TutorCardContext);
   return (
     <VStack w="100%" bg={'white'} spacing={'20px'} align={'start'}>
       <Text fontSize={'2xl'} as="b">
         Отзывы
       </Text>
-      {reviews.map((r) => (
-        <SingleReview {...r} key={r.id} />
+      {context.reviews.items.map((review) => (
+        <SingleReview review={review} key={review.id} />
       ))}
     </VStack>
   );
-};
-
-type ReviewSectionProps = {
-  reviews: Array<Review>;
 };

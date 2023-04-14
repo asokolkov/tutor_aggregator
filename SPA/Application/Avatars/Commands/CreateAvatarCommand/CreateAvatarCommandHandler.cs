@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using MediatR;
+using SPA.Domain;
 using SPA.Repositories;
 
 namespace SPA.Application.Avatars.Commands.CreateAvatarCommand;
@@ -16,6 +17,11 @@ internal class CreateAvatarCommandHandler : IRequestHandler<CreateAvatarCommand,
 
     public async Task<byte[]> Handle(CreateAvatarCommand request, CancellationToken cancellationToken)
     {
-        return await repository.Create(request.Id, request.Image);
+        var avatar = new Avatar
+        {
+            Id = request.Id, 
+            Image = request.Image
+        };
+        return await repository.InsertAsync(avatar);
     }
 }

@@ -25,8 +25,10 @@ internal sealed class V1Profile : Profile
         CreateMap<Page<Location>, V1PageDto<V1LocationDto>>().ReverseMap();
         
         CreateMap<ReviewEntity, Review>().ReverseMap();
-        CreateMap<Review, V1ReviewDto>().ReverseMap();
+        CreateMap<Review, V1ReviewDto>().ForMember(dest => 
+            dest.Student, opt => opt.MapFrom(src => src.Student.FirstName));
         CreateMap<Page<Review>, V1PageDto<V1ReviewDto>>().ReverseMap();
+        CreateMap<Review, V1CreateReviewDto>().ReverseMap();
 
         CreateMap<StudentEntity, Student>().ReverseMap();
         CreateMap<Student, V1StudentDto>().ReverseMap();
@@ -61,5 +63,7 @@ internal sealed class V1Profile : Profile
         
         CreateMap<RequirementEntity, Requirement>().ReverseMap();
         CreateMap<Requirement, V1RequirementDto>().ReverseMap();
+        
+        CreateMap<AvatarEntity, Avatar>().ReverseMap();
     }
 }

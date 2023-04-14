@@ -16,6 +16,6 @@ internal class GetAvatarQueryHandler : IRequestHandler<GetAvatarQuery, byte[]>
 
     public async Task<byte[]> Handle(GetAvatarQuery request, CancellationToken cancellationToken)
     {
-        return await repository.Get(request.Id);
+        return await repository.GetAsync(request.Id);
     }
 }
