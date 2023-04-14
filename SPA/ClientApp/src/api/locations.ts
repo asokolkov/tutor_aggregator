@@ -21,11 +21,4 @@ export default class LocationAPI {
     );
     return response.data;
   }
-
-  static async getLocationById(id: string): Promise<Location> {
-    const response = await axiosInstance.get<Location>(
-      `/api/v1/locations/${id}`
-    );
-    return response.data;
-  }
 }
