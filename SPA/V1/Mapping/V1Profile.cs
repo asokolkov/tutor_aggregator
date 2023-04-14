@@ -63,5 +63,7 @@ internal sealed class V1Profile : Profile
         
         CreateMap<RequirementEntity, Requirement>().ReverseMap();
         CreateMap<Requirement, V1RequirementDto>().ReverseMap();
+        
+        CreateMap<AvatarEntity, Avatar>().ReverseMap();
     }
 }

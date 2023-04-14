@@ -1,10 +1,11 @@
 ﻿#nullable enable
 
+using SPA.Domain;
+
 namespace SPA.Repositories;
 
 internal interface IAvatarsRepository
 {
-    Task<byte[]> Get(Guid id);
-    
-    Task<byte[]> Create(Guid id, byte[] image);
+    Task<byte[]> GetAsync(Guid id);
+    Task<byte[]> InsertAsync(Avatar avatar);
 }
