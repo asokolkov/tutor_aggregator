@@ -38,12 +38,15 @@ public class V1AccountController : ControllerBase
         var signInResult = await signInManager.PasswordSignInAsync(loginDto.Email, loginDto.Password,
             loginDto.RememberMe, false);
 
-        if (signInResult.Succeeded)
-        {
-            return Ok();
-        }
+        if (!signInResult.Succeeded)
+            return Unauthorized();
+        
+        var user = await userManager.FindByEmailAsync(loginDto.Email);
+        
+        var userModel = new User(user.Id, user.FirstName, user.LastName, null,
+            user.AccountType, user.RegistrationCompleted);
 
-        return Unauthorized();
+        return Ok(mapper.Map<V1UserDto>(userModel));
     }
 
     [AllowAnonymous]
