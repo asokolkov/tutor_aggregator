@@ -19,8 +19,6 @@ build-and-test:
 linting:
   image: node:18.12.0
   stage: test 
-  needs:
-    - build 
   script:
     - npm ci
     - npm run lint
