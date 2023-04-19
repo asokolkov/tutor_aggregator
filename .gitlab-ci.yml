@@ -6,7 +6,6 @@ variables:
 stages:
   - test
   - build_and_push
-  - deploy
 
 build-and-test:
   image: mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim
@@ -20,8 +19,9 @@ linting:
   image: node:18.12.0
   stage: test 
   script:
-    - npm --prefix /SPA/ClientApp ci
-    - npm --prefix /SPA/ClientApp run lint
+    - cd ./SPA/ClientApp
+    - npm ci
+    - npm run lint
 
 .docker-build: &build-template
   stage: build_and_push
