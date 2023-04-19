@@ -139,7 +139,7 @@ internal sealed class DataGenerator : IDataGenerator
                     Id = Guid.NewGuid(),
                     Tutor = tutor,
                     Student = studentExists ? extraction.Get(students) : null,
-                    Price = extraction.GetDouble() * 1000,
+                    Price = extraction.GetNumber(10000),
                     Status = LessonStatus.Empty,
                     Type = (LessonType)extraction.GetNumber(2),
                     Start = startTime,
