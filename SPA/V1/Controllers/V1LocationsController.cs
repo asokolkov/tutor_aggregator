@@ -22,7 +22,7 @@ public sealed class V1LocationsController : Controller
     }
 
     [HttpGet]
-    [SwaggerResponse(200, "OK", typeof(V1PageDto<V1LocationDto>))]
+    [SwaggerResponse(200, "OK", typeof(ICollection<V1LocationDto>))]
     public async Task<IActionResult> Get()
     {
         var query = new GetLocationsQuery();
