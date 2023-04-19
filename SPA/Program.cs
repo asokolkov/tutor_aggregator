@@ -10,7 +10,9 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Converters;
 using SPA.Authorization;
 using SPA.Authorization.Requirements;
+using SPA.Authorization.Requirements.Impl;
 using SPA.Extensions;
+using SPA.Identity;
 using SPA.Startup;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +35,7 @@ builder.Services
 builder.Services
     .AddIdentityContext(builder.Configuration.GetConnectionString("Identity"))
     .AddIdentity<ApplicationUser, IdentityRole<Guid>>()
+    .AddErrorDescriber<CustomIdentityErrorDescriber>()
     .AddEntityFrameworkStores<ApplicationIdentityContext>();
 
 builder.Services.ConfigureApplicationCookie(options =>
@@ -87,13 +90,11 @@ builder.Services.AddAuthorization(
             Policies.CreateLessonPolicy,
             policy => { policy.AddRequirements(new CreateLessonRequirement()); });
         authorization.AddPolicy(
+            Policies.DeleteLessonPolicy,
+            policy => { policy.AddRequirements(new DeleteLessonRequirement()); });
+        authorization.AddPolicy(
             Policies.CancelLessonPolicy,
-            policy =>
-            {
-                policy.AddRequirements(
-                    new CancelLessonStudentRequirement(),
-                    new CancelLessonTutorRequirement());
-            });
+            policy => { policy.AddRequirements(new CancelLessonRequirement()); });
         authorization.AddPolicy(
             Policies.BookLessonPolicy,
             policy => { policy.AddRequirements(new BookLessonRequirement()); });

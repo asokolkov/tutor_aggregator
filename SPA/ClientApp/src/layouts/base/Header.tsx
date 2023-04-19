@@ -32,7 +32,7 @@ import {
   SEARCH_PAGE,
   SIGNUP_PAGE,
   LESSONS_PAGE,
-} from '../../route-paths';
+} from '../../routes/routePaths';
 import HeaderButton from './components/HeaderButton';
 import { useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';

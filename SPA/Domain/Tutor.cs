@@ -1,4 +1,6 @@
-﻿namespace SPA.Domain;
+﻿#nullable enable
+
+namespace SPA.Domain;
 
 public sealed class Tutor
 {
@@ -8,23 +10,27 @@ public sealed class Tutor
 
     public string LastName { get; set; }
 
+    public int? Age { get; set; }
+
     public double Rating { get; set; }
-    
-    public Location Location { get; set; }
 
-    public string Requirements { get; set; }
+    public string? Job { get; set; }
 
-    public string Job { get; set; }
-    
-    public string Educations { get; set; }
+    public string? Description { get; set; }
 
-    public string Awards { get; set; }
-    
-    public string Contacts { get; init; }
+    public Location? Location { get; set; }
+
+    public ICollection<TutorEducation> Educations { get; init; }
+
+    public ICollection<Award> Awards { get; init; }
+
+    public ICollection<Requirement> Requirements { get; init; }
+
+    public ICollection<TutorContact> Contacts { get; init; }
 
     public ICollection<Subject> Subjects { get; init; }
-    
+
     public ICollection<Lesson> Lessons { get; init; }
-    
+
     public ICollection<Review> Reviews { get; init; }
 }

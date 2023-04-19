@@ -6,15 +6,15 @@ namespace SPA.Application.Tutors.Queries.GetLessonsQuery;
 
 internal sealed class GetTutorLessonsQueryHandler : IRequestHandler<GetTutorLessonsQuery, ICollection<Lesson>>
 {
-    private readonly ILessonRepository repository;
+    private readonly ILessonsRepository repository;
 
-    public GetTutorLessonsQueryHandler(ILessonRepository repository)
+    public GetTutorLessonsQueryHandler(ILessonsRepository repository)
     {
         this.repository = repository;
     }
 
     public async Task<ICollection<Lesson>> Handle(GetTutorLessonsQuery request, CancellationToken cancellationToken)
     {
-        return await repository.GetTutorLessonsAsync(request.TutorId);
+        return await repository.GetTutorLessonsAsync(request.TutorId, request.Date);
     }
 }

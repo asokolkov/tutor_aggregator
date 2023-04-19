@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import UserAPI, { User } from '../../apis/currentUser';
+import UserAPI, { User } from '../../api/currentUser';
+import { AxiosError } from 'axios';
 
 export function useUser() {
   const [user, setUser] = useState<User>();
@@ -12,10 +13,13 @@ export function useUser() {
     UserAPI.getCurrentUser()
       .then((u) => {
         setUser(u);
-        setLoading(false);
       })
-      .catch((e) => {
-        if (e.response.status === 401) removeUser();
+      .catch((err: AxiosError) => {
+        if (err.response.status === 401) {
+          removeUser();
+        }
+      })
+      .finally(() => {
         setLoading(false);
       });
   }, []);

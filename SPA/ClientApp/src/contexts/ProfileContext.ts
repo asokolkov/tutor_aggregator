@@ -1,11 +1,11 @@
-import { Student } from '../apis/students';
-import { Tutor } from '../apis/tutors';
+import { Student } from '../api/students';
+import { Tutor } from '../api/tutors';
 import React from 'react';
 
-type ContextType = {
+type ContextProps = {
   tutorProfile: Tutor;
   studentProfile: Student;
   isLoading: boolean;
 };
 
-export const ProfileContext = React.createContext<ContextType>(null);
+export const ProfileContext = React.createContext<ContextProps>(null);

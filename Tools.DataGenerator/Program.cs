@@ -1,9 +1,12 @@
 ﻿namespace Tools.DataGenerator;
 
 using DataGeneration;
+using EFCore.Postgres.Application.Contexts;
 using EFCore.Postgres.Extensions;
+using EFCore.Postgres.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Services;
 
 public sealed class Program
 {
@@ -13,18 +16,26 @@ public sealed class Program
             .AddUserSecrets<Program>()
             .Build();
 
-        var applciationConnectionString = configuration.GetConnectionString("Application");
+        var applicationConnectionString = configuration.GetConnectionString("Application");
         var identityConnectionString = configuration.GetConnectionString("Identity");
 
         var services = new ServiceCollection();
         services
             .AddIdentityContext(identityConnectionString)
-            .AddApplicationContext(applciationConnectionString);
+            .AddApplicationContext(applicationConnectionString);
 
         services.AddScoped<IDataGenerator, DataGenerator>();
+        services.AddScoped<IDatabaseCleaner, DatabaseCleaner<ApplicationContext>>();
+        services.AddScoped<IDatabaseCleaner, DatabaseCleaner<ApplicationIdentityContext>>();
 
         var serviceProvider = services.BuildServiceProvider();
         var dataGenerator = serviceProvider.GetRequiredService<IDataGenerator>();
-        await dataGenerator.FillInDatabase();
+        var cleaners = serviceProvider.GetRequiredService<IEnumerable<IDatabaseCleaner>>();
+
+        foreach (var cleaner in cleaners)
+        {
+            await cleaner.CleanupDatabase();
+        }
+        await dataGenerator.FillDatabase();
     }
 }

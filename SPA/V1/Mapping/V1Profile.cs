@@ -11,7 +11,7 @@ internal sealed class V1Profile : Profile
     {
         CreateMap<TutorEntity, Tutor>().ReverseMap();
         CreateMap<Tutor, V1TutorDto>().ReverseMap();
-        CreateMap<Page<Tutor>, V1PageDto<V1TutorDto>>().ReverseMap();
+        CreateMap<Page<Tutor>, V1PageDto<V1TutorInfoDto>>().ReverseMap();
 
         CreateMap<LessonEntity, Lesson>().ReverseMap();
         CreateMap<Lesson, V1LessonDto>().ReverseMap();
@@ -25,8 +25,10 @@ internal sealed class V1Profile : Profile
         CreateMap<Page<Location>, V1PageDto<V1LocationDto>>().ReverseMap();
         
         CreateMap<ReviewEntity, Review>().ReverseMap();
-        CreateMap<Review, V1ReviewDto>().ReverseMap();
+        CreateMap<Review, V1ReviewDto>().ForMember(dest => 
+            dest.Student, opt => opt.MapFrom(src => src.Student.FirstName));
         CreateMap<Page<Review>, V1PageDto<V1ReviewDto>>().ReverseMap();
+        CreateMap<Review, V1CreateReviewDto>().ReverseMap();
 
         CreateMap<StudentEntity, Student>().ReverseMap();
         CreateMap<Student, V1StudentDto>().ReverseMap();
@@ -35,6 +37,12 @@ internal sealed class V1Profile : Profile
         CreateMap<SubjectEntity, Subject>().ReverseMap();
         CreateMap<Subject, V1SubjectDto>().ReverseMap();
         CreateMap<Page<Subject>, V1PageDto<V1SubjectDto>>().ReverseMap();
+        
+        CreateMap<TutorContactEntity, TutorContact>().ReverseMap();
+        CreateMap<TutorContact, V1TutorContactDto>().ReverseMap();
+        
+        CreateMap<StudentContactEntity, StudentContact>().ReverseMap();
+        CreateMap<StudentContact, V1StudentContactDto>().ReverseMap();
 
         CreateMap<User, V1UserDto>();
 
@@ -43,5 +51,19 @@ internal sealed class V1Profile : Profile
         
         CreateMap<V1UpdateStudentDto, UpdateStudent>();
         CreateMap<UpdateStudent, StudentEntity>();
+        
+        CreateMap<TutorEducationEntity, TutorEducation>().ReverseMap();
+        CreateMap<TutorEducation, V1TutorEducationDto>().ReverseMap();
+        
+        CreateMap<StudentEducationEntity, StudentEducation>().ReverseMap();
+        CreateMap<StudentEducation, V1StudentEducationDto>().ReverseMap();
+        
+        CreateMap<AwardEntity, Award>().ReverseMap();
+        CreateMap<Award, V1AwardDto>().ReverseMap();
+        
+        CreateMap<RequirementEntity, Requirement>().ReverseMap();
+        CreateMap<Requirement, V1RequirementDto>().ReverseMap();
+        
+        CreateMap<AvatarEntity, Avatar>().ReverseMap();
     }
 }

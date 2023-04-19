@@ -1,7 +1,8 @@
-﻿namespace SPA.V1.DataModels;
+﻿using EFCore.Postgres.Identity.Models;
+
+namespace SPA.V1.DataModels;
 
 #nullable enable
-using Identity.Models;
 using Newtonsoft.Json;
 
 public sealed record V1ExternalRegisterDto(

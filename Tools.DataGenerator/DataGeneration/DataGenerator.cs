@@ -1,172 +1,315 @@
-﻿namespace Tools.DataGenerator.DataGeneration;
+﻿using Microsoft.EntityFrameworkCore;
+using Tools.DataGenerator.Services;
 
-#nullable enable
+namespace Tools.DataGenerator.DataGeneration;
+
 using EFCore.Postgres.Application.Contexts;
 using EFCore.Postgres.Application.Models.Entities;
 using EFCore.Postgres.Identity;
 using EFCore.Postgres.Identity.Models;
-using Extensions;
-using SPA.Identity.Models;
+
+#nullable enable
 
 internal sealed class DataGenerator : IDataGenerator
 {
     private readonly ApplicationContext applicationContext;
     private readonly ApplicationIdentityContext identityContext;
+    private readonly Dictionary<string, List<string?>> data;
+    private readonly ExtractionService extraction;
 
-    private readonly string[] firstNames = { "Артемий", "Влад", "Алексей", "Михаил", "Илья" };
-    private readonly string[] lastNames = { "Курганов", "Бикбулатов", "Соколков", "Ланец", "Жданов" };
-    private readonly string[] districts = { "Ленинский", "Орджоникидзевский" };
-    private readonly string city = "Ектеринбург";
-    private readonly string[] subjectsNames = { "Математика", "Русский язык", "Физика", "Литература", "Информатика" };
+    private const int TutorsAmount = 50;
+    private const int StudentsAmount = 50;
 
-    private readonly Random random = new();
-
-    public DataGenerator(
-        ApplicationContext applicationContext,
-        ApplicationIdentityContext identityContext)
+    public DataGenerator(ApplicationContext applicationContext, ApplicationIdentityContext identityContext)
     {
         this.applicationContext = applicationContext;
         this.identityContext = identityContext;
+        data = new FilesService().GetDataFromJson();
+        extraction = new ExtractionService();
     }
 
-    public async Task FillInDatabase()
+    public async Task FillDatabase()
     {
-        var users = CreateApplicationUsers();
-        var locations = new List<LocationEntity>();
+        var tutors = await CreateTutors();
+        var students = await CreateStudents();
 
-        foreach (var district in districts)
+        foreach (var student in students)
         {
-            var locationEntityEntry = await applicationContext.Locations.AddAsync(new LocationEntity
-            {
-                City = city,
-                Id = Guid.NewGuid(),
-                District = district
-            });
-
-            locations.Add(locationEntityEntry.Entity);
-        }
-
-        var subjects = new List<SubjectEntity>();
-        foreach (var name in subjectsNames)
-        {
-            var subject = new SubjectEntity
-            {
-                Id = Guid.NewGuid(),
-                Description = name
-            };
-
-            var subjectEntityEntry = await applicationContext.AddAsync(subject);
-            subjects.Add(subjectEntityEntry.Entity);
-        }
-
-        var students = new List<StudentEntity>();
-        var tutors = new List<TutorEntity>();
-
-        foreach (var user in users)
-        {
-            identityContext.Add(user);
-
-            switch (user.AccountType)
-            {
-                case AccountType.Student:
-                    var studentEntityEntry = await applicationContext.Students.AddAsync(CreateStudentEntity(user));
-                    students.Add(studentEntityEntry.Entity);
-                    break;
-                case AccountType.Tutor:
-                    var tutorEntityEntry =
-                        await applicationContext.Tutors.AddAsync(CreateTutorEntity(user,
-                            locations[random.Next(locations.Count)], subjects.GetRandomSubEnumerable().ToArray()));
-                    tutors.Add(tutorEntityEntry.Entity);
-                    break;
-                case null:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            student.Contacts = await CreateStudentContacts();
+            student.Education = await CreateEducation();
         }
 
         foreach (var tutor in tutors)
         {
-            for (var i = 0; i < random.Next(0, 20); i++)
-            {
-                var start = DateTimeOffset.FromUnixTimeSeconds(random.Next(100000, 1000000));
-                var lesson = new LessonEntity
-                {
-                    Id = Guid.NewGuid(),
-                    Tutor = tutor,
-                    Student = students[random.Next(0, students.Count)],
-                    Price = random.NextDouble() * 10000,
-                    Status = (LessonStatus)random.Next(0, 3),
-                    Start = start,
-                    End = start + TimeSpan.FromHours(random.NextDouble() * 5)
-                };
-
-                await applicationContext.Lessons.AddAsync(lesson);
-            }
+            tutor.Contacts = await CreateTutorContacts();
+            tutor.Subjects = await CreateSubjects();
+            tutor.Educations = await CreateTutorEducations();
+            tutor.Awards = await CreateAwards();
+            tutor.Requirements = await CreateRequirements();
+            tutor.Location = await CreateLocation();
         }
 
-        foreach (var tutor in tutors)
-        {
-            for (var i = 0; i < random.Next(0, 50); i++)
-            {
-                var review = new ReviewEntity
-                {
-                    Id = Guid.NewGuid(),
-                    Description = Guid.NewGuid().ToString(),
-                    Tutor = tutor,
-                    Student = students[random.Next(0, students.Count)],
-                    Rating = random.NextDouble() * 10,
-                    UpdatedAt = DateTimeOffset.Now
-                };
-
-                await applicationContext.AddAsync(review);
-            }
-        }
-
+        await CreateReviews(tutors, students);
+        await RecalculateRating(tutors);
+        await CreateLessons(tutors, students);
 
         await identityContext.SaveChangesAsync();
         await applicationContext.SaveChangesAsync();
     }
 
-    private IReadOnlyList<ApplicationUser> CreateApplicationUsers(int count = 100)
+    private async Task<StudentEducationEntity?> CreateEducation()
     {
-        var users = new List<ApplicationUser>();
-        for (var i = 0; i < count; i++)
+        var education = extraction.Get(data["studentEducations"], true);
+        if (education == null)
+            return null;
+
+        var educationEntry = await applicationContext.StudentEducations.AddAsync(new StudentEducationEntity
         {
-            var user = new ApplicationUser
+            Id = Guid.NewGuid(),
+            Value = education,
+            Grade = extraction.GetNumber(100)
+        });
+
+        return educationEntry.Entity;
+    }
+
+    private async Task<ICollection<TutorEducationEntity>> CreateTutorEducations()
+    {
+        var result = new List<TutorEducationEntity>();
+
+        for (var i = 0; i < extraction.GetNumber(); i++)
+        {
+            var entity = new TutorEducationEntity
             {
                 Id = Guid.NewGuid(),
-                Email = Guid.NewGuid().ToString(),
-                FirstName = firstNames[random.Next(firstNames.Length)],
-                LastName = lastNames[random.Next(lastNames.Length)],
-                AccountType = random.Next(0, 1) == 0 ? AccountType.Student : AccountType.Tutor
+                Value = extraction.Get(data["tutorEducations"])!
             };
-
-            users.Add(user);
+            var entry = await applicationContext.TutorEducations.AddAsync(entity);
+            result.Add(entry.Entity);
         }
 
-        return users;
+        return result;
     }
 
-    private StudentEntity CreateStudentEntity(ApplicationUser user)
+    private async Task<ICollection<AwardEntity>> CreateAwards()
     {
-        return new StudentEntity
+        var result = new List<AwardEntity>();
+
+        for (var i = 0; i < extraction.GetNumber(); i++)
         {
-            Id = user.Id,
-            FirstName = user.FirstName,
-            LastName = user.LastName
-        };
+            var awardEntity = new AwardEntity
+            {
+                Id = Guid.NewGuid(),
+                Value = extraction.Get(data["awards"])!
+            };
+            var awardEntry = await applicationContext.Awards.AddAsync(awardEntity);
+            result.Add(awardEntry.Entity);
+        }
+
+        return result;
     }
 
-    private TutorEntity CreateTutorEntity(ApplicationUser user, LocationEntity locationEntity, SubjectEntity[] subjects)
+    private async Task<ICollection<RequirementEntity>> CreateRequirements()
     {
-        return new TutorEntity
+        var result = new List<RequirementEntity>();
+
+        for (var i = 0; i < extraction.GetNumber(); i++)
         {
-            Id = user.Id,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            Location = locationEntity,
-            Subjects = subjects
+            var requirementEntity = new RequirementEntity
+            {
+                Id = Guid.NewGuid(),
+                Value = extraction.Get(data["requirements"])!
+            };
+            var requirementEntry = await applicationContext.Requirements.AddAsync(requirementEntity);
+            result.Add(requirementEntry.Entity);
+        }
+
+        return result;
+    }
+
+    private async Task CreateLessons(List<TutorEntity> tutors, IReadOnlyCollection<StudentEntity> students)
+    {
+        foreach (var tutor in tutors)
+            for (var i = 0; i < extraction.GetNumber(); i++)
+            {
+                var startTime = extraction.GetTime();
+                var studentExists = extraction.GetDouble() < 0.2;
+                var lesson = new LessonEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Tutor = tutor,
+                    Student = studentExists ? extraction.Get(students) : null,
+                    Price = extraction.GetDouble() * 1000,
+                    Status = LessonStatus.Empty,
+                    Type = (LessonType)extraction.GetNumber(2),
+                    Start = startTime,
+                    End = startTime + TimeSpan.FromHours(extraction.GetDouble() * 5)
+                };
+
+                await applicationContext.Lessons.AddAsync(lesson);
+            }
+    }
+
+    private async Task RecalculateRating(IEnumerable<TutorEntity> tutors)
+    {
+        foreach (var tutor in tutors.Where(tutor => tutor.Reviews != null))
+            tutor.Rating = tutor.Reviews.Average(x => x.Rating);
+    }
+
+    private async Task CreateReviews(List<TutorEntity> tutors, IReadOnlyCollection<StudentEntity> students)
+    {
+        foreach (var tutor in tutors)
+            for (var i = 0; i < extraction.GetNumber(); i++)
+                await applicationContext.AddAsync(new ReviewEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Description = Guid.NewGuid().ToString(),
+                    Tutor = tutor,
+                    Student = extraction.Get(students)!,
+                    Rating = extraction.GetDouble() * 10,
+                    UpdatedAt = extraction.GetTime()
+                });
+    }
+
+    private async Task<LocationEntity?> CreateLocation()
+    {
+        var district = extraction.Get(data["districts"], true);
+        if (district == null)
+            return null;
+        
+        var locationEntity = await applicationContext.Locations.FirstOrDefaultAsync(x => x.District == district);
+        if (locationEntity != null)
+            return locationEntity;
+
+        var locationEntry = await applicationContext.Locations.AddAsync(new LocationEntity
+        {
+            Id = Guid.NewGuid(),
+            City = extraction.Get(data["cities"])!,
+            District = district
+        });
+
+        return locationEntry.Entity;
+    }
+
+    private async Task<ICollection<SubjectEntity>> CreateSubjects()
+    {
+        var result = new List<SubjectEntity>();
+        foreach (var subject in extraction.GetCollection(data["subjects"]))
+        {
+            var subjectEntity = await applicationContext.Subjects.FirstOrDefaultAsync(x => x.Description == subject);
+            if (subjectEntity != null)
+                result.Add(subjectEntity);
+            else
+            {
+                var subjectEntry = await applicationContext.Subjects.AddAsync(new SubjectEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Description = subject!
+                });
+
+                result.Add(subjectEntry.Entity);
+            }
+        }
+
+        return result;
+    }
+
+    private async Task<List<TutorContactEntity>> CreateTutorContacts()
+    {
+        var result = new List<TutorContactEntity>();
+        for (var i = 0; i < extraction.GetNumber(); i++)
+        {
+            var usePhones = extraction.GetBoolean();
+            var contactEntity = new TutorContactEntity
+            {
+                Id = Guid.NewGuid(),
+                Type = usePhones ? ContactType.Phone : ContactType.Email,
+                Value = extraction.Get(usePhones ? data["phones"] : data["emails"])!
+            };
+            var contactEntry = await applicationContext.TutorsContacts.AddAsync(contactEntity);
+            result.Add(contactEntry.Entity);
+        }
+
+        return result;
+    }
+
+    private async Task<List<StudentContactEntity>> CreateStudentContacts()
+    {
+        var result = new List<StudentContactEntity>();
+        for (var i = 0; i < extraction.GetNumber(); i++)
+        {
+            var usePhones = extraction.GetBoolean();
+            var contactEntity = new StudentContactEntity
+            {
+                Id = Guid.NewGuid(),
+                Type = usePhones ? ContactType.Phone : ContactType.Email,
+                Value = extraction.Get(usePhones ? data["phones"] : data["emails"])!
+            };
+            var contactEntry = await applicationContext.StudentsContacts.AddAsync(contactEntity);
+            result.Add(contactEntry.Entity);
+        }
+
+        return result;
+    }
+
+    private async Task<List<TutorEntity>> CreateTutors()
+    {
+        var result = new List<TutorEntity>();
+
+        for (var i = 0; i < TutorsAmount; i++)
+        {
+            var user = CreateUser(AccountType.Tutor);
+            identityContext.Add(user);
+
+            var tutorEntity = new TutorEntity
+            {
+                Id = user.Id,
+                FirstName = user.FirstName!,
+                Age = extraction.GetNumber(100, true),
+                LastName = user.LastName!,
+                Description = extraction.Get(data["descriptions"], true),
+                Job = extraction.Get(data["jobs"], true)
+            };
+            var tutorEntry = await applicationContext.Tutors.AddAsync(tutorEntity);
+            result.Add(tutorEntry.Entity);
+        }
+
+        return result;
+    }
+
+    private async Task<List<StudentEntity>> CreateStudents()
+    {
+        var result = new List<StudentEntity>();
+
+        for (var i = 0; i < StudentsAmount; i++)
+        {
+            var user = CreateUser(AccountType.Student);
+            identityContext.Add(user);
+
+            var studentEntity = new StudentEntity
+            {
+                Id = user.Id,
+                FirstName = user.FirstName!,
+                LastName = user.LastName!,
+                Age = extraction.GetNumber(100, true),
+                Description = extraction.Get(data["descriptions"], true)
+            };
+            var studentEntry = await applicationContext.Students.AddAsync(studentEntity);
+            result.Add(studentEntry.Entity);
+        }
+
+        return result;
+    }
+
+    private ApplicationUser CreateUser(AccountType accountType)
+    {
+        return new ApplicationUser
+        {
+            Id = Guid.NewGuid(),
+            Email = extraction.Get(data["emails"]),
+            FirstName = extraction.Get(data["firstNames"]),
+            LastName = extraction.Get(data["lastNames"]),
+            AccountType = accountType
         };
     }
 }

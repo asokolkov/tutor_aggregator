@@ -15,6 +15,9 @@ public sealed class V1LessonDto
     [JsonProperty("status")]
     public LessonStatus Status { get; init; }
     
+    [JsonProperty("type")]
+    public LessonType Type { get; init; }
+    
     [JsonProperty("start")]
     public DateTimeOffset Start { get; init; }
     

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using SPA.Identity.Models;
+using SPA.Domain;
 
 namespace SPA.V1.Controllers;
 
@@ -86,7 +86,10 @@ public class V1AccountController : ControllerBase
 
         await signInManager.SignInAsync(user, false);
 
-        return Ok();
+        var userModel = new User(user.Id, user.FirstName, user.LastName, null,
+            user.AccountType, user.RegistrationCompleted);
+
+        return Ok(mapper.Map<V1UserDto>(userModel));
     }
 
     [AllowAnonymous]

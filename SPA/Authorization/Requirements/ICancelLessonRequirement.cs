@@ -1,7 +1,7 @@
-﻿namespace SPA.Authorization.Requirements;
+﻿using Microsoft.AspNetCore.Authorization;
+using SPA.Domain;
 
-using Domain;
-using Microsoft.AspNetCore.Authorization;
+namespace SPA.Authorization.Requirements;
 
 public interface ICancelLessonRequirement : IAuthorizationRequirement
 {
