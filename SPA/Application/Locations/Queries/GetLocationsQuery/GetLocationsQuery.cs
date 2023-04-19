@@ -1,8 +1,7 @@
-﻿#nullable enable
-using MediatR;
+﻿using MediatR;
 
 namespace SPA.Application.Locations.Queries.GetLocationsQuery;
 
 using Domain;
 
-internal record GetLocationsQuery(int PageNumber, int PageSize) : IRequest<Page<Location?>>;
+internal record GetLocationsQuery : IRequest<List<Location>>;
