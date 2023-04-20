@@ -1,5 +1,4 @@
-﻿#nullable enable
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using MediatR;
 using SPA.Repositories;
 
@@ -8,7 +7,7 @@ namespace SPA.Application.Locations.Queries.GetLocationsQuery;
 using Domain;
 
 [UsedImplicitly]
-internal class GetLocationsQueryHandler : IRequestHandler<GetLocationsQuery, Page<Location?>>
+internal class GetLocationsQueryHandler : IRequestHandler<GetLocationsQuery, List<Location>>
 {
     private readonly ILocationsRepository repository;
 
@@ -17,8 +16,8 @@ internal class GetLocationsQueryHandler : IRequestHandler<GetLocationsQuery, Pag
         this.repository = repository;
     }
 
-    public async Task<Page<Location?>> Handle(GetLocationsQuery request, CancellationToken cancellationToken)
+    public async Task<List<Location>> Handle(GetLocationsQuery request, CancellationToken cancellationToken)
     {
-        return await repository.Get(request.PageNumber, request.PageSize);
+        return await repository.GetAsync();
     }
 }

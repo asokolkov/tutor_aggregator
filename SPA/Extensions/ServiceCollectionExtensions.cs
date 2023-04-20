@@ -51,7 +51,7 @@ internal static class ServiceCollectionExtensions
             .AddScoped<IRequestHandler<CreateReviewCommand, Review>, CreateReviewCommandHandler>();
 
         services
-            .AddScoped<IRequestHandler<GetLocationsQuery, Page<Location>>, GetLocationsQueryHandler>()
+            .AddScoped<IRequestHandler<GetLocationsQuery, List<Location>>, GetLocationsQueryHandler>()
             .AddScoped<IRequestHandler<GetLocationQuery, Location>, GetLocationQueryHandler>()
             .AddScoped<IRequestHandler<UpdateLocationCommand, Location>, UpdateLocationCommandHandler>();
         
