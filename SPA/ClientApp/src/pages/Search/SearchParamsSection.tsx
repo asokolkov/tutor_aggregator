@@ -14,7 +14,6 @@ import { useSubjectQuery } from '../../query/useSubjectQuery';
 export const SearchParamsSection: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   const { locationsQuery } = useLocationQuery();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { subjectQuery } = useSubjectQuery();
 
   return (
@@ -59,7 +58,7 @@ export const SearchParamsSection: React.FC = () => {
             options={
               locationsQuery.isLoading
                 ? []
-                : locationsQuery.data.items.map((location) => location.district)
+                : locationsQuery.data.map((location) => location.district)
             }
             name="subject"
           />
@@ -68,9 +67,9 @@ export const SearchParamsSection: React.FC = () => {
           <SelectOptions
             label={'Район'}
             options={
-              locationsQuery.isLoading
+              subjectQuery.isLoading
                 ? []
-                : locationsQuery.data.items.map((location) => location.district)
+                : subjectQuery.data.map((subject) => subject.description)
             }
             name="district"
           />
