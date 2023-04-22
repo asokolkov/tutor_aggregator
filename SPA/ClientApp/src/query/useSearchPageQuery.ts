@@ -18,7 +18,7 @@ export function useSearchPageQuery() {
     rating: -1,
   });
 
-  const { isLoading, data, isFetchingNextPage, fetchNextPage } =
+  const { isLoading, data, isFetchingNextPage, fetchNextPage, isRefetching } =
     useInfiniteQuery({
       queryKey: [searchKey, values],
       queryFn: ({ pageParam = 0 }) =>
@@ -41,6 +41,7 @@ export function useSearchPageQuery() {
   return {
     isLoading,
     isFetchingNextPage,
+    isRefetching,
     data,
     fetchNextPage,
     values,

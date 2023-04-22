@@ -14,8 +14,10 @@ export enum AccountType {
 }
 
 export default class UserAPI {
-  static async getCurrentUser(): Promise<User> {
-    const response = await axiosInstance.get<User>('api/v1/users/current');
+  static async getCurrentUser(signal?: AbortSignal): Promise<User> {
+    const response = await axiosInstance.get<User>('api/v1/users/current', {
+      signal,
+    });
     return response.data;
   }
 }

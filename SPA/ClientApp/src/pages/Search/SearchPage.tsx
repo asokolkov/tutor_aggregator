@@ -15,12 +15,13 @@ export const SearchPage = () => {
     isLoading,
     data,
     isFetchingNextPage,
+    isRefetching,
     fetchNextPage,
     values,
     setValues,
   } = useSearchPageQuery();
 
-  if (isLoading)
+  if (isLoading || isRefetching)
     return <LoadBar description={'Загружаем список преподавателей'} />;
   return (
     <VStack spacing={'32px'} align={'start'}>
