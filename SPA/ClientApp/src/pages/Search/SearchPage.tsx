@@ -8,7 +8,10 @@ import {
   useSearchPageQuery,
 } from '../../query/useSearchPageQuery';
 import { Form, Formik } from 'formik';
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useLocationQuery } from '../../query/useLocationQuery';
+import { useSubjectQuery } from '../../query/useSubjectQuery';
+import { SearchParamsContext } from '../../contexts/SearchParamsContext';
 
 export const SearchPage = () => {
   const {
@@ -21,7 +24,19 @@ export const SearchPage = () => {
     setValues,
   } = useSearchPageQuery();
 
-  if (isLoading || isRefetching)
+  const { locationsQuery } = useLocationQuery();
+  const { subjectQuery } = useSubjectQuery();
+
+  const providerValues = useMemo(
+    () => ({
+      isRefetching,
+      locationsData: locationsQuery.data,
+      subjectsData: subjectQuery.data,
+    }),
+    [isRefetching, locationsQuery, subjectQuery]
+  );
+
+  if (isLoading || locationsQuery.isLoading || subjectQuery.isLoading)
     return <LoadBar description={'Загружаем список преподавателей'} />;
   return (
     <VStack spacing={'32px'} align={'start'}>
@@ -30,7 +45,9 @@ export const SearchPage = () => {
         onSubmit={(v: SearchValuesProps) => setValues(v)}
       >
         <Form style={{ width: '100%' }}>
-          <SearchParamsSection />
+          <SearchParamsContext.Provider value={providerValues}>
+            <SearchParamsSection />
+          </SearchParamsContext.Provider>
         </Form>
       </Formik>
       <SimpleGrid

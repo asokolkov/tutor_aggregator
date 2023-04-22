@@ -8,14 +8,14 @@ import {
 } from '@chakra-ui/react';
 import { SelectOptions } from './components/SelectOptions';
 import searchIcon from '../../assets/images/search_icon_bg.png';
-import { useLocationQuery } from '../../query/useLocationQuery';
-import { useSubjectQuery } from '../../query/useSubjectQuery';
 import { PriceOptions, ReviewOptions } from './_formHelper';
+import { useContext } from 'react';
+import { SearchParamsContext } from '../../contexts/SearchParamsContext';
 
 export const SearchParamsSection: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
-  const { locationsQuery } = useLocationQuery();
-  const { subjectQuery } = useSubjectQuery();
+  const { subjectsData, locationsData, isRefetching } =
+    useContext(SearchParamsContext);
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const REMOVE_removeDuplicates = (array: string[]) => {
@@ -61,13 +61,9 @@ export const SearchParamsSection: React.FC = () => {
         <GridItem area={'subject'} alignItems={'center'}>
           <SelectOptions
             label={'Предмет'}
-            options={
-              subjectQuery.isLoading
-                ? []
-                : REMOVE_removeDuplicates(
-                    subjectQuery.data.map((subject) => subject.description)
-                  )
-            }
+            options={REMOVE_removeDuplicates(
+              subjectsData.map((subject) => subject.description)
+            )}
             name="subject"
             placeholder="Любой"
           />
@@ -75,13 +71,9 @@ export const SearchParamsSection: React.FC = () => {
         <GridItem area={'district'}>
           <SelectOptions
             label={'Район'}
-            options={
-              locationsQuery.isLoading
-                ? []
-                : REMOVE_removeDuplicates(
-                    locationsQuery.data.map((location) => location.district)
-                  )
-            }
+            options={REMOVE_removeDuplicates(
+              locationsData.map((location) => location.district)
+            )}
             name="district"
             placeholder="Любой"
           />
@@ -110,6 +102,7 @@ export const SearchParamsSection: React.FC = () => {
             _active={{ bg: '#5877AC' }}
             width={'100%'}
             type="submit"
+            isLoading={isRefetching}
           >
             Найти
           </Button>
