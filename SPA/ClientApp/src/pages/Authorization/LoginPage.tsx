@@ -19,7 +19,6 @@ import { Form, Formik } from 'formik';
 import { RememberMeCheckbox } from './components/RememberMeCheckbox';
 import AccountAPI, { V1LoginDto } from '../../api/account';
 import { UserContext } from '../../contexts/UserContext';
-import UserAPI from '../../api/currentUser';
 import { useNavigate } from 'react-router-dom';
 import { SEARCH_PAGE } from '../../routes/routePaths';
 import { AuthorizationContext } from '../../contexts/AuthorizationContext';
@@ -53,9 +52,8 @@ export const LoginPage = () => {
       password: values.password,
     };
 
-    AccountAPI.login(loginData)
-      .then(async () => {
-        const user = await UserAPI.getCurrentUser();
+    AccountAPI.signIn(loginData)
+      .then((user) => {
         userContext.setUser(user);
         navigate(SEARCH_PAGE);
       })

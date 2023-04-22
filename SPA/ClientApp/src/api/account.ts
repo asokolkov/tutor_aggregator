@@ -1,5 +1,5 @@
 ﻿import axiosInstance from './_share';
-import { AccountType } from './currentUser';
+import { AccountType, User } from './user';
 
 export type V1LoginDto = {
   email: string;
@@ -25,22 +25,24 @@ export type V1RegisterViaExternalDto = {
 };
 
 export default class AccountAPI {
-  static async login(loginDto: V1LoginDto) {
-    await axiosInstance.post('account/signin', loginDto);
+  static async signIn(loginDto: V1LoginDto): Promise<User> {
+    const response = await axiosInstance.post<User>('account/signin', loginDto);
+    return response.data;
   }
 
-  static async register(registerDto: V1RegisterDto) {
-    await axiosInstance.post('account/signup', registerDto);
+  static async signUp(registerDto: V1RegisterDto): Promise<User> {
+    const response = await axiosInstance.post<User>(
+      'account/signup',
+      registerDto
+    );
+    return response.data;
   }
 
   static async signOut() {
     await axiosInstance.get('account/sign-out');
   }
 
-  static async loginViaExternal(
-    provider: string,
-    returnUrl: string
-  ): Promise<undefined> {
+  static async loginViaExternal(provider: string, returnUrl: string) {
     await axiosInstance
       .get(`account/signin-external`, {
         params: { provider: provider, returnUrl: returnUrl },
@@ -54,16 +56,14 @@ export default class AccountAPI {
           window.location.href = Location;
         }
       });
-    return undefined;
   }
 
   static async registerViaExternal(
     registerViaExternalDto: V1RegisterViaExternalDto
-  ): Promise<undefined> {
+  ) {
     await axiosInstance.post(
       `/account/signup-external`,
       registerViaExternalDto
     );
-    return undefined;
   }
 }

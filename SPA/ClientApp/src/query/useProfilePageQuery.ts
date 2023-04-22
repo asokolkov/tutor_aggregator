@@ -1,4 +1,4 @@
-import { AccountType } from '../api/currentUser';
+import { AccountType } from '../api/user';
 import TutorsAPI, { Tutor } from '../api/tutors';
 import StudentAPI, { Student } from '../api/students';
 import { useQuery } from 'react-query';
