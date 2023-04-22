@@ -26,7 +26,7 @@ public class V1SubjectsController : ControllerBase
     public async Task<IActionResult> GetSubjectsAsync()
     {
         var getSubjectsQuery = new GetSubjectsQuery();
-        var subjects = (ICollection<Subject>) await mediator.Send(getSubjectsQuery);
-        return Ok(mapper.Map<V1SubjectDto>(subjects));
+        var subjects = await mediator.Send(getSubjectsQuery);
+        return Ok(mapper.Map<List<V1SubjectDto>>(subjects));
     }
 }

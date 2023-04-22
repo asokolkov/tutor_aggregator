@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { API_URL, AXIOS_TIMEOUT } from './constants';
+
+const API_URL = process.env.REACT_APP_API_URL;
+const AXIOS_TIMEOUT = 100000000;
 
 const axiosInstance = axios.create({
   timeout: AXIOS_TIMEOUT,
