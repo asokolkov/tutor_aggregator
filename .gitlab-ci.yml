@@ -2,10 +2,12 @@ variables:
   OWNER: tewboat
   APPLICATION: tutor-aggregator
   RELEASE_VERSION: 1.0.$CI_PIPELINE_IID
+  DEVELOP_DOCKER_STACK_FILE: k8s.yml
 
 stages:
   - test
   - build_and_push
+  - deploy
 
 build-and-test:
   image: mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim
@@ -45,3 +47,8 @@ build_and_push:
   needs: [build-and-test, linting]
   variables:
     IMAGE_NAME: ${OWNER}/${APPLICATION}
+
+deploy_to_staging:
+  stage: deploy
+  script:
+    - envsubst < $DEVELOP_DOCKER_STACK_FILE > docker-compose.development.yml
