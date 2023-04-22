@@ -1,21 +1,47 @@
-image: mcr.microsoft.com/dotnet/sdk:6.0
+variables:
+  OWNER: tewboat
+  APPLICATION: tutor-aggregator
+  RELEASE_VERSION: 1.0.$CI_PIPELINE_IID
 
 stages:
-  - build
   - test
+  - build_and_push
 
-build:
-  stage: build
-  script:
-    - dotnet build -c Release
-  only:
-    - merge_requests
-    - master
-
-test job:
+build-and-test:
+  image: mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim
   stage: test
   script:
-    - dotnet test -c Release
-  only:
-    - merge_requests
-    - master
+    - dotnet restore
+    - dotnet build --configuration Release --no-restore
+    - dotnet test  --configuration Release --no-build
+
+linting:
+  image: node:18.12.0
+  stage: test 
+  script:
+    - cd ./SPA/ClientApp
+    - npm ci
+    - npm run lint
+
+.docker-build: &build-template
+  stage: build_and_push
+  image: docker:stable
+  before_script:
+    - docker --version
+    - docker login -u "$REGISTRY_LOGIN" -p "$REGISTRY_PASSWORD"
+  script:
+    - >
+      docker build --no-cache
+      -t "${IMAGE_NAME}:${RELEASE_VERSION}"
+      -f .docker/amd64/spa.dockerfile ./
+    - docker push "${IMAGE_NAME}:${RELEASE_VERSION}"
+  after_script:
+    - docker logout "${$KONTUR_REGISTRY_URL}"
+
+build_and_push:
+  <<: *build-template
+  stage: build_and_push
+  when: manual
+  needs: [build-and-test, linting]
+  variables:
+    IMAGE_NAME: ${OWNER}/${APPLICATION}
