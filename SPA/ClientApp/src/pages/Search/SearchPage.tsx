@@ -1,4 +1,4 @@
-import { SimpleGrid, VStack } from '@chakra-ui/react';
+import { Button, SimpleGrid, VStack } from '@chakra-ui/react';
 import SearchCardInfo from './components/SearchCardInfo';
 import { SearchParamsSection } from './SearchParamsSection';
 import './SearchPage.css';
@@ -7,6 +7,7 @@ import { useSearchPageQuery } from '../../query/useSearchPageQuery';
 import { useMutation } from 'react-query';
 import TutorsAPI from '../../api/tutors';
 import { Form, Formik } from 'formik';
+import React from 'react';
 
 export interface SearchValuesProps {
   district: string;
@@ -16,7 +17,8 @@ export interface SearchValuesProps {
 }
 
 export const SearchPage = () => {
-  const { isLoading, data } = useSearchPageQuery();
+  const { isLoading, data, isFetchingNextPage, fetchNextPage } =
+    useSearchPageQuery();
 
   const onSearchMutation = useMutation({
     mutationFn: (values: SearchValuesProps) => {
@@ -54,10 +56,17 @@ export const SearchPage = () => {
         minChildWidth="390px"
         width={'100%'}
       >
-        {data.items.map((item) => (
-          <SearchCardInfo tutor={item} key={item.id}></SearchCardInfo>
+        {data.pages.map((x, i) => (
+          <React.Fragment key={+(data.pageParams[i] ?? 0)}>
+            {x.items.map((item) => (
+              <SearchCardInfo tutor={item} key={item.id}></SearchCardInfo>
+            ))}
+          </React.Fragment>
         ))}
       </SimpleGrid>
+      <Button onClick={() => fetchNextPage()} isLoading={isFetchingNextPage}>
+        Загрузить еще...
+      </Button>
     </VStack>
   );
 };

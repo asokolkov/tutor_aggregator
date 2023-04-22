@@ -19,16 +19,12 @@ internal sealed class LocationsRepository : ILocationsRepository
         table = context.Locations;
     }
 
-    public async Task<Page<Location>> Get(int page, int size)
+    public async Task<List<Location>> GetAsync()
     {
-        var tutorEntities = await table
+        var entities = await table
             .OrderBy(e => e.Id)
-            .Skip(page * size)
-            .Take(size)
             .ToListAsync();
-        var locations = mapper.Map<List<Location>>(tutorEntities);
-        
-        return new Page<Location>(locations, table.Count());
+        return mapper.Map<List<Location>>(entities);
     }
 
     public async Task<Location> Get(Guid id)

@@ -6,7 +6,7 @@ public sealed class LessonEntity
 {
     public Guid Id { get; init; }
 
-    public double Price { get; init; }
+    public int Price { get; init; }
 
     public LessonStatus Status { get; set; }
 

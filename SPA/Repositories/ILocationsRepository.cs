@@ -4,7 +4,7 @@ using Domain;
 
 internal interface ILocationsRepository
 {
-    Task<Page<Location>> Get(int page, int size);
+    Task<List<Location>> GetAsync();
     
     Task<Location> Get(Guid id);
 
