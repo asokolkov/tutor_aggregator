@@ -10,11 +10,17 @@ import { SelectOptions } from './components/SelectOptions';
 import searchIcon from '../../assets/images/search_icon_bg.png';
 import { useLocationQuery } from '../../query/useLocationQuery';
 import { useSubjectQuery } from '../../query/useSubjectQuery';
+import { PriceOptions, ReviewOptions } from './_formHelper';
 
 export const SearchParamsSection: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   const { locationsQuery } = useLocationQuery();
   const { subjectQuery } = useSubjectQuery();
+
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  const REMOVE_removeDuplicates = (array: string[]) => {
+    return array.filter((item, pos, self) => self.indexOf(item) == pos);
+  };
 
   return (
     <Box
@@ -56,42 +62,43 @@ export const SearchParamsSection: React.FC = () => {
           <SelectOptions
             label={'Предмет'}
             options={
-              locationsQuery.isLoading
+              subjectQuery.isLoading
                 ? []
-                : locationsQuery.data.map((location) => location.district)
+                : REMOVE_removeDuplicates(
+                    subjectQuery.data.map((subject) => subject.description)
+                  )
             }
             name="subject"
+            placeholder="Любой"
           />
         </GridItem>
         <GridItem area={'district'}>
           <SelectOptions
             label={'Район'}
             options={
-              subjectQuery.isLoading
+              locationsQuery.isLoading
                 ? []
-                : subjectQuery.data.map((subject) => subject.description)
+                : REMOVE_removeDuplicates(
+                    locationsQuery.data.map((location) => location.district)
+                  )
             }
             name="district"
+            placeholder="Любой"
           />
         </GridItem>
         <GridItem area={'price'}>
           <SelectOptions
             label={'Цена'}
-            options={[
-              'Любая',
-              '< 1000 ₽ за час',
-              '< 800 ₽ за час',
-              '< 700 ₽ за час',
-              '< 600 ₽ за час',
-              '< 500 ₽ за час',
-            ]}
+            options={Object.keys(PriceOptions)}
+            optionsMap={PriceOptions}
             name="price"
           />
         </GridItem>
         <GridItem area={'rating'}>
           <SelectOptions
             label={'Рейтинг'}
-            options={['Любой', '⭐⭐⭐⭐ и более', '⭐⭐⭐ и более']}
+            options={Object.keys(ReviewOptions)}
+            optionsMap={ReviewOptions}
             name="rating"
           />
         </GridItem>

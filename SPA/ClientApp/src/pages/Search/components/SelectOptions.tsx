@@ -4,8 +4,10 @@ import { useField } from 'formik';
 
 export const SelectOptions: React.FC<SelectOptionsProps> = ({
   options,
+  optionsMap,
   label,
   name,
+  placeholder,
 }) => {
   const [field] = useField({ name });
 
@@ -25,9 +27,10 @@ export const SelectOptions: React.FC<SelectOptionsProps> = ({
         color="black"
         width={'100%'}
         fontSize={'lg'}
+        placeholder={placeholder}
       >
         {options?.map((option) => (
-          <option value={option} key={option}>
+          <option value={optionsMap ? optionsMap[option] : option} key={option}>
             {option}
           </option>
         ))}
@@ -38,6 +41,8 @@ export const SelectOptions: React.FC<SelectOptionsProps> = ({
 
 type SelectOptionsProps = {
   options: string[];
+  optionsMap?: { [index: string]: number };
   label: string;
   name: string;
+  placeholder?: string;
 };
