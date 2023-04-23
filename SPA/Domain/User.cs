@@ -2,4 +2,4 @@
 
 namespace SPA.Domain;
 
-public sealed record User(Guid Id, string FirstName, string LastName, Uri Avatar, AccountType? AccountType, bool RegistrationCompleted);
+public sealed record User(Guid Id, string FirstName, string LastName, string Phone, string Email, Uri Avatar, AccountType? AccountType, bool RegistrationCompleted);
