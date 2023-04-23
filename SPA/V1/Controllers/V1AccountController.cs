@@ -58,7 +58,7 @@ public class V1AccountController : ControllerBase
             Id = Guid.NewGuid(),
             FirstName = registerDto.FirstName,
             LastName = registerDto.LastName,
-            Phone = registerDto.Phone,
+            PhoneNumber = registerDto.Phone,
             AccountType = accountType
         };
 
@@ -86,7 +86,7 @@ public class V1AccountController : ControllerBase
 
         await signInManager.SignInAsync(user, false);
 
-        var userModel = new User(user.Id, user.FirstName, user.LastName, user.Phone, user.Email, null,
+        var userModel = new User(user.Id, user.FirstName, user.LastName, user.PhoneNumber, user.Email, null,
             user.AccountType, user.RegistrationCompleted);
 
         return Ok(mapper.Map<V1UserDto>(userModel));
