@@ -33,6 +33,7 @@ public class V1AccountController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("signin")]
+    [SwaggerResponse(200, "OK", typeof(V1UserDto))]
     public async Task<IActionResult> LoginAsync([FromBody] V1LoginDto loginDto)
     {
         var signInResult = await signInManager.PasswordSignInAsync(loginDto.Email, loginDto.Password,
@@ -51,6 +52,7 @@ public class V1AccountController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("signup")]
+    [SwaggerResponse(200, "OK", typeof(V1UserDto))]
     public async Task<IActionResult> RegisterAsync([FromBody] V1RegisterDto registerDto)
     {
         var accountType = mapper.Map<AccountType>(registerDto.AccountType);
