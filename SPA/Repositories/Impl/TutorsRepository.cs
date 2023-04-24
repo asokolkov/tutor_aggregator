@@ -52,12 +52,13 @@ internal sealed class TutorsRepository : ITutorsRepository
         {
             var tutorEntity = await table.FindAsync(id);
             if (tutorEntity is null)
-                return default;
+                return null;
 
             tutorEntity.FirstName = tutor.FirstName;
             tutorEntity.LastName = tutor.LastName;
             tutorEntity.Description = tutor.Description;
             tutorEntity.Job = tutor.Job;
+            tutorEntity.Location = mapper.Map<LocationEntity>(tutor.Location);
 
             var educationsEntities = mapper.Map<ICollection<TutorEducationEntity>>(tutor.Educations).ToList();
             foreach (var educationEntity in educationsEntities)
@@ -99,17 +100,6 @@ internal sealed class TutorsRepository : ITutorsRepository
 
             tutorEntity.Contacts = contactsEntities;
 
-            if (tutor.Location != null)
-            {
-                var locationEntity = mapper.Map<LocationEntity>(tutor.Location);
-                var location = await context.Locations.FindAsync(locationEntity.Id);
-                if (location is null)
-                    context.Locations.Add(locationEntity);
-                else
-                    locationEntity = location;
-                tutorEntity.Location = locationEntity;
-            }
-
             var subjectsEntities = mapper.Map<ICollection<SubjectEntity>>(tutor.Subjects).ToList();
             for (var i = 0; i < subjectsEntities.Count; i++)
             {
@@ -135,21 +125,10 @@ internal sealed class TutorsRepository : ITutorsRepository
 
     public async Task<Tutor?> Insert(Tutor tutor)
     {
-        await using var transaction = await context.Database.BeginTransactionAsync();
-        await transaction.CreateSavepointAsync("BeforeInsert");
-        try
-        {
-            var tutorEntity = mapper.Map<TutorEntity>(tutor);
-            var entityEntry = await table.AddAsync(tutorEntity);
-            await context.SaveChangesAsync();
-            await transaction.CommitAsync();
-            return mapper.Map<Tutor>(entityEntry.Entity);
-        }
-        catch (Exception)
-        {
-            await transaction.RollbackToSavepointAsync("BeforeInsert");
-            return default;
-        }
+        var tutorEntity = mapper.Map<TutorEntity>(tutor);
+        await table.AddAsync(tutorEntity);
+        await context.SaveChangesAsync();
+        return mapper.Map<Tutor>(tutorEntity);
     }
 
     public async Task<Page<Review>> GetTutorReviews(Guid id, int page, int size)
