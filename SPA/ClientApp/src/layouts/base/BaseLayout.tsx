@@ -12,7 +12,7 @@ const BaseLayout: React.FC = () => {
   const { user, setUser, removeUser, isLoading, isUserAuth } = useUser();
   const userProviderValues = useMemo(
     () => ({ user, setUser, removeUser, isAuthorized: isUserAuth }),
-    [user, setUser, removeUser, isUserAuth]
+    [user, setUser, removeUser, isUserAuth, isLoading]
   );
   if (isLoading) return <LoadBar description={'Загружаем данные'} />;
   return (

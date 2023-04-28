@@ -1,9 +1,4 @@
-import axiosInstance from './_share';
-
-export interface Subject {
-  id: string;
-  description: string;
-}
+import axiosInstance, { Subject } from './_share';
 
 export default class SubjectsAPI {
   static async getSubjects(): Promise<Subject[]> {
