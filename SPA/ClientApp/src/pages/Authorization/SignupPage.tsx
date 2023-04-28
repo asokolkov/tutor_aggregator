@@ -20,8 +20,7 @@ import { PhoneNumberField } from './components/PhoneNumberField';
 import { NameSurnameField } from './components/NameSurnameField';
 import { Form, Formik } from 'formik';
 import { LoginSuggestion } from './components/LoginSuggestion';
-import AccountAPI, { V1RegisterDto } from '../../api/account';
-import UserAPI, { AccountType } from '../../api/currentUser';
+import UserAPI, { V1RegisterDto, AccountType } from '../../api/user';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
 import { SEARCH_PAGE } from '../../routes/routePaths';
@@ -64,7 +63,7 @@ export const SignupPage = () => {
       phone: values.phoneNumber,
     };
 
-    AccountAPI.register(registerData)
+    UserAPI.register(registerData)
       .then(async () => {
         const user = await UserAPI.getCurrentUser();
         userContext.setUser(user);
