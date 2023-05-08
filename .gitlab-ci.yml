@@ -38,7 +38,7 @@ linting:
       -f .docker/amd64/spa.dockerfile ./
     - docker push "${IMAGE_NAME}:${RELEASE_VERSION}"
   after_script:
-    - docker logout "${$KONTUR_REGISTRY_URL}"
+    - docker logout
 
 build_and_push:
   <<: *build-template
