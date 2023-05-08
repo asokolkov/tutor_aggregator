@@ -47,8 +47,6 @@ build_and_push:
   needs: [build-and-test, linting]
   variables:
     IMAGE_NAME: ${OWNER}/${APPLICATION}
-  only:
-    - main
 
 deploy_to_staging:
   stage: deploy
@@ -60,5 +58,3 @@ deploy_to_staging:
     - kubectl create secret generic tewboat --from-file=.dockerconfigjson=$DOCKER_TEWBOAT_CREDS --type=kubernetes.io/dockerconfigjson --namespace=tutor-aggregator
     - kubectl apply docker-compose.development.yml
   when: manual
-  only:
-    - main
