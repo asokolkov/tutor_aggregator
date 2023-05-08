@@ -51,6 +51,7 @@ build_and_push:
 deploy_to_staging:
   stage: deploy
   image: hub.66bit.ru/urfu2022/ci/deploy:1.26.2
+  needs: [build_and_push]
   script:
     - envsubst < $DEVELOP_DOCKER_STACK_FILE > docker-compose.development.yml
     - kubectl create namespace tutor-aggregator
