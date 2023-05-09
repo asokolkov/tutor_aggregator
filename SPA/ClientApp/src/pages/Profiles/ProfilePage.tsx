@@ -5,7 +5,7 @@ import { TutorCard } from './TutorCard';
 import { VStack } from '@chakra-ui/react';
 import { UserContext } from '../../contexts/UserContext';
 import { StudentCard } from './StudentCard';
-import { AccountType } from '../../api/currentUser';
+import { AccountType } from '../../api/user';
 import { useProfileInfo } from '../../query/useProfilePageQuery';
 import { ProfileContext } from '../../contexts/ProfileContext';
 import { Navigate } from 'react-router-dom';
