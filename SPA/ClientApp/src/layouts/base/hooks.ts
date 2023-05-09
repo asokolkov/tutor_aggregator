@@ -14,15 +14,14 @@ export function useUser() {
     UserAPI.getCurrentUser(abortController.signal)
       .then((u) => {
         setUser(u);
-        setLoading(false);
       })
       .catch((err: AxiosError) => {
         if (axios.isCancel(err)) return;
       })
       .catch((err: AxiosError) => {
         if (err.response.status === 401) removeUser();
-        setLoading(false);
-      });
+      })
+      .finally(() => setLoading(false))
     return () => abortController.abort();
   }, []);
 
