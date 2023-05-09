@@ -5,7 +5,7 @@ import { UserContext } from '../../contexts/UserContext';
 import { LOGIN_PAGE } from '../../routes/routePaths';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import { YourLessonsTab } from './YourLessonsTab/YourLessonsTab';
-import { AccountType } from '../../api/user';
+import { AccountType } from '../../api/currentUser';
 
 export const LessonsPage = () => {
   const { isAuthorized, user } = useContext(UserContext);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { User } from '../api/user';
+import { User } from '../api/currentUser';
 
 type UserContextProps = {
   user?: User;

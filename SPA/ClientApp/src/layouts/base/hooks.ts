@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import UserAPI, { User } from '../../api/user';
+import UserAPI, { User } from '../../api/currentUser';
 import axios, { AxiosError } from 'axios';
 
 export function useUser() {
