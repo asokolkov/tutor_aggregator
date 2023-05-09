@@ -6,8 +6,6 @@ const AXIOS_TIMEOUT = 100000000;
 const axiosInstance = axios.create({
   timeout: AXIOS_TIMEOUT,
   baseURL: API_URL,
-  validateStatus: (status) =>
-    status === 200 || status === 300 || status === 302,
 });
 
 axiosInstance.interceptors.request.use((config) => {
@@ -22,7 +20,7 @@ axiosInstance.interceptors.request.use((config) => {
 export default axiosInstance;
 
 export interface Person {
-  id?: string;
+  id: string;
   firstName: string;
   lastName: string;
   avatar: string;
@@ -32,9 +30,12 @@ export interface Person {
 
 export interface PaginatedResponse<T> {
   items: T[];
+  count: number;
+  next: string;
+  previous: string;
 }
 
-export interface IValuable {
+export interface Valuable {
   id?: string;
   value: string;
 }
@@ -44,13 +45,13 @@ export interface Subject {
   description: string;
 }
 
-export interface Education extends IValuable {}
+export interface Education extends Valuable {}
 
-export interface Award extends IValuable {}
+export interface Award extends Valuable {}
 
-export interface Requirements extends IValuable {}
+export interface Requirements extends Valuable {}
 
-export interface Contact extends IValuable {
+export interface Contact extends Valuable {
   type: ContactType;
 }
 
