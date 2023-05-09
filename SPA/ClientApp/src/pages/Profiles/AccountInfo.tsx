@@ -9,9 +9,9 @@ import {
 } from '@chakra-ui/react';
 import { TextRow } from './components/TextRow';
 import { UserContext } from '../../contexts/UserContext';
-import { AccountType } from '../../api/user';
+import { AccountType } from '../../api/currentUser';
 import { ProfileContext } from '../../contexts/ProfileContext';
-import UserAPI from '../../api/user';
+import AccountAPI from '../../api/account';
 import { LOGIN_PAGE } from '../../routes/routePaths';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,7 +22,7 @@ export const AccountInfo = () => {
   const navigate = useNavigate();
 
   const signOut = async () => {
-    await UserAPI.signOut();
+    await AccountAPI.signOut();
     userContext.removeUser();
     navigate(LOGIN_PAGE);
   };

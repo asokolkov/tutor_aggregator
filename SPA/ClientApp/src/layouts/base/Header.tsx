@@ -16,9 +16,16 @@ import {
   MenuButton,
   MenuList,
   MenuDivider,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverBody,
 } from '@chakra-ui/react';
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { FiMapPin } from 'react-icons/fi';
 import {
   LOGIN_PAGE,
   PROFILE_PAGE,
@@ -32,7 +39,6 @@ import { UserContext } from '../../contexts/UserContext';
 import HeaderMenuButton from './components/HeaderMenuButton';
 import logo from '../../assets/images/teacher_icon.png';
 import { HamburgerIcon } from '@chakra-ui/icons';
-import { CitySelection } from './components/CitySelection';
 
 const Header: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
@@ -49,15 +55,22 @@ const Header: React.FC = () => {
         as="header"
         pb={{ base: '0', md: '0' }}
         width={'100%'}
+        maxWidth={'100%'}
       >
         <Box as="nav" bg="bg-surface">
-          <Flex py={{ base: '5', lg: '5' }} width={'100%'} wrap={'nowrap'}>
+          <Flex
+            py={{ base: '5', lg: '5' }}
+            width={'100%'}
+            maxWidth={'100%'}
+            wrap={'nowrap'}
+          >
             <HStack
               spacing="5"
               display={'flex'}
-              justify={'left'}
+              justifyContent={'left'}
               align={'center'}
               width={'100%'}
+              maxWidth={'100%'}
             >
               <Link to={SEARCH_PAGE}>
                 <Image src={logo} boxSize="50px" />
@@ -73,7 +86,36 @@ const Header: React.FC = () => {
                     Репетиторы
                   </Text>
                 </Link>
-                <CitySelection />
+                <Popover>
+                  <PopoverTrigger>
+                    <Button
+                      bg={'white'}
+                      leftIcon={<FiMapPin />}
+                      iconSpacing={'5px'}
+                      height={'auto'}
+                      fontSize="xs"
+                      color="subtle"
+                      padding={'0 20px 0 0'}
+                      _hover={{ bg: 'white' }}
+                      _active={{
+                        bg: 'white',
+                        transform: 'scale(1)',
+                        borderColor: 'white',
+                      }}
+                    >
+                      <Text as={'u'} _hover={{ color: 'gray' }}>
+                        в Екатеринбурге
+                      </Text>
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <PopoverArrow />
+                    <PopoverCloseButton />
+                    <PopoverBody>
+                      Пока мы работаем только в одном городе :(
+                    </PopoverBody>
+                  </PopoverContent>
+                </Popover>
               </VStack>
             </HStack>
             {isDesktop ? (

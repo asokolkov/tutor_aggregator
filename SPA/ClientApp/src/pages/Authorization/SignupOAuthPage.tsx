@@ -17,8 +17,8 @@ import {
   InputGroup,
   useBreakpointValue,
 } from '@chakra-ui/react';
-import Theme from '../../../assets/theme';
-import { Header } from '../components/Header';
+import Theme from '../../assets/theme/index';
+import { Header } from './components/Header';
 
 export const SignupOAuthPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
@@ -76,7 +76,10 @@ export const SignupOAuthPage = () => {
               </Stack>
               <HStack justify="space-between">
                 <Checkbox>
-                  Принимаю <Link color="teal.500">условия сервиса.</Link>
+                  Принимаю{' '}
+                  <Link color="teal.500" href="#">
+                    условия сервиса.
+                  </Link>
                 </Checkbox>
               </HStack>
               <Stack spacing="6">

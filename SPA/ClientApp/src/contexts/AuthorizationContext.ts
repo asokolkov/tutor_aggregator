@@ -6,4 +6,8 @@ export type ContextProps = {
   setError: (error: string) => void;
 };
 
-export const AuthorizationContext = React.createContext<ContextProps>(null);
+export const AuthorizationContext = React.createContext<ContextProps>({
+  hasError: false,
+  errorMessage: '',
+  setError: () => {},
+});
