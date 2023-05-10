@@ -60,6 +60,5 @@ deploy_to_staging:
   image: hub.66bit.ru/shared/stk8s:1.26.2
   needs: [build_and_push, login_registry]
   script:
-    - kubectl create secret generic tewboat --from-file=.dockerconfigjson=$DOCKER_TEWBOAT_CREDS --type=kubernetes.io/dockerconfigjson --namespace=tutor-aggregator
     - kubectl apply k8s.yml
   when: manual
