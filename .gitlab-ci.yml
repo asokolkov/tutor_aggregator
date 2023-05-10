@@ -50,6 +50,7 @@ build_and_push:
 
 login_registry:
   stage: deploy
+  needs: [build_and_push]
   image: docker:stable
   script:
     - docker login -u "$LOCAL_REGISTRY_LOGIN" -p "$LOCAL_REGISTRY_PASSWORD" hub.66bit.ru
