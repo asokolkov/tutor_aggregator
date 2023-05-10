@@ -1,153 +1,153 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tutor-aggregator
-  namespace: tutor-aggregator
-  labels:
-    app: tutor-aggregator-web
-    env: Production
-    owner: IlyaZhdanov
+  name: tutor-aggregator
+  namespace: tutor-aggregator
+  labels:
+    app: tutor-aggregator-web
+    env: Production
+    owner: IlyaZhdanov
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      project: taa
+  replicas: 1
+  selector:
+    matchLabels:
+      project: taa
   strategy:
     type: Recreate
-  template:
-    metadata:
-      labels:
-        project: taa
-    spec:
-      containers:
-        - name: tutor-aggregator
-          image: tewboat/tutor-aggregator:latest
-          ports:
-            - containerPort: 80
-      imagePullSecrets:
-        - name: tewboat
+  template:
+    metadata:
+      labels:
+        project: taa
+    spec:
+      containers:
+        - name: tutor-aggregator
+          image: tewboat/tutor-aggregator:latest
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: tewboat
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: tutor-aggregator-service
-  namespace: tutor-aggregator
-  labels:
-    env: Production
-    owner: IlyaZhdanov
+  name: tutor-aggregator-service
+  namespace: tutor-aggregator
+  labels:
+    env: Production
+    owner: IlyaZhdanov
 spec:
-  selector:
-    project: taa
-  ports:
-    - name: app-listener
-      protocol: TCP
-      port: 80
-      targetPort: 80
+  selector:
+    project: taa
+  ports:
+    - name: app-listener
+      protocol: TCP
+      port: 80
+      targetPort: 80
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: taa-postgres
-  namespace: tutor-aggregator
+  name: taa-postgres
+  namespace: tutor-aggregator
 spec:
-  selector:
-    matchLabels:
-      app: taa-postgres # has to match .spec.template.metadata.labels
-  serviceName: "taa-postgres"
-  replicas: 1
-  minReadySeconds: 5 # by default is 0
-  template:
-    metadata:
-      labels:
-        app: taa-postgres # has to match .spec.selector.matchLabels
-    spec:
-      terminationGracePeriodSeconds: 10
-      containers:
-      - name: taa-postgres
-        image: postgres:15-alpine
-        ports:
-        - containerPort: 5432
-        volumeMounts:
-        - name: taa-postgres
-          mountPath: /var/lib/postgresql/data
-        env:
-        - name: POSTGRES_USER
-          value: postgres
-        - name: POSTGRES_PASSWORD
-          value: postgres
-        - name: App_DB
-          value: AppDB
-        - name: Identity_DB
-          value: IdentityDB
-        - name: PGDATA
-          value: /var/lib/postgresql/data/pgdata
-      initContainers:
-      - name: taa-rights-to-data
-        image: busybox
-        command: ["sh","-c","mkdir -p /var/lib/postgresql/data/pgdata && chown -R 999:999 /var/lib/postgresql/data/pgdata"]
-        securityContext:
-          runAsUser: 0
-          privileged: true
-        volumeMounts:
-        - name: taa-postgres
-          mountPath: /var/lib/postgresql/data
-  volumeClaimTemplates:
-  - metadata:
-      name: taa-postgres
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      storageClassName: "rook-ceph-block"
-      resources:
-        requests:
-          storage: 1Gi
+  selector:
+    matchLabels:
+      app: taa-postgres # has to match .spec.template.metadata.labels
+  serviceName: "taa-postgres"
+  replicas: 1
+  minReadySeconds: 5 # by default is 0
+  template:
+    metadata:
+      labels:
+        app: taa-postgres # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: taa-postgres
+          image: postgres:15-alpine
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: taa-postgres
+              mountPath: /var/lib/postgresql/data
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: App_DB
+              value: AppDB
+            - name: Identity_DB
+              value: IdentityDB
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+      initContainers:
+        - name: taa-rights-to-data
+          image: busybox
+          command: [ "sh","-c","mkdir -p /var/lib/postgresql/data/pgdata && chown -R 999:999 /var/lib/postgresql/data/pgdata" ]
+          securityContext:
+            runAsUser: 0
+            privileged: true
+          volumeMounts:
+            - name: taa-postgres
+              mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+    - metadata:
+        name: taa-postgres
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "rook-ceph-block"
+        resources:
+          requests:
+            storage: 1Gi
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: taa-postgres-service
-  namespace: tutor-aggregator
-  labels:
-    app: taa-postgres-service
+  name: taa-postgres-service
+  namespace: tutor-aggregator
+  labels:
+    app: taa-postgres-service
 spec:
-  ports:
-  - protocol: TCP
-    port: 5432
-    targetPort: 5432
-  selector:
-    app: taa-postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+  selector:
+    app: taa-postgres
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: tutor-aggregator-ingress
-  namespace: tutor-aggregator
+  name: tutor-aggregator-ingress
+  namespace: tutor-aggregator
 spec:
-  rules:
-  - host: "taa.stk8s.66bit.ru"
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: tutor-aggregator-service
-            port:
-              number: 80
+  rules:
+    - host: "taa.stk8s.66bit.ru"
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: tutor-aggregator-service
+                port:
+                  number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: taa-postgres-ingress
-  namespace: tutor-aggregator
+  name: taa-postgres-ingress
+  namespace: tutor-aggregator
 spec:
-  rules:
-  - host: "taa-postgres.stk8s.66bit.ru"
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: taa-postgres-service
-            port:
-              number: 5432
+  rules:
+    - host: "taa-postgres.stk8s.66bit.ru"
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: taa-postgres-service
+                port:
+                  number: 5432
