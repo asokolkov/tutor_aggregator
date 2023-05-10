@@ -48,13 +48,21 @@ build_and_push:
   variables:
     IMAGE_NAME: ${OWNER}/${APPLICATION}
 
+login_registry:
+  stage: deploy
+  image: docker:stable
+  script:
+    - docker login -u "$LOCAL_REGISTRY_LOGIN" -p "$LOCAL_REGISTRY_PASSWORD"
+
 deploy_to_staging:
   stage: deploy
   image: hub.66bit.ru/urfu2022/ci/deploy:1.26.2
-  needs: [build_and_push]
+  needs: [build_and_push, login_registry]
   script:
     - envsubst < $DEVELOP_DOCKER_STACK_FILE > docker-compose.development.yml
     - kubectl create namespace tutor-aggregator
     - kubectl create secret generic tewboat --from-file=.dockerconfigjson=$DOCKER_TEWBOAT_CREDS --type=kubernetes.io/dockerconfigjson --namespace=tutor-aggregator
     - kubectl apply docker-compose.development.yml
+  after_script:
+    - docker logout
   when: manual
