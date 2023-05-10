@@ -31,7 +31,6 @@ linting:
   before_script:
     - docker --version
     - docker login -u "$REGISTRY_LOGIN" -p "$REGISTRY_PASSWORD"
-    - docker builder prune -f
   script:
     - >
       docker build --no-cache
