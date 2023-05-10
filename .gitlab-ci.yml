@@ -63,6 +63,4 @@ deploy_to_staging:
     - kubectl create namespace tutor-aggregator
     - kubectl create secret generic tewboat --from-file=.dockerconfigjson=$DOCKER_TEWBOAT_CREDS --type=kubernetes.io/dockerconfigjson --namespace=tutor-aggregator
     - kubectl apply docker-compose.development.yml
-  after_script:
-    - docker logout
   when: manual
