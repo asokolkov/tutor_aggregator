@@ -35,7 +35,7 @@ linting:
     - >
       docker build --no-cache
       -t "${IMAGE_NAME}:${RELEASE_VERSION}"
-      -t "${IMAGE_NAME}:latest}"
+      -t "${IMAGE_NAME}:latest"
       -f .docker/amd64/spa.dockerfile ./
     - docker push "${IMAGE_NAME}:${RELEASE_VERSION}"
     - docker push "${IMAGE_NAME}:latest"
