@@ -22,6 +22,7 @@ spec:
       containers:
         - name: tutor-aggregator
           image: tewboat/tutor-aggregator:latest
+          imagePullPolicy: "Always"
           ports:
             - containerPort: 80
       imagePullSecrets:
