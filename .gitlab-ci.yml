@@ -52,11 +52,11 @@ login_registry:
   stage: deploy
   image: docker:stable
   script:
-    - docker login -u "$LOCAL_REGISTRY_LOGIN" -p "$LOCAL_REGISTRY_PASSWORD"
+    - docker login -u "$LOCAL_REGISTRY_LOGIN" -p "$LOCAL_REGISTRY_PASSWORD" hub.66bit.ru
 
 deploy_to_staging:
   stage: deploy
-  image: hub.66bit.ru/urfu2022/ci/deploy:1.26.2
+  image: hub.66bit.ru/shared/stk8s:1.26.2
   needs: [build_and_push, login_registry]
   script:
     - envsubst < $DEVELOP_DOCKER_STACK_FILE > docker-compose.development.yml
