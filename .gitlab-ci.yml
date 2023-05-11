@@ -1,3 +1,5 @@
+image: alpine:3.7
+
 variables:
   OWNER: tewboat
   APPLICATION: tutor-aggregator
@@ -56,20 +58,15 @@ login_registry:
   image: docker:stable
   script:
     - docker login -u "$LOCAL_REGISTRY_LOGIN" -p "$LOCAL_REGISTRY_PASSWORD" hub.66bit.ru
-
-.export-env-variables: &export-variables-template
-  image: alpine:3.7
-  stage: deploy
-  script:
-    - export ConnectionStrings__Postgres="stub"
-    - export ConnectionStrings__Identity="stub"
-    - envsubst < k8s.yml > k8s-updated.yml
-
+    
 deploy_to_staging:
   <<: *export-variables-template
   stage: deploy
   image: hub.66bit.ru/shared/stk8s:1.26.2
   needs: [build_and_push, login_registry]
   script:
+    - export ConnectionStrings__Postgres="stub"
+    - export ConnectionStrings__Identity="stub"
+    - envsubst < k8s.yml > k8s-updated.yml
     - kubectl apply -f k8s-updated.yml
   when: manual
