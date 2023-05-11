@@ -65,7 +65,8 @@ deploy_to_staging:
   needs: [build_and_push, login_registry]
   before_script:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-    - apt update && apt install gettext -f
+    - sudo apt-get install apk
+    - apk update && apk add gettext
   script:
     - export ConnectionStrings__Postgres="stub"
     - export ConnectionStrings__Identity="stub"
