@@ -66,6 +66,6 @@ deploy_to_staging:
   script:
     - export ConnectionStrings__Postgres="stub"
     - export ConnectionStrings__Identity="stub"
-    - envsubst < k8s.yml > k8s-updated.yml
-    - kubectl apply -f k8s-updated.yml
+    - envsubst < $DEVELOP_DOCKER_STACK_FILE > docker-compose.development.yml
+    - kubectl apply -f docker-compose.development.yml
   when: manual
