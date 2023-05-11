@@ -59,6 +59,7 @@ login_registry:
 
 .export-env-variables: &export-variables-template
   image: alpine:3.7
+  stage: deploy
   script:
     - export ConnectionStrings__Postgres="stub"
     - export ConnectionStrings__Identity="stub"
