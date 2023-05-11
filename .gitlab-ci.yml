@@ -60,7 +60,6 @@ login_registry:
     - docker login -u "$LOCAL_REGISTRY_LOGIN" -p "$LOCAL_REGISTRY_PASSWORD" hub.66bit.ru
     
 deploy_to_staging:
-  <<: *export-variables-template
   stage: deploy
   image: hub.66bit.ru/shared/stk8s:1.26.2
   needs: [build_and_push, login_registry]
