@@ -44,12 +44,14 @@ export default class UserAPI {
     return response.data;
   }
 
-  static async login(loginDto: V1LoginDto) {
-    await axiosInstance.post('account/signin', loginDto);
+  static async login(loginDto: V1LoginDto): Promise<User> {
+    const response = await axiosInstance.post('account/signin', loginDto);
+    return response.data;
   }
 
-  static async register(registerDto: V1RegisterDto) {
-    await axiosInstance.post('account/signup', registerDto);
+  static async register(registerDto: V1RegisterDto): Promise<User> {
+    const response = await axiosInstance.post('account/signup', registerDto);
+    return response.data;
   }
 
   static async signOut() {
