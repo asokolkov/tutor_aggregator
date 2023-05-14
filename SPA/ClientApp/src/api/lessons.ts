@@ -21,8 +21,8 @@ export enum LessonStatus {
 }
 
 export enum LessonType {
-  Online,
-  Offline,
+  Online = 'Online',
+  Offline = 'Offline',
 }
 
 interface Person {
@@ -59,6 +59,14 @@ export default class LessonsAPI {
   }
 
   static async deleteLesson(lessonId: string) {
-    await axiosInstance.post(`api/v1/lessons/${lessonId}/delete`);
+    await axiosInstance.patch(`api/v1/lessons/${lessonId}/delete`);
+  }
+
+  static async bookLesson(lessonId: string) {
+    await axiosInstance.patch(`api/v1/lessons/${lessonId}/book`);
+  }
+
+  static async cancelLesson(lessonId: string) {
+    await axiosInstance.patch(`/api/v1/lessons/${lessonId}/cancel`);
   }
 }

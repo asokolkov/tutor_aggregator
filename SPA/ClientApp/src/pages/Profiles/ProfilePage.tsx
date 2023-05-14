@@ -10,7 +10,7 @@ import { useProfileInfo } from '../../query/useProfilePageQuery';
 import { ProfileContext } from '../../contexts/ProfileContext';
 import { Navigate } from 'react-router-dom';
 import { LOGIN_PAGE } from '../../routes/routePaths';
-import { LoadBar } from '../sharedComponents/LoadBar';
+import { LoadBar } from '../sharedComponents/LoadBar/LoadBar';
 
 export const ProfilePage = () => {
   const userContext = useContext(UserContext);

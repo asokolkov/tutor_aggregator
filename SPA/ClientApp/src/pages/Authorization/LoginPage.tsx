@@ -17,7 +17,7 @@ import { DividerWithOr } from './components/DividerWithOr';
 import { EmailField } from './components/EmailField';
 import { Form, Formik } from 'formik';
 import { RememberMeCheckbox } from './components/RememberMeCheckbox';
-import AccountAPI, { V1LoginDto } from '../../api/account';
+import UserAPI, { V1LoginDto } from '../../api/user';
 import { UserContext } from '../../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 import { SEARCH_PAGE } from '../../routes/routePaths';
@@ -52,7 +52,7 @@ export const LoginPage = () => {
       password: values.password,
     };
 
-    AccountAPI.signIn(loginData)
+    UserAPI.login(loginData)
       .then((user) => {
         userContext.setUser(user);
         navigate(SEARCH_PAGE);

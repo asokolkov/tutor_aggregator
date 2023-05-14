@@ -6,6 +6,7 @@ export const LESSONS_PAGE = `${DEFAULT_LAYOUT}/calendar`;
 
 export const TUTORS_PATH = `${DEFAULT_LAYOUT}/tutors`;
 export const TUTOR_PAGE = `${TUTORS_PATH}/:tutorId`;
+export const TUTOR_BOOK = `${TUTOR_PAGE}/book`;
 
 export const AUTH_LAYOUT = '/auth';
 export const LOGIN_PAGE = `${AUTH_LAYOUT}/login`;

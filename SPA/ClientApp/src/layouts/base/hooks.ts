@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import UserAPI, { User } from '../../api/user';
-import { AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
 
 export function useUser() {
   const [user, setUser] = useState<User>();
@@ -10,18 +10,19 @@ export function useUser() {
   const isUserAuth = user !== undefined;
 
   useEffect(() => {
-    UserAPI.getCurrentUser()
+    const abortController = new AbortController();
+    UserAPI.getCurrentUser(abortController.signal)
       .then((u) => {
         setUser(u);
       })
       .catch((err: AxiosError) => {
-        if (err.response.status === 401) {
-          removeUser();
-        }
+        if (axios.isCancel(err)) return;
       })
-      .finally(() => {
-        setLoading(false);
-      });
+      .catch((err: AxiosError) => {
+        if (err.response.status === 401) removeUser();
+      })
+      .finally(() => setLoading(false));
+    return () => abortController.abort();
   }, []);
 
   return { user, isLoading, setUser, removeUser, isUserAuth };

@@ -2,17 +2,17 @@ import { AccountType } from '../api/user';
 import TutorsAPI, { Tutor } from '../api/tutors';
 import StudentAPI, { Student } from '../api/students';
 import { useQuery } from 'react-query';
-import { studentProfileKeys, tutorProfileKeys } from './queryKeys';
+import { profileKey, studentKey, tutorKey } from './queryKeys';
 
 function useTutorQuery() {
   return useQuery({
-    queryKey: tutorProfileKeys,
+    queryKey: [profileKey, tutorKey],
     queryFn: () => TutorsAPI.getCurrentProfileInfo(),
   });
 }
 function useStudentQuery() {
   return useQuery({
-    queryKey: studentProfileKeys,
+    queryKey: [profileKey, studentKey],
     queryFn: () => StudentAPI.getCurrentProfileInfo(),
   });
 }

@@ -9,15 +9,17 @@ import {
   FORGOT_PASSWORD_PAGE,
   TUTOR_PAGE,
   LESSONS_PAGE,
+  TUTOR_BOOK,
 } from './routePaths';
 import BaseLayout from '../layouts/base/BaseLayout';
 import { TutorCardPage } from '../pages/TutorCard/TutorCardPage';
 import { SearchPage } from '../pages/Search/SearchPage';
 import { LoginPage } from '../pages/Authorization/LoginPage';
 import { SignupPage } from '../pages/Authorization/SignupPage';
-import { ForgotPasswordPage } from '../pages/Authorization/ForgotPasswordPage';
+import { ForgotPasswordPage } from '../pages/Authorization/_notInUse_toRefactor/ForgotPasswordPage';
 import { ProfilePage } from '../pages/Profiles/ProfilePage';
 import { LessonsPage } from '../pages/Lessons/LessonsPage';
+import { TutorBookPage } from '../pages/TutorBook/TutorBookPage';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: TUTOR_PAGE,
         element: <TutorCardPage />,
+      },
+      {
+        path: TUTOR_BOOK,
+        element: <TutorBookPage />,
       },
       {
         path: SEARCH_PAGE,

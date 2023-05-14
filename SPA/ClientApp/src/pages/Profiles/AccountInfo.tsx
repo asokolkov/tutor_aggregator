@@ -11,7 +11,7 @@ import { TextRow } from './components/TextRow';
 import { UserContext } from '../../contexts/UserContext';
 import { AccountType } from '../../api/user';
 import { ProfileContext } from '../../contexts/ProfileContext';
-import AccountAPI from '../../api/account';
+import UserAPI from '../../api/user';
 import { LOGIN_PAGE } from '../../routes/routePaths';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,7 +22,7 @@ export const AccountInfo = () => {
   const navigate = useNavigate();
 
   const signOut = async () => {
-    await AccountAPI.signOut();
+    await UserAPI.signOut();
     userContext.removeUser();
     navigate(LOGIN_PAGE);
   };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award } from '../../api/_share';
+import { Award } from '../../../api/_share';
 import { VStack, Text } from '@chakra-ui/react';
 
 const AwardSection: React.FC<AwardSectionProps> = (props) => {

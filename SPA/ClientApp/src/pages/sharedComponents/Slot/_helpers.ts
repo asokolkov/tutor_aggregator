@@ -1,3 +1,8 @@
+export const getTimeFromDate = (dateString: string) => {
+  const date = new Date(dateString);
+  return `${date.getHours()}:${date.getMinutes()}`;
+};
+
 export const russianDayOfTheWeekByIndex = (date: Date) => {
   const map = [
     'воскресенье',
@@ -24,3 +29,9 @@ export const dateShift = (date: Date, index: number) => {
   newDate.setDate(date.getDate() + index);
   return newDate;
 };
+
+export interface DisclosureProps {
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+}

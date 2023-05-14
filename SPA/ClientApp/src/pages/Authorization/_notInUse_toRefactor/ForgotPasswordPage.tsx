@@ -14,13 +14,12 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
-  AlertDescription,
   useBreakpointValue,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import Theme from '../../assets/theme/index';
+import Theme from '../../../assets/theme';
 import { Link } from 'react-router-dom';
-import { LOGIN_PAGE } from '../../routes/routePaths';
+import { LOGIN_PAGE } from '../../../routes/routePaths';
 
 export const ForgotPasswordPage = () => {
   const [isError] = useState(false);
@@ -43,8 +42,9 @@ export const ForgotPasswordPage = () => {
             {isError && (
               <Alert status="error">
                 <AlertIcon />
-                <AlertTitle>Введена некорректная почта!</AlertTitle>
-                <AlertDescription>Проверьте почту.</AlertDescription>
+                <AlertTitle>
+                  Если аккаунт существует, на почту было отправлено письмо
+                </AlertTitle>
               </Alert>
             )}
             <Stack spacing="6">

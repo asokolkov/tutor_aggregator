@@ -23,8 +23,11 @@ internal sealed class LessonsManager : ILessonsManager
         return await lessonsRepository.MakeBookedAsync(studentId, lessonId);
     }
 
-    public async Task<Lesson?> CreateAsync(Guid tutorId, double price, LessonType type, DateTimeOffset start, DateTimeOffset end)
+    public async Task<Lesson?> CreateAsync(Guid tutorId, int price, LessonType type, DateTimeOffset start, DateTimeOffset end)
     {
+        if (price < 0)
+            return null;
+        
         var lesson = new Lesson
         {
             Id =Guid.NewGuid(),
