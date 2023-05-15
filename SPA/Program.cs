@@ -156,6 +156,6 @@ app.UseAuthorization();
 
 app.UseEndpoints(configure => { configure.MapControllers(); });
 
-app.MapFallbackToFile("wwwroot/index.html");
+app.MapFallbackToFile("index.html");
 
 app.Run();
