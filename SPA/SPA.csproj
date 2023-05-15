@@ -27,6 +27,8 @@
         <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="6.0.10" />
         <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.10" />
+        <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="3.1.32" />
+        <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.16" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.10" />
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="6.0.0" />
@@ -59,6 +61,15 @@
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Pages\Error.cshtml" />
       <_ContentIncludedByDefault Remove="Pages\_ViewImports.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <!-- Don't publish the SPA source files, but do show them in the project files list -->
+        <Compile Remove="$(SpaRoot)build\**" />
+        <Content Remove="$(SpaRoot)" />
+        <Content Remove="$(SpaRoot)build\" />
+        <Content Include="ClientApp\tsconfig.json" />
+        <None Include="$(SpaRoot)" Exclude="$(SpaRoot)node_modules\;$(SpaRoot)build\**" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

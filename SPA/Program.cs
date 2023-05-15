@@ -1,19 +1,18 @@
-using System.Security.Claims;
 using EFCore.Postgres.Application.Contexts;
 using EFCore.Postgres.Extensions;
 using EFCore.Postgres.Identity;
 using EFCore.Postgres.Identity.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.OAuth;
+using Humanizer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json.Converters;
 using SPA.Authorization;
-using SPA.Authorization.Requirements;
 using SPA.Authorization.Requirements.Impl;
 using SPA.Extensions;
 using SPA.Identity;
 using SPA.Startup;
+using SameSiteMode = Microsoft.AspNetCore.Http.SameSiteMode;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -103,6 +102,8 @@ builder.Services.AddAuthorization(
             policy => { policy.AddRequirements(new CreateReviewRequirement()); });
     });
 
+builder.Services.AddSpaStaticFiles(options => { options.RootPath = "ClientApp/build"; });
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -116,6 +117,37 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseSpa(spa =>
+{
+    spa.Options.SourcePath = "ClientApp";
+    spa.Options.DefaultPageStaticFileOptions = new StaticFileOptions
+    {
+        OnPrepareResponse = context =>
+        {
+            var headers = context.Context.Response.GetTypedHeaders();
+            if (context.File.Name != "index.html")
+            {
+                headers.CacheControl = new CacheControlHeaderValue
+                {
+                    Public = true,
+                    MaxAge = 1.Days()
+                };
+                return;
+            }
+
+            headers.CacheControl = new CacheControlHeaderValue
+            {
+                NoStore = true,
+                NoCache = true
+            };
+        }
+    };
+
+    if (app.Environment.IsDevelopment())
+        spa.UseReactDevelopmentServer("start");
+});
+
+app.UseSpaStaticFiles();
 app.UseStaticFiles();
 app.UseRouting();
 
@@ -124,6 +156,6 @@ app.UseAuthorization();
 
 app.UseEndpoints(configure => { configure.MapControllers(); });
 
-//app.MapFallbackToFile("index.html");
+app.MapFallbackToFile("index.html");
 
 app.Run();
