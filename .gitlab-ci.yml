@@ -30,8 +30,6 @@ linting:
 .docker-build: &build-template
   stage: build_and_push
   image: docker:stable
-  only:
-    - development
   before_script:
     - docker --version
     - docker login -u "$REGISTRY_LOGIN" -p "$REGISTRY_PASSWORD"
