@@ -64,8 +64,7 @@ export const SignupPage = () => {
     };
 
     UserAPI.register(registerData)
-      .then(async () => {
-        const user = await UserAPI.getCurrentUser();
+      .then((user) => {
         userContext.setUser(user);
         navigate(SEARCH_PAGE);
       })

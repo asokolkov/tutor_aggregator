@@ -53,8 +53,7 @@ export const LoginPage = () => {
     };
 
     UserAPI.login(loginData)
-      .then(async () => {
-        const user = await UserAPI.getCurrentUser();
+      .then((user) => {
         userContext.setUser(user);
         navigate(SEARCH_PAGE);
       })

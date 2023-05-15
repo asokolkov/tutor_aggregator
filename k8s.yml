@@ -23,10 +23,16 @@ spec:
         - name: tutor-aggregator
           image: tewboat/tutor-aggregator:latest
           imagePullPolicy: "Always"
+          env:
+            - name: ConnectionStrings__Postgres
+              value: "Host=taa-postgres-service;Port=5432;Database=usersdb;Username=postgres;Password=postgres"
+            - name: ConnectionStrings__Identity
+              value: "Host=taa-postgres-service;Port=5432;Database=identity;Username=postgres;Password=postgres"
           ports:
             - containerPort: 80
       imagePullSecrets:
         - name: tewboat
+
 ---
 apiVersion: v1
 kind: Service
