@@ -63,10 +63,6 @@ deploy_to_staging:
   stage: deploy
   image: hub.66bit.ru/shared/stk8s:1.26.2
   needs: [build_and_push, login_registry]
-  before_script:
-    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-    - sudo apt-get install apk
-    - apk update && apk add gettext
   script:
     - kubectl apply -f k8s.yml
   when: manual
