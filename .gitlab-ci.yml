@@ -69,4 +69,5 @@ deploy_to_staging:
   image: hub.66bit.ru/shared/stk8s:1.26.2
   needs: [build_and_push, login_registry]
   script:
+    - kubectl delete deployment tutor-aggregator
     - kubectl apply -f k8s.yml
