@@ -7,8 +7,7 @@ import { BuildingHouseIcon } from '../../Lessons/components/Icons/BuildingHouseI
 import { LessonType } from '../../../api/lessons';
 
 export const PriceAndTypeInfo: React.FC = () => {
-  const { lesson } = useContext(SlotContext);
-  const { type, price } = lesson;
+  const { type, price } = useContext(SlotContext);
   const isOnline = type === LessonType.Online;
 
   return (
@@ -17,7 +16,9 @@ export const PriceAndTypeInfo: React.FC = () => {
         {isOnline ? <DesktopIcon /> : <BuildingHouseIcon />}
         <Text>{isOnline ? 'Онлайн' : 'Оффлайн'}</Text>
       </HStack>
-      <Text variant="semibold">{Math.floor(price)} ₽</Text>
+      <Text variant="regular.bold" wordBreak="break-all">
+        {price <= 1000 * 1000 ? Math.floor(price) : '>1000000'} ₽
+      </Text>
     </Flex>
   );
 };

@@ -3,7 +3,7 @@ import { Button, HStack, IconButton, useDisclosure } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { SlotContext } from '../../../contexts/SlotContext';
 import { ChatIcon, DeleteIcon } from '@chakra-ui/icons';
-import { DeleteSlotModal } from '../../Lessons/components/modals/DeleteSlotModal';
+import { DeleteSlotModal } from './modals/DeleteSlotModal';
 
 export const ButtonGroupTutor: React.FC = () => {
   const { isBooked } = useContext(SlotContext);
@@ -14,25 +14,21 @@ export const ButtonGroupTutor: React.FC = () => {
       <DeleteSlotModal disclosure={disclosure} />
       <HStack w="100%" p="8px" spacing="4px">
         {isBooked ? (
-          <Button
-            rightIcon={<ChatIcon />}
-            w="100%"
-            bg="green.200"
-            color="white"
-          >
-            Связаться
+          <Button rightIcon={<ChatIcon />} w="100%" h="30px" variant="blue.300">
+            Показать контакты
           </Button>
         ) : (
-          <Button w="100%" bg="gray.300" color="white">
+          <Button w="100%" h="30px" variant="blue.200">
             Никто не записан
           </Button>
         )}
         <IconButton
           icon={<DeleteIcon />}
-          bg="red"
-          color="white"
+          h="30px"
+          width="30px"
           aria-label="Удалить слот"
           onClick={disclosure.onOpen}
+          variant="red"
         />
       </HStack>
     </>

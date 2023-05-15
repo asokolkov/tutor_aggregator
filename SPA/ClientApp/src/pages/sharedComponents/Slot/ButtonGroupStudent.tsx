@@ -1,19 +1,19 @@
 import * as React from 'react';
 import { Button, HStack, useDisclosure } from '@chakra-ui/react';
-import { ChatIcon } from '@chakra-ui/icons';
+import { ChatIcon, LockIcon } from '@chakra-ui/icons';
 import { useContext } from 'react';
 import { SlotContext } from '../../../contexts/SlotContext';
-import { BookLessonModal } from '../../TutorBook/modals/BookLessonModal';
+import { BookLessonModal } from './modals/BookLessonModal';
 import { UserContext } from '../../../contexts/UserContext';
-import { CancelLessonModal } from '../../TutorBook/modals/CancelLessonModal';
+import { CancelLessonModal } from './modals/CancelLessonModal';
 
 export const ButtonGroupStudent: React.FC = () => {
-  const { isBooked, lesson } = useContext(SlotContext);
+  const { isBooked, student } = useContext(SlotContext);
   const bookDisclosure = useDisclosure();
   const cancelDisclosure = useDisclosure();
   const { user } = useContext(UserContext);
 
-  const isBookedByCurrent = user.id === lesson.student?.id;
+  const isBookedByCurrent = user?.id === student?.id;
 
   const renderButton = () => {
     if (isBookedByCurrent)
@@ -21,8 +21,8 @@ export const ButtonGroupStudent: React.FC = () => {
         <Button
           rightIcon={<ChatIcon />}
           w="100%"
-          bg="red"
-          color="white"
+          h="30px"
+          variant="red"
           onClick={cancelDisclosure.onOpen}
         >
           Отменить запись
@@ -31,8 +31,8 @@ export const ButtonGroupStudent: React.FC = () => {
 
     if (isBooked)
       return (
-        <Button w="100%" bg="gray.300" color="white">
-          Слот уже занят
+        <Button w="100%" h="30px" variant="blue.200" rightIcon={<LockIcon />}>
+          Слот занят
         </Button>
       );
 
@@ -40,8 +40,8 @@ export const ButtonGroupStudent: React.FC = () => {
       <Button
         rightIcon={<ChatIcon />}
         w="100%"
-        bg="green.200"
-        color="white"
+        h="30px"
+        variant="green"
         onClick={bookDisclosure.onOpen}
       >
         Записаться

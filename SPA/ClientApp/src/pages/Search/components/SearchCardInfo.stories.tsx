@@ -1,10 +1,8 @@
 import SearchCardInfo from './SearchCardInfo';
 import { Tutor } from '../../../api/tutors';
-import { withRouter } from 'storybook-addon-react-router-v6';
 
 export default {
   component: SearchCardInfo,
-  decorators: [withRouter],
 };
 
 const mockTutor: Tutor = {
