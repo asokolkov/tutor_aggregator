@@ -68,8 +68,5 @@ deploy_to_staging:
     - sudo apt-get install apk
     - apk update && apk add gettext
   script:
-    - export ConnectionStrings__Postgres="stub"
-    - export ConnectionStrings__Identity="stub"
-    - envsubst < $DEVELOP_DOCKER_STACK_FILE > docker-compose.development.yml
-    - kubectl apply -f docker-compose.development.yml
+    - kubectl apply -f k8s.yml
   when: manual
