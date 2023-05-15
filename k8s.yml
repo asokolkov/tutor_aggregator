@@ -19,6 +19,7 @@ spec:
       labels:
         project: taa
     spec:
+      terminationGracePeriodSeconds: 30
       containers:
         - name: tutor-aggregator
           image: tewboat/tutor-aggregator:latest
