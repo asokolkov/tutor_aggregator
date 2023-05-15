@@ -1,0 +1,28 @@
+.lessons-tab-container {
+    column-count: 1;
+    break-inside: avoid;
+}
+
+@media(min-width: 1024px) {
+    .lessons-tab-container {
+        column-count: 2;
+    }
+}
+
+@media(min-width: 1440px) {
+    .lessons-tab-container {
+        column-count: 3;
+    }
+}
+
+@media(min-width: 1920px) {
+    .lessons-tab-container {
+        column-count: 4;
+    }
+}
+
+@media(min-width: 2560px) {
+    .lessons-tab-container {
+        column-count: 5;
+    }
+}

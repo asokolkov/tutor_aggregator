@@ -13,19 +13,22 @@ export const PaginationMenu: React.FC<Props> = ({
   end,
   onDateChange,
 }) => {
+  const isOneDay = start.getDate() === end.getDate();
   return (
     <HStack width="100%" spacing="30px" justify="center" p="8px">
       <Button leftIcon={<ArrowBackIcon />} onClick={() => onDateChange(false)}>
-        Предыдущий период
+        {isOneDay ? 'Предыдущий день' : 'Предыдущий период'}
       </Button>
       <Text variant="big-semibold">
-        {dayAndMonth(start)} - {dayAndMonth(end)}
+        {isOneDay
+          ? dayAndMonth(start)
+          : `${dayAndMonth(start)} - ${dayAndMonth(end)}`}
       </Text>
       <Button
         rightIcon={<ArrowForwardIcon />}
         onClick={() => onDateChange(true)}
       >
-        Следующий период
+        {isOneDay ? 'Следующий день' : 'Следующий период'}
       </Button>
     </HStack>
   );
