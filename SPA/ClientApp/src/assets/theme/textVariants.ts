@@ -1,83 +1,65 @@
+import { buttonTextVariant } from './button';
+
 export const textVariants = {
-  regular: {
-    baseStyle: {
-      fontFamily: 'Inter',
-      fontSize: '18px',
-      fontWeight: 'regular',
-      lineHeight: '130%',
-    },
-    variants: {
-      bold: {
-        fontWeight: 'semi-bold',
-        lineHeight: '150%',
-      },
-      h1: {
-        fontSize: '32px',
-        fontWeight: 'bold',
-        lineHeight: '120%',
-      },
-      h2: {
-        fontSize: '24px',
-        fontWeight: 'bold',
-        lineHeight: '133%',
-      },
-      h3: {
-        fontSize: '20px',
-        fontWeight: 'semi-bold',
-        lineHeight: '130%',
-      },
-    },
+  baseStyle: {
+    fontFamily: 'Inter',
+    fontSize: '18px',
+    fontWeight: 'regular',
+    lineHeight: '130%',
   },
-  misc: {
-    variants: {
-      link: {
-        fontFamily: 'Inter',
-        fontSize: '22px',
-        fontWeight: 'medium',
-        lineHeight: '150%',
-        textDecoration: 'underline',
-      },
-      field_title: {
-        fontFamily: 'Inter',
-        fontSize: '16px',
-        fontWeight: 'regular',
-        lineHeight: '150%',
-      },
-      button: {
-        fontFamily: 'Inter',
-        fontSize: '18px',
-        fontWeight: 'semi-bold',
-        lineHeight: '130%',
-      },
-      logo_addition: {
-        fontFamily: 'Inter',
-        fontSize: '16px',
-        fontWeight: 'regular',
-        lineHeight: '175%',
-        textDecoration: 'underline',
-      },
-      small_button: {
-        fontFamily: 'Inter',
-        fontSize: '14px',
-        fontWeight: 'semi-bold',
-        lineHeight: '150%',
-      },
+  variants: {
+    'regular.bold': {
+      fontWeight: 'semibold',
+      lineHeight: '150%',
     },
-  },
-  brand: {
-    variants: {
-      logo: {
-        fontFamily: 'PT Sans',
-        fontSize: '32px',
-        fontWeight: 'bold',
-        lineHeight: '120%',
-      },
-      h1: {
-        fontFamily: 'PT Sans',
-        fontSize: '40px',
-        fontWeight: 'bold',
-        lineHeight: '120%',
-      },
+    'regular.h1': {
+      fontSize: '32px',
+      fontWeight: 'bold',
+      lineHeight: '120%',
+    },
+    'regular.h2': {
+      fontSize: '24px',
+      fontWeight: 'bold',
+      lineHeight: '133%',
+    },
+    'regular.h3': {
+      fontSize: '20px',
+      fontWeight: 'semibold',
+    },
+
+    'misc.link': {
+      fontSize: '22px',
+      fontWeight: 'medium',
+      lineHeight: '150%',
+      textDecoration: 'underline',
+    },
+    'misc.field-title': {
+      fontSize: '16px',
+      lineHeight: '150%',
+    },
+    'misc.button': buttonTextVariant,
+    'misc.logo-addition': {
+      fontSize: '16px',
+      lineHeight: '175%',
+      textDecoration: 'underline',
+    },
+    'misc.small-button': {
+      fontSize: '14px',
+      fontWeight: 'semibold',
+      lineHeight: '150%',
+    },
+
+    'brand.logo': {
+      fontFamily: 'PT Sans',
+      fontSize: '32px',
+      fontWeight: 'bold',
+      lineHeight: '120%',
+    },
+    'brand.h1': {
+      fontFamily: 'PT Sans',
+      fontSize: '40px',
+      fontWeight: 'bold',
+      lineHeight: '120%',
     },
   },
 };
