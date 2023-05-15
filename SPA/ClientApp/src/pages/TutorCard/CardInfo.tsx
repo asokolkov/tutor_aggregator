@@ -17,7 +17,7 @@ import educationIcon from '../../assets/images/educations-icon.png';
 import requirementsIcon from '../../assets/images/requirements-icon.png';
 import aboutIcon from '../../assets/images/about-icon.png';
 import awardsIcon from '../../assets/images/awards-icon.png';
-import { ReviewStarWithStats } from './components/ReviewStarWithStats';
+import { RatingStars } from '../sharedComponents/ReviewStars/RatingStars';
 import React, { useContext } from 'react';
 import { ButtonSection } from './components/ButtonSection';
 import { mapCollectionToString } from './components/_helpers';
@@ -120,7 +120,7 @@ export const CardInfo = () => {
               justify={'center'}
               margin={isDesktop ? 'auto' : '0 0 1em 0'}
             >
-              <ReviewStarWithStats rating={rating} />
+              <RatingStars rating={rating} />
             </Flex>
             <ButtonSection />
           </Flex>
