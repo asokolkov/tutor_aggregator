@@ -30,6 +30,8 @@ linting:
 .docker-build: &build-template
   stage: build_and_push
   image: docker:stable
+  only:
+    - development
   before_script:
     - docker --version
     - docker login -u "$REGISTRY_LOGIN" -p "$REGISTRY_PASSWORD"
@@ -52,6 +54,8 @@ build_and_push:
     IMAGE_NAME: ${OWNER}/${APPLICATION}
 
 login_registry:
+  only:
+    - development
   stage: deploy
   needs: [build_and_push]
   image: docker:stable
@@ -59,6 +63,8 @@ login_registry:
     - docker login -u "$LOCAL_REGISTRY_LOGIN" -p "$LOCAL_REGISTRY_PASSWORD" hub.66bit.ru
     
 deploy_to_staging:
+  only:
+    - development
   stage: deploy
   image: hub.66bit.ru/shared/stk8s:1.26.2
   needs: [build_and_push, login_registry]
