@@ -47,7 +47,6 @@ linting:
 build_and_push:
   <<: *build-template
   stage: build_and_push
-  when: manual
   needs: [build-and-test, linting]
   variables:
     IMAGE_NAME: ${OWNER}/${APPLICATION}
@@ -65,4 +64,3 @@ deploy_to_staging:
   needs: [build_and_push, login_registry]
   script:
     - kubectl apply -f k8s.yml
-  when: manual
