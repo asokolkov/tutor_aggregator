@@ -55,33 +55,33 @@ builder.Services.ConfigureApplicationCookie(options =>
     };
 });
 
-builder.Services.AddAuthentication()
-    .AddGoogle(options =>
-    {
-        options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-    })
-    .AddOAuth("Vk", options =>
-    {
-        options.ClientId = builder.Configuration["Authentication:Vk:ClientId"];
-        options.ClientSecret = builder.Configuration["Authentication:Vk:ClientSecret"];
-        options.ClaimsIssuer = "Vk";
-        options.CallbackPath = new PathString("/signin-vk");
-        options.AuthorizationEndpoint = "https://oauth.vk.com/authorize";
-        options.TokenEndpoint = "https://oauth.vk.com/access_token";
-        options.Scope.Add("email");
-        options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "user_id");
-        options.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
-        options.SaveTokens = true;
-        options.Events = new OAuthEvents
-        {
-            OnCreatingTicket = context =>
-            {
-                context.RunClaimActions(context.TokenResponse.Response.RootElement);
-                return Task.CompletedTask;
-            }
-        };
-    });
+// builder.Services.AddAuthentication()
+//     .AddGoogle(options =>
+//     {
+//         options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+//         options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+//     })
+//     .AddOAuth("Vk", options =>
+//     {
+//         options.ClientId = builder.Configuration["Authentication:Vk:ClientId"];
+//         options.ClientSecret = builder.Configuration["Authentication:Vk:ClientSecret"];
+//         options.ClaimsIssuer = "Vk";
+//         options.CallbackPath = new PathString("/signin-vk");
+//         options.AuthorizationEndpoint = "https://oauth.vk.com/authorize";
+//         options.TokenEndpoint = "https://oauth.vk.com/access_token";
+//         options.Scope.Add("email");
+//         options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "user_id");
+//         options.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
+//         options.SaveTokens = true;
+//         options.Events = new OAuthEvents
+//         {
+//             OnCreatingTicket = context =>
+//             {
+//                 context.RunClaimActions(context.TokenResponse.Response.RootElement);
+//                 return Task.CompletedTask;
+//             }
+//         };
+//     });
 
 builder.Services.AddAuthorization(
     authorization =>
