@@ -11,18 +11,15 @@ import {
 } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { PasswordField } from './components/PasswordField';
-import { OAuthButtons } from './components/OAuthButtons';
 import { Header } from './components/Header';
-import { DividerWithOr } from './components/DividerWithOr';
 import { EmailField } from './components/EmailField';
 import { TutorOrStudentSwitchField } from './components/TutorOrStudentSwitchField';
 import { PhoneNumberField } from './components/PhoneNumberField';
 import { NameSurnameField } from './components/NameSurnameField';
 import { Form, Formik } from 'formik';
 import { LoginSuggestion } from './components/LoginSuggestion';
-import AccountAPI, { V1RegisterDto } from '../../api/account';
-import UserAPI, { AccountType } from '../../api/currentUser';
-import { useNavigate } from 'react-router-dom';
+import UserAPI, { V1RegisterDto, AccountType } from '../../api/user';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
 import { SEARCH_PAGE } from '../../routes/routePaths';
 import { AuthorizationContext } from '../../contexts/AuthorizationContext';
@@ -51,7 +48,9 @@ export const SignupPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   const navigate = useNavigate();
 
-  const userContext = useContext(UserContext);
+  const { isAuthorized, setUser } = useContext(UserContext);
+  if (isAuthorized) return <Navigate to={SEARCH_PAGE} />;
+
   const authContextValue = useAuthContextValue();
 
   const onSubmit = async (values: FormikValuesProps) => {
@@ -64,10 +63,9 @@ export const SignupPage = () => {
       phone: values.phoneNumber,
     };
 
-    AccountAPI.register(registerData)
-      .then(async () => {
-        const user = await UserAPI.getCurrentUser();
-        userContext.setUser(user);
+    UserAPI.register(registerData)
+      .then((user) => {
+        setUser(user);
         navigate(SEARCH_PAGE);
       })
       .catch((err: AxiosError) => {
@@ -89,8 +87,6 @@ export const SignupPage = () => {
           borderWidth="2px"
           borderRadius={{ base: 'none', sm: 'xl' }}
         >
-          <OAuthButtons />
-          <DividerWithOr />
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
             <Form>
               <NameSurnameField />

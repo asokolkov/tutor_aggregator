@@ -3,41 +3,47 @@ import { HStack } from '@chakra-ui/react';
 import { TimeBox } from './TimeBox';
 import { SlotContext } from '../../../contexts/SlotContext';
 import { SlotInfo } from './SlotInfo';
-import { Lesson } from '../../../api/lessons';
 import { useMemo } from 'react';
-import './Slot.css';
-import { getTimeFromDate } from './_helpers';
+import { LessonType } from '../../../api/lessons';
 
-type Props = {
-  lesson: Lesson;
-  forTutor: boolean;
-};
-
-export const Slot: React.FC<Props> = ({ forTutor, lesson }) => {
+export const Slot: React.FC<SlotProps> = (props) => {
   const providerValue = useMemo(
     () => ({
-      isForTutor: forTutor,
-      lesson: lesson,
-      isBooked: !!lesson.student,
-      studentName: lesson.student
-        ? `${lesson.student.firstName} ${lesson.student.lastName}`
-        : undefined,
-      tutorName: `${lesson.tutor.firstName} ${lesson.tutor.lastName}`,
-      dateRangeStr: `${getTimeFromDate(lesson.start)} - ${getTimeFromDate(
-        lesson.end
-      )}`,
+      ...props,
+      timeRange: `${props.startTime || '??:??'} - ${props.endTime || '??:??'}`,
+      tutorName: props.tutorName || 'Неизвестно',
     }),
-    [lesson]
+    [props]
   );
-
   return (
     <>
       <SlotContext.Provider value={providerValue}>
-        <HStack className="Slot" w="100%" spacing="0">
+        <HStack
+          borderRadius="10px"
+          borderWidth="2px"
+          borderColor="blue.200"
+          w={props.isForTutor ? '356px' : '260px'}
+          spacing="0"
+        >
           <TimeBox />
           <SlotInfo />
         </HStack>
       </SlotContext.Provider>
     </>
   );
+};
+
+export type SlotProps = {
+  startTime: string;
+  endTime: string;
+  lessonId: string;
+  isForTutor: boolean;
+  isBooked: boolean;
+  type: LessonType;
+  price: number;
+  tutorName: string;
+  student?: {
+    name: string;
+    id: string;
+  };
 };

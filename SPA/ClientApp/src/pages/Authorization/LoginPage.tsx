@@ -9,18 +9,15 @@ import {
 } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { PasswordField } from './components/PasswordField';
-import { OAuthButtons } from './components/OAuthButtons';
 import { Header } from './components/Header';
 import { SignupSuggestion } from './components/SignupSuggestion';
 import { ForgetPasswordButton } from './components/ForgetPasswordButton';
-import { DividerWithOr } from './components/DividerWithOr';
 import { EmailField } from './components/EmailField';
 import { Form, Formik } from 'formik';
 import { RememberMeCheckbox } from './components/RememberMeCheckbox';
-import AccountAPI, { V1LoginDto } from '../../api/account';
+import UserAPI, { V1LoginDto } from '../../api/user';
 import { UserContext } from '../../contexts/UserContext';
-import UserAPI from '../../api/currentUser';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { SEARCH_PAGE } from '../../routes/routePaths';
 import { AuthorizationContext } from '../../contexts/AuthorizationContext';
 import { AxiosError } from 'axios';
@@ -43,7 +40,9 @@ export const LoginPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   const navigate = useNavigate();
 
-  const userContext = useContext(UserContext);
+  const { isAuthorized, setUser } = useContext(UserContext);
+  if (isAuthorized) return <Navigate to={SEARCH_PAGE} />;
+
   const authContextValue = useAuthContextValue();
 
   const onFormSubmit = async (values: FormikValuesProps) => {
@@ -53,10 +52,9 @@ export const LoginPage = () => {
       password: values.password,
     };
 
-    AccountAPI.login(loginData)
-      .then(async () => {
-        const user = await UserAPI.getCurrentUser();
-        userContext.setUser(user);
+    UserAPI.login(loginData)
+      .then((user) => {
+        setUser(user);
         navigate(SEARCH_PAGE);
       })
       .catch((err: AxiosError) => {
@@ -78,8 +76,6 @@ export const LoginPage = () => {
           borderWidth="2px"
           borderRadius={{ base: 'none', sm: 'xl' }}
         >
-          <OAuthButtons />
-          <DividerWithOr />
           <Formik initialValues={initialValues} onSubmit={onFormSubmit}>
             <Form>
               <Stack spacing="6">

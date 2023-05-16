@@ -1,23 +1,16 @@
 import * as React from 'react';
 import { getTutorBookByIdPath } from '../../../routes/routes';
-import { Button, useBreakpointValue } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
-import { TutorCardContext } from '../../../contexts/TutorCardContext';
+import { CardInfoContext } from '../../../contexts/CardInfoContext';
 
 export const BookLessonButton: React.FC = () => {
-  const isDesktop = useBreakpointValue({ base: false, lg: true });
-  const context = useContext(TutorCardContext);
-  const tutorId = context.tutor.id;
+  const context = useContext(CardInfoContext);
 
   return (
-    <Link to={getTutorBookByIdPath(tutorId)}>
-      <Button
-        size={'md'}
-        colorScheme={'green'}
-        width={'100%'}
-        margin={isDesktop ? '0 0 0 1em' : '8px 0 0 0'}
-      >
+    <Link to={getTutorBookByIdPath(context.id)} style={{ width: '100%' }}>
+      <Button variant="green" w="100%">
         Записаться на занятие
       </Button>
     </Link>

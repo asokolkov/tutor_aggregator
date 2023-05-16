@@ -1,7 +1,7 @@
-import { Avatar, Heading, VStack, Button, Flex } from '@chakra-ui/react';
+import { Avatar, Heading, VStack, Button } from '@chakra-ui/react';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ReviewStarWithStats } from '../../TutorCard/components/ReviewStarWithStats';
+import { RatingStars } from '../../sharedComponents/ReviewStars/RatingStars';
 import categoryIcon from '../../../assets/images/category-icon.png';
 import jobIcon from '../../../assets/images/job-icon.png';
 import SearchCardInfoRow from './SearchCardInfoRow';
@@ -13,31 +13,37 @@ const SearchCardInfo: React.FC<SearchCardInfoProps> = ({ tutor }) => {
   const fullName = `${firstName} ${lastName}`;
   return (
     <VStack
-      w={'auto'}
-      minW={'390px'}
-      borderWidth={'1px'}
-      shadow={'md'}
-      padding={'16px'}
-      spacing={'8px'}
+      w="310px"
+      borderWidth="2px"
+      borderColor="blue.200"
+      borderRadius="10px"
+      padding={'20px'}
+      spacing={'20px'}
     >
-      <Avatar name={fullName} border={'0px'} src={avatar} size="2xl" />
-      <Flex h={'auto'} direction={'column'}>
-        <Heading as="h4" size="lg" textAlign={'center'} margin={'0 0 12px 0'}>
-          {fullName}
-        </Heading>
-        <SearchCardInfoRow
-          icon={categoryIcon}
-          text={educations.map((e) => e.value).join(', ')}
-          categoryText={''}
-        />
-        <SearchCardInfoRow icon={jobIcon} text={job} categoryText={''} />
-      </Flex>
-      <VStack spacing={'4px'} padding={'0 0 16px 0'}>
-        <ReviewStarWithStats rating={rating} />
+      <VStack spacing="20px" w="100%">
+        <VStack spacing="10px">
+          <Avatar name={fullName} src={avatar} border="0px" size="2xl" />
+          <VStack spacing="5px">
+            <Heading variant="regular.h2" as="h2">
+              {fullName}
+            </Heading>
+            <RatingStars rating={rating} />
+          </VStack>
+        </VStack>
+
+        <VStack spacing="5px" align="flex-start" w="100%">
+          <SearchCardInfoRow
+            icon={categoryIcon}
+            text={educations.map((e) => e.value).join(', ')}
+            categoryText={''}
+          />
+          <SearchCardInfoRow icon={jobIcon} text={job} categoryText={''} />
+        </VStack>
       </VStack>
+
       <Link to={getTutorCardByIdPath(id)} style={{ width: '100%' }}>
-        <Button colorScheme={'teal'} h={'40px'} w={'100%'}>
-          Открыть профиль
+        <Button variant="green" h="48px" w="100%">
+          Посмотреть профиль
         </Button>
       </Link>
     </VStack>

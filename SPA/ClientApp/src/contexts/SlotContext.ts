@@ -1,13 +1,8 @@
 import React from 'react';
-import { Lesson } from '../api/lessons';
+import { SlotProps } from '../pages/sharedComponents/Slot/Slot';
 
-type ContextProps = {
-  lesson: Lesson;
-  isForTutor: boolean;
-  isBooked: boolean;
-  tutorName: string;
-  studentName: string;
-  dateRangeStr: string;
+type ContextProps = SlotProps & {
+  timeRange: string;
 };
 
 export const SlotContext = React.createContext<ContextProps>(null);

@@ -1,58 +1,76 @@
 import * as React from 'react';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../../contexts/UserContext';
 import { DayColumnWithSlots } from '../components/DayColumn/DayColumnWithSlots';
 import { LoadBar } from '../../sharedComponents/LoadBar/LoadBar';
-import { Center, Divider, HStack, VStack } from '@chakra-ui/react';
-import { useLessonTab } from './useLessonTab';
-import { PaginationMenu } from '../components/PaginationMenu';
+import { VStack } from '@chakra-ui/react';
+import {
+  useLessonTab,
+  useWindowDimensions,
+} from '../../sharedComponents/LessonTab/useLessonTab';
+import { PaginationMenu } from '../../sharedComponents/LessonTab/PaginationMenu';
 import { dateShift } from '../../sharedComponents/Slot/_helpers';
-
-const COLUMN_COUNT = 4;
+import './YourLessonsTab.css';
 
 export const YourLessonsTab: React.FC = () => {
   const { user } = useContext(UserContext);
   const userId = user.id;
 
+  const [columnCount, setColumnCount] = useState(1);
+  const dimensions = useWindowDimensions();
+
+  const updateColumn = () => {
+    const width = dimensions.width;
+    if (width < 1024) setColumnCount(1);
+    else if (width < 1440) setColumnCount(2);
+    else if (width < 1920) setColumnCount(3);
+    else if (width < 2560) setColumnCount(4);
+    else setColumnCount(5);
+  };
+
+  useEffect(() => {
+    updateColumn();
+  }, [dimensions]);
+
   const [currentDate, setCurrentDate] = useState(new Date());
   const changeDate = (isForward: boolean) => {
     setCurrentDate((prevDate) => {
       const newDate = new Date(prevDate);
-      const delta = isForward ? COLUMN_COUNT : -COLUMN_COUNT;
+      const delta = isForward ? columnCount : -columnCount;
       newDate.setDate(prevDate.getDate() + delta);
       return newDate;
     });
   };
 
-  const { queries } = useLessonTab(userId, COLUMN_COUNT, currentDate);
+  const { queries } = useLessonTab(userId, columnCount, currentDate);
   const isLoading = queries.some((query) => query.isLoading);
 
   return (
     <VStack spacing="20px">
       <PaginationMenu
         start={currentDate}
-        end={dateShift(currentDate, COLUMN_COUNT - 1)}
+        end={dateShift(currentDate, columnCount - 1)}
         onDateChange={changeDate}
       />
+
       {isLoading ? (
         <LoadBar description={'Загружаем данные ваших уроков'} />
       ) : (
-        <HStack spacing="20px" align="stretch">
-          <Center height="500px">
-            <Divider orientation="vertical" />
-          </Center>
+        <div
+          className="lessons-tab-container"
+          style={{ columnRuleColor: 'blue.100' }}
+        >
           {queries.map((query, i) => {
             const date = dateShift(currentDate, i);
             return (
-              <React.Fragment key={date.toString()}>
-                <DayColumnWithSlots lessons={query.data} date={date} />
-                <Center height="500px">
-                  <Divider orientation="vertical" />
-                </Center>
-              </React.Fragment>
+              <DayColumnWithSlots
+                lessons={query.data}
+                date={date}
+                key={date.toString()}
+              />
             );
           })}
-        </HStack>
+        </div>
       )}
     </VStack>
   );
