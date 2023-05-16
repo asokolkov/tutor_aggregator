@@ -127,7 +127,7 @@ app.UseAuthorization();
 
 app.UseEndpoints(configure => { 
     configure.MapControllers();
-    configure.MapFallbackToFile("index.html");
+    configure.MapFallbackToFile("ClientApp/build/index.html");
  });
 
 app.UseSpa(spa =>
