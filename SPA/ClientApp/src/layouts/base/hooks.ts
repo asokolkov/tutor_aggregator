@@ -18,12 +18,7 @@ export function useUser() {
       })
       .catch((err: AxiosError) => {
         if (axios.isCancel(err)) return;
-      })
-      .catch((err: AxiosError) => {
-        if (err.response.status === 401) {
-          removeUser();
-          setLoading(false);
-        }
+        setLoading(false);
       });
     return () => abortController.abort();
   }, []);
