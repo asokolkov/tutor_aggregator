@@ -1,17 +1,18 @@
 import * as React from 'react';
-import { Lesson, LessonStatus } from '../../../../api/lessons';
+import { Lesson } from '../../../../api/lessons';
 import { Button, useDisclosure, VStack } from '@chakra-ui/react';
 import { Title } from './Title';
 import { Slot } from '../../../sharedComponents/Slot/Slot';
 import { AddIcon } from '@chakra-ui/icons';
 import { AddNewSlotModal } from '../modals/AddNewSlotModal';
+import { MapSlot } from '../../../sharedComponents/Slot/_maper';
 
 type Props = {
   lessons: Lesson[];
   date: Date;
 };
 export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
-  lessons = lessons.filter((lesson) => lesson.status !== LessonStatus.Deleted);
+  if (!lessons) lessons = [];
   const bookedCount = lessons.filter((x) => x.student).length;
   const disclosure = useDisclosure();
 
@@ -25,7 +26,7 @@ export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
         />
         <VStack spacing="16px" w="100%">
           {lessons.map((lesson) => (
-            <Slot lesson={lesson} forTutor={true} key={lesson.id} />
+            <Slot {...MapSlot(lesson, true)} key={lesson.id} />
           ))}
           <Button
             color="white"

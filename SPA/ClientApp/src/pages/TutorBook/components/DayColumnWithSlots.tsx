@@ -3,6 +3,7 @@ import * as React from 'react';
 import { VStack } from '@chakra-ui/react';
 import { Title } from '../../Lessons/components/DayColumn/Title';
 import { Slot } from '../../sharedComponents/Slot/Slot';
+import { MapSlot } from '../../sharedComponents/Slot/_maper';
 
 type Props = {
   lessons: Lesson[];
@@ -22,7 +23,7 @@ export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
         />
         <VStack spacing="16px" w="100%">
           {lessons.map((lesson) => (
-            <Slot lesson={lesson} forTutor={false} key={lesson.id} />
+            <Slot {...MapSlot(lesson, false)} key={lesson.id} />
           ))}
         </VStack>
       </VStack>

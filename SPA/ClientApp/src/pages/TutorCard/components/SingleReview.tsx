@@ -1,30 +1,34 @@
 import { Avatar, Text, HStack, VStack } from '@chakra-ui/react';
-import { ReviewStar } from './ReviewStar';
-import { Review } from '../../../api/tutors';
 import React from 'react';
+import { RatingStars } from '../../sharedComponents/ReviewStars/RatingStars';
 
-type Props = {
-  review: Review;
+export const SingleReview: React.FC<SingleReviewProps> = (props) => {
+  return (
+    <HStack
+      w="100%"
+      spacing={'16px'}
+      align={'start'}
+      borderWidth="2px"
+      borderColor="blue.200"
+      borderRadius="10px"
+      p="16px"
+    >
+      <Avatar name={props.fullName} size="md" />
+      <VStack spacing={'16px'} align={'start'}>
+        <HStack spacing={'16px'}>
+          <Text variant="regular.h3">{props.fullName}</Text>
+          <RatingStars rating={props.rating} />
+          <Text>{props.date}</Text>
+        </HStack>
+        <Text>{props.text}</Text>
+      </VStack>
+    </HStack>
+  );
 };
 
-export const SingleReview: React.FC<Props> = ({ review }) => {
-  return (
-    <div>
-      <HStack spacing={'16px'} align={'start'}>
-        <Avatar
-          name={review.studentName}
-          showBorder={true}
-          src={review.studentAvatar}
-          size="md"
-        />
-        <VStack spacing={'16px'} align={'start'}>
-          <HStack spacing={'16px'}>
-            <Text as={'b'}>{review.studentName}</Text>
-            <ReviewStar starCount={review.rating} />
-          </HStack>
-          <Text>{review.description}</Text>
-        </VStack>
-      </HStack>
-    </div>
-  );
+export type SingleReviewProps = {
+  fullName: string;
+  rating: number;
+  date: string;
+  text: string;
 };

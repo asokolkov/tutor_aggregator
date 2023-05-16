@@ -1,4 +1,5 @@
 export const getTimeFromDate = (dateString: string) => {
+  if (!dateString) return '00:00';
   const date = new Date(dateString);
   return `${date.getHours()}:${date.getMinutes()}`;
 };

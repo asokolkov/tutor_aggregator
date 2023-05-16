@@ -14,10 +14,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import LessonsAPI from '../../../../api/lessons';
-import {
-  DisclosureProps,
-  getTimeFromDate,
-} from '../../../sharedComponents/Slot/_helpers';
+import { DisclosureProps } from '../_helpers';
 import { useContext, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { lessonsKey } from '../../../../query/queryKeys';
@@ -30,12 +27,11 @@ export const DeleteSlotModal: React.FC<Props> = ({ disclosure }) => {
   const { isOpen, onClose } = disclosure;
   const [isSubmitLoading, setSubmitLoading] = useState(false);
   const queryClient = useQueryClient();
-  const { lesson, studentName, isBooked } = useContext(SlotContext);
-  const { id, start, end } = lesson;
+  const { lessonId, timeRange, student, isBooked } = useContext(SlotContext);
 
   const onSubmit = async () => {
     setSubmitLoading(true);
-    await LessonsAPI.deleteLesson(id);
+    await LessonsAPI.deleteLesson(lessonId);
     setSubmitLoading(false);
     onClose();
   };
@@ -57,16 +53,14 @@ export const DeleteSlotModal: React.FC<Props> = ({ disclosure }) => {
               <Alert status="warning">
                 <AlertIcon />
                 <Text>
-                  На данный слот записан ученик <b>{studentName}</b>. Запись
+                  На данный слот записан ученик <b>{student.name}</b>. Запись
                   будет отменена
                 </Text>
               </Alert>
             )}
             <VStack align={'start'} pl="16px" spacing="0">
               <Text>Выбранный слот будет удален.</Text>
-              <Text variant="semibold">
-                {`Время: ${getTimeFromDate(start)} - ${getTimeFromDate(end)}`}
-              </Text>
+              <Text variant="regular.bold">{`Время: ${timeRange}`}</Text>
             </VStack>
           </VStack>
         </ModalBody>

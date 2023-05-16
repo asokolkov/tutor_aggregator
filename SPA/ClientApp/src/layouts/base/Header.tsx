@@ -43,116 +43,106 @@ const Header: React.FC = () => {
     return location.pathname.includes(path);
   };
   return (
-    <>
-      <Container
-        padding={'0vh 5vw 1vh 5vw'}
-        as="header"
-        pb={{ base: '0', md: '0' }}
-        width={'100%'}
-      >
-        <Box as="nav" bg="bg-surface">
-          <Flex py={{ base: '5', lg: '5' }} width={'100%'} wrap={'nowrap'}>
-            <HStack
-              spacing="5"
-              display={'flex'}
-              justify={'left'}
-              align={'center'}
-              width={'100%'}
-            >
+    <Container padding={'0vh 5vw 1vh 5vw'} as="header" maxW="100%">
+      <Box as="nav" bg="bg-surface" w="100%">
+        <Flex py={{ base: '5', lg: '5' }} w="100%" wrap={'nowrap'}>
+          <HStack
+            spacing="5"
+            display={'flex'}
+            justify={'left'}
+            align={'center'}
+            w="100%"
+          >
+            <Link to={SEARCH_PAGE}>
+              <Image src={logo} boxSize="50px" />
+            </Link>
+            <VStack spacing="0px" align="left">
               <Link to={SEARCH_PAGE}>
-                <Image src={logo} boxSize="50px" />
+                <Text
+                  as="b"
+                  fontSize="2xl"
+                  color="subtle"
+                  _hover={{ color: '#777777' }}
+                >
+                  Репетиторы
+                </Text>
               </Link>
-              <VStack spacing="0px" align="left">
-                <Link to={SEARCH_PAGE}>
-                  <Text
-                    as="b"
-                    fontSize="2xl"
-                    color="subtle"
-                    _hover={{ color: '#777777' }}
-                  >
-                    Репетиторы
-                  </Text>
-                </Link>
-                <CitySelection />
-              </VStack>
-            </HStack>
-            {isDesktop ? (
-              <>
-                <Spacer />
-                <Flex justify="center" align={'center'} flex="10">
-                  <ButtonGroup spacing="8" margin="0px 40px 0px 0px">
+              <CitySelection />
+            </VStack>
+          </HStack>
+          {isDesktop ? (
+            <>
+              <Spacer />
+              <Flex justify="center" align={'center'} flex="10">
+                <ButtonGroup spacing="8" margin="0px 40px 0px 0px">
+                  <HeaderButton
+                    text={'Поиск'}
+                    link={SEARCH_PAGE}
+                    variant={'link'}
+                    isActive={isActive(SEARCH_PAGE)}
+                  />
+                  <HeaderButton
+                    text={'Мои занятия'}
+                    link={LESSONS_PAGE}
+                    variant={'link'}
+                    isActive={isActive(LESSONS_PAGE)}
+                  />
+                  <HeaderButton
+                    text={'Мой профиль'}
+                    link={PROFILE_PAGE}
+                    variant={'link'}
+                    isActive={isActive(PROFILE_PAGE)}
+                  />
+                </ButtonGroup>
+                {userState.user ? (
+                  <HStack spacing={'3'}>
+                    <Link to={PROFILE_PAGE}>
+                      <Avatar size={'sm'} src={userState.user.avatar} />
+                    </Link>
+                  </HStack>
+                ) : (
+                  <HStack spacing="3">
                     <HeaderButton
-                      text={'Поиск'}
-                      link={SEARCH_PAGE}
-                      variant={'link'}
-                      isActive={isActive(SEARCH_PAGE)}
-                    />
-                    <HeaderButton
-                      text={'Мои занятия'}
-                      link={LESSONS_PAGE}
-                      variant={'link'}
-                      isActive={isActive(LESSONS_PAGE)}
-                    />
-                    <HeaderButton
-                      text={'Мой профиль'}
-                      link={PROFILE_PAGE}
-                      variant={'link'}
-                      isActive={isActive(PROFILE_PAGE)}
-                    />
-                  </ButtonGroup>
-                  {userState.user ? (
-                    <HStack spacing={'3'}>
-                      <Link to={PROFILE_PAGE}>
-                        <Avatar size={'sm'} src={userState.user.avatar} />
-                      </Link>
-                    </HStack>
-                  ) : (
-                    <HStack spacing="3">
-                      <HeaderButton
-                        text={'Зарегистрироваться'}
-                        link={SIGNUP_PAGE}
-                        variant={'ghost'}
-                      />
-                      <HeaderButton
-                        text={'Войти'}
-                        link={LOGIN_PAGE}
-                        variant={'ghost'}
-                      />
-                    </HStack>
-                  )}
-                </Flex>
-              </>
-            ) : (
-              <Center>
-                <Menu>
-                  <MenuButton
-                    as={Button}
-                    rightIcon={<HamburgerIcon />}
-                    aria-label="Menu"
-                    variant="outline"
-                  >
-                    Меню
-                  </MenuButton>
-                  <MenuList>
-                    <HeaderMenuButton text={'Поиск'} link={SEARCH_PAGE} />
-                    <HeaderMenuButton
-                      text={'Мои занятия'}
-                      link={PROFILE_PAGE}
-                    />
-                    <MenuDivider />
-                    <HeaderMenuButton
                       text={'Зарегистрироваться'}
                       link={SIGNUP_PAGE}
+                      variant={'ghost'}
                     />
-                    <HeaderMenuButton text={'Войти'} link={LOGIN_PAGE} />
-                  </MenuList>
-                </Menu>
-              </Center>
-            )}
-          </Flex>
-        </Box>
-      </Container>
-    </>
+                    <HeaderButton
+                      text={'Войти'}
+                      link={LOGIN_PAGE}
+                      variant={'ghost'}
+                    />
+                  </HStack>
+                )}
+              </Flex>
+            </>
+          ) : (
+            <Center>
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  rightIcon={<HamburgerIcon />}
+                  aria-label="Menu"
+                  variant="outline"
+                >
+                  Меню
+                </MenuButton>
+                <MenuList>
+                  <HeaderMenuButton text={'Поиск'} link={SEARCH_PAGE} />
+                  <HeaderMenuButton text={'Мои занятия'} link={PROFILE_PAGE} />
+                  <MenuDivider />
+                  <HeaderMenuButton
+                    text={'Зарегистрироваться'}
+                    link={SIGNUP_PAGE}
+                  />
+                  <HeaderMenuButton text={'Войти'} link={LOGIN_PAGE} />
+                </MenuList>
+              </Menu>
+            </Center>
+          )}
+        </Flex>
+      </Box>
+    </Container>
   );
 };
 

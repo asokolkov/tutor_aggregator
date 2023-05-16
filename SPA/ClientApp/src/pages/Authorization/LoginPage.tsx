@@ -9,11 +9,9 @@ import {
 } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { PasswordField } from './components/PasswordField';
-import { OAuthButtons } from './components/OAuthButtons';
 import { Header } from './components/Header';
 import { SignupSuggestion } from './components/SignupSuggestion';
 import { ForgetPasswordButton } from './components/ForgetPasswordButton';
-import { DividerWithOr } from './components/DividerWithOr';
 import { EmailField } from './components/EmailField';
 import { Form, Formik } from 'formik';
 import { RememberMeCheckbox } from './components/RememberMeCheckbox';
@@ -76,8 +74,6 @@ export const LoginPage = () => {
           borderWidth="2px"
           borderRadius={{ base: 'none', sm: 'xl' }}
         >
-          <OAuthButtons />
-          <DividerWithOr />
           <Formik initialValues={initialValues} onSubmit={onFormSubmit}>
             <Form>
               <Stack spacing="6">

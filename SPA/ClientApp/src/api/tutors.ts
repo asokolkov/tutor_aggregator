@@ -24,10 +24,8 @@ export interface Review {
   id: string;
   rating: number;
   description: string;
-  updatedAt: Date;
-  studentId: string;
-  studentName: string;
-  studentAvatar: string;
+  updatedAt: string;
+  student: string;
 }
 
 export interface ReviewList extends PaginatedResponse<Review> {}

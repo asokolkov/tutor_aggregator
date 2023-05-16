@@ -12,6 +12,10 @@ const blue100 = defineStyle({
   backgroundColor: 'blue.100',
 });
 
+const blue200 = defineStyle({
+  backgroundColor: 'blue.200',
+});
+
 const blue300 = defineStyle({
   backgroundColor: 'blue.300',
 });
@@ -27,14 +31,14 @@ export const buttonTheme = defineStyleConfig({
     ...buttonTextVariant,
     color: 'white',
   },
-  sizes: {
-    lg: {
-      fontSize: '18px',
-    },
+  variants: {
+    green,
+    red,
+    'blue.100': blue100,
+    'blue.200': blue200,
+    'blue.300': blue300,
   },
-  variants: { green, red, 'blue.100': blue100, 'blue.300': blue300 },
   defaultProps: {
-    size: 'lg',
     colorScheme: 'green',
   },
 });
