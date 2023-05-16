@@ -2,7 +2,6 @@ import { buttonTextVariant } from './button';
 
 export const textVariants = {
   baseStyle: {
-    fontFamily: 'Inter',
     fontSize: '18px',
     fontWeight: 'regular',
     lineHeight: '130%',
@@ -44,7 +43,7 @@ export const textVariants = {
       textDecoration: 'underline',
     },
     'misc.small-button': {
-      fontSize: '14px',
+      fontSize: '16px',
       fontWeight: 'semibold',
       lineHeight: '150%',
     },
