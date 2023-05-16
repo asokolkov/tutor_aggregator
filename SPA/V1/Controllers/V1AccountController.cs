@@ -33,21 +33,26 @@ public class V1AccountController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("signin")]
+    [SwaggerResponse(200, "OK", typeof(V1UserDto))]
     public async Task<IActionResult> LoginAsync([FromBody] V1LoginDto loginDto)
     {
         var signInResult = await signInManager.PasswordSignInAsync(loginDto.Email, loginDto.Password,
             loginDto.RememberMe, false);
 
-        if (signInResult.Succeeded)
-        {
-            return Ok();
-        }
+        if (!signInResult.Succeeded)
+            return Unauthorized();
+        
+        var user = await userManager.FindByEmailAsync(loginDto.Email);
+        
+        var userModel = new User(user.Id, user.FirstName, user.LastName, null,
+            user.AccountType, user.RegistrationCompleted);
 
-        return Unauthorized();
+        return Ok(mapper.Map<V1UserDto>(userModel));
     }
 
     [AllowAnonymous]
     [HttpPost("signup")]
+    [SwaggerResponse(200, "OK", typeof(V1UserDto))]
     public async Task<IActionResult> RegisterAsync([FromBody] V1RegisterDto registerDto)
     {
         var accountType = mapper.Map<AccountType>(registerDto.AccountType);

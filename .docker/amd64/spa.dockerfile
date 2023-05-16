@@ -1,4 +1,4 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:6.0-bullseye-slim as base
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-bullseye-slim as base
 
 # Build
 FROM mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim as build
@@ -33,7 +33,7 @@ RUN dotnet publish SPA/SPA.csproj -c Release -o /app/publish
 ## Restore dependencies of npm project taking advantage of docker layer caching
 COPY SPA/ClientApp/package.json ./SPA/ClientApp
 
-RUN yarn install --non-interactive --cwd SPA/ClientApp
+RUN npm install --non-interactive ./SPA/ClientApp
 
 # Finalize
 FROM base AS final

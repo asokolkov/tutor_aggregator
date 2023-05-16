@@ -1,3 +1,5 @@
+image: alpine:3.7
+
 variables:
   OWNER: tewboat
   APPLICATION: tutor-aggregator
@@ -35,26 +37,40 @@ linting:
     - >
       docker build --no-cache
       -t "${IMAGE_NAME}:${RELEASE_VERSION}"
+      -t "${IMAGE_NAME}:latest"
       -f .docker/amd64/spa.dockerfile ./
     - docker push "${IMAGE_NAME}:${RELEASE_VERSION}"
+    - docker push "${IMAGE_NAME}:latest"
   after_script:
     - docker logout
 
 build_and_push:
   <<: *build-template
+  only:
+    - development
+    - main
   stage: build_and_push
-  when: manual
   needs: [build-and-test, linting]
   variables:
     IMAGE_NAME: ${OWNER}/${APPLICATION}
 
+login_registry:
+  stage: deploy
+  only:
+    - development
+    - main
+  needs: [build_and_push]
+  image: docker:stable
+  script:
+    - docker login -u "$LOCAL_REGISTRY_LOGIN" -p "$LOCAL_REGISTRY_PASSWORD" hub.66bit.ru
+    
 deploy_to_staging:
   stage: deploy
-  image: hub.66bit.ru/urfu2022/ci/deploy:1.26.2
-  needs: [build_and_push]
+  only:
+    - development
+    - main
+  image: hub.66bit.ru/shared/stk8s:1.26.2
+  needs: [build_and_push, login_registry]
   script:
-    - envsubst < $DEVELOP_DOCKER_STACK_FILE > docker-compose.development.yml
-    - kubectl create namespace tutor-aggregator
-    - kubectl create secret generic tewboat --from-file=.dockerconfigjson=$DOCKER_TEWBOAT_CREDS --type=kubernetes.io/dockerconfigjson --namespace=tutor-aggregator
-    - kubectl apply docker-compose.development.yml
-  when: manual
+    - kubectl delete deployment tutor-aggregator -n tutor-aggregator
+    - kubectl apply -f k8s.yml

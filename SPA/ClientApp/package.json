@@ -52,7 +52,6 @@
     "webpack": "^5.82.1"
   },
   "scripts": {
-    "prestart": "node aspnetcore-https && node aspnetcore-react",
     "start": "rimraf ./build && react-scripts start",
     "build": "react-scripts build",
     "test": "cross-env CI=true react-scripts test --env=jsdom",
