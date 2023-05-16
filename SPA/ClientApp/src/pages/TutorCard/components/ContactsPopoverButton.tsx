@@ -15,7 +15,7 @@ const ContactsPopoverButton: React.FC = () => {
   const context = useContext(TutorCardContext);
   const contacts = context.tutor.contacts;
 
-  const strContacts = mapCollectionToString(
+  const strContacts = contacts.length === 0 ? "Пока что тут нет контактов" : mapCollectionToString(
     contacts.map((contact) => contact.value)
   );
 
