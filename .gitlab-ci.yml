@@ -46,6 +46,9 @@ linting:
 
 build_and_push:
   <<: *build-template
+  only:
+    - development
+    - main
   stage: build_and_push
   needs: [build-and-test, linting]
   variables:
@@ -53,6 +56,9 @@ build_and_push:
 
 login_registry:
   stage: deploy
+  only:
+    - development
+    - main
   needs: [build_and_push]
   image: docker:stable
   script:
@@ -60,6 +66,9 @@ login_registry:
     
 deploy_to_staging:
   stage: deploy
+  only:
+    - development
+    - main
   image: hub.66bit.ru/shared/stk8s:1.26.2
   needs: [build_and_push, login_registry]
   script:
