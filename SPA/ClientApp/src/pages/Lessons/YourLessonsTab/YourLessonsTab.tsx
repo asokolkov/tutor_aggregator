@@ -53,7 +53,10 @@ export const YourLessonsTab: React.FC = () => {
       {isLoading ? (
         <LoadBar description={'Загружаем данные ваших уроков'} />
       ) : (
-        <div className="lessons-tab-container">
+        <div
+          className="lessons-tab-container"
+          style={{ columnRuleColor: 'blue.100' }}
+        >
           {queries.map((query, i) => {
             const date = dateShift(currentDate, i);
             return (
