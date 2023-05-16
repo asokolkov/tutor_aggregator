@@ -46,24 +46,29 @@ linting:
 
 build_and_push:
   <<: *build-template
+  only:
+    - development
+    - main
   stage: build_and_push
   needs: [build-and-test, linting]
   variables:
     IMAGE_NAME: ${OWNER}/${APPLICATION}
 
 login_registry:
+  stage: deploy
   only:
     - development
-  stage: deploy
+    - main
   needs: [build_and_push]
   image: docker:stable
   script:
     - docker login -u "$LOCAL_REGISTRY_LOGIN" -p "$LOCAL_REGISTRY_PASSWORD" hub.66bit.ru
     
 deploy_to_staging:
+  stage: deploy
   only:
     - development
-  stage: deploy
+    - main
   image: hub.66bit.ru/shared/stk8s:1.26.2
   needs: [build_and_push, login_registry]
   script:
