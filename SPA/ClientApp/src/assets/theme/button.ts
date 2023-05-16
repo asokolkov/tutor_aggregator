@@ -1,23 +1,25 @@
 import { defineStyle, defineStyleConfig } from '@chakra-ui/react';
+import { Color } from './themeEnum';
 
 const green = defineStyle({
-  backgroundColor: 'green',
+  backgroundColor: Color.green,
 });
 
 const red = defineStyle({
-  backgroundColor: 'red',
+  backgroundColor: Color.red,
 });
 
 const blue100 = defineStyle({
-  backgroundColor: 'blue.100',
+  backgroundColor: Color.blue100,
+  color: Color.black,
 });
 
 const blue200 = defineStyle({
-  backgroundColor: 'blue.200',
+  backgroundColor: Color.blue200,
 });
 
 const blue300 = defineStyle({
-  backgroundColor: 'blue.300',
+  backgroundColor: Color.blue300,
 });
 
 export const buttonTextVariant = {
@@ -29,7 +31,7 @@ export const buttonTextVariant = {
 export const buttonTheme = defineStyleConfig({
   baseStyle: {
     ...buttonTextVariant,
-    color: 'white',
+    color: Color.white,
   },
   variants: {
     green,

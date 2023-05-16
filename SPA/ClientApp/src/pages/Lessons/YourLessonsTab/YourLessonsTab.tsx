@@ -4,8 +4,11 @@ import { UserContext } from '../../../contexts/UserContext';
 import { DayColumnWithSlots } from '../components/DayColumn/DayColumnWithSlots';
 import { LoadBar } from '../../sharedComponents/LoadBar/LoadBar';
 import { VStack } from '@chakra-ui/react';
-import { useLessonTab, useWindowDimensions } from './useLessonTab';
-import { PaginationMenu } from '../components/PaginationMenu';
+import {
+  useLessonTab,
+  useWindowDimensions,
+} from '../../sharedComponents/LessonTab/useLessonTab';
+import { PaginationMenu } from '../../sharedComponents/LessonTab/PaginationMenu';
 import { dateShift } from '../../sharedComponents/Slot/_helpers';
 import './YourLessonsTab.css';
 

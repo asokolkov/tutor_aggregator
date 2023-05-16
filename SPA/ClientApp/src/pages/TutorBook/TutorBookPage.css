@@ -1,0 +1,36 @@
+.tutor-book-container {
+    column-count: 1;
+    break-inside: avoid;
+    column-rule: solid 1px;
+    column-gap: 48px;
+}
+
+@media(min-width: 768px) {
+    .tutor-book-container {
+        column-count: 2;
+    }
+}
+
+@media(min-width: 1024px) {
+    .tutor-book-container {
+        column-count: 3;
+    }
+}
+
+@media(min-width: 1440px) {
+    .tutor-book-container {
+        column-count: 4;
+    }
+}
+
+@media(min-width: 1920px) {
+    .tutor-book-container {
+        column-count: 5;
+    }
+}
+
+@media(min-width: 2560px) {
+    .tutor-book-container {
+        column-count: 6;
+    }
+}

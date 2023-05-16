@@ -6,6 +6,7 @@ import { Slot } from '../../../sharedComponents/Slot/Slot';
 import { AddIcon } from '@chakra-ui/icons';
 import { AddNewSlotModal } from '../modals/AddNewSlotModal';
 import { MapSlot } from '../../../sharedComponents/Slot/_maper';
+import { ButtonVariant } from '../../../../assets/theme/themeEnum';
 
 type Props = {
   lessons: Lesson[];
@@ -18,7 +19,7 @@ export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
 
   return (
     <>
-      <VStack w="420px" spacing="30px" style={{ breakInside: 'avoid' }}>
+      <VStack w="356px" spacing="30px" style={{ breakInside: 'avoid' }}>
         <Title
           date={date}
           totalCount={lessons.length}
@@ -29,9 +30,8 @@ export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
             <Slot {...MapSlot(lesson, true)} key={lesson.id} />
           ))}
           <Button
-            color="white"
-            bg="green.400"
             rightIcon={<AddIcon />}
+            variant={ButtonVariant.green}
             w="100%"
             onClick={disclosure.onOpen}
           >

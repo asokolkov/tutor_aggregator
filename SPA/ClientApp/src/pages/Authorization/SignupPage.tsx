@@ -19,7 +19,7 @@ import { NameSurnameField } from './components/NameSurnameField';
 import { Form, Formik } from 'formik';
 import { LoginSuggestion } from './components/LoginSuggestion';
 import UserAPI, { V1RegisterDto, AccountType } from '../../api/user';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
 import { SEARCH_PAGE } from '../../routes/routePaths';
 import { AuthorizationContext } from '../../contexts/AuthorizationContext';
@@ -48,7 +48,9 @@ export const SignupPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   const navigate = useNavigate();
 
-  const userContext = useContext(UserContext);
+  const { isAuthorized, setUser } = useContext(UserContext);
+  if (isAuthorized) return <Navigate to={SEARCH_PAGE} />;
+
   const authContextValue = useAuthContextValue();
 
   const onSubmit = async (values: FormikValuesProps) => {
@@ -63,7 +65,7 @@ export const SignupPage = () => {
 
     UserAPI.register(registerData)
       .then((user) => {
-        userContext.setUser(user);
+        setUser(user);
         navigate(SEARCH_PAGE);
       })
       .catch((err: AxiosError) => {
