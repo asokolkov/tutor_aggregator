@@ -11,9 +11,15 @@ import { dateShift } from '../sharedComponents/Slot/_helpers';
 import { LoadBar } from '../sharedComponents/LoadBar/LoadBar';
 import { DayColumnWithSlots } from './components/DayColumnWithSlots';
 import './TutorBookPage.css';
+import { Navigate } from 'react-router-dom';
+import { LOGIN_PAGE } from '../../routes/routePaths';
 
 export const TutorBookPage: React.FC = () => {
-  const { user } = useContext(UserContext);
+  const { isAuthorized, user } = useContext(UserContext);
+
+  if (!isAuthorized) {
+    return <Navigate to={LOGIN_PAGE} />;
+  }
 
   const [columnCount, setColumnCount] = useState(5);
   const dimensions = useWindowDimensions();

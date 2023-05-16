@@ -17,7 +17,7 @@ import { Form, Formik } from 'formik';
 import { RememberMeCheckbox } from './components/RememberMeCheckbox';
 import UserAPI, { V1LoginDto } from '../../api/user';
 import { UserContext } from '../../contexts/UserContext';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { SEARCH_PAGE } from '../../routes/routePaths';
 import { AuthorizationContext } from '../../contexts/AuthorizationContext';
 import { AxiosError } from 'axios';
@@ -40,7 +40,9 @@ export const LoginPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   const navigate = useNavigate();
 
-  const userContext = useContext(UserContext);
+  const { isAuthorized, setUser } = useContext(UserContext);
+  if (isAuthorized) return <Navigate to={SEARCH_PAGE} />;
+
   const authContextValue = useAuthContextValue();
 
   const onFormSubmit = async (values: FormikValuesProps) => {
@@ -52,7 +54,7 @@ export const LoginPage = () => {
 
     UserAPI.login(loginData)
       .then((user) => {
-        userContext.setUser(user);
+        setUser(user);
         navigate(SEARCH_PAGE);
       })
       .catch((err: AxiosError) => {
