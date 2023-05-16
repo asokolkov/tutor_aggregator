@@ -14,15 +14,15 @@ export const CardInfo: React.FC<CardInfoProps> = (props) => {
     <CardInfoContext.Provider value={providerValue}>
       <VStack spacing="20px" padding="10px 0" w="100%">
         <HStack spacing="0" w="100%">
-          <Box p="10px 10px 10px 90px">
+          <Box p="10px 10px 10px 0px">
             <Avatar name={props.fullName} src={props.avatar} size="2xl" />
           </Box>
-          <VStack spacing="8px" align="flex-start" p="10px 90px 10px 30px">
+          <VStack spacing="8px" align="flex-start" p="10px 0 10px 30px">
             <Text variant="regular.h1">{props.fullName}</Text>
             <Text variant="regular.h3">{props.description}</Text>
           </VStack>
         </HStack>
-        <VStack spacing="20px" w="100%" padding="0 90px">
+        <VStack spacing="20px" w="100%">
           <VStack spacing="8px" align="flex-start" w="100%">
             <BottomCardDescription
               icon={locationIcon}

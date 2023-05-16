@@ -49,7 +49,8 @@ export const SearchPage = () => {
           </SearchParamsContext.Provider>
         </Form>
       </Formik>
-      <Flex flexWrap="wrap" gap="16px" justify="center">
+
+      <Flex flexWrap="wrap" gap="16px">
         {data.pages.map((x, i) => (
           <React.Fragment key={+(data.pageParams[i] ?? 0)}>
             {x.items.map((item) => (
@@ -58,6 +59,7 @@ export const SearchPage = () => {
           </React.Fragment>
         ))}
       </Flex>
+
       <Button
         onClick={() => fetchNextPage()}
         isLoading={isFetchingNextPage}
