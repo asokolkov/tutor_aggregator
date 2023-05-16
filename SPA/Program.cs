@@ -117,6 +117,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseStaticFiles();
+app.UseSpaStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseEndpoints(configure => { configure.MapControllers(); });
+
 app.UseSpa(spa =>
 {
     spa.Options.SourcePath = "ClientApp";
@@ -147,15 +157,6 @@ app.UseSpa(spa =>
         spa.UseReactDevelopmentServer("start");
 });
 
-app.UseSpaStaticFiles();
-app.UseStaticFiles();
-app.UseRouting();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.UseEndpoints(configure => { configure.MapControllers(); });
-
-//app.MapFallbackToFile("index.html");
+app.MapFallbackToFile("index.html");
 
 app.Run();
