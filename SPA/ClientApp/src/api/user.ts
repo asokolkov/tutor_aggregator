@@ -28,6 +28,8 @@ export interface User {
   name: string;
   surname: string;
   avatar: string;
+  email: string;
+  phone: string;
   accountType: AccountType;
 }
 

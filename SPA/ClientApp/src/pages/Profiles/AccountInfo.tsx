@@ -57,8 +57,8 @@ export const AccountInfo = () => {
               label={'Тип профиля'}
               text={isTutor ? 'репетитор' : 'ученик'}
             />
-            <TextRow label={'Почта'} text={'Почта не прикручена в апишке'} />
-            <TextRow label={'Телефон'} text={'Телефон не прикручен в апишке'} />
+            <TextRow label={'Почта'} text={userContext.user.email} />
+            <TextRow label={'Телефон'} text={userContext.user.phone} />
           </Flex>
           <Button
             onClick={signOut}
