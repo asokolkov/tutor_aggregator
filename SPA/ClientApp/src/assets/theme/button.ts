@@ -11,6 +11,7 @@ const red = defineStyle({
 
 const blue100 = defineStyle({
   backgroundColor: Color.blue100,
+  color: Color.black,
 });
 
 const blue200 = defineStyle({
