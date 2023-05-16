@@ -10,10 +10,11 @@ type Props = {
   date: Date;
 };
 export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
+  if (!lessons) lessons = [];
   const bookedCount = lessons.filter((x) => x.student).length;
 
   return (
-    <VStack w="420px" spacing="30px">
+    <VStack w="260px" spacing="30px">
       <Title
         date={date}
         totalCount={lessons.length}
