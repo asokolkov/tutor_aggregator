@@ -125,7 +125,10 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseEndpoints(configure => { configure.MapControllers(); });
+app.UseEndpoints(configure => { 
+    configure.MapControllers();
+    configure.MapFallbackToFile("index.html");
+ });
 
 app.UseSpa(spa =>
 {
@@ -156,7 +159,5 @@ app.UseSpa(spa =>
     if (app.Environment.IsDevelopment())
         spa.UseReactDevelopmentServer("start");
 });
-
-app.MapFallbackToFile("index.html");
 
 app.Run();
