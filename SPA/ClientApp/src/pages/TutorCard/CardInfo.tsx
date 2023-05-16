@@ -12,7 +12,7 @@ export const CardInfo: React.FC<CardInfoProps> = (props) => {
   const providerValue = useMemo(() => ({ ...props }), [props]);
   return (
     <CardInfoContext.Provider value={providerValue}>
-      <VStack spacing="20px" padding="10px 0">
+      <VStack spacing="20px" padding="10px 0" w="100%">
         <HStack spacing="0" w="100%">
           <Box p="10px 10px 10px 90px">
             <Avatar name={props.fullName} src={props.avatar} size="2xl" />

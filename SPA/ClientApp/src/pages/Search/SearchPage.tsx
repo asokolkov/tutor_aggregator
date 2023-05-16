@@ -1,4 +1,4 @@
-import { Button, SimpleGrid, VStack } from '@chakra-ui/react';
+import { Button, Flex, VStack } from '@chakra-ui/react';
 import SearchCardInfo from './components/SearchCardInfo';
 import { SearchParamsSection } from './SearchParamsSection';
 import './SearchPage.css';
@@ -50,11 +50,7 @@ export const SearchPage = () => {
           </SearchParamsContext.Provider>
         </Form>
       </Formik>
-      <SimpleGrid
-        className={'grid-container'}
-        minChildWidth="390px"
-        width={'100%'}
-      >
+      <Flex flexWrap="wrap" gap="16px" justify="center">
         {data.pages.map((x, i) => (
           <React.Fragment key={+(data.pageParams[i] ?? 0)}>
             {x.items.map((item) => (
@@ -62,8 +58,12 @@ export const SearchPage = () => {
             ))}
           </React.Fragment>
         ))}
-      </SimpleGrid>
-      <Button onClick={() => fetchNextPage()} isLoading={isFetchingNextPage}>
+      </Flex>
+      <Button
+        onClick={() => fetchNextPage()}
+        isLoading={isFetchingNextPage}
+        variant="green"
+      >
         Загрузить еще...
       </Button>
     </VStack>

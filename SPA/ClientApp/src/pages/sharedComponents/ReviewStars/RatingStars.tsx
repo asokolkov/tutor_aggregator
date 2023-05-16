@@ -12,7 +12,7 @@ export const RatingStars = ({ rating }: RatingStarsProps) => {
             <Star isActive={i < Math.round(rating)} key={i} />
           ))}
       </HStack>
-      <Text>{rating.toFixed(2)}</Text>
+      <Text>{rating.toFixed(1)}</Text>
     </HStack>
   );
 };
