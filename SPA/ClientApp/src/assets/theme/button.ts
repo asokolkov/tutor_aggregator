@@ -18,7 +18,6 @@ const blue300 = defineStyle({
 
 export const buttonTextVariant = {
   fontWeight: 'semibold',
-  fontFamily: 'Inter',
   lineHeight: '130%',
   fontSize: '18px',
 };
