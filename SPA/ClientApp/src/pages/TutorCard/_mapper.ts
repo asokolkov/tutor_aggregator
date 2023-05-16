@@ -1,6 +1,7 @@
-import { Tutor } from '../../api/tutors';
+import { Review, Tutor } from '../../api/tutors';
 import { CardInfoProps } from './CardInfo';
 import { mapCollectionToString } from './components/_helpers';
+import { SingleReviewProps } from './components/SingleReview';
 
 export function MapCardInfo(tutor: Tutor): CardInfoProps {
   return {
@@ -21,5 +22,19 @@ export function MapCardInfo(tutor: Tutor): CardInfoProps {
     subjects:
       mapCollectionToString(tutor.subjects?.map((x) => x.description)) ||
       'Не указано',
+  };
+}
+
+export function MapSingleReview(review: Review): SingleReviewProps {
+  return {
+    date: new Date(review.updatedAt)
+      .toISOString()
+      .split('T')[0]
+      .split('-')
+      .reverse()
+      .join('.'),
+    fullName: review.student,
+    rating: review.rating,
+    text: review.description,
   };
 }
