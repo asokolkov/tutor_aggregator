@@ -1,6 +1,6 @@
 export const searchKey = 'search';
 export const tutorCardKey = 'tutorCard';
-export const awardKey = 'award';
+export const reviewKey = 'review';
 
 export const profileKey = 'profile';
 export const tutorKey = 'tutor';

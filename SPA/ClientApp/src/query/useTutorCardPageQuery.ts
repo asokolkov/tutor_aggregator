@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { awardKey, tutorCardKey } from './queryKeys';
+import { reviewKey, tutorCardKey } from './queryKeys';
 import TutorsAPI from '../api/tutors';
 import { useTutorId } from '../routes/params';
 
@@ -12,7 +12,7 @@ export function useTutorCardPageQuery() {
   });
 
   const reviewQuery = useQuery({
-    queryKey: [awardKey],
+    queryKey: [reviewKey],
     queryFn: () => TutorsAPI.getReviewsByTutorId(tutorId),
   });
 

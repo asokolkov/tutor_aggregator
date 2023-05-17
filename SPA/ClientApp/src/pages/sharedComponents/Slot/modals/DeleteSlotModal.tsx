@@ -14,11 +14,11 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import LessonsAPI from '../../../../api/lessons';
-import { DisclosureProps } from '../_helpers';
 import { useContext, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { lessonsKey } from '../../../../query/queryKeys';
 import { SlotContext } from '../../../../contexts/SlotContext';
+import { DisclosureProps } from '../../disclosureProps';
 
 type Props = {
   disclosure: DisclosureProps;
