@@ -3,7 +3,6 @@ import { Subject } from '../api/_share';
 import { Location } from '../api/locations';
 
 type SearchParamsContextProps = {
-  isRefetching: boolean;
   locationsData: Location[];
   subjectsData: Subject[];
 };

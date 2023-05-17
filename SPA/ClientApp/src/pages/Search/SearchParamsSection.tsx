@@ -14,8 +14,7 @@ import { SearchParamsContext } from '../../contexts/SearchParamsContext';
 
 export const SearchParamsSection: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
-  const { subjectsData, locationsData, isRefetching } =
-    useContext(SearchParamsContext);
+  const { subjectsData, locationsData } = useContext(SearchParamsContext);
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const REMOVE_removeDuplicates = (array: string[]) => {
@@ -102,7 +101,6 @@ export const SearchParamsSection: React.FC = () => {
             _active={{ bg: '#5877AC' }}
             width={'100%'}
             type="submit"
-            isLoading={isRefetching}
           >
             Найти
           </Button>
