@@ -14,7 +14,6 @@ export const TextRow: React.FC<Props> = (props) => {
           fontSize={'xl'}
           margin={'auto 10px auto 0'}
           flex={'0 0 130px'}
-          textAlign={'right'}
         >
           {props.label}
         </FormLabel>

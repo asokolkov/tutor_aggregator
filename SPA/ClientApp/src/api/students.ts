@@ -32,6 +32,6 @@ export default class StudentAPI {
   }
 
   static async putCurrentProfileValues(student: Student) {
-    await axiosInstance.put('api/v1/student', { ...student });
+    await axiosInstance.put('api/v1/students', { ...student });
   }
 }

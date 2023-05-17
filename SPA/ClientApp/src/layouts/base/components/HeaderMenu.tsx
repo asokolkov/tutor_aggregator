@@ -1,5 +1,12 @@
 import * as React from 'react';
-import { Menu, MenuButton, MenuList, MenuItem, Button } from '@chakra-ui/react';
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Button,
+  Avatar,
+} from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Color } from '../../../assets/theme/themeEnum';
 import { useNavigate } from 'react-router-dom';
@@ -15,17 +22,22 @@ import { UserContext } from '../../../contexts/UserContext';
 
 export const HeaderMenu: React.FC = () => {
   const navigate = useNavigate();
-  const userContext = useContext(UserContext);
+  const { removeUser, user } = useContext(UserContext);
 
   const signOut = async () => {
     await UserAPI.signOut();
-    userContext.removeUser();
+    removeUser();
     navigate(LOGIN_PAGE);
   };
 
   return (
     <Menu>
-      <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+      <MenuButton
+        as={Button}
+        variant="blue.300"
+        rightIcon={<ChevronDownIcon />}
+      >
+        <Avatar src={user.avatar} name={user.name} size="xs" mr="8px"></Avatar>
         Мой профиль
       </MenuButton>
       <MenuList>
