@@ -16,7 +16,7 @@ const ContactsPopoverButton: React.FC = () => {
   return (
     <Popover isLazy>
       <PopoverTrigger>
-        <Button variant="blue.300" w="100%">
+        <Button variant="blue.300" w="100%" flex="1 0 208px">
           Показать контакты
         </Button>
       </PopoverTrigger>

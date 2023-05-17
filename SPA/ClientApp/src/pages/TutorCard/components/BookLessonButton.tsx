@@ -1,18 +1,22 @@
 import * as React from 'react';
 import { getTutorBookByIdPath } from '../../../routes/routes';
 import { Button } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { CardInfoContext } from '../../../contexts/CardInfoContext';
 
 export const BookLessonButton: React.FC = () => {
   const context = useContext(CardInfoContext);
+  const navigate = useNavigate();
 
   return (
-    <Link to={getTutorBookByIdPath(context.id)} style={{ width: '100%' }}>
-      <Button variant="green" w="100%">
-        Записаться на занятие
-      </Button>
-    </Link>
+    <Button
+      variant="green"
+      w="100%"
+      onClick={() => navigate(getTutorBookByIdPath(context.id))}
+      flex="1 0 208px"
+    >
+      Записаться на занятие
+    </Button>
   );
 };
