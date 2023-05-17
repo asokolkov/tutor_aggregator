@@ -4,6 +4,7 @@ import { Button } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { CardInfoContext } from '../../../contexts/CardInfoContext';
+import { ButtonVariant } from '../../../assets/theme/themeEnum';
 
 export const BookLessonButton: React.FC = () => {
   const context = useContext(CardInfoContext);
@@ -11,7 +12,7 @@ export const BookLessonButton: React.FC = () => {
 
   return (
     <Button
-      variant="green"
+      variant={ButtonVariant.green}
       w="100%"
       onClick={() => navigate(getTutorBookByIdPath(context.id))}
       flex="1 0 208px"
