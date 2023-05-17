@@ -1,5 +1,4 @@
 import { Avatar, Text, HStack, VStack, Box } from '@chakra-ui/react';
-import BottomCardDescription from './components/BottomCardDescription';
 import categoryIcon from '../../assets/images/category-icon.png';
 import locationIcon from '../../assets/images/location-icon.png';
 import educationIcon from '../../assets/images/educations-icon.png';
@@ -7,6 +6,7 @@ import requirementsIcon from '../../assets/images/requirements-icon.png';
 import React, { useMemo } from 'react';
 import { ButtonSection } from './components/ButtonSection';
 import { CardInfoContext } from '../../contexts/CardInfoContext';
+import InfoWithIcon from '../sharedComponents/InfoWithIcon';
 
 export const CardInfo: React.FC<CardInfoProps> = (props) => {
   const providerValue = useMemo(() => ({ ...props }), [props]);
@@ -23,25 +23,25 @@ export const CardInfo: React.FC<CardInfoProps> = (props) => {
           </VStack>
         </HStack>
         <VStack spacing="20px" w="100%">
-          <VStack spacing="8px" align="flex-start" w="100%">
-            <BottomCardDescription
+          <VStack spacing="16px" align="flex-start" w="100%">
+            <InfoWithIcon
               icon={locationIcon}
-              categoryText={'Район:'}
+              categoryText={'Район'}
               text={props.location}
             />
-            <BottomCardDescription
+            <InfoWithIcon
               icon={educationIcon}
-              categoryText={'Оразование:'}
+              categoryText={'Оразование'}
               text={props.education}
             />
-            <BottomCardDescription
+            <InfoWithIcon
               icon={categoryIcon}
               categoryText={'Предметы'}
               text={props.subjects}
             />
-            <BottomCardDescription
+            <InfoWithIcon
               icon={requirementsIcon}
-              categoryText={'Требования:'}
+              categoryText={'Требования'}
               text={props.requirements}
             />
           </VStack>
