@@ -1,6 +1,7 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SPA.Application.Avatars.Commands.InsertAvatarCommand;
+using SPA.Application.Avatars.Commands.CreateAvatarCommand;
 using SPA.Application.Avatars.Queries.GetAvatarQuery;
 using SPA.Extensions;
 using Swashbuckle.AspNetCore.Annotations;
@@ -19,7 +20,6 @@ public sealed class V1AvatarsController : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
-    [SwaggerResponse(404, "NotFound")]
     [SwaggerResponse(200, "OK")]
     public async Task<IActionResult> Get(Guid id)
     {
@@ -31,14 +31,14 @@ public sealed class V1AvatarsController : ControllerBase
     [HttpPost]
     [RequestSizeLimit(4 * 1024 * 1024)]
     [SwaggerResponse(401, "Unauthorized")]
-    [SwaggerResponse(200, "OK")]
+    [SwaggerResponse(404, "NotFound")]
     public async Task<IActionResult> Create([FromBody] byte[] image)
     {
         var userId = User.GetId();
         if (userId is null)
             return Unauthorized();
 
-        var query = new InsertAvatarCommand(userId.Value, image);
+        var query = new CreateAvatarCommand(userId.Value, image);
         return Ok(await mediator.Send(query));
     }
 }
