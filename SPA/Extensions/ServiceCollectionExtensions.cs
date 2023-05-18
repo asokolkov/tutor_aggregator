@@ -1,4 +1,4 @@
-﻿using SPA.Application.Avatars.Commands.CreateAvatarCommand;
+﻿using SPA.Application.Avatars.Commands.InsertAvatarCommand;
 using SPA.Application.Avatars.Queries.GetAvatarQuery;
 using SPA.Application.Locations.Commands.UpdateLocationCommand;
 using SPA.Application.Locations.Queries.GetLocationQuery;
@@ -63,7 +63,7 @@ internal static class ServiceCollectionExtensions
 
         services
             .AddScoped<IRequestHandler<GetAvatarQuery, byte[]>, GetAvatarQueryHandler>()
-            .AddScoped<IRequestHandler<CreateAvatarCommand, byte[]>, CreateAvatarCommandHandler>();
+            .AddScoped<IRequestHandler<InsertAvatarCommand, byte[]>, InsertAvatarCommandHandler>();
 
         services
             .AddScoped<IRequestHandler<GetStudentLessonsQuery, ICollection<Lesson>>, GetStudentLessonsQueryHandler>();

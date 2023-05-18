@@ -1,4 +1,12 @@
-import { Container, Flex, HStack, Image, Text, VStack } from '@chakra-ui/react';
+import {
+  Container,
+  Flex,
+  HStack,
+  Image,
+  Text,
+  VStack,
+  useMediaQuery,
+} from '@chakra-ui/react';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { SEARCH_PAGE } from '../../routes/routePaths';
@@ -8,9 +16,11 @@ import logo from '../../assets/images/teacher_icon.png';
 import { CitySelection } from './components/CitySelection';
 import { LoginButton, RegisterButton } from './components/HeaderButtons';
 import { HeaderMenu } from './components/HeaderMenu';
+import { HeaderAuthMenu } from './components/HeaderAuthMenu';
 
 const Header: React.FC = () => {
   const userState = useContext(UserContext);
+  const [isLargerThanTablet] = useMediaQuery('(min-width: 768px)');
 
   return (
     <Container padding={'0vh 5vw 1vh 5vw'} as="header" maxW="100%">
@@ -28,11 +38,13 @@ const Header: React.FC = () => {
         </HStack>
         {userState.isAuthorized ? (
           <HeaderMenu />
-        ) : (
+        ) : isLargerThanTablet ? (
           <HStack spacing="16px">
             <LoginButton />
             <RegisterButton />
           </HStack>
+        ) : (
+          <HeaderAuthMenu />
         )}
       </Flex>
     </Container>

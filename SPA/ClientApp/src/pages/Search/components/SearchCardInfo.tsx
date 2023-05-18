@@ -1,16 +1,18 @@
 import { Avatar, Heading, VStack, Button } from '@chakra-ui/react';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { RatingStars } from '../../sharedComponents/ReviewStars/RatingStars';
 import categoryIcon from '../../../assets/images/category-icon.png';
 import jobIcon from '../../../assets/images/job-icon.png';
-import SearchCardInfoRow from './SearchCardInfoRow';
+import InfoWithIcon from '../../sharedComponents/InfoWithIcon';
 import { getTutorCardByIdPath } from '../../../routes/routes';
 import { Tutor } from '../../../api/tutors';
 
 const SearchCardInfo: React.FC<SearchCardInfoProps> = ({ tutor }) => {
   const { avatar, firstName, lastName, educations, job, rating, id } = tutor;
   const fullName = `${firstName} ${lastName}`;
+
+  const navigate = useNavigate();
   return (
     <VStack
       w="310px"
@@ -32,20 +34,23 @@ const SearchCardInfo: React.FC<SearchCardInfoProps> = ({ tutor }) => {
         </VStack>
 
         <VStack spacing="5px" align="flex-start" w="100%">
-          <SearchCardInfoRow
+          <InfoWithIcon
             icon={categoryIcon}
             text={educations.map((e) => e.value).join(', ')}
             categoryText={''}
           />
-          <SearchCardInfoRow icon={jobIcon} text={job} categoryText={''} />
+          <InfoWithIcon icon={jobIcon} text={job} categoryText={''} />
         </VStack>
       </VStack>
 
-      <Link to={getTutorCardByIdPath(id)} style={{ width: '100%' }}>
-        <Button variant="green" h="48px" w="100%">
-          Посмотреть профиль
-        </Button>
-      </Link>
+      <Button
+        variant="green"
+        h="48px"
+        w="100%"
+        onClick={() => navigate(getTutorCardByIdPath(id))}
+      >
+        Посмотреть профиль
+      </Button>
     </VStack>
   );
 };

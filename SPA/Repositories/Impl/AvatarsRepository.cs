@@ -24,8 +24,11 @@ internal sealed class AvatarsRepository : IAvatarsRepository
 
     public async Task<byte[]> InsertAsync(Avatar avatar)
     {
-        var t = mapper.Map<AvatarEntity>(avatar);
-        await context.Avatars.AddAsync(t);
+        var avatarEntity = await context.Avatars.FindAsync(avatar.Id);
+        if (avatarEntity is not null)
+            context.Avatars.Remove(avatarEntity);
+        
+        await context.Avatars.AddAsync(mapper.Map<AvatarEntity>(avatar));
         await context.SaveChangesAsync();
         return avatar.Image;
     }

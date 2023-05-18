@@ -20,12 +20,9 @@ export const LoginButton: React.FC = () => {
 export const RegisterButton: React.FC = () => {
   const navigate = useNavigate();
   return (
-    <Button
-      variant={ButtonVariant.green}
-      rightIcon={<ChevronRightIcon />}
-      onClick={() => navigate(SIGNUP_PAGE)}
-    >
+    <Button variant={ButtonVariant.green} onClick={() => navigate(SIGNUP_PAGE)}>
       Зарегистрироваться
+      <ChevronRightIcon ml="4px" />
     </Button>
   );
 };
