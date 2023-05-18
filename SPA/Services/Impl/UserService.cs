@@ -30,7 +30,7 @@ internal sealed class UserService : IUserService
             Contacts = new List<TutorContact>
             {
                 new() { Id = Guid.NewGuid(), Type = ContactType.Email, Value = user.Email },
-                new() { Id = Guid.NewGuid(), Type = ContactType.Phone, Value = user.Phone }
+                new() { Id = Guid.NewGuid(), Type = ContactType.Phone, Value = user.PhoneNumber }
             }
         };
 
@@ -47,7 +47,7 @@ internal sealed class UserService : IUserService
             Contacts = new List<StudentContact>
             {
                 new() { Id = Guid.NewGuid(), Type = ContactType.Email, Value = user.Email },
-                new() { Id = Guid.NewGuid(), Type = ContactType.Phone, Value = user.Phone }
+                new() { Id = Guid.NewGuid(), Type = ContactType.Phone, Value = user.PhoneNumber }
             }
         };
 

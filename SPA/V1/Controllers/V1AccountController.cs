@@ -43,8 +43,8 @@ public class V1AccountController : ControllerBase
             return Unauthorized();
         
         var user = await userManager.FindByEmailAsync(loginDto.Email);
-        
-        var userModel = new User(user.Id, user.FirstName, user.LastName, null,
+
+        var userModel = new User(user.Id, user.FirstName, user.LastName, user.PhoneNumber, user.Email, null,
             user.AccountType, user.RegistrationCompleted);
 
         return Ok(mapper.Map<V1UserDto>(userModel));
