@@ -52,13 +52,12 @@ internal sealed class TutorsRepository : ITutorsRepository
         {
             var tutorEntity = await table.FindAsync(id);
             if (tutorEntity is null)
-                return null;
+                return default;
 
             tutorEntity.FirstName = tutor.FirstName;
             tutorEntity.LastName = tutor.LastName;
             tutorEntity.Description = tutor.Description;
             tutorEntity.Job = tutor.Job;
-            tutorEntity.Location = mapper.Map<LocationEntity>(tutor.Location);
 
             var educationsEntities = mapper.Map<ICollection<TutorEducationEntity>>(tutor.Educations).ToList();
             foreach (var educationEntity in educationsEntities)
@@ -99,6 +98,17 @@ internal sealed class TutorsRepository : ITutorsRepository
             }
 
             tutorEntity.Contacts = contactsEntities;
+
+            if (tutor.Location != null)
+            {
+                var locationEntity = mapper.Map<LocationEntity>(tutor.Location);
+                var location = await context.Locations.FindAsync(locationEntity.Id);
+                if (location is null)
+                    context.Locations.Add(locationEntity);
+                else
+                    locationEntity = location;
+                tutorEntity.Location = locationEntity;
+            }
 
             var subjectsEntities = mapper.Map<ICollection<SubjectEntity>>(tutor.Subjects).ToList();
             for (var i = 0; i < subjectsEntities.Count; i++)
