@@ -30,7 +30,8 @@ internal sealed class DataGenerator : IDataGenerator
 
     public async Task FillDatabase()
     {
-        var tutors = await CreateTutors();
+        var locations = await CreateLocations();
+        var tutors = await CreateTutors(locations);
         var students = await CreateStudents();
 
         foreach (var student in students)
@@ -46,7 +47,6 @@ internal sealed class DataGenerator : IDataGenerator
             tutor.Educations = await CreateTutorEducations();
             tutor.Awards = await CreateAwards();
             tutor.Requirements = await CreateRequirements();
-            tutor.Location = await CreateLocation();
         }
 
         await CreateReviews(tutors, students);
@@ -170,25 +170,24 @@ internal sealed class DataGenerator : IDataGenerator
                     UpdatedAt = extraction.GetTime()
                 });
     }
-
-    private async Task<LocationEntity?> CreateLocation()
+    
+    private async Task<List<LocationEntity>> CreateLocations()
     {
-        var district = extraction.Get(data["districts"], true);
-        if (district == null)
-            return null;
-        
-        var locationEntity = await applicationContext.Locations.FirstOrDefaultAsync(x => x.District == district);
-        if (locationEntity != null)
-            return locationEntity;
+        var result = new List<LocationEntity>();
 
-        var locationEntry = await applicationContext.Locations.AddAsync(new LocationEntity
+        foreach (var district in data["districtsEkb"])
         {
-            Id = Guid.NewGuid(),
-            City = extraction.Get(data["cities"])!,
-            District = district
-        });
+            var locationEntity = new LocationEntity
+            {
+                Id = Guid.NewGuid(),
+                City = "Екатеринбург",
+                District = district!
+            };
+            var locationEntry = await applicationContext.Locations.AddAsync(locationEntity);
+            result.Add(locationEntry.Entity);
+        }
 
-        return locationEntry.Entity;
+        return result;
     }
 
     private async Task<ICollection<SubjectEntity>> CreateSubjects()
@@ -252,7 +251,7 @@ internal sealed class DataGenerator : IDataGenerator
         return result;
     }
 
-    private async Task<List<TutorEntity>> CreateTutors()
+    private async Task<List<TutorEntity>> CreateTutors(List<LocationEntity> locationEntities)
     {
         var result = new List<TutorEntity>();
 
@@ -268,8 +267,10 @@ internal sealed class DataGenerator : IDataGenerator
                 Age = extraction.GetNumber(100, true),
                 LastName = user.LastName!,
                 Description = extraction.Get(data["descriptions"], true),
-                Job = extraction.Get(data["jobs"], true)
+                Job = extraction.Get(data["jobs"], true),
+                Location = extraction.Get(locationEntities, true)
             };
+            
             var tutorEntry = await applicationContext.Tutors.AddAsync(tutorEntity);
             result.Add(tutorEntry.Entity);
         }
