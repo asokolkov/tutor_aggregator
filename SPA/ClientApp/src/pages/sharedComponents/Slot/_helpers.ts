@@ -29,9 +29,3 @@ export const dateShift = (date: Date, index: number) => {
   newDate.setDate(date.getDate() + index);
   return newDate;
 };
-
-export interface DisclosureProps {
-  isOpen: boolean;
-  onOpen: () => void;
-  onClose: () => void;
-}

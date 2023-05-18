@@ -79,6 +79,12 @@ class TutorsAPI {
     return response.data;
   }
 
+  static async addReview(tutorId: string, rating: number, description: string) {
+    await axiosInstance.post(`/api/v1/tutors/${tutorId}/reviews`, {
+      params: { rating, description },
+    });
+  }
+
   static async getCurrentProfileInfo(): Promise<Tutor> {
     const response = await axiosInstance.get<Tutor>('/api/v1/tutors/profile');
     return response.data;

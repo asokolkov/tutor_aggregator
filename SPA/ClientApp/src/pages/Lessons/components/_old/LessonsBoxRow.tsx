@@ -7,11 +7,8 @@ import {
   Button,
   useBreakpointValue,
   Divider,
-  useDisclosure,
 } from '@chakra-ui/react';
 import { Link, To } from 'react-router-dom';
-import CancelLessonModal from '../modals/CancelLessonModal';
-import NewReviewModal from '../modals/NewReviewModal';
 
 const monthNames = [
   'января',
@@ -30,16 +27,6 @@ const monthNames = [
 const daysOfWeek = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
 
 export const LessonsBoxRow = (props: LessonsBoxProps) => {
-  const {
-    isOpen: isOpenCancel,
-    onOpen: OnOpenCancel,
-    onClose: onCloseCancel,
-  } = useDisclosure();
-  const {
-    isOpen: isOpenReview,
-    onOpen: OnOpenReview,
-    onClose: onCloseReview,
-  } = useDisclosure();
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   const date = new Date(props.datetime);
   const hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
@@ -47,10 +34,9 @@ export const LessonsBoxRow = (props: LessonsBoxProps) => {
     date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
   const month =
     date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+  // @ts-ignore
   return (
     <>
-      <NewReviewModal isOpen={isOpenReview} onClose={onCloseReview} />
-      <CancelLessonModal isOpen={isOpenCancel} onClose={onCloseCancel} />
       <Box
         w={'100%'}
         h={'50px'}
@@ -96,12 +82,12 @@ export const LessonsBoxRow = (props: LessonsBoxProps) => {
           <Spacer />
           <Flex align={'center'} maxWidth={'30%'} margin={'0 0 0 1em'}>
             {props.isRatable && (
-              <Button colorScheme="green" size={'sm'} onClick={OnOpenReview}>
+              <Button colorScheme="green" size={'sm'}>
                 Оценить
               </Button>
             )}
             {props.isCancellable && (
-              <Button colorScheme="red" size={'sm'} onClick={OnOpenCancel}>
+              <Button colorScheme="red" size={'sm'}>
                 Отменить
               </Button>
             )}

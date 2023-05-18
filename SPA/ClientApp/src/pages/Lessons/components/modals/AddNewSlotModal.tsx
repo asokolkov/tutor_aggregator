@@ -20,11 +20,9 @@ import LessonsAPI, { LessonType } from '../../../../api/lessons';
 import { slotInputValues, SlotInputValuesProps } from './_formikHelper';
 import { useMutation, useQueryClient } from 'react-query';
 import { lessonsKey } from '../../../../query/queryKeys';
-import {
-  dayAndMonth,
-  DisclosureProps,
-} from '../../../sharedComponents/Slot/_helpers';
+import { dayAndMonth } from '../../../sharedComponents/Slot/_helpers';
 import { NewSlotInputSwitch } from '../DayColumn/NewSlotInputSwitch';
+import { DisclosureProps } from '../../../sharedComponents/disclosureProps';
 
 type Props = {
   disclosure: DisclosureProps;

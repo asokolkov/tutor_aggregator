@@ -15,7 +15,7 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react';
-import { DisclosureProps } from '../_helpers';
+import { DisclosureProps } from '../../disclosureProps';
 
 type Props = {
   disclosure: DisclosureProps;
