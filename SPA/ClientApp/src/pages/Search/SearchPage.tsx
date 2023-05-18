@@ -1,63 +1,72 @@
-import { SimpleGrid, VStack } from '@chakra-ui/react';
+import { Button, Flex, VStack } from '@chakra-ui/react';
 import SearchCardInfo from './components/SearchCardInfo';
 import { SearchParamsSection } from './SearchParamsSection';
-import './SearchPage.css';
 import { LoadBar } from '../sharedComponents/LoadBar/LoadBar';
-import { useSearchPageQuery } from '../../query/useSearchPageQuery';
-import { useMutation } from 'react-query';
-import TutorsAPI from '../../api/tutors';
+import {
+  SearchValuesProps,
+  useSearchPageQuery,
+} from '../../query/useSearchPageQuery';
 import { Form, Formik } from 'formik';
-
-export interface SearchValuesProps {
-  district: string;
-  price: string;
-  rating: string;
-  subject: string;
-}
+import React, { useMemo } from 'react';
+import { useLocationQuery } from '../../query/useLocationQuery';
+import { useSubjectQuery } from '../../query/useSubjectQuery';
+import { SearchParamsContext } from '../../contexts/SearchParamsContext';
 
 export const SearchPage = () => {
-  const { isLoading, data } = useSearchPageQuery();
+  const {
+    isLoading,
+    data,
+    isFetchingNextPage,
+    isRefetching,
+    fetchNextPage,
+    values,
+    setValues,
+  } = useSearchPageQuery();
 
-  const onSearchMutation = useMutation({
-    mutationFn: (values: SearchValuesProps) => {
-      return TutorsAPI.getAllTutors({
-        rating: +values.rating,
-        maxPrice: +values.price,
-        subject: values.subject,
-        district: values.district,
-        city: null,
-      });
-    },
-  });
-  const onSearch = (values: SearchValuesProps) => {
-    onSearchMutation.mutate(values);
-  };
+  const { locationsQuery } = useLocationQuery();
+  const { subjectQuery } = useSubjectQuery();
 
-  const initValues = {
-    district: 'Уралмаш',
-    price: '-1',
-    rating: '-1',
-    subject: 'Математика',
-  };
+  const providerValues = useMemo(
+    () => ({
+      isRefetching,
+      locationsData: locationsQuery.data,
+      subjectsData: subjectQuery.data,
+    }),
+    [isRefetching, locationsQuery, subjectQuery]
+  );
 
-  if (isLoading)
+  if (isLoading || locationsQuery.isLoading || subjectQuery.isLoading)
     return <LoadBar description={'Загружаем список преподавателей'} />;
   return (
     <VStack spacing={'32px'} align={'start'}>
-      <Formik initialValues={initValues} onSubmit={onSearch}>
+      <Formik
+        initialValues={values}
+        onSubmit={(v: SearchValuesProps) => setValues(v)}
+      >
         <Form style={{ width: '100%' }}>
-          <SearchParamsSection />
+          <SearchParamsContext.Provider value={providerValues}>
+            <SearchParamsSection />
+          </SearchParamsContext.Provider>
         </Form>
       </Formik>
-      <SimpleGrid
-        className={'grid-container'}
-        minChildWidth="390px"
-        width={'100%'}
-      >
-        {data.items.map((item) => (
-          <SearchCardInfo tutor={item} key={item.id}></SearchCardInfo>
+
+      <Flex flexWrap="wrap" gap="16px">
+        {data.pages.map((x, i) => (
+          <React.Fragment key={+(data.pageParams[i] ?? 0)}>
+            {x.items.map((item) => (
+              <SearchCardInfo tutor={item} key={item.id}></SearchCardInfo>
+            ))}
+          </React.Fragment>
         ))}
-      </SimpleGrid>
+      </Flex>
+
+      <Button
+        onClick={() => fetchNextPage()}
+        isLoading={isFetchingNextPage}
+        variant="green"
+      >
+        Загрузить еще...
+      </Button>
     </VStack>
   );
 };

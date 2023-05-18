@@ -8,28 +8,22 @@ import {
   Popover,
   PopoverBody,
 } from '@chakra-ui/react';
-import { TutorCardContext } from '../../../contexts/TutorCardContext';
-import { mapCollectionToString } from './_helpers';
+import { CardInfoContext } from '../../../contexts/CardInfoContext';
 
 const ContactsPopoverButton: React.FC = () => {
-  const context = useContext(TutorCardContext);
-  const contacts = context.tutor.contacts;
-
-  const strContacts = contacts.length === 0 ? "Пока что тут нет контактов" : mapCollectionToString(
-    contacts.map((contact) => contact.value)
-  );
+  const context = useContext(CardInfoContext);
 
   return (
     <Popover isLazy>
       <PopoverTrigger>
-        <Button size={'md'} colorScheme={'blue'} width={'100%'}>
+        <Button variant="blue.300" w="100%" flex="1 0 208px">
           Показать контакты
         </Button>
       </PopoverTrigger>
       <PopoverContent>
         <PopoverArrow />
         <PopoverCloseButton height={'3em'} />
-        <PopoverBody fontSize={'lg'}>{strContacts}</PopoverBody>
+        <PopoverBody fontSize={'lg'}>{context.contacts}</PopoverBody>
       </PopoverContent>
     </Popover>
   );

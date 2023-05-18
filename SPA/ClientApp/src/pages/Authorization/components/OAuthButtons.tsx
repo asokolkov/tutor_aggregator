@@ -1,6 +1,5 @@
 import { Button, ButtonGroup, HStack, VisuallyHidden } from '@chakra-ui/react';
 import { FaGoogle, FaVk } from 'react-icons/fa';
-import AccountAPI from '../../../api/account';
 
 const providers = [
   { name: 'Google', icon: <FaGoogle /> },
@@ -15,9 +14,9 @@ export function OAuthButtons() {
           <Button
             key={name}
             width="full"
-            onClick={() =>
-              AccountAPI.loginViaExternal(name, '/').then((r) => console.log(r))
-            }
+            // onClick={() =>
+            //   // UserAPI.loginViaExternal(name, '/').then((r) => console.log(r))
+            // }
           >
             <VisuallyHidden>Sign in with {name}</VisuallyHidden>
             {icon}

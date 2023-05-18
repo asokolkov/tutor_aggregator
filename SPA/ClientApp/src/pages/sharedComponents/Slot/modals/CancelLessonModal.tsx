@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useContext, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import { SlotContext } from '../../../contexts/SlotContext';
-import LessonsAPI from '../../../api/lessons';
-import { lessonsKey } from '../../../query/queryKeys';
+import { SlotContext } from '../../../../contexts/SlotContext';
+import LessonsAPI from '../../../../api/lessons';
+import { lessonsKey } from '../../../../query/queryKeys';
 import {
   Button,
   Modal,
@@ -15,7 +15,7 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react';
-import { DisclosureProps } from '../../sharedComponents/Slot/_helpers';
+import { DisclosureProps } from '../_helpers';
 
 type Props = {
   disclosure: DisclosureProps;
@@ -24,11 +24,11 @@ export const CancelLessonModal: React.FC<Props> = ({ disclosure }) => {
   const { isOpen, onClose } = disclosure;
   const [isSubmitLoading, setSubmitLoading] = useState(false);
   const queryClient = useQueryClient();
-  const { lesson, tutorName, dateRangeStr } = useContext(SlotContext);
+  const { tutorName, lessonId, timeRange } = useContext(SlotContext);
 
   const onSubmit = async () => {
     setSubmitLoading(true);
-    await LessonsAPI.cancelLesson(lesson.id);
+    await LessonsAPI.cancelLesson(lessonId);
     setSubmitLoading(false);
     onClose();
   };
@@ -48,9 +48,9 @@ export const CancelLessonModal: React.FC<Props> = ({ disclosure }) => {
           </ModalHeader>
           <ModalCloseButton />
           <Text>Будет отменена запись к преподвавателю:</Text>
-          <Text variant="semibold">{tutorName}</Text>
+          <Text variant="regular.bold">{tutorName}</Text>
           <Text>Время занятия:</Text>
-          <Text variant="semibold">{`Время: ${dateRangeStr}`}</Text>
+          <Text variant="regular.bold">{`Время: ${timeRange}`}</Text>
         </ModalBody>
 
         <ModalFooter>

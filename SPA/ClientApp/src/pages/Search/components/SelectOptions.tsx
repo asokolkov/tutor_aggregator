@@ -2,14 +2,14 @@ import { FormControl, FormLabel, Select } from '@chakra-ui/react';
 import * as React from 'react';
 import { useField } from 'formik';
 
-export const SelectOptions: React.FC<SelectOptionsProps> = (props) => {
-  const options = props.options.map((option) => (
-    <option value={option[1]} key={option[1]}>
-      {option[0]}
-    </option>
-  ));
-
-  const [field] = useField({ name: props.name });
+export const SelectOptions: React.FC<SelectOptionsProps> = ({
+  options,
+  optionsMap,
+  label,
+  name,
+  placeholder,
+}) => {
+  const [field] = useField({ name });
 
   return (
     <FormControl display={'flex'} alignItems={'center'}>
@@ -19,7 +19,7 @@ export const SelectOptions: React.FC<SelectOptionsProps> = (props) => {
         flex={'0 0 90px'}
         textAlign={'right'}
       >
-        {props.label}
+        {label}
       </FormLabel>
       <Select
         {...field}
@@ -27,19 +27,22 @@ export const SelectOptions: React.FC<SelectOptionsProps> = (props) => {
         color="black"
         width={'100%'}
         fontSize={'lg'}
-        value={props.value}
-        onChange={(e) => props.updateState(e.target.value)}
+        placeholder={placeholder}
       >
-        {options}
+        {options?.map((option) => (
+          <option value={optionsMap ? optionsMap[option] : option} key={option}>
+            {option}
+          </option>
+        ))}
       </Select>
     </FormControl>
   );
 };
 
 type SelectOptionsProps = {
-  value: string | number;
-  options: Array<Array<string>>;
+  options: string[];
+  optionsMap?: { [index: string]: number };
   label: string;
-  updateState: (newState: string) => void;
   name: string;
+  placeholder?: string;
 };

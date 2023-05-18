@@ -9,9 +9,9 @@ import {
 } from '@chakra-ui/react';
 import { TextRow } from './components/TextRow';
 import { UserContext } from '../../contexts/UserContext';
-import { AccountType } from '../../api/currentUser';
+import { AccountType } from '../../api/user';
 import { ProfileContext } from '../../contexts/ProfileContext';
-import AccountAPI from '../../api/account';
+import UserAPI from '../../api/user';
 import { LOGIN_PAGE } from '../../routes/routePaths';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,7 +22,7 @@ export const AccountInfo = () => {
   const navigate = useNavigate();
 
   const signOut = async () => {
-    await AccountAPI.signOut();
+    await UserAPI.signOut();
     userContext.removeUser();
     navigate(LOGIN_PAGE);
   };
@@ -30,49 +30,30 @@ export const AccountInfo = () => {
   const profileContext = useContext(ProfileContext);
   if (profileContext.isLoading) return <></>;
   return (
-    <>
-      <Box
-        width={'100%'}
-        shadow={'md'}
-        borderRadius={'5px'}
-        borderWidth={'1px'}
+    <Box width={'100%'} shadow={'md'} borderRadius={'5px'} borderWidth={'1px'}>
+      <Flex
+        padding={isDesktop ? '15px 3em 15px 3em' : '10px'}
+        direction={'column'}
+        align="flex-start"
       >
-        <Flex
-          padding={isDesktop ? '15px 3em 15px 3em' : '10px'}
-          direction={'column'}
+        <Heading
+          textAlign={'center'}
+          margin={isDesktop ? '0 0 15px 0' : '0 0 10px 0px'}
         >
-          <Heading
-            textAlign={'center'}
-            margin={isDesktop ? '0 0 15px 0' : '0 0 10px 0px'}
-          >
-            Аккаунт
-          </Heading>
-          <Flex
-            width={'100%'}
-            align={'left'}
-            direction={'column'}
-            margin={isDesktop ? '0 0 0 15em' : '0 0 0 0'}
-          >
-            <TextRow
-              label={'Тип профиля'}
-              text={isTutor ? 'репетитор' : 'ученик'}
-            />
-            <TextRow label={'Почта'} text={'Почта не прикручена в апишке'} />
-            <TextRow label={'Телефон'} text={'Телефон не прикручен в апишке'} />
-          </Flex>
-          <Button
-            onClick={signOut}
-            color={'red'}
-            as={'u'}
-            w={'100%'}
-            variant={'link'}
-            textAlign={'center'}
-            margin={'1em 0 1em 0'}
-          >
-            Выйти из аккаунта
-          </Button>
+          Аккаунт
+        </Heading>
+        <Flex width={'100%'} direction={'column'}>
+          <TextRow
+            label={'Тип профиля'}
+            text={isTutor ? 'репетитор' : 'ученик'}
+          />
+          <TextRow label={'Почта'} text={'Почта не прикручена в апишке'} />
+          <TextRow label={'Телефон'} text={'Телефон не прикручен в апишке'} />
         </Flex>
-      </Box>
-    </>
+        <Button onClick={signOut} variant="red" margin={'1em 0 1em 0'}>
+          Выйти из аккаунта
+        </Button>
+      </Flex>
+    </Box>
   );
 };

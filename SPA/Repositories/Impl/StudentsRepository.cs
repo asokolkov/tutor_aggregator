@@ -86,20 +86,9 @@ internal sealed class StudentsRepository : IStudentsRepository
 
     public async Task<Student?> Insert(Student student)
     {
-        await using var transaction = await context.Database.BeginTransactionAsync();
-        await transaction.CreateSavepointAsync("BeforeInsert");
-        try
-        {
-            var studentEntity = mapper.Map<StudentEntity>(student);
-            var entityEntry = await table.AddAsync(studentEntity);
-            await context.SaveChangesAsync();
-            await transaction.CommitAsync();
-            return mapper.Map<Student>(entityEntry.Entity);
-        }
-        catch (Exception)
-        {
-            await transaction.RollbackToSavepointAsync("BeforeInsert");
-            return default;
-        }
+        var studentEntity = mapper.Map<StudentEntity>(student);
+        await table.AddAsync(studentEntity);
+        await context.SaveChangesAsync();
+        return mapper.Map<Student>(studentEntity);
     }
 }

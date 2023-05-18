@@ -5,6 +5,7 @@ import { LoadBar } from '../sharedComponents/LoadBar/LoadBar';
 import { useTutorCardPageQuery } from '../../query/useTutorCardPageQuery';
 import { useMemo } from 'react';
 import { TutorCardContext } from '../../contexts/TutorCardContext';
+import { MapCardInfo } from './_mapper';
 
 export const TutorCardPage = () => {
   const { tutorQuery, reviewQuery } = useTutorCardPageQuery();
@@ -19,7 +20,7 @@ export const TutorCardPage = () => {
   return (
     <TutorCardContext.Provider value={providerValue}>
       <VStack maxW={'100%'} spacing={'40px'}>
-        <CardInfo />
+        <CardInfo {...MapCardInfo(tutor)} />
         <ReviewSection />
       </VStack>
     </TutorCardContext.Provider>

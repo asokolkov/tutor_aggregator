@@ -8,28 +8,18 @@ import {
 } from '@chakra-ui/react';
 import { SelectOptions } from './components/SelectOptions';
 import searchIcon from '../../assets/images/search_icon_bg.png';
-import { useSearchParams } from 'react-router-dom';
-
-const SearchParams = {
-  subject: 'subject',
-  district: 'district',
-  price: 'price',
-  rating: 'rating',
-};
+import { PriceOptions, ReviewOptions } from './_formHelper';
+import { useContext } from 'react';
+import { SearchParamsContext } from '../../contexts/SearchParamsContext';
 
 export const SearchParamsSection: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
+  const { subjectsData, locationsData, isRefetching } =
+    useContext(SearchParamsContext);
 
-  const [searchParamsState, searchParamsSetState] = useSearchParams({
-    district: 'Уралмаш',
-    price: 'Любая',
-    rating: 'Любой',
-    subject: 'Математика',
-  });
-
-  const updateSearchParam = (paramName: string, newState: string) => {
-    searchParamsState.set(paramName, newState);
-    searchParamsSetState(searchParamsState);
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  const REMOVE_removeDuplicates = (array: string[]) => {
+    return array.filter((item, pos, self) => self.indexOf(item) == pos);
   };
 
   return (
@@ -71,63 +61,36 @@ export const SearchParamsSection: React.FC = () => {
         <GridItem area={'subject'} alignItems={'center'}>
           <SelectOptions
             label={'Предмет'}
-            options={[
-              ['Математика', 'Математика'],
-              ['Программирование', 'Программирование'],
-              ['История', 'История'],
-            ]}
-            value={searchParamsState.get(SearchParams.subject)}
-            updateState={(newState) =>
-              updateSearchParam(SearchParams.subject, newState)
-            }
+            options={REMOVE_removeDuplicates(
+              subjectsData.map((subject) => subject.description)
+            )}
             name="subject"
+            placeholder="Любой"
           />
         </GridItem>
         <GridItem area={'district'}>
           <SelectOptions
             label={'Район'}
-            options={[
-              ['Уралмаш', 'Уралмаш'],
-              ['Ленинский', 'Ленинский'],
-              ['Ботанический', 'Ботанический'],
-            ]}
-            value={searchParamsState.get(SearchParams.district)}
-            updateState={(newState) =>
-              updateSearchParam(SearchParams.district, newState)
-            }
+            options={REMOVE_removeDuplicates(
+              locationsData.map((location) => location.district)
+            )}
             name="district"
+            placeholder="Любой"
           />
         </GridItem>
         <GridItem area={'price'}>
           <SelectOptions
             label={'Цена'}
-            options={[
-              ['Любая', '-1'],
-              ['< 1000 ₽ за час', '1000'],
-              ['< 800 ₽ за час', '800'],
-              ['< 700 ₽ за час', '700'],
-              ['< 600 ₽ за час', '600'],
-              ['< 500 ₽ за час', '500'],
-            ]}
-            value={searchParamsState.get(SearchParams.price)}
-            updateState={(newState) =>
-              updateSearchParam(SearchParams.price, newState)
-            }
+            options={Object.keys(PriceOptions)}
+            optionsMap={PriceOptions}
             name="price"
           />
         </GridItem>
         <GridItem area={'rating'}>
           <SelectOptions
             label={'Рейтинг'}
-            options={[
-              ['Любой', '-1'],
-              ['⭐⭐⭐⭐ и более', '4'],
-              ['⭐⭐⭐ и более', '3'],
-            ]}
-            value={searchParamsState.get(SearchParams.rating)}
-            updateState={(newState) =>
-              updateSearchParam(SearchParams.rating, newState)
-            }
+            options={Object.keys(ReviewOptions)}
+            optionsMap={ReviewOptions}
             name="rating"
           />
         </GridItem>
@@ -139,6 +102,7 @@ export const SearchParamsSection: React.FC = () => {
             _active={{ bg: '#5877AC' }}
             width={'100%'}
             type="submit"
+            isLoading={isRefetching}
           >
             Найти
           </Button>

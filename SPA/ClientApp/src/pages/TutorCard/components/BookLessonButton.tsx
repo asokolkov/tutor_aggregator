@@ -1,25 +1,23 @@
 import * as React from 'react';
 import { getTutorBookByIdPath } from '../../../routes/routes';
-import { Button, useBreakpointValue } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Button } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
-import { TutorCardContext } from '../../../contexts/TutorCardContext';
+import { CardInfoContext } from '../../../contexts/CardInfoContext';
+import { ButtonVariant } from '../../../assets/theme/themeEnum';
 
 export const BookLessonButton: React.FC = () => {
-  const isDesktop = useBreakpointValue({ base: false, lg: true });
-  const context = useContext(TutorCardContext);
-  const tutorId = context.tutor.id;
+  const context = useContext(CardInfoContext);
+  const navigate = useNavigate();
 
   return (
-    <Link to={getTutorBookByIdPath(tutorId)}>
-      <Button
-        size={'md'}
-        colorScheme={'green'}
-        width={'100%'}
-        margin={isDesktop ? '0 0 0 1em' : '8px 0 0 0'}
-      >
-        Записаться на занятие
-      </Button>
-    </Link>
+    <Button
+      variant={ButtonVariant.green}
+      w="100%"
+      onClick={() => navigate(getTutorBookByIdPath(context.id))}
+      flex="1 0 208px"
+    >
+      Записаться на занятие
+    </Button>
   );
 };
