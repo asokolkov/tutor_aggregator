@@ -7,4 +7,5 @@ type SearchParamsContextProps = {
   subjectsData: Subject[];
 };
 
-React.createContext<SearchParamsContextProps>(null);
+export const SearchParamsContext =
+  React.createContext<SearchParamsContextProps>(null);

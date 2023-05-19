@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import {
   AUTH_LAYOUT,
   DEFAULT_LAYOUT,
@@ -51,10 +51,6 @@ const router = createBrowserRouter([
       {
         path: LESSONS_PAGE,
         element: <LessonsPage />,
-      },
-      {
-        index: true,
-        element: <Navigate to={MAIN_PAGE} />,
       },
     ],
   },
