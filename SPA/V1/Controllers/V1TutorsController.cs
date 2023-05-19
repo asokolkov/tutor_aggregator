@@ -2,6 +2,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SPA.Application.Tutors.Commands.CreateReviewCommand;
 using SPA.Application.Tutors.Commands.UpdateTutorCommand;
 using SPA.Application.Tutors.Queries.GetLessonsQuery;
@@ -22,14 +23,16 @@ public sealed class V1TutorsController : Controller
 {
     private readonly IMapper mapper;
     private readonly IMediator mediator;
+    private readonly LinkGenerator linkGenerator;
 
-    public V1TutorsController(IMediator mediator, IMapper mapper)
+    public V1TutorsController(IMediator mediator, IMapper mapper, LinkGenerator linkGenerator)
     {
         this.mediator = mediator;
         this.mapper = mapper;
+        this.linkGenerator = linkGenerator;
     }
 
-    [HttpGet]
+    [HttpGet(Name = nameof(GetPageAsync))]
     [SwaggerResponse(200, "OK", typeof(V1PageDto<V1TutorDto>))]
     public async Task<IActionResult> GetPageAsync([FromQuery] int page = 0,
         [FromQuery] int size = 30, [FromQuery] string subject = "", [FromQuery] string city = "",
@@ -42,6 +45,18 @@ public sealed class V1TutorsController : Controller
 
         var query = new GetTutorsQuery(page, size, subject, city, district, maxPrice, rating);
         var modelsPage = await mediator.Send(query);
+        
+        var previousPageLink = modelsPage.HasPrevious 
+            ? linkGenerator.GetUriByRouteValues(HttpContext, nameof(GetPageAsync), new { pageNumber = page - 1, size }) 
+            : null;
+        
+        var nextPageLink = modelsPage.HasNext 
+            ? linkGenerator.GetUriByRouteValues(HttpContext, nameof(GetPageAsync), new { pageNumber = page + 1, size }) 
+            : null;
+        
+        var paginationHeader = new { previousPageLink, nextPageLink };
+        Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(paginationHeader));
+        
         return Ok(mapper.Map<V1PageDto<V1TutorInfoDto>>(modelsPage));
     }
 
@@ -54,13 +69,30 @@ public sealed class V1TutorsController : Controller
         return Ok(mapper.Map<V1TutorDto>(model));
     }
 
-    [HttpGet("{id:guid}/reviews")]
+    [HttpGet("{id:guid}/reviews", Name = nameof(GetReviewsAsync))]
     [SwaggerResponse(200, "OK", typeof(ICollection<V1ReviewDto>))]
     public async Task<IActionResult> GetReviewsAsync(Guid id, [FromQuery] int page = 0, [FromQuery] int size = 30)
     {
+        if (page < 0)
+            return BadRequest("Page must not be less than 0");
+        if (size < 1)
+            return BadRequest("Size must not be less than 1");
+        
         var command = new GetReviewsQuery(id, page, size);
-        var model = await mediator.Send(command);
-        return Ok(mapper.Map<V1PageDto<V1ReviewDto>>(model));
+        var modelsPage = await mediator.Send(command);
+        
+        var previousPageLink = modelsPage.HasPrevious 
+            ? linkGenerator.GetUriByRouteValues(HttpContext, nameof(GetReviewsAsync), new { pageNumber = page - 1, size }) 
+            : null;
+        
+        var nextPageLink = modelsPage.HasNext 
+            ? linkGenerator.GetUriByRouteValues(HttpContext, nameof(GetReviewsAsync), new { pageNumber = page + 1, size }) 
+            : null;
+        
+        var paginationHeader = new { previousPageLink, nextPageLink };
+        Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(paginationHeader));
+        
+        return Ok(mapper.Map<V1PageDto<V1ReviewDto>>(modelsPage));
     }
 
     [Authorize(Policy = Policies.CreateReviewPolicy)]

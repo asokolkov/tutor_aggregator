@@ -30,10 +30,7 @@ internal sealed class StudentsRepository : IStudentsRepository
             .ToListAsync();
         var students = mapper.Map<List<Student>>(studentEntities);
 
-        var entitiesAmount = table.Count();
-        var lastPage = (int)Math.Ceiling((double)entitiesAmount / size) - 1;
-        
-        return new Page<Student>(students, entitiesAmount, 0 < page && page <= lastPage + 1, page < lastPage);
+        return new Page<Student>(students, table.Count(), page, size);
     }
 
     public async Task<Student?> GetAsync(Guid id)

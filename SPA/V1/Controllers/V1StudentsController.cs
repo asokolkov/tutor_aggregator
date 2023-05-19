@@ -1,4 +1,5 @@
-﻿using SPA.Application.Students.Commands.UpdateStudentCommand;
+﻿using Newtonsoft.Json;
+using SPA.Application.Students.Commands.UpdateStudentCommand;
 using SPA.Application.Students.Queries.GetLessonsQuery;
 using SPA.Application.Students.Queries.GetStudentQuery;
 using SPA.Application.Students.Queries.GetStudentsQuery;
@@ -20,14 +21,16 @@ public sealed class V1StudentsController : Controller
 {
     private readonly IMediator mediator;
     private readonly IMapper mapper;
+    private readonly LinkGenerator linkGenerator;
 
-    public V1StudentsController(IMediator mediator, IMapper mapper)
+    public V1StudentsController(IMediator mediator, IMapper mapper, LinkGenerator linkGenerator)
     {
         this.mediator = mediator;
         this.mapper = mapper;
+        this.linkGenerator = linkGenerator;
     }
 
-    [HttpGet]
+    [HttpGet(Name = nameof(GetPage))]
     [SwaggerResponse(200, "OK", typeof(V1PageDto<V1StudentDto>))]
     public async Task<IActionResult> GetPage([FromQuery] int page = 0, [FromQuery] int size = 30)
     {
@@ -38,6 +41,18 @@ public sealed class V1StudentsController : Controller
 
         var query = new GetStudentsQuery(page, size);
         var modelsPage = await mediator.Send(query);
+        
+        var previousPageLink = modelsPage.HasPrevious 
+            ? linkGenerator.GetUriByRouteValues(HttpContext, nameof(GetPage), new { pageNumber = page - 1, size }) 
+            : null;
+        
+        var nextPageLink = modelsPage.HasNext 
+            ? linkGenerator.GetUriByRouteValues(HttpContext, nameof(GetPage), new { pageNumber = page + 1, size }) 
+            : null;
+        
+        var paginationHeader = new { previousPageLink, nextPageLink };
+        Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(paginationHeader));
+        
         return Ok(mapper.Map<V1PageDto<V1StudentDto>>(modelsPage));
     }
 
