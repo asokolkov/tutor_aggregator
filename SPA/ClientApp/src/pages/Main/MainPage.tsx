@@ -6,10 +6,12 @@ import { MainDescriptionForTutors } from './components/MainDescriptionForTutors'
 
 export const MainPage = () => {
   return (
-    <VStack spacing={'40px'}>
+    <VStack spacing="40px">
       <MainSearchBox />
-      <MainDescriptionForStudents />
-      <MainDescriptionForTutors />
+      <VStack spacing="60px" w="100%">
+        <MainDescriptionForStudents />
+        <MainDescriptionForTutors />
+      </VStack>
     </VStack>
   );
 };
