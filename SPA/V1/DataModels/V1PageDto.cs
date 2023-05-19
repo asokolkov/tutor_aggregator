@@ -5,34 +5,23 @@ namespace SPA.V1.DataModels;
 public sealed class V1PageDto<T>
 {
     [JsonProperty("items")]
-    public ICollection<T> Items { get; }
+    public ICollection<T> Items { get; init; }
 
     [JsonProperty("totalCount")]
-    public long TotalCount { get; }
+    public long TotalCount { get; init; }
     
     [JsonProperty("lastPage")] 
-    public int LastPage { get; }
+    public int LastPage { get; init; }
 
     [JsonProperty("currentPage")] 
-    public int CurrentPage { get; }
+    public int CurrentPage { get; init; }
     
     [JsonProperty("size")] 
-    public int Size { get; }
+    public int Size { get; init; }
     
     [JsonProperty("hasPrevious")]
-    public bool HasPrevious { get; }
+    public bool HasPrevious { get; init; }
     
     [JsonProperty("hasNext")]
-    public bool HasNext { get; }
-    
-    public V1PageDto(ICollection<T> items, long totalCount, int currentPage, int size)
-    {
-        Items = items;
-        TotalCount = totalCount;
-        Size = size;
-        CurrentPage = currentPage;
-        LastPage = (int)Math.Ceiling(totalCount / (double)size) - 1;
-        HasPrevious = 0 < currentPage && currentPage <= LastPage + 1;
-        HasNext = currentPage < LastPage;
-    }
+    public bool HasNext { get; init; }
 }
