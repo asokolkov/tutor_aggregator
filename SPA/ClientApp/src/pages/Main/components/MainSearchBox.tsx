@@ -1,13 +1,5 @@
 import * as React from 'react';
-import {
-  VStack,
-  Text,
-  TabPanel,
-  TabPanels,
-  Tab,
-  Tabs,
-  TabList,
-} from '@chakra-ui/react';
+import { VStack, Text } from '@chakra-ui/react';
 import searchIcon from '../../../assets/images/search_icon_bg.png';
 import { FormBody } from './FormBody';
 import { Form, Formik } from 'formik';
@@ -48,46 +40,11 @@ export const MainSearchBox: React.FC = () => {
       <Text variant={'brand.h1'} color={'custom.blue.300'}>
         Найдем репетиторов под твои цели
       </Text>
-      <Tabs
-        variant={'soft-rounded'}
-        size={'sm'}
-        colorScheme="gray"
-        width={'100%'}
-      >
-        <TabList justifyContent={'center'}>
-          <Tab>Офлайн занятия</Tab>
-          <Tab>Онлайн занятия</Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel padding={'10px 20% 6px 20%'}>
-            <Formik initialValues={initValues} onSubmit={onSubmit}>
-              <Form>
-                <FormBody />
-              </Form>
-            </Formik>
-          </TabPanel>
-          {/*<TabPanel padding={'10px 20% 6px 20%'}>*/}
-          {/*  <HStack justify={'center'} width={'100%'} align={'flex-end'}>*/}
-          {/*    <SelectOptions*/}
-          {/*      label={'Предмет'}*/}
-          {/*      options={REMOVE_removeDuplicates(*/}
-          {/*        subjectsData.map((subject) => subject.description)*/}
-          {/*      )}*/}
-          {/*      name="subject"*/}
-          {/*      placeholder="Любой"*/}
-          {/*    />*/}
-          {/*    <Button*/}
-          {/*      variant="green"*/}
-          {/*      minWidth={'160px'}*/}
-          {/*      type="submit"*/}
-          {/*      // isLoading={isRefetching}*/}
-          {/*    >*/}
-          {/*      Найти*/}
-          {/*    </Button>*/}
-          {/*  </HStack>*/}
-          {/*</TabPanel>*/}
-        </TabPanels>
-      </Tabs>
+      <Formik initialValues={initValues} onSubmit={onSubmit}>
+        <Form>
+          <FormBody />
+        </Form>
+      </Formik>
     </VStack>
   );
 };
