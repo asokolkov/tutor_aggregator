@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import UserAPI, { User } from '../../api/user';
 import axios, { AxiosError } from 'axios';
+import { SearchProps } from '../../pages/Main/_formikHelper';
 
 export function useUser() {
   const [user, setUser] = useState<User>();
@@ -24,4 +25,11 @@ export function useUser() {
   }, []);
 
   return { user, isLoading, setUser, removeUser, isUserAuth };
+}
+
+export function useSearchValues() {
+  const [searchValues, setSearchValues] = useState<SearchProps>();
+  const hasSearchValues = !!searchValues;
+
+  return { searchValues, setSearchValues, hasSearchValues };
 }

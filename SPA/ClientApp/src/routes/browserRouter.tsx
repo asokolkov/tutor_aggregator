@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import {
   AUTH_LAYOUT,
   DEFAULT_LAYOUT,
@@ -10,6 +10,7 @@ import {
   TUTOR_PAGE,
   LESSONS_PAGE,
   TUTOR_BOOK,
+  MAIN_PAGE,
 } from './routePaths';
 import BaseLayout from '../layouts/base/BaseLayout';
 import { TutorCardPage } from '../pages/TutorCard/TutorCardPage';
@@ -20,12 +21,17 @@ import { ForgotPasswordPage } from '../pages/Authorization/_notInUse_toRefactor/
 import { ProfilePage } from '../pages/Profiles/ProfilePage';
 import { LessonsPage } from '../pages/Lessons/LessonsPage';
 import { TutorBookPage } from '../pages/TutorBook/TutorBookPage';
+import { MainPage } from '../pages/Main/MainPage';
 
 const router = createBrowserRouter([
   {
     path: DEFAULT_LAYOUT,
     element: <BaseLayout />,
     children: [
+      {
+        path: MAIN_PAGE,
+        element: <MainPage />,
+      },
       {
         path: TUTOR_PAGE,
         element: <TutorCardPage />,
@@ -45,10 +51,6 @@ const router = createBrowserRouter([
       {
         path: LESSONS_PAGE,
         element: <LessonsPage />,
-      },
-      {
-        index: true,
-        element: <Navigate to={SEARCH_PAGE} />,
       },
     ],
   },

@@ -1,5 +1,6 @@
 export const DEFAULT_LAYOUT = '';
 
+export const MAIN_PAGE = `${DEFAULT_LAYOUT}/`;
 export const PROFILE_PAGE = `${DEFAULT_LAYOUT}/profile`;
 export const SEARCH_PAGE = `${DEFAULT_LAYOUT}/search`;
 export const LESSONS_PAGE = `${DEFAULT_LAYOUT}/calendar`;
