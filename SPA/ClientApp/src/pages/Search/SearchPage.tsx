@@ -7,39 +7,27 @@ import {
   useSearchPageQuery,
 } from '../../query/useSearchPageQuery';
 import { Form, Formik } from 'formik';
-import React, { useMemo } from 'react';
-import { useLocationQuery } from '../../query/useLocationQuery';
-import { useSubjectQuery } from '../../query/useSubjectQuery';
-import { SearchParamsContext } from '../../contexts/SearchParamsContext';
+import React, { useContext } from 'react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { MAIN_PAGE } from '../../routes/routePaths';
 import { Color } from '../../assets/theme/themeEnum';
+import { SearchStateContext } from '../../contexts/SearchStateContext';
 
 export const SearchPage = () => {
+  const { hasSearchValues } = useContext(SearchStateContext);
+  if (!hasSearchValues) return <Navigate to={MAIN_PAGE} />;
+
   const {
     isLoading,
     data,
     isFetchingNextPage,
-    isRefetching,
     fetchNextPage,
     values,
     setValues,
   } = useSearchPageQuery();
 
-  const { locationsQuery } = useLocationQuery();
-  const { subjectQuery } = useSubjectQuery();
-
-  const providerValues = useMemo(
-    () => ({
-      isRefetching,
-      locationsData: locationsQuery.data,
-      subjectsData: subjectQuery.data,
-    }),
-    [isRefetching, locationsQuery, subjectQuery]
-  );
-
-  if (isLoading || locationsQuery.isLoading || subjectQuery.isLoading)
+  if (isLoading)
     return <LoadBar description={'Загружаем список преподавателей'} />;
   return (
     <>
@@ -55,9 +43,7 @@ export const SearchPage = () => {
           onSubmit={(v: SearchValuesProps) => setValues(v)}
         >
           <Form style={{ width: '100%' }}>
-            <SearchParamsContext.Provider value={providerValues}>
-              <SearchParamsSection />
-            </SearchParamsContext.Provider>
+            <SearchParamsSection />
           </Form>
         </Formik>
 

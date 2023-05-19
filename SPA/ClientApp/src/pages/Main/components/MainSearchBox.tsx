@@ -7,22 +7,31 @@ import {
   Tab,
   Tabs,
   TabList,
-  HStack,
-  Button,
 } from '@chakra-ui/react';
-import searchIcon from '../../../assets/images/search_icon_bg_new.png';
-import { SelectOptions } from './SelectOptions';
-// import { useContext } from 'react';
-// import { SearchParamsContext } from '../../../contexts/SearchParamsContext';
+import searchIcon from '../../../assets/images/search_icon_bg.png';
+import { FormBody } from './FormBody';
+import { Form, Formik } from 'formik';
+import { useNavigate } from 'react-router-dom';
+import { SEARCH_PAGE } from '../../../routes/routePaths';
+import { SearchProps } from '../_formikHelper';
+import { useContext } from 'react';
+import { SearchStateContext } from '../../../contexts/SearchStateContext';
 
 export const MainSearchBox: React.FC = () => {
-  // const { subjectsData, locationsData, isRefetching } =
-  //   useContext(SearchParamsContext);
+  const { hasSearchValues, searchValues, setSearchValues } =
+    useContext(SearchStateContext);
+  const initValues: SearchProps = hasSearchValues
+    ? searchValues
+    : {
+        district: '',
+        subject: '',
+      };
 
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  // const REMOVE_removeDuplicates = (array: string[]) => {
-  //   return array.filter((item, pos, self) => self.indexOf(item) == pos);
-  // };
+  const navigate = useNavigate();
+  const onSubmit = (values: SearchProps) => {
+    setSearchValues(values);
+    navigate(SEARCH_PAGE);
+  };
 
   return (
     <VStack
@@ -51,53 +60,32 @@ export const MainSearchBox: React.FC = () => {
         </TabList>
         <TabPanels>
           <TabPanel padding={'10px 20% 6px 20%'}>
-            <HStack justify={'center'} width={'100%'} align={'flex-end'}>
-              <SelectOptions
-                label={'Предмет'}
-                // options={REMOVE_removeDuplicates(
-                //   subjectsData.map((subject) => subject.description)
-                // )}
-                name="subject"
-                placeholder="Любой"
-              />
-              <SelectOptions
-                label={'Район'}
-                // options={REMOVE_removeDuplicates(
-                //   locationsData.map((location) => location.district)
-                // )}
-                name="district"
-                placeholder="Любой"
-              />
-              <Button
-                variant="green"
-                minWidth={'160px'}
-                type="submit"
-                // isLoading={isRefetching}
-              >
-                Найти
-              </Button>
-            </HStack>
+            <Formik initialValues={initValues} onSubmit={onSubmit}>
+              <Form>
+                <FormBody />
+              </Form>
+            </Formik>
           </TabPanel>
-          <TabPanel padding={'10px 20% 6px 20%'}>
-            <HStack justify={'center'} width={'100%'} align={'flex-end'}>
-              <SelectOptions
-                label={'Предмет'}
-                // options={REMOVE_removeDuplicates(
-                //   subjectsData.map((subject) => subject.description)
-                // )}
-                name="subject"
-                placeholder="Любой"
-              />
-              <Button
-                variant="green"
-                minWidth={'160px'}
-                type="submit"
-                // isLoading={isRefetching}
-              >
-                Найти
-              </Button>
-            </HStack>
-          </TabPanel>
+          {/*<TabPanel padding={'10px 20% 6px 20%'}>*/}
+          {/*  <HStack justify={'center'} width={'100%'} align={'flex-end'}>*/}
+          {/*    <SelectOptions*/}
+          {/*      label={'Предмет'}*/}
+          {/*      options={REMOVE_removeDuplicates(*/}
+          {/*        subjectsData.map((subject) => subject.description)*/}
+          {/*      )}*/}
+          {/*      name="subject"*/}
+          {/*      placeholder="Любой"*/}
+          {/*    />*/}
+          {/*    <Button*/}
+          {/*      variant="green"*/}
+          {/*      minWidth={'160px'}*/}
+          {/*      type="submit"*/}
+          {/*      // isLoading={isRefetching}*/}
+          {/*    >*/}
+          {/*      Найти*/}
+          {/*    </Button>*/}
+          {/*  </HStack>*/}
+          {/*</TabPanel>*/}
         </TabPanels>
       </Tabs>
     </VStack>
