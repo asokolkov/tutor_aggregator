@@ -10,7 +10,7 @@ import {
   HStack,
   Button,
 } from '@chakra-ui/react';
-import searchIcon from '../../../assets/images/search_icon_bg.png';
+import searchIcon from '../../../assets/images/search_icon_bg_new.png';
 import { SelectOptions } from './SelectOptions';
 // import { useContext } from 'react';
 // import { SearchParamsContext } from '../../../contexts/SearchParamsContext';
