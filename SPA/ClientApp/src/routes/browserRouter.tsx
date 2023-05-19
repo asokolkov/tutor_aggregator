@@ -29,6 +29,10 @@ const router = createBrowserRouter([
     element: <BaseLayout />,
     children: [
       {
+        path: MAIN_PAGE,
+        element: <MainPage />,
+      },
+      {
         path: TUTOR_PAGE,
         element: <TutorCardPage />,
       },
@@ -49,12 +53,8 @@ const router = createBrowserRouter([
         element: <LessonsPage />,
       },
       {
-        path: MAIN_PAGE,
-        element: <MainPage />,
-      },
-      {
         index: true,
-        element: <Navigate to={SEARCH_PAGE} />,
+        element: <Navigate to={MAIN_PAGE} />,
       },
     ],
   },
