@@ -1,8 +1,8 @@
 import { useInfiniteQuery } from 'react-query';
 import { searchKey } from './queryKeys';
 import TutorsAPI from '../api/tutors';
-import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { SearchStateContext } from '../contexts/SearchStateContext';
 
 export interface SearchValuesProps {
   district: string;
@@ -12,10 +12,10 @@ export interface SearchValuesProps {
 }
 
 export function useSearchPageQuery() {
-  const [searchParams] = useSearchParams();
+  const { searchValues } = useContext(SearchStateContext);
   const [values, setValues] = useState<SearchValuesProps>({
-    district: searchParams.get('district'),
-    subject: searchParams.get('subject'),
+    district: searchValues.district,
+    subject: searchValues.subject,
     price: -1,
     rating: -1,
   });

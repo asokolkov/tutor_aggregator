@@ -10,22 +10,27 @@ import {
 } from '@chakra-ui/react';
 import searchIcon from '../../../assets/images/search_icon_bg.png';
 import { FormBody } from './FormBody';
-import { Form, Formik, FormikValues } from 'formik';
-import { createSearchParams, useNavigate } from 'react-router-dom';
+import { Form, Formik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import { SEARCH_PAGE } from '../../../routes/routePaths';
+import { SearchProps } from '../_formikHelper';
+import { useContext } from 'react';
+import { SearchStateContext } from '../../../contexts/SearchStateContext';
 
-export const MainSearchBox: React.FC = ({}) => {
-  const initValues: FormikValues = {
-    district: '',
-    subject: '',
-  };
+export const MainSearchBox: React.FC = () => {
+  const { hasSearchValues, searchValues, setSearchValues } =
+    useContext(SearchStateContext);
+  const initValues: SearchProps = hasSearchValues
+    ? searchValues
+    : {
+        district: '',
+        subject: '',
+      };
 
   const navigate = useNavigate();
-  const onSubmit = (values: FormikValues) => {
-    navigate({
-      pathname: SEARCH_PAGE,
-      search: createSearchParams(values).toString(),
-    });
+  const onSubmit = (values: SearchProps) => {
+    setSearchValues(values);
+    navigate(SEARCH_PAGE);
   };
 
   return (

@@ -7,13 +7,17 @@ import {
   useSearchPageQuery,
 } from '../../query/useSearchPageQuery';
 import { Form, Formik } from 'formik';
-import React from 'react';
+import React, { useContext } from 'react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { MAIN_PAGE } from '../../routes/routePaths';
 import { Color } from '../../assets/theme/themeEnum';
+import { SearchStateContext } from '../../contexts/SearchStateContext';
 
 export const SearchPage = () => {
+  const { hasSearchValues } = useContext(SearchStateContext);
+  if (!hasSearchValues) return <Navigate to={MAIN_PAGE} />;
+
   const {
     isLoading,
     data,
