@@ -4,13 +4,15 @@ namespace SPA.V1.DataModels;
 
 public sealed class V1PageDto<T>
 {
-    public V1PageDto(ICollection<T> items, long totalCount)
-    {
-        Items = items;
-        TotalCount = totalCount;
-    }
+    [JsonProperty("items")]
+    public ICollection<T> Items { get; init; }
 
-    [JsonProperty("items")] public ICollection<T> Items { get; }
+    [JsonProperty("totalCount")]
+    public long TotalCount { get; init; }
 
-    [JsonProperty("totalCount")] public long TotalCount { get; }
+    [JsonProperty("hasPrevious")]
+    public bool HasPrevious { get; init; }
+    
+    [JsonProperty("hasNext")]
+    public bool HasNext { get; init; }
 }

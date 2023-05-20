@@ -36,7 +36,7 @@ internal sealed class TutorsRepository : ITutorsRepository
             .ToListAsync();
         var tutors = mapper.Map<List<Tutor>>(tutorsEntities);
 
-        return new Page<Tutor>(tutors, table.Count());
+        return new Page<Tutor>(tutors, table.Count(), page, size);
     }
 
     public async Task<Tutor?> GetAsync(Guid id)
@@ -136,7 +136,7 @@ internal sealed class TutorsRepository : ITutorsRepository
         var tutor = await context.Tutors.FindAsync(id);
 
         if (tutor?.Reviews is null)
-            return new Page<Review>(Array.Empty<Review>(), 0);
+            return new Page<Review>(Array.Empty<Review>(), 0, page, size);
 
         var reviewsEntities = tutor.Reviews
             .Skip(page * size)
@@ -144,6 +144,6 @@ internal sealed class TutorsRepository : ITutorsRepository
             .ToList();
         var reviews = mapper.Map<List<Review>>(reviewsEntities);
 
-        return new Page<Review>(reviews, tutor.Reviews.Count);
+        return new Page<Review>(reviews, tutor.Reviews.Count, page, size);
     }
 }

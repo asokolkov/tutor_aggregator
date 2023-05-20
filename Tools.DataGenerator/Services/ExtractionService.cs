@@ -36,11 +36,12 @@ public class ExtractionService
     
     public DateTimeOffset GetTime()
     {
-        return DateTimeOffset.FromUnixTimeSeconds(random.Next(100000, 1000000));
+        var result = DateTimeOffset.Now.ToOffset(TimeSpan.Zero);
+        return result.AddMinutes(GetNumber(241));
     }
     
     public bool GetBoolean()
     {
-        return random.NextDouble() < 0.5;
+        return GetDouble() < 0.5;
     }
 }
