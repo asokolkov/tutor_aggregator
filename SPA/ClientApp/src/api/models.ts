@@ -42,7 +42,10 @@ export type LessonStatus =
   | 'Deleted'
   | 'ExpiredEmpty'
   | 'ExpiredBooked';
-export type LessonType = 'Online' | 'Offline';
+export enum LessonType {
+  online = 'Online',
+  offline = 'Offline',
+}
 export type V1TutorEducationDto = {
   id?: string | null;
   value?: string | null;

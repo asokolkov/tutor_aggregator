@@ -1,5 +1,5 @@
 import { Slot, SlotProps } from './Slot';
-import { LessonType } from '../../api/lessons';
+import { LessonType } from '../../api/models';
 
 export default {
   component: Slot,
@@ -14,7 +14,7 @@ const args: SlotProps = {
   price: 0,
   student: { id: '', name: '' },
   tutorName: '',
-  type: LessonType.Offline,
+  type: LessonType.offline,
 };
 export const Tutor = {
   args,

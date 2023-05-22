@@ -1,8 +1,8 @@
-import { Lesson } from '../../api/lessons';
 import { getTimeFromDate } from './_helpers';
 import { SlotProps } from './Slot';
+import { V1LessonDto } from '../../api/models';
 
-export function MapSlot(lesson: Lesson, isForTutor: boolean): SlotProps {
+export function MapSlot(lesson: V1LessonDto, isForTutor: boolean): SlotProps {
   const endTime = getTimeFromDate(lesson.end);
   const startTime = getTimeFromDate(lesson.start);
 

@@ -4,11 +4,11 @@ import { Flex, HStack, Text } from '@chakra-ui/react';
 import { SlotContext } from './contexts/SlotContext';
 import { DesktopIcon } from '../../assets/icons/DesktopIcon';
 import { BuildingHouseIcon } from '../../assets/icons/BuildingHouseIcon';
-import { LessonType } from '../../api/lessons';
+import { LessonType } from '../../api/models';
 
 export const PriceAndTypeInfo: React.FC = () => {
   const { type, price } = useContext(SlotContext);
-  const isOnline = type === LessonType.Online;
+  const isOnline = type === LessonType.online;
 
   return (
     <Flex justify={'space-between'} w="100%" p="4px 8px">

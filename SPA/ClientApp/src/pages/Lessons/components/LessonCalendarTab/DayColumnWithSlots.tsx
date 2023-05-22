@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Lesson } from '../../../../api/lessons';
 import { Button, useDisclosure, VStack } from '@chakra-ui/react';
 import { Title } from './Title';
 import { Slot } from '../../../../components/Slot/Slot';
@@ -7,9 +6,10 @@ import { AddIcon } from '@chakra-ui/icons';
 import { AddNewSlotModal } from '../../modals/AddNewSlotModal';
 import { MapSlot } from '../../../../components/Slot/_maper';
 import { ButtonVariant } from '../../../../assets/theme/themeEnum';
+import { V1LessonDto } from '../../../../api/models';
 
 type Props = {
-  lessons: Lesson[];
+  lessons: V1LessonDto[];
   date: Date;
 };
 export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {

@@ -16,13 +16,14 @@ import {
 import { NewSlotInputTime } from '../components/LessonCalendarTab/NewSlotInputTime';
 import { NewSlotInputPrice } from '../components/LessonCalendarTab/NewSlotInputPrice';
 import { Form, Formik } from 'formik';
-import LessonsAPI, { LessonType } from '../../../api/lessons';
+import LessonsAPI from '../../../api/lessons';
 import { slotInputValues, SlotInputValuesProps } from './_formikHelper';
 import { useMutation, useQueryClient } from 'react-query';
 import { lessonsKey } from '../../../query/queryKeys';
 import { dayAndMonth } from '../../../components/Slot/_helpers';
 import { NewSlotInputSwitch } from '../components/LessonCalendarTab/NewSlotInputSwitch';
 import { DisclosureProps } from '../../../components/disclosureProps';
+import { LessonType } from '../../../api/models';
 
 type Props = {
   disclosure: DisclosureProps;
@@ -73,7 +74,7 @@ export const AddNewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
       startDate,
       endDate,
       values.price,
-      values.isOnline ? LessonType.Online : LessonType.Offline
+      values.isOnline ? LessonType.online : LessonType.offline
     );
     setSubmitLoading(false);
     onClose();

@@ -1,12 +1,11 @@
 import SearchCard from './SearchCard';
-import { Tutor } from '../../../api/tutors';
+import { V1TutorDto } from '../../../api/models';
 
 export default {
   component: SearchCard,
 };
 
-const mockTutor: Tutor = {
-  avatar: '',
+const mockTutor: V1TutorDto = {
   awards: [],
   contacts: [],
   description: '',
