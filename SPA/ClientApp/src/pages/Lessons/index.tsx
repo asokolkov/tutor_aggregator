@@ -4,32 +4,27 @@ import { Navigate } from 'react-router-dom';
 import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { LOGIN_PAGE } from '../../routes/routePaths';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
-import { YourLessonsTab } from './YourLessonsTab/YourLessonsTab';
-import { AccountType } from '../../api/user';
+import { LessonCalendarTab } from './LessonCalendarTab';
+import { V1AccountTypeDto } from '../../api/models';
+import './styles.css';
 
 export const LessonsPage = () => {
   const { isAuthorized, user } = useContext(UserContext);
   if (!isAuthorized) {
     return <Navigate to={LOGIN_PAGE} />;
   }
-  const isTutor = user.accountType === AccountType.Tutor;
+  const isTutor = user.accountType === V1AccountTypeDto.tutor;
 
   return (
     <Tabs>
-      <TabList>
-        {isTutor && <Tab>Твое расписание</Tab>}
-        <Tab>Актуальные занятия</Tab>
-        <Tab>Архивные занятия</Tab>
-      </TabList>
+      <TabList>{isTutor && <Tab>Твое расписание</Tab>}</TabList>
 
       <TabPanels>
         {isTutor && (
           <TabPanel>
-            <YourLessonsTab />
+            <LessonCalendarTab />
           </TabPanel>
         )}
-        <TabPanel />
-        <TabPanel />
       </TabPanels>
     </Tabs>
   );

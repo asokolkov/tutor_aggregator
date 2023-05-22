@@ -6,7 +6,7 @@ import {
   GridItem,
   useBreakpointValue,
 } from '@chakra-ui/react';
-import { SelectOptions } from './components/SelectOptions';
+import { SelectOption } from './components/SelectOption';
 import searchIcon from '../../assets/images/search_icon_bg.png';
 import { PriceOptions, ReviewOptions } from './_formHelper';
 
@@ -46,7 +46,7 @@ export const SearchParamsSection: React.FC = () => {
         padding={isDesktop ? '1.5em 16em 1.5em 3em' : '1em 1em 1em 1em'}
       >
         <GridItem area={'price'}>
-          <SelectOptions
+          <SelectOption
             label={'Цена'}
             options={Object.keys(PriceOptions)}
             optionsMap={PriceOptions}
@@ -54,7 +54,7 @@ export const SearchParamsSection: React.FC = () => {
           />
         </GridItem>
         <GridItem area={'rating'}>
-          <SelectOptions
+          <SelectOption
             label={'Рейтинг'}
             options={Object.keys(ReviewOptions)}
             optionsMap={ReviewOptions}

@@ -6,11 +6,12 @@ import categoryIcon from '../../../assets/images/category-icon.png';
 import jobIcon from '../../../assets/images/job-icon.png';
 import InfoWithIcon from '../../sharedComponents/InfoWithIcon';
 import { getTutorCardByIdPath } from '../../../routes/routes';
-import { Tutor } from '../../../api/tutors';
+import { V1TutorDto } from '../../../api/models';
+import { getFullName } from '../../../utils/names';
 
-const SearchCardInfo: React.FC<SearchCardInfoProps> = ({ tutor }) => {
-  const { avatar, firstName, lastName, educations, job, rating, id } = tutor;
-  const fullName = `${firstName} ${lastName}`;
+const SearchCard: React.FC<SearchCardInfoProps> = ({ tutor }) => {
+  const { firstName, lastName, educations, job, rating, id } = tutor;
+  const fullName = getFullName(firstName, lastName);
 
   const navigate = useNavigate();
   return (
@@ -24,7 +25,7 @@ const SearchCardInfo: React.FC<SearchCardInfoProps> = ({ tutor }) => {
     >
       <VStack spacing="20px" w="100%">
         <VStack spacing="10px">
-          <Avatar name={fullName} src={avatar} border="0px" size="2xl" />
+          <Avatar name={fullName} border="0px" size="2xl" />
           <VStack spacing="5px">
             <Heading variant="regular.h2" as="h2">
               {fullName}
@@ -55,8 +56,8 @@ const SearchCardInfo: React.FC<SearchCardInfoProps> = ({ tutor }) => {
   );
 };
 
-export default SearchCardInfo;
+export default SearchCard;
 
 export type SearchCardInfoProps = {
-  tutor: Tutor;
+  tutor: V1TutorDto;
 };

@@ -5,12 +5,12 @@ import { TutorCard } from './TutorCard';
 import { VStack } from '@chakra-ui/react';
 import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { StudentCard } from './StudentCard';
-import { AccountType } from '../../api/user';
 import { useProfileInfo } from '../../query/useProfilePageQuery';
 import { ProfileContext } from '../../contexts/ProfileContext';
 import { Navigate } from 'react-router-dom';
 import { LOGIN_PAGE } from '../../routes/routePaths';
 import { LoadBar } from '../sharedComponents/LoadBar/LoadBar';
+import { V1AccountTypeDto } from '../../api/models';
 
 export const ProfilePage = () => {
   const userContext = useContext(UserContext);
@@ -28,7 +28,7 @@ export const ProfilePage = () => {
     [isLoading, studentProfile, tutorProfile]
   );
 
-  const isTutor = userContext.user.accountType === AccountType.Tutor;
+  const isTutor = userContext.user.accountType === V1AccountTypeDto.tutor;
   if (isLoading)
     return <LoadBar description={'Загружаем данные вашего профиля'} />;
 

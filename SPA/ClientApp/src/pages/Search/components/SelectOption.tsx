@@ -2,7 +2,7 @@ import { FormControl, FormLabel, Select } from '@chakra-ui/react';
 import * as React from 'react';
 import { useField } from 'formik';
 
-export const SelectOptions: React.FC<SelectOptionsProps> = ({
+export const SelectOption: React.FC<SelectOptionsProps> = ({
   options,
   optionsMap,
   label,

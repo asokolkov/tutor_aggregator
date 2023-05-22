@@ -1,6 +1,5 @@
-import { Student } from '../../api/students';
-import { Tutor } from '../../api/tutors';
 import { FormikValues } from 'formik';
+import { V1StudentDto, V1TutorDto } from '../../api/models';
 
 function mapToFullName(firstName: string, lastName: string) {
   return `${firstName} ${lastName}`;
@@ -12,7 +11,7 @@ export enum SexOptions {
   Other = 'other',
 }
 
-export const mapTutorToFormikValues = (tutor: Tutor) => ({
+export const mapTutorToFormikValues = (tutor: V1TutorDto) => ({
   name: mapToFullName(tutor.firstName, tutor.lastName),
   district: tutor.location?.city,
   education: tutor.educations[0]?.value,
@@ -24,7 +23,7 @@ export const mapTutorToFormikValues = (tutor: Tutor) => ({
 });
 
 export const updateTutorFromFormikValues = (
-  tutor: Tutor,
+  tutor: V1TutorDto,
   values: FormikValues
 ) => {
   tutor.educations[0] = { value: values.education };
@@ -36,7 +35,7 @@ export const updateTutorFromFormikValues = (
   return tutor;
 };
 
-export const mapStudentToFormikValues = (student: Student) => ({
+export const mapStudentToFormikValues = (student: V1StudentDto) => ({
   name: mapToFullName(student.firstName, student.lastName),
   sex: SexOptions.Male,
   age: '',
@@ -44,7 +43,7 @@ export const mapStudentToFormikValues = (student: Student) => ({
 });
 
 export const updateStudentFromFormikValues = (
-  student: Student,
+  student: V1StudentDto,
   values: FormikValues
 ) => {
   student.age = values.age;

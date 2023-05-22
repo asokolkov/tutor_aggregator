@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SearchProps } from '../../../pages/Main/_formikHelper';
+import { SearchProps } from '../../../pages/Main/components/_formikHelper';
 
 export function useSearchValues() {
   const [searchValues, setSearchValues] = useState<SearchProps>();

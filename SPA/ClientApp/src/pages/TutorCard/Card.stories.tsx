@@ -1,11 +1,10 @@
-import { CardInfo, CardInfoProps } from './CardInfo';
+import { Card, CardInfoProps } from './Card';
 
 export default {
-  component: CardInfo,
+  component: Card,
 };
 
 const args: CardInfoProps = {
-  avatar: '',
   contacts: '',
   description:
     'Я — то, кем ты хотел бы быть. Я выгляжу так, как ты мечтаешь выглядеть. ' +

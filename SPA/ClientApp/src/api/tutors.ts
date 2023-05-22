@@ -1,4 +1,8 @@
-import { V1ReviewDto, V1TutorDto, V1TutorDtoV1PageDto } from './models';
+import {
+  V1ReviewDtoV1PageDto,
+  V1TutorDto,
+  V1TutorDtoV1PageDto,
+} from './models';
 import axiosInstance from './_share';
 
 export interface TutorSearchParams {
@@ -45,8 +49,8 @@ class TutorsAPI {
     tutorId: string,
     page: number = 0,
     size: number = 30
-  ): Promise<V1ReviewDto[]> {
-    const response = await axiosInstance.get<V1ReviewDto[]>(
+  ): Promise<V1ReviewDtoV1PageDto> {
+    const response = await axiosInstance.get<V1ReviewDtoV1PageDto>(
       `/api/v1/tutors/${tutorId}/reviews`,
       {
         params: { page, size },

@@ -5,18 +5,18 @@ import { TutorCardContext } from '../../contexts/TutorCardContext';
 import { MapSingleReview } from './_mapper';
 import NewReviewModal from './modal/NewReviewModal';
 import { UserContext } from '../../layouts/base/contexts/UserContext';
-import { AccountType } from '../../api/user';
+import { V1AccountTypeDto } from '../../api/models';
 
 export const ReviewSection: React.FC = () => {
   const { reviews } = useContext(TutorCardContext);
-  const { user } = useContext(UserContext);
+  const { user, isAuthorized } = useContext(UserContext);
   const disclosure = useDisclosure();
 
   return (
     <VStack w="100%" spacing="20px" align="start">
       <Flex justify="space-between" w="100%">
         <Text variant="brand.h1">Отзывы</Text>
-        {user.accountType === AccountType.Student && (
+        {isAuthorized && user.accountType === V1AccountTypeDto.student && (
           <>
             <Button variant="green" onClick={disclosure.onOpen}>
               Добавить отзыв

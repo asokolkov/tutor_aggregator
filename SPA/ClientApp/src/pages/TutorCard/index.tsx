@@ -1,5 +1,5 @@
 import { Text, VStack } from '@chakra-ui/react';
-import { CardInfo } from './CardInfo';
+import { Card } from './Card';
 import { ReviewSection } from './ReviewSection';
 import { LoadBar } from '../sharedComponents/LoadBar/LoadBar';
 import { useTutorCardPageQuery } from '../../query/useTutorCardPageQuery';
@@ -30,7 +30,7 @@ export const TutorCardPage = () => {
         </Text>
       </Link>
       <VStack maxW={'100%'} spacing={'40px'}>
-        <CardInfo {...MapCardInfo(tutor)} />
+        <Card {...MapCardInfo(tutor)} />
         <ReviewSection />
       </VStack>
     </TutorCardContext.Provider>

@@ -13,16 +13,16 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
-import { NewSlotInputTime } from '../DayColumn/NewSlotInputTime';
-import { NewSlotInputPrice } from '../DayColumn/NewSlotInputPrice';
+import { NewSlotInputTime } from '../components/LessonCalendarTab/NewSlotInputTime';
+import { NewSlotInputPrice } from '../components/LessonCalendarTab/NewSlotInputPrice';
 import { Form, Formik } from 'formik';
-import LessonsAPI, { LessonType } from '../../../../api/lessons';
+import LessonsAPI, { LessonType } from '../../../api/lessons';
 import { slotInputValues, SlotInputValuesProps } from './_formikHelper';
 import { useMutation, useQueryClient } from 'react-query';
-import { lessonsKey } from '../../../../query/queryKeys';
-import { dayAndMonth } from '../../../sharedComponents/Slot/_helpers';
-import { NewSlotInputSwitch } from '../DayColumn/NewSlotInputSwitch';
-import { DisclosureProps } from '../../../sharedComponents/disclosureProps';
+import { lessonsKey } from '../../../query/queryKeys';
+import { dayAndMonth } from '../../sharedComponents/Slot/_helpers';
+import { NewSlotInputSwitch } from '../components/LessonCalendarTab/NewSlotInputSwitch';
+import { DisclosureProps } from '../../sharedComponents/disclosureProps';
 
 type Props = {
   disclosure: DisclosureProps;

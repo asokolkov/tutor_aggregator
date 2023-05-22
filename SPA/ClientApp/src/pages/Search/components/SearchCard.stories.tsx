@@ -1,8 +1,8 @@
-import SearchCardInfo from './SearchCardInfo';
+import SearchCard from './SearchCard';
 import { Tutor } from '../../../api/tutors';
 
 export default {
-  component: SearchCardInfo,
+  component: SearchCard,
 };
 
 const mockTutor: Tutor = {

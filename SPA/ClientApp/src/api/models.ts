@@ -173,6 +173,12 @@ export type V1ReviewDto = {
   student?: string | null;
   updatedAt?: string;
 };
+export type V1ReviewDtoV1PageDto = {
+  items?: V1ReviewDto[] | null;
+  totalCount?: number;
+  hasPrevious?: boolean;
+  hasNext?: boolean;
+};
 export type V1CreateReviewDto = {
   rating?: number;
   description?: string | null;

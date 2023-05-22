@@ -1,5 +1,5 @@
 import { Button, Flex, Text, VStack } from '@chakra-ui/react';
-import SearchCardInfo from './components/SearchCardInfo';
+import SearchCard from './components/SearchCard';
 import { SearchParamsSection } from './SearchParamsSection';
 import { LoadBar } from '../sharedComponents/LoadBar/LoadBar';
 import {
@@ -51,7 +51,7 @@ export const SearchPage = () => {
           {data.pages.map((x, i) => (
             <React.Fragment key={+(data.pageParams[i] ?? 0)}>
               {x.items.map((item) => (
-                <SearchCardInfo tutor={item} key={item.id}></SearchCardInfo>
+                <SearchCard tutor={item} key={item.id}></SearchCard>
               ))}
             </React.Fragment>
           ))}

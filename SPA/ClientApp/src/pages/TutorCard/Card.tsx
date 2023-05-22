@@ -8,14 +8,14 @@ import { ButtonSection } from './components/ButtonSection';
 import { CardInfoContext } from '../../contexts/CardInfoContext';
 import InfoWithIcon from '../sharedComponents/InfoWithIcon';
 
-export const CardInfo: React.FC<CardInfoProps> = (props) => {
+export const Card: React.FC<CardInfoProps> = (props) => {
   const providerValue = useMemo(() => ({ ...props }), [props]);
   return (
     <CardInfoContext.Provider value={providerValue}>
       <VStack spacing="20px" padding="10px 0" w="100%">
         <HStack spacing="0" w="100%">
           <Box p="10px 10px 10px 0px">
-            <Avatar name={props.fullName} src={props.avatar} size="2xl" />
+            <Avatar name={props.fullName} size="2xl" />
           </Box>
           <VStack spacing="8px" align="flex-start" p="10px 0 10px 30px">
             <Text variant="regular.h1">{props.fullName}</Text>
@@ -55,7 +55,6 @@ export const CardInfo: React.FC<CardInfoProps> = (props) => {
 export type CardInfoProps = {
   id: string;
   fullName: string;
-  avatar: string;
   contacts: string;
   description: string;
   location: string;

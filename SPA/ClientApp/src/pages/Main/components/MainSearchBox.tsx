@@ -5,7 +5,7 @@ import { FormBody } from './FormBody';
 import { Form, Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { SEARCH_PAGE } from '../../../routes/routePaths';
-import { SearchProps } from '../_formikHelper';
+import { SearchProps } from './_formikHelper';
 import { useContext } from 'react';
 import { SearchStateContext } from '../../../contexts/SearchStateContext';
 

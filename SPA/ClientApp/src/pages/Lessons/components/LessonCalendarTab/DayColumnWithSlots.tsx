@@ -4,7 +4,7 @@ import { Button, useDisclosure, VStack } from '@chakra-ui/react';
 import { Title } from './Title';
 import { Slot } from '../../../sharedComponents/Slot/Slot';
 import { AddIcon } from '@chakra-ui/icons';
-import { AddNewSlotModal } from '../modals/AddNewSlotModal';
+import { AddNewSlotModal } from '../../modals/AddNewSlotModal';
 import { MapSlot } from '../../../sharedComponents/Slot/_maper';
 import { ButtonVariant } from '../../../../assets/theme/themeEnum';
 

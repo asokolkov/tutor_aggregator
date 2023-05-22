@@ -13,15 +13,15 @@ import {
   MAIN_PAGE,
 } from './routePaths';
 import BaseLayout from '../layouts/base';
-import { TutorCardPage } from '../pages/TutorCard/TutorCardPage';
-import { SearchPage } from '../pages/Search/SearchPage';
+import { TutorCardPage } from '../pages/TutorCard';
+import { SearchPage } from '../pages/Search';
 import { LoginPage } from '../pages/Authorization/LoginPage';
 import { SignupPage } from '../pages/Authorization/SignupPage';
 import { ForgotPasswordPage } from '../pages/Authorization/ForgotPasswordPage';
-import { ProfilePage } from '../pages/Profiles/ProfilePage';
-import { LessonsPage } from '../pages/Lessons/LessonsPage';
-import { TutorBookPage } from '../pages/TutorBook/TutorBookPage';
-import { MainPage } from '../pages/Main/MainPage';
+import { ProfilePage } from '../pages/Profiles';
+import { LessonsPage } from '../pages/Lessons';
+import { TutorBookPage } from '../pages/TutorBook';
+import { MainPage } from '../pages/Main';
 
 const router = createBrowserRouter([
   {

@@ -1,9 +1,9 @@
-import { ReviewList, Tutor } from '../api/tutors';
 import React from 'react';
+import { V1ReviewDtoV1PageDto, V1TutorDto } from '../api/models';
 
 type ContextProps = {
-  tutor: Tutor;
-  reviews: ReviewList;
+  tutor: V1TutorDto;
+  reviews: V1ReviewDtoV1PageDto;
 };
 
 export const TutorCardContext = React.createContext<ContextProps>(null);
