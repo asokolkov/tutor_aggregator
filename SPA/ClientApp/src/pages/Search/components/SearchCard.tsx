@@ -20,10 +20,11 @@ const SearchCard: React.FC<SearchCardInfoProps> = ({ tutor }) => {
       borderWidth="2px"
       borderColor="blue.200"
       borderRadius="10px"
-      padding={'20px'}
-      spacing={'20px'}
+      padding="20px"
+      spacing="20px"
+      justify="space-between"
     >
-      <VStack spacing="20px" w="100%" justify="space-between">
+      <VStack spacing="20px" w="100%">
         <VStack spacing="10px">
           <Avatar name={fullName} border="0px" size="2xl" />
           <VStack spacing="5px">
