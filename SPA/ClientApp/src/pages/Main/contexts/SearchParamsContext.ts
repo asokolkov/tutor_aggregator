@@ -1,10 +1,9 @@
 import React from 'react';
-import { Subject } from '../api/_share';
-import { Location } from '../api/locations';
+import { V1LocationDto, V1SubjectDto } from '../../../api/models';
 
 type SearchParamsContextProps = {
-  locationsData: Location[];
-  subjectsData: Subject[];
+  locationsData: V1LocationDto[];
+  subjectsData: V1SubjectDto[];
 };
 
 export const SearchParamsContext =

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { SlotContext } from '../../contexts/SlotContext';
+import { SlotContext } from './contexts/SlotContext';
 import { Stack, Text } from '@chakra-ui/react';
 
 export const StudentName: React.FC = () => {

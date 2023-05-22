@@ -2,7 +2,7 @@ import * as React from 'react';
 import { SelectOptions } from './SelectOptions';
 import { Button, HStack } from '@chakra-ui/react';
 import { useContext } from 'react';
-import { SearchParamsContext } from '../../../contexts/SearchParamsContext';
+import { SearchParamsContext } from '../contexts/SearchParamsContext';
 
 export const FormBody: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/naming-convention,@typescript-eslint/no-unused-vars

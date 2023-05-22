@@ -1,10 +1,9 @@
-import { Student } from '../api/students';
-import { Tutor } from '../api/tutors';
 import React from 'react';
+import { V1StudentDto, V1TutorDto } from '../../../api/models';
 
 type ContextProps = {
-  tutorProfile: Tutor;
-  studentProfile: Student;
+  tutorProfile: V1TutorDto;
+  studentProfile: V1StudentDto;
   isLoading: boolean;
 };
 

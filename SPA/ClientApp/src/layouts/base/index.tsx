@@ -5,7 +5,7 @@ import { Container } from '@chakra-ui/react';
 import { UserContext } from './contexts/UserContext';
 import { LoadBar } from '../../components/LoadBar/LoadBar';
 import React, { useMemo } from 'react';
-import { SearchStateContext } from '../../contexts/SearchStateContext';
+import { SearchStateContext } from './contexts/SearchStateContext';
 import { useSearchValues } from './hooks/useSearchValues';
 import { useUser } from './hooks/useUser';
 

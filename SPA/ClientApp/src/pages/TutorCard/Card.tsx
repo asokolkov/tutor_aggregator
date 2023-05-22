@@ -5,7 +5,7 @@ import educationIcon from '../../assets/images/educations-icon.png';
 import requirementsIcon from '../../assets/images/requirements-icon.png';
 import React, { useMemo } from 'react';
 import { ButtonSection } from './components/ButtonSection';
-import { CardInfoContext } from '../../contexts/CardInfoContext';
+import { CardInfoContext } from './contexts/CardInfoContext';
 import InfoWithIcon from '../../components/InfoWithIcon';
 
 export const Card: React.FC<CardInfoProps> = (props) => {

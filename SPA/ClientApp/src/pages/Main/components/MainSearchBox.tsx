@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { SEARCH_PAGE } from '../../../routes/routePaths';
 import { SearchProps } from './_formikHelper';
 import { useContext } from 'react';
-import { SearchStateContext } from '../../../contexts/SearchStateContext';
+import { SearchStateContext } from '../../../layouts/base/contexts/SearchStateContext';
 
 export const MainSearchBox: React.FC = () => {
   const { hasSearchValues, searchValues, setSearchValues } =

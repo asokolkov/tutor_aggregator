@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useContext, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import { SlotContext } from '../../../contexts/SlotContext';
+import { SlotContext } from '../contexts/SlotContext';
 import LessonsAPI from '../../../api/lessons';
 import { lessonsKey } from '../../../query/queryKeys';
 import {

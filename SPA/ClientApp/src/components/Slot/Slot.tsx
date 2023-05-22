@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { HStack } from '@chakra-ui/react';
 import { TimeBox } from './TimeBox';
-import { SlotContext } from '../../contexts/SlotContext';
+import { SlotContext } from './contexts/SlotContext';
 import { SlotInfo } from './SlotInfo';
 import { useMemo } from 'react';
 import { LessonType } from '../../api/lessons';

@@ -21,7 +21,7 @@ import { LoginSuggestion } from './components/LoginSuggestion';
 import { Navigate } from 'react-router-dom';
 import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { SEARCH_PAGE } from '../../routes/routePaths';
-import { AuthorizationContext } from '../../contexts/AuthorizationContext';
+import { AuthorizationContext } from './contexts/AuthorizationContext';
 import { useAuthContextValue } from './hooks/useAuthContextValue';
 import { useRegisterButton } from './hooks/useRegisterButton';
 

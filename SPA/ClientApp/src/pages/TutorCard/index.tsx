@@ -3,8 +3,7 @@ import { Card } from './Card';
 import { ReviewSection } from './ReviewSection';
 import { LoadBar } from '../../components/LoadBar/LoadBar';
 import { useTutorCardPageQuery } from '../../query/useTutorCardPageQuery';
-import React, { useMemo } from 'react';
-import { TutorCardContext } from '../../contexts/TutorCardContext';
+import React from 'react';
 import { MapCardInfo } from './_mapper';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Color } from '../../assets/theme/themeEnum';
@@ -16,13 +15,12 @@ export const TutorCardPage = () => {
 
   const tutor = tutorQuery.data;
   const reviews = reviewQuery.data;
-  const providerValue = useMemo(() => ({ tutor, reviews }), [tutor, reviews]);
 
   if (tutorQuery.isLoading || reviewQuery.isLoading)
     return <LoadBar description={'Загружаем карточку преподавателя'} />;
 
   return (
-    <TutorCardContext.Provider value={providerValue}>
+    <>
       <Link to={SEARCH_PAGE}>
         <Text variant="misc.link" color={Color.blue300}>
           <ArrowBackIcon />
@@ -31,8 +29,8 @@ export const TutorCardPage = () => {
       </Link>
       <VStack maxW={'100%'} spacing={'40px'}>
         <Card {...MapCardInfo(tutor)} />
-        <ReviewSection />
+        <ReviewSection reviews={reviews} />
       </VStack>
-    </TutorCardContext.Provider>
+    </>
   );
 };

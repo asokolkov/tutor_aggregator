@@ -6,7 +6,7 @@ import { MainDescriptionForTutors } from './components/MainDescriptionForTutors'
 import { useLocationQuery } from '../../query/useLocationQuery';
 import { useSubjectQuery } from '../../query/useSubjectQuery';
 import { LoadBar } from '../../components/LoadBar/LoadBar';
-import { SearchParamsContext } from '../../contexts/SearchParamsContext';
+import { SearchParamsContext } from './contexts/SearchParamsContext';
 
 export const MainPage = () => {
   const { locationsQuery } = useLocationQuery();

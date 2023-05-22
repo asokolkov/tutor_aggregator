@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { TextRow } from './components/TextRow';
 import { UserContext } from '../../layouts/base/contexts/UserContext';
-import { ProfileContext } from '../../contexts/ProfileContext';
+import { ProfileContext } from './contexts/ProfileContext';
 import UserAPI from '../../api/user';
 import { LOGIN_PAGE } from '../../routes/routePaths';
 import { useNavigate } from 'react-router-dom';

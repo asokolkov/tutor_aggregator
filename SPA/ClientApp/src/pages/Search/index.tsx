@@ -12,7 +12,7 @@ import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Link, Navigate } from 'react-router-dom';
 import { MAIN_PAGE } from '../../routes/routePaths';
 import { Color } from '../../assets/theme/themeEnum';
-import { SearchStateContext } from '../../contexts/SearchStateContext';
+import { SearchStateContext } from '../../layouts/base/contexts/SearchStateContext';
 
 export const SearchPage = () => {
   const { hasSearchValues } = useContext(SearchStateContext);

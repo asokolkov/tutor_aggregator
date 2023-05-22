@@ -2,7 +2,7 @@ import { useInfiniteQuery } from 'react-query';
 import { searchKey } from './queryKeys';
 import TutorsAPI from '../api/tutors';
 import { useContext, useState } from 'react';
-import { SearchStateContext } from '../contexts/SearchStateContext';
+import { SearchStateContext } from '../layouts/base/contexts/SearchStateContext';
 
 export interface SearchValuesProps {
   district: string;

@@ -18,7 +18,7 @@ import { RememberMeCheckbox } from './components/RememberMeCheckbox';
 import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { Navigate } from 'react-router-dom';
 import { SEARCH_PAGE } from '../../routes/routePaths';
-import { AuthorizationContext } from '../../contexts/AuthorizationContext';
+import { AuthorizationContext } from './contexts/AuthorizationContext';
 import { useAuthContextValue } from './hooks/useAuthContextValue';
 import { useLoginButton } from './hooks/useLoginButton';
 

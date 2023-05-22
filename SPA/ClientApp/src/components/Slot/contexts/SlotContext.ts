@@ -1,5 +1,5 @@
 import React from 'react';
-import { SlotProps } from '../components/Slot/Slot';
+import { SlotProps } from '../Slot';
 
 type ContextProps = SlotProps & {
   timeRange: string;

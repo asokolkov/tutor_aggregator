@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, HStack, IconButton, useDisclosure } from '@chakra-ui/react';
 import { useContext } from 'react';
-import { SlotContext } from '../../contexts/SlotContext';
+import { SlotContext } from './contexts/SlotContext';
 import { ChatIcon, DeleteIcon } from '@chakra-ui/icons';
 import { DeleteSlotModal } from './modals/DeleteSlotModal';
 

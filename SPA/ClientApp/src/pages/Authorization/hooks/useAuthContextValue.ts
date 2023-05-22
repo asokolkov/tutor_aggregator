@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ContextProps } from '../../../contexts/AuthorizationContext';
+import { ContextProps } from '../contexts/AuthorizationContext';
 
 export function useAuthContextValue() {
   const [hasError, setHasError] = useState(false);

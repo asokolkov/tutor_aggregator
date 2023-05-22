@@ -17,7 +17,7 @@ import LessonsAPI from '../../../api/lessons';
 import { useContext, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { lessonsKey } from '../../../query/queryKeys';
-import { SlotContext } from '../../../contexts/SlotContext';
+import { SlotContext } from '../contexts/SlotContext';
 import { DisclosureProps } from '../../disclosureProps';
 
 type Props = {
