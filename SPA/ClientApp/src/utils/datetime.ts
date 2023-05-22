@@ -9,6 +9,10 @@ export const getShiftedDate = (date: Date, shift: number) => {
   newDate.setDate(date.getDate() + shift);
   return newDate;
 };
+export const getHoursAndMinutes = (forInput: string) => {
+  const [hours, minutes] = forInput.split(':');
+  return { hours: +hours, minutes: +minutes };
+};
 
 export const russianDayOfTheWeek = (date: Date) => {
   const map = [

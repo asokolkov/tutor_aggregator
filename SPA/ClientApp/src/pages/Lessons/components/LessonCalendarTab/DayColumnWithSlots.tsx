@@ -3,7 +3,7 @@ import { Button, useDisclosure, VStack } from '@chakra-ui/react';
 import { Title } from './Title';
 import { Slot } from '../../../../components/Slot/Slot';
 import { AddIcon } from '@chakra-ui/icons';
-import { AddNewSlotModal } from '../../modals/AddNewSlotModal';
+import { NewSlotModal } from '../../modals/NewSlotModal';
 import { MapSlot } from '../../../../components/Slot/_maper';
 import { ButtonVariant } from '../../../../assets/theme/themeEnum';
 import { V1LessonDto } from '../../../../api/models';
@@ -39,7 +39,7 @@ export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
           </Button>
         </VStack>
       </VStack>
-      <AddNewSlotModal disclosure={disclosure} date={date} />
+      <NewSlotModal disclosure={disclosure} date={date} />
     </>
   );
 };
