@@ -166,7 +166,7 @@ internal sealed class DataGenerator : IDataGenerator
                     Description = Guid.NewGuid().ToString(),
                     Tutor = tutor,
                     Student = extraction.Get(students)!,
-                    Rating = extraction.GetDouble() * 10,
+                    Rating = extraction.GetDouble() * 5,
                     UpdatedAt = extraction.GetTime()
                 });
     }
