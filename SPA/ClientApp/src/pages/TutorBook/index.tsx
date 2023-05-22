@@ -7,7 +7,7 @@ import {
   useWindowDimensions,
 } from '../../components/LessonTab/useLessonTab';
 import { PaginationMenu } from '../../components/LessonTab/PaginationMenu';
-import { dateShift } from '../../components/Slot/_helpers';
+import { getShiftedDate } from '../../utils/datetime';
 import { LoadBar } from '../../components/LoadBar/LoadBar';
 import { DayColumnWithSlots } from './components/DayColumnWithSlots';
 import './styles.css';
@@ -56,7 +56,7 @@ export const TutorBookPage: React.FC = () => {
     <VStack spacing="20px">
       <PaginationMenu
         start={currentDate}
-        end={dateShift(currentDate, columnCount - 1)}
+        end={getShiftedDate(currentDate, columnCount - 1)}
         onDateChange={changeDate}
       />
       {isLoading ? (
@@ -67,7 +67,7 @@ export const TutorBookPage: React.FC = () => {
           style={{ columnRuleColor: 'blue.100' }}
         >
           {queries.map((query, i) => {
-            const date = dateShift(currentDate, i);
+            const date = getShiftedDate(currentDate, i);
             return (
               <DayColumnWithSlots
                 lessons={query.data}

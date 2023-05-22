@@ -20,7 +20,7 @@ import LessonsAPI from '../../../api/lessons';
 import { slotInputValues, SlotInputValuesProps } from './_formikHelper';
 import { useMutation, useQueryClient } from 'react-query';
 import { lessonsKey } from '../../../query/queryKeys';
-import { dayAndMonth } from '../../../components/Slot/_helpers';
+import { getDayAndMonthFromDate } from '../../../utils/datetime';
 import { NewSlotInputSwitch } from '../components/LessonCalendarTab/NewSlotInputSwitch';
 import { DisclosureProps } from '../../../components/disclosureProps';
 import { LessonType } from '../../../api/models';
@@ -96,7 +96,7 @@ export const AddNewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
           <Form>
             <ModalBody>
               <ModalHeader>
-                Добавить новый слот на {dayAndMonth(date)}
+                Добавить новый слот на {getDayAndMonthFromDate(date)}
               </ModalHeader>
               <ModalCloseButton />
               <FormControl isInvalid={!!formErrorMessage}>

@@ -1,10 +1,14 @@
-import { getTimeFromDate } from './_helpers';
+import { getTimeFromDate } from '../../utils/datetime';
 import { SlotProps } from './Slot';
 import { V1LessonDto } from '../../api/models';
 
 export function MapSlot(lesson: V1LessonDto, isForTutor: boolean): SlotProps {
-  const endTime = getTimeFromDate(lesson.end);
-  const startTime = getTimeFromDate(lesson.start);
+  const endTime = lesson.end
+    ? getTimeFromDate(new Date(lesson.end))
+    : undefined;
+  const startTime = lesson.start
+    ? getTimeFromDate(new Date(lesson.start))
+    : undefined;
 
   return {
     endTime,

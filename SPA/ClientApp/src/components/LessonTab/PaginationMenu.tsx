@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, HStack, Text } from '@chakra-ui/react';
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
-import { dayAndMonth } from '../Slot/_helpers';
+import { getDayAndMonthFromDate } from '../../utils/datetime';
 import { ButtonVariant } from '../../assets/theme/themeEnum';
 
 type Props = {
@@ -26,8 +26,8 @@ export const PaginationMenu: React.FC<Props> = ({
       </Button>
       <Text variant="big-semibold">
         {isOneDay
-          ? dayAndMonth(start)
-          : `${dayAndMonth(start)} - ${dayAndMonth(end)}`}
+          ? getDayAndMonthFromDate(start)
+          : `${getDayAndMonthFromDate(start)} - ${getDayAndMonthFromDate(end)}`}
       </Text>
       <Button
         rightIcon={<ArrowForwardIcon />}

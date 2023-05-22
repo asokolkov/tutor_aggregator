@@ -9,7 +9,7 @@ import {
   useWindowDimensions,
 } from '../../components/LessonTab/useLessonTab';
 import { PaginationMenu } from '../../components/LessonTab/PaginationMenu';
-import { dateShift } from '../../components/Slot/_helpers';
+import { getShiftedDate } from '../../utils/datetime';
 
 export const LessonCalendarTab: React.FC = () => {
   const { user } = useContext(UserContext);
@@ -48,7 +48,7 @@ export const LessonCalendarTab: React.FC = () => {
     <VStack spacing="20px">
       <PaginationMenu
         start={currentDate}
-        end={dateShift(currentDate, columnCount - 1)}
+        end={getShiftedDate(currentDate, columnCount - 1)}
         onDateChange={changeDate}
       />
 
@@ -60,7 +60,7 @@ export const LessonCalendarTab: React.FC = () => {
           style={{ columnRuleColor: 'blue.100' }}
         >
           {queries.map((query, i) => {
-            const date = dateShift(currentDate, i);
+            const date = getShiftedDate(currentDate, i);
             return (
               <DayColumnWithSlots
                 lessons={query.data}
