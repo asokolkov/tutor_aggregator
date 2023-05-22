@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  VStack,
-  HStack,
-  Stack,
-  useBreakpointValue,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, VStack, HStack, Stack } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { PasswordField } from './components/PasswordField';
 import { Header } from './components/Header';
@@ -17,31 +9,30 @@ import { Form, Formik } from 'formik';
 import { RememberMeCheckbox } from './components/RememberMeCheckbox';
 import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { Navigate } from 'react-router-dom';
-import { SEARCH_PAGE } from '../../routes/routePaths';
+import { MAIN_PAGE } from '../../routes/routePaths';
 import { AuthorizationContext } from './contexts/AuthorizationContext';
 import { useLoginButton } from './hooks/useLoginButton';
 import { useFormikValues } from './hooks/useFormikValues';
+import './styles.css';
 
 export const LoginPage = () => {
-  const isDesktop = useBreakpointValue({ base: false, lg: true });
   const { loginInitValues } = useFormikValues();
 
   const { isAuthorized } = useContext(UserContext);
-  if (isAuthorized) return <Navigate to={SEARCH_PAGE} />;
+  if (isAuthorized) return <Navigate to={MAIN_PAGE} />;
 
   const { onSubmit, providerValues } = useLoginButton();
 
   return (
-    <Flex background={'white'}>
+    <Flex>
       <VStack margin={'20px'} width={'100%'}>
         <Header title={'Войти в аккаунт'} />
         <Box
-          py={{ base: '0', sm: '8' }}
+          className="login-container"
+          py={{ base: '4', sm: '8' }}
           px={{ base: '4', sm: '10' }}
-          width={isDesktop ? '50%' : '90%'}
-          bg="white"
           borderWidth="2px"
-          borderRadius={{ base: 'none', sm: 'xl' }}
+          borderRadius="12px"
         >
           <Formik initialValues={loginInitValues} onSubmit={onSubmit}>
             <Form>
