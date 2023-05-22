@@ -1,37 +1,35 @@
-import axiosInstance, { PaginatedResponse, Person } from './_share';
-
-export interface Student extends Person {
-  age: number;
-  educationPlace: string;
-  grade: number;
-}
-
-export interface StudentList extends PaginatedResponse<Student> {}
+import axiosInstance from './_share';
+import { V1StudentDto, V1StudentDtoV1PageDto } from './models';
 
 export default class StudentAPI {
   static async getStudents(
     page: number = 0,
     size: number = 30
-  ): Promise<StudentList> {
-    const response = await axiosInstance.get<StudentList>('/api/v1/students', {
-      params: { page, size },
-    });
+  ): Promise<V1StudentDtoV1PageDto> {
+    const response = await axiosInstance.get<V1StudentDtoV1PageDto>(
+      '/api/v1/students',
+      {
+        params: { page, size },
+      }
+    );
     return response.data;
   }
 
-  static async getStudentById(id: string): Promise<Student> {
-    const response = await axiosInstance.get<Student>(`/api/v1/students/${id}`);
+  static async getStudentById(id: string): Promise<V1StudentDto> {
+    const response = await axiosInstance.get<V1StudentDto>(
+      `/api/v1/students/${id}`
+    );
     return response.data;
   }
 
-  static async getCurrentProfileInfo(): Promise<Student> {
-    const response = await axiosInstance.get<Student>(
+  static async getCurrentProfileInfo(): Promise<V1StudentDto> {
+    const response = await axiosInstance.get<V1StudentDto>(
       'api/v1/students/profile'
     );
     return response.data;
   }
 
-  static async putCurrentProfileValues(student: Student) {
+  static async putCurrentProfileValues(student: V1StudentDto) {
     await axiosInstance.put('api/v1/students', { ...student });
   }
 }

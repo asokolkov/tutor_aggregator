@@ -8,17 +8,17 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 import { TextRow } from './components/TextRow';
-import { UserContext } from '../../contexts/UserContext';
-import { AccountType } from '../../api/user';
-import { ProfileContext } from '../../contexts/ProfileContext';
+import { UserContext } from '../../layouts/base/contexts/UserContext';
+import { ProfileContext } from './contexts/ProfileContext';
 import UserAPI from '../../api/user';
 import { LOGIN_PAGE } from '../../routes/routePaths';
 import { useNavigate } from 'react-router-dom';
+import { V1AccountTypeDto } from '../../api/models';
 
 export const AccountInfo = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   const userContext = useContext(UserContext);
-  const isTutor = userContext.user.accountType === AccountType.Tutor;
+  const isTutor = userContext.user.accountType === V1AccountTypeDto.tutor;
   const navigate = useNavigate();
 
   const signOut = async () => {

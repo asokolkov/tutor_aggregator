@@ -10,7 +10,7 @@ import {
   ModalBody,
 } from '@chakra-ui/react';
 import { useMutation, useQueryClient } from 'react-query';
-import { DisclosureProps } from '../../sharedComponents/disclosureProps';
+import { DisclosureProps } from '../../../components/disclosureProps';
 import TutorsAPI from '../../../api/tutors';
 import { Formik, FormikValues, Form } from 'formik';
 import { useTutorId } from '../../../routes/params';

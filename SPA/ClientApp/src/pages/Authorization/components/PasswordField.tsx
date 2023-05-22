@@ -12,7 +12,7 @@ import * as React from 'react';
 import { GoEye, GoEyeClosed } from 'react-icons/go';
 import { useField } from 'formik';
 import { useContext } from 'react';
-import { AuthorizationContext } from '../../../contexts/AuthorizationContext';
+import { AuthorizationContext } from '../contexts/AuthorizationContext';
 
 export const PasswordField: React.FC = () => {
   const { isOpen, onToggle } = useDisclosure();

@@ -1,12 +1,12 @@
-import { Lesson } from '../../../api/lessons';
 import * as React from 'react';
 import { VStack } from '@chakra-ui/react';
-import { Title } from '../../Lessons/components/DayColumn/Title';
-import { Slot } from '../../sharedComponents/Slot/Slot';
-import { MapSlot } from '../../sharedComponents/Slot/_maper';
+import { Title } from '../../Lessons/components/LessonCalendarTab/Title';
+import { Slot } from '../../../components/Slot/Slot';
+import { MapSlot } from '../../../components/Slot/_maper';
+import { V1LessonDto } from '../../../api/models';
 
 type Props = {
-  lessons: Lesson[];
+  lessons: V1LessonDto[];
   date: Date;
 };
 export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {

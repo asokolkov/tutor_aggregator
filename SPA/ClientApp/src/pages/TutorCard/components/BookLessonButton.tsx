@@ -3,7 +3,7 @@ import { getTutorBookByIdPath } from '../../../routes/routes';
 import { Button } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
-import { CardInfoContext } from '../../../contexts/CardInfoContext';
+import { CardInfoContext } from '../contexts/CardInfoContext';
 import { ButtonVariant } from '../../../assets/theme/themeEnum';
 
 export const BookLessonButton: React.FC = () => {

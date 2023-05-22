@@ -18,62 +18,21 @@ import { PhoneNumberField } from './components/PhoneNumberField';
 import { NameSurnameField } from './components/NameSurnameField';
 import { Form, Formik } from 'formik';
 import { LoginSuggestion } from './components/LoginSuggestion';
-import UserAPI, { V1RegisterDto, AccountType } from '../../api/user';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { UserContext } from '../../contexts/UserContext';
+import { Navigate } from 'react-router-dom';
+import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { SEARCH_PAGE } from '../../routes/routePaths';
-import { AuthorizationContext } from '../../contexts/AuthorizationContext';
-import { AxiosError } from 'axios';
-import { useAuthContextValue } from './useAuthContextValue';
-
-type FormikValuesProps = {
-  name: string;
-  surname: string;
-  phoneNumber: string;
-  isTutor: boolean;
-  email: string;
-  password: string;
-};
-
-const initialValues: FormikValuesProps = {
-  name: '',
-  surname: '',
-  phoneNumber: '',
-  isTutor: false,
-  email: '',
-  password: '',
-};
+import { AuthorizationContext } from './contexts/AuthorizationContext';
+import { useRegisterButton } from './hooks/useRegisterButton';
+import { useFormikValues } from './hooks/useFormikValues';
 
 export const SignupPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
-  const navigate = useNavigate();
+  const { signupInitValues } = useFormikValues();
 
-  const { isAuthorized, setUser } = useContext(UserContext);
+  const { isAuthorized } = useContext(UserContext);
   if (isAuthorized) return <Navigate to={SEARCH_PAGE} />;
 
-  const authContextValue = useAuthContextValue();
-
-  const onSubmit = async (values: FormikValuesProps) => {
-    const registerData: V1RegisterDto = {
-      accountType: values.isTutor ? AccountType.Tutor : AccountType.Student,
-      email: values.email,
-      firstName: values.name,
-      lastName: values.surname,
-      password: values.password,
-      phone: values.phoneNumber,
-    };
-
-    UserAPI.register(registerData)
-      .then((user) => {
-        setUser(user);
-        navigate(SEARCH_PAGE);
-      })
-      .catch((err: AxiosError) => {
-        if (err.response.status === 400) {
-          authContextValue.setError(err.response.data.toString());
-        }
-      });
-  };
+  const { onSubmit, providerValues } = useRegisterButton();
 
   return (
     <Flex background={'white'}>
@@ -87,14 +46,14 @@ export const SignupPage = () => {
           borderWidth="2px"
           borderRadius={{ base: 'none', sm: 'xl' }}
         >
-          <Formik initialValues={initialValues} onSubmit={onSubmit}>
+          <Formik initialValues={signupInitValues} onSubmit={onSubmit}>
             <Form>
               <NameSurnameField />
               <PhoneNumberField />
               <TutorOrStudentSwitchField />
               <Stack spacing="6">
                 <Stack spacing="5">
-                  <AuthorizationContext.Provider value={authContextValue}>
+                  <AuthorizationContext.Provider value={providerValues}>
                     <EmailField />
                     <PasswordField />
                   </AuthorizationContext.Provider>

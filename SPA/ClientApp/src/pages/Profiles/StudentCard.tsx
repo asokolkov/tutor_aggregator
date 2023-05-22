@@ -10,7 +10,7 @@ import {
 import { SubmitButton } from './components/SubmitButton';
 import profileIcon from '../../assets/images/profile_icon_bg.png';
 import { InputRow } from './components/InputRow';
-import { ProfileContext } from '../../contexts/ProfileContext';
+import { ProfileContext } from './contexts/ProfileContext';
 import { Form, Formik, FormikValues } from 'formik';
 import {
   mapStudentToFormikValues,

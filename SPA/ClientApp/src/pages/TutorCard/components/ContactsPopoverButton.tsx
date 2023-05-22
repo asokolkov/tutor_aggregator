@@ -8,7 +8,7 @@ import {
   Popover,
   PopoverBody,
 } from '@chakra-ui/react';
-import { CardInfoContext } from '../../../contexts/CardInfoContext';
+import { CardInfoContext } from '../contexts/CardInfoContext';
 
 const ContactsPopoverButton: React.FC = () => {
   const context = useContext(CardInfoContext);

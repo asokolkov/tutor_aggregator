@@ -1,15 +1,14 @@
-import { Review, Tutor } from '../../api/tutors';
-import { CardInfoProps } from './CardInfo';
-import { mapCollectionToString } from './components/_helpers';
+import { CardInfoProps } from './Card';
+import { mapCollectionToString } from '../../utils/mapCollectionToString';
 import { SingleReviewProps } from './components/SingleReview';
+import { V1ReviewDto, V1TutorDto } from '../../api/models';
 
-export function MapCardInfo(tutor: Tutor): CardInfoProps {
+export function MapCardInfo(tutor: V1TutorDto): CardInfoProps {
   return {
     id: tutor.id,
     contacts:
       mapCollectionToString(tutor.contacts?.map((x) => x.value)) ||
       'Не указано',
-    avatar: tutor.avatar,
     description: tutor.description,
     education:
       mapCollectionToString(tutor.educations?.map((x) => x.value)) ||
@@ -25,7 +24,7 @@ export function MapCardInfo(tutor: Tutor): CardInfoProps {
   };
 }
 
-export function MapSingleReview(review: Review): SingleReviewProps {
+export function MapSingleReview(review: V1ReviewDto): SingleReviewProps {
   return {
     date: new Date(review.updatedAt)
       .toISOString()
