@@ -23,27 +23,11 @@ import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { SEARCH_PAGE } from '../../routes/routePaths';
 import { AuthorizationContext } from './contexts/AuthorizationContext';
 import { useRegisterButton } from './hooks/useRegisterButton';
-
-export type SignupFormikProps = {
-  name: string;
-  surname: string;
-  phoneNumber: string;
-  isTutor: boolean;
-  email: string;
-  password: string;
-};
-
-const initialValues: SignupFormikProps = {
-  name: '',
-  surname: '',
-  phoneNumber: '',
-  isTutor: false,
-  email: '',
-  password: '',
-};
+import { useFormikValues } from './hooks/useFormikValues';
 
 export const SignupPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
+  const { signupInitValues } = useFormikValues();
 
   const { isAuthorized } = useContext(UserContext);
   if (isAuthorized) return <Navigate to={SEARCH_PAGE} />;
@@ -62,7 +46,7 @@ export const SignupPage = () => {
           borderWidth="2px"
           borderRadius={{ base: 'none', sm: 'xl' }}
         >
-          <Formik initialValues={initialValues} onSubmit={onSubmit}>
+          <Formik initialValues={signupInitValues} onSubmit={onSubmit}>
             <Form>
               <NameSurnameField />
               <PhoneNumberField />

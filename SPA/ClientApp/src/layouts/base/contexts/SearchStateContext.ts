@@ -1,5 +1,5 @@
 import React from 'react';
-import { SearchProps } from '../../../pages/Main/components/_formikHelper';
+import { SearchProps } from '../../../pages/Main/hooks/useFormikValues';
 
 type ContextProps = {
   searchValues: SearchProps;

@@ -8,10 +8,11 @@ import {
 } from '@chakra-ui/react';
 import { SelectOption } from './components/SelectOption';
 import searchIcon from '../../assets/images/search_icon_bg.png';
-import { PriceOptions, ReviewOptions } from './_formHelper';
+import { useOptionMap } from './hooks/useOptionMap';
 
 export const SearchParamsSection: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
+  const { ReviewOptions, PriceOptions } = useOptionMap();
 
   return (
     <Box

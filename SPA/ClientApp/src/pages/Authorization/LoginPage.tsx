@@ -20,20 +20,11 @@ import { Navigate } from 'react-router-dom';
 import { SEARCH_PAGE } from '../../routes/routePaths';
 import { AuthorizationContext } from './contexts/AuthorizationContext';
 import { useLoginButton } from './hooks/useLoginButton';
-
-export type LoginFormikProps = {
-  email: string;
-  password: string;
-  remember: boolean;
-};
-const initialValues: LoginFormikProps = {
-  email: '',
-  password: '',
-  remember: true,
-};
+import { useFormikValues } from './hooks/useFormikValues';
 
 export const LoginPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
+  const { loginInitValues } = useFormikValues();
 
   const { isAuthorized } = useContext(UserContext);
   if (isAuthorized) return <Navigate to={SEARCH_PAGE} />;
@@ -52,7 +43,7 @@ export const LoginPage = () => {
           borderWidth="2px"
           borderRadius={{ base: 'none', sm: 'xl' }}
         >
-          <Formik initialValues={initialValues} onSubmit={onSubmit}>
+          <Formik initialValues={loginInitValues} onSubmit={onSubmit}>
             <Form>
               <Stack spacing="6">
                 <Stack spacing="5">

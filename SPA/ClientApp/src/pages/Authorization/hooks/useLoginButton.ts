@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../../../layouts/base/contexts/UserContext';
 import { useAuthContext } from './useAuthContext';
-import { LoginFormikProps } from '../LoginPage';
+import { LoginFormikProps } from './useFormikValues';
 
 const LOGIN_FAIL_ERROR_MESSAGE = 'Проверьте правильность логина и пароля';
 

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../../../layouts/base/contexts/UserContext';
 import { useAuthContext } from './useAuthContext';
-import { SignupFormikProps } from '../SignupPage';
+import { SignupFormikProps } from './useFormikValues';
 
 export function useRegisterButton() {
   const { providerValues } = useAuthContext();
