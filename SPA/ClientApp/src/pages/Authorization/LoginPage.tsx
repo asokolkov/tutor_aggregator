@@ -16,7 +16,7 @@ import { EmailField } from './components/EmailField';
 import { Form, Formik } from 'formik';
 import { RememberMeCheckbox } from './components/RememberMeCheckbox';
 import UserAPI, { V1LoginDto } from '../../api/user';
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { SEARCH_PAGE } from '../../routes/routePaths';
 import { AuthorizationContext } from '../../contexts/AuthorizationContext';

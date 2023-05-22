@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import UserAPI, { User } from '../../api/user';
+import UserAPI from '../../../api/user';
 import axios, { AxiosError } from 'axios';
-import { SearchProps } from '../../pages/Main/_formikHelper';
+import { V1UserDto } from '../../../api/models';
 
 export function useUser() {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<V1UserDto>();
   const [isLoading, setLoading] = useState(true);
 
   const removeUser = () => setUser(undefined);
@@ -13,8 +13,8 @@ export function useUser() {
   useEffect(() => {
     const abortController = new AbortController();
     UserAPI.getCurrentUser(abortController.signal)
-      .then((u) => {
-        setUser(u);
+      .then((userDto) => {
+        setUser(userDto);
         setLoading(false);
       })
       .catch((err: AxiosError) => {
@@ -25,11 +25,4 @@ export function useUser() {
   }, []);
 
   return { user, isLoading, setUser, removeUser, isUserAuth };
-}
-
-export function useSearchValues() {
-  const [searchValues, setSearchValues] = useState<SearchProps>();
-  const hasSearchValues = !!searchValues;
-
-  return { searchValues, setSearchValues, hasSearchValues };
 }

@@ -18,7 +18,8 @@ import {
 } from '../../../routes/routePaths';
 import UserAPI from '../../../api/user';
 import { useContext } from 'react';
-import { UserContext } from '../../../contexts/UserContext';
+import { UserContext } from '../contexts/UserContext';
+import { getFullName } from '../../../utils/names';
 
 export const HeaderMenu: React.FC = () => {
   const navigate = useNavigate();
@@ -37,7 +38,11 @@ export const HeaderMenu: React.FC = () => {
         variant="blue.300"
         rightIcon={<ChevronDownIcon />}
       >
-        <Avatar src={user.avatar} name={user.name} size="xs" mr="8px"></Avatar>
+        <Avatar
+          name={getFullName(user.firstName, user.lastName)}
+          size="xs"
+          mr="8px"
+        ></Avatar>
         Мой профиль
       </MenuButton>
       <MenuList>

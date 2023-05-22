@@ -4,7 +4,7 @@ import React, { useContext } from 'react';
 import { TutorCardContext } from '../../contexts/TutorCardContext';
 import { MapSingleReview } from './_mapper';
 import NewReviewModal from './modal/NewReviewModal';
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { AccountType } from '../../api/user';
 
 export const ReviewSection: React.FC = () => {

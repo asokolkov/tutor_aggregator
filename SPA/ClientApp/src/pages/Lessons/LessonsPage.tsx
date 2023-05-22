@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { LOGIN_PAGE } from '../../routes/routePaths';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import { YourLessonsTab } from './YourLessonsTab/YourLessonsTab';

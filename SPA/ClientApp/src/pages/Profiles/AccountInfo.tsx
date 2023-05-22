@@ -8,7 +8,7 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 import { TextRow } from './components/TextRow';
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { AccountType } from '../../api/user';
 import { ProfileContext } from '../../contexts/ProfileContext';
 import UserAPI from '../../api/user';

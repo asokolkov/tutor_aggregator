@@ -20,7 +20,7 @@ import { Form, Formik } from 'formik';
 import { LoginSuggestion } from './components/LoginSuggestion';
 import UserAPI, { V1RegisterDto, AccountType } from '../../api/user';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { SEARCH_PAGE } from '../../routes/routePaths';
 import { AuthorizationContext } from '../../contexts/AuthorizationContext';
 import { AxiosError } from 'axios';

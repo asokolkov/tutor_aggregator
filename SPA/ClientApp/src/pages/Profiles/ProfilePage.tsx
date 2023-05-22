@@ -3,7 +3,7 @@ import { useContext, useMemo } from 'react';
 import { AccountInfo } from './AccountInfo';
 import { TutorCard } from './TutorCard';
 import { VStack } from '@chakra-ui/react';
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { StudentCard } from './StudentCard';
 import { AccountType } from '../../api/user';
 import { useProfileInfo } from '../../query/useProfilePageQuery';

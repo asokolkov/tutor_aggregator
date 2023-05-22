@@ -9,14 +9,14 @@ import {
 } from '@chakra-ui/react';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { MAIN_PAGE } from '../../routes/routePaths';
+import { MAIN_PAGE } from '../../../routes/routePaths';
 import { useContext } from 'react';
-import { UserContext } from '../../contexts/UserContext';
-import logo from '../../assets/images/teacher_icon.png';
-import { CitySelection } from './components/CitySelection';
-import { LoginButton, RegisterButton } from './components/HeaderButtons';
-import { HeaderMenu } from './components/HeaderMenu';
-import { HeaderAuthMenu } from './components/HeaderAuthMenu';
+import { UserContext } from '../contexts/UserContext';
+import logo from '../../../assets/images/teacher_icon.png';
+import { CitySelection } from './CitySelection';
+import { LoginButton, RegisterButton } from './HeaderButtons';
+import { HeaderMenu } from './HeaderMenu';
+import { HeaderAuthMenu } from './HeaderAuthMenu';
 
 const Header: React.FC = () => {
   const userState = useContext(UserContext);

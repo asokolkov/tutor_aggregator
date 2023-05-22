@@ -1,12 +1,13 @@
 import { Outlet } from 'react-router-dom';
-import Header from './Header';
-import Footer from './Footer';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import { Container } from '@chakra-ui/react';
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext } from './contexts/UserContext';
 import { LoadBar } from '../../pages/sharedComponents/LoadBar/LoadBar';
-import { useSearchValues, useUser } from './hooks';
 import React, { useMemo } from 'react';
 import { SearchStateContext } from '../../contexts/SearchStateContext';
+import { useSearchValues } from './hooks/useSearchValues';
+import { useUser } from './hooks/useUser';
 
 const BaseLayout: React.FC = () => {
   const { user, setUser, removeUser, isLoading, isUserAuth } = useUser();

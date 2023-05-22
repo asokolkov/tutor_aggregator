@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../../../contexts/UserContext';
+import { UserContext } from '../../../layouts/base/contexts/UserContext';
 import { DayColumnWithSlots } from '../components/DayColumn/DayColumnWithSlots';
 import { LoadBar } from '../../sharedComponents/LoadBar/LoadBar';
 import { VStack } from '@chakra-ui/react';

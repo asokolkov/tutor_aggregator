@@ -12,7 +12,7 @@ import {
   TUTOR_BOOK,
   MAIN_PAGE,
 } from './routePaths';
-import BaseLayout from '../layouts/base/BaseLayout';
+import BaseLayout from '../layouts/base';
 import { TutorCardPage } from '../pages/TutorCard/TutorCardPage';
 import { SearchPage } from '../pages/Search/SearchPage';
 import { LoginPage } from '../pages/Authorization/LoginPage';
