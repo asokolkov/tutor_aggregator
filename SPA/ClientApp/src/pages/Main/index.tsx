@@ -1,30 +1,20 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { VStack } from '@chakra-ui/react';
 import { MainSearchBox } from './components/MainSearchBox';
 import { MainDescriptionForStudents } from './components/MainDescriptionForStudents';
 import { MainDescriptionForTutors } from './components/MainDescriptionForTutors';
-import { useLocationQuery } from '../../query/useLocationQuery';
-import { useSubjectQuery } from '../../query/useSubjectQuery';
 import { LoadBar } from '../../components/LoadBar/LoadBar';
 import { SearchParamsContext } from './contexts/SearchParamsContext';
+import { useSearchParamsContext } from './hooks/useSearchParamsContext';
 
 export const MainPage = () => {
-  const { locationsQuery } = useLocationQuery();
-  const { subjectQuery } = useSubjectQuery();
+  const { providerValue, isLoading } = useSearchParamsContext();
 
-  const providerValues = useMemo(
-    () => ({
-      locationsData: locationsQuery.data,
-      subjectsData: subjectQuery.data,
-    }),
-    [locationsQuery, subjectQuery]
-  );
-
-  if (locationsQuery.isLoading || subjectQuery.isLoading)
+  if (isLoading)
     return <LoadBar description="Загружаем данные о районах и предметах" />;
   return (
     <VStack spacing="40px">
-      <SearchParamsContext.Provider value={providerValues}>
+      <SearchParamsContext.Provider value={providerValue}>
         <MainSearchBox />
       </SearchParamsContext.Provider>
       <VStack spacing="60px" w="100%">

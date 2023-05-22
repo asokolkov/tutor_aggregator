@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import UserAPI from '../../../api/user';
 import axios, { AxiosError } from 'axios';
 import { V1UserDto } from '../../../api/models';
@@ -9,6 +9,11 @@ export function useUser() {
 
   const removeUser = () => setUser(undefined);
   const isUserAuth = user !== undefined;
+
+  const providerValues = useMemo(
+    () => ({ user, setUser, removeUser, isAuthorized: isUserAuth }),
+    [user, setUser, removeUser, isUserAuth, isLoading]
+  );
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -24,5 +29,5 @@ export function useUser() {
     return () => abortController.abort();
   }, []);
 
-  return { user, isLoading, setUser, removeUser, isUserAuth };
+  return { providerValues, isLoading };
 }

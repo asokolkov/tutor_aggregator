@@ -22,7 +22,6 @@ import { Navigate } from 'react-router-dom';
 import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { SEARCH_PAGE } from '../../routes/routePaths';
 import { AuthorizationContext } from './contexts/AuthorizationContext';
-import { useAuthContextValue } from './hooks/useAuthContextValue';
 import { useRegisterButton } from './hooks/useRegisterButton';
 
 export type SignupFormikProps = {
@@ -49,8 +48,7 @@ export const SignupPage = () => {
   const { isAuthorized } = useContext(UserContext);
   if (isAuthorized) return <Navigate to={SEARCH_PAGE} />;
 
-  const authContextValue = useAuthContextValue();
-  const { onSubmit } = useRegisterButton();
+  const { onSubmit, providerValues } = useRegisterButton();
 
   return (
     <Flex background={'white'}>
@@ -71,7 +69,7 @@ export const SignupPage = () => {
               <TutorOrStudentSwitchField />
               <Stack spacing="6">
                 <Stack spacing="5">
-                  <AuthorizationContext.Provider value={authContextValue}>
+                  <AuthorizationContext.Provider value={providerValues}>
                     <EmailField />
                     <PasswordField />
                   </AuthorizationContext.Provider>

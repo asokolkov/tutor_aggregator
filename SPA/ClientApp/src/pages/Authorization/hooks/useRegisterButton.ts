@@ -5,15 +5,15 @@ import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../../../layouts/base/contexts/UserContext';
-import { useAuthContextValue } from './useAuthContextValue';
+import { useAuthContext } from './useAuthContext';
 import { SignupFormikProps } from '../SignupPage';
 
 export function useRegisterButton() {
-  const onSubmit = (values: SignupFormikProps) => {
-    const navigate = useNavigate();
-    const { setUser } = useContext(UserContext);
-    const authContextValue = useAuthContextValue();
+  const { providerValues } = useAuthContext();
+  const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
 
+  const onSubmit = (values: SignupFormikProps) => {
     const registerData: V1RegisterDto = {
       accountType: values.isTutor
         ? V1AccountTypeDto.tutor
@@ -32,9 +32,9 @@ export function useRegisterButton() {
       })
       .catch((err: AxiosError) => {
         if (err.response.status === 400) {
-          authContextValue.setError(err.response.data.toString());
+          providerValues.setError(err.response.data.toString());
         }
       });
   };
-  return { onSubmit };
+  return { onSubmit, providerValues };
 }

@@ -4,28 +4,19 @@ import Footer from './components/Footer';
 import { Container } from '@chakra-ui/react';
 import { UserContext } from './contexts/UserContext';
 import { LoadBar } from '../../components/LoadBar/LoadBar';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { SearchStateContext } from './contexts/SearchStateContext';
 import { useSearchValues } from './hooks/useSearchValues';
 import { useUser } from './hooks/useUser';
 
 const BaseLayout: React.FC = () => {
-  const { user, setUser, removeUser, isLoading, isUserAuth } = useUser();
-  const userProviderValues = useMemo(
-    () => ({ user, setUser, removeUser, isAuthorized: isUserAuth }),
-    [user, setUser, removeUser, isUserAuth, isLoading]
-  );
-
-  const { setSearchValues, searchValues, hasSearchValues } = useSearchValues();
-  const searchProviderValues = useMemo(
-    () => ({ setSearchValues, searchValues, hasSearchValues }),
-    [setSearchValues, searchValues, hasSearchValues]
-  );
+  const { providerValues: userProviderValues, isLoading } = useUser();
+  const { providerValues: providerValues } = useSearchValues();
 
   if (isLoading) return <LoadBar description={'Загружаем данные'} />;
   return (
     <UserContext.Provider value={userProviderValues}>
-      <SearchStateContext.Provider value={searchProviderValues}>
+      <SearchStateContext.Provider value={providerValues}>
         <Header />
         <Container padding={'0vh 5vw 16vh 5vw'} maxW={'100%'}>
           <Outlet />

@@ -5,7 +5,7 @@ import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../../../layouts/base/contexts/UserContext';
-import { useAuthContextValue } from './useAuthContextValue';
+import { useAuthContext } from './useAuthContext';
 import { LoginFormikProps } from '../LoginPage';
 
 const LOGIN_FAIL_ERROR_MESSAGE = 'Проверьте правильность логина и пароля';
@@ -13,7 +13,7 @@ const LOGIN_FAIL_ERROR_MESSAGE = 'Проверьте правильность л
 export function useLoginButton() {
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
-  const authContextValue = useAuthContextValue();
+  const { providerValues } = useAuthContext();
 
   const onSubmit = (values: LoginFormikProps) => {
     const loginData: V1LoginDto = {
@@ -29,10 +29,10 @@ export function useLoginButton() {
       })
       .catch((err: AxiosError) => {
         if (err.response.status === 401) {
-          authContextValue.setError(LOGIN_FAIL_ERROR_MESSAGE);
+          providerValues.setError(LOGIN_FAIL_ERROR_MESSAGE);
         }
       });
   };
 
-  return { onSubmit };
+  return { onSubmit, providerValues };
 }

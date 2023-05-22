@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ContextProps } from '../contexts/AuthorizationContext';
 
-export function useAuthContextValue() {
+export function useAuthContext() {
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -10,11 +10,11 @@ export function useAuthContextValue() {
     setErrorMessage(error);
   };
 
-  const contextValue: ContextProps = {
+  const providerValues: ContextProps = {
     errorMessage,
     hasError,
     setError,
   };
 
-  return contextValue;
+  return { providerValues };
 }

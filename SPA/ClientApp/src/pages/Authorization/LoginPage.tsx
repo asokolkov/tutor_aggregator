@@ -19,7 +19,6 @@ import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { Navigate } from 'react-router-dom';
 import { SEARCH_PAGE } from '../../routes/routePaths';
 import { AuthorizationContext } from './contexts/AuthorizationContext';
-import { useAuthContextValue } from './hooks/useAuthContextValue';
 import { useLoginButton } from './hooks/useLoginButton';
 
 export type LoginFormikProps = {
@@ -39,8 +38,7 @@ export const LoginPage = () => {
   const { isAuthorized } = useContext(UserContext);
   if (isAuthorized) return <Navigate to={SEARCH_PAGE} />;
 
-  const authContextValue = useAuthContextValue();
-  const { onSubmit } = useLoginButton();
+  const { onSubmit, providerValues } = useLoginButton();
 
   return (
     <Flex background={'white'}>
@@ -58,7 +56,7 @@ export const LoginPage = () => {
             <Form>
               <Stack spacing="6">
                 <Stack spacing="5">
-                  <AuthorizationContext.Provider value={authContextValue}>
+                  <AuthorizationContext.Provider value={providerValues}>
                     <EmailField />
                     <PasswordField />
                   </AuthorizationContext.Provider>
