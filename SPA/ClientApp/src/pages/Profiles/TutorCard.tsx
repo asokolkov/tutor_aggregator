@@ -13,7 +13,6 @@ import { InputRow } from './components/InputRow';
 import { TextAreaRow } from './components/TextAreaRow';
 import { SubmitButton } from './components/SubmitButton';
 import profileIcon from '../../assets/images/profile_icon_bg.png';
-import { LoadBar } from '../../components/LoadBar/LoadBar';
 import { ProfileContext } from './contexts/ProfileContext';
 import { Form, Formik, FormikValues } from 'formik';
 import {
@@ -26,8 +25,6 @@ import { TooltipType } from './components/_shared';
 export const TutorCard: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   const profileContext = useContext(ProfileContext);
-
-  if (profileContext.isLoading) return <LoadBar />;
   const tutor = profileContext.tutorProfile;
   const onSubmit = async (values: FormikValues) => {
     const newTutor = updateTutorFromFormikValues(tutor, values);

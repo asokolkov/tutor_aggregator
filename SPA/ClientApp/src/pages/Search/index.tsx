@@ -2,10 +2,6 @@ import { Button, Flex, Text, VStack } from '@chakra-ui/react';
 import SearchCard from './components/SearchCard';
 import { SearchParamsSection } from './SearchParamsSection';
 import { LoadBar } from '../../components/LoadBar/LoadBar';
-import {
-  SearchValuesProps,
-  useSearchPageQuery,
-} from '../../query/useSearchPageQuery';
 import { Form, Formik } from 'formik';
 import React, { useContext } from 'react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
@@ -13,19 +9,15 @@ import { Link, Navigate } from 'react-router-dom';
 import { MAIN_PAGE } from '../../routes/routePaths';
 import { Color } from '../../assets/theme/themeEnum';
 import { SearchStateContext } from '../../layouts/base/contexts/SearchStateContext';
+import { useSearchParams } from './hooks/useSearchParams';
 
 export const SearchPage = () => {
   const { hasSearchValues } = useContext(SearchStateContext);
   if (!hasSearchValues) return <Navigate to={MAIN_PAGE} />;
 
-  const {
-    isLoading,
-    data,
-    isFetchingNextPage,
-    fetchNextPage,
-    values,
-    setValues,
-  } = useSearchPageQuery();
+  const { query, values, setValues } = useSearchParams();
+  const { isLoading, data, isFetchingNextPage, fetchNextPage, hasNextPage } =
+    query;
 
   if (isLoading)
     return <LoadBar description={'Загружаем список преподавателей'} />;
@@ -38,12 +30,12 @@ export const SearchPage = () => {
         </Text>
       </Link>
       <VStack spacing={'32px'} align={'start'}>
-        <Formik
-          initialValues={values}
-          onSubmit={(v: SearchValuesProps) => setValues(v)}
-        >
+        <Formik initialValues={values} onSubmit={setValues}>
           <Form style={{ width: '100%' }}>
-            <SearchParamsSection />
+            <SearchParamsSection
+              subject={values.subject}
+              district={values.district}
+            />
           </Form>
         </Formik>
 
@@ -57,13 +49,15 @@ export const SearchPage = () => {
           ))}
         </Flex>
 
-        <Button
-          onClick={() => fetchNextPage()}
-          isLoading={isFetchingNextPage}
-          variant="green"
-        >
-          Загрузить еще...
-        </Button>
+        {hasNextPage && (
+          <Button
+            onClick={() => fetchNextPage()}
+            isLoading={isFetchingNextPage}
+            variant="green"
+          >
+            Загрузить еще...
+          </Button>
+        )}
       </VStack>
     </>
   );

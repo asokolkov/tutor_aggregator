@@ -3,12 +3,13 @@ import { Button, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { LOGIN_PAGE, SIGNUP_PAGE } from '../../../routes/routePaths';
 import { useNavigate } from 'react-router-dom';
 import { ChevronDownIcon } from '@chakra-ui/icons';
+import { ButtonVariant } from '../../../assets/theme/themeEnum';
 
 export const HeaderAuthMenu: React.FC = () => {
   const navigate = useNavigate();
   return (
     <Menu>
-      <MenuButton as={Button}>
+      <MenuButton as={Button} variant={ButtonVariant.green}>
         Войти
         <ChevronDownIcon ml="4px" />
       </MenuButton>

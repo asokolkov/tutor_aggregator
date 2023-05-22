@@ -10,7 +10,8 @@ import { SelectOption } from './components/SelectOption';
 import searchIcon from '../../assets/images/search_icon_bg.png';
 import { useOptionMap } from './hooks/useOptionMap';
 
-export const SearchParamsSection: React.FC = () => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const SearchParamsSection: React.FC<Props> = ({ district, subject }) => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   const { ReviewOptions, PriceOptions } = useOptionMap();
 
@@ -77,4 +78,9 @@ export const SearchParamsSection: React.FC = () => {
       </Grid>
     </Box>
   );
+};
+
+type Props = {
+  district: string;
+  subject: string;
 };
