@@ -17,9 +17,9 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import Theme from '../../../assets/theme';
+import Theme from '../../assets/theme';
 import { Link } from 'react-router-dom';
-import { LOGIN_PAGE } from '../../../routes/routePaths';
+import { LOGIN_PAGE } from '../../routes/routePaths';
 
 export const ForgotPasswordPage = () => {
   const [isError] = useState(false);

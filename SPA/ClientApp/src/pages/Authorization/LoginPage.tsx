@@ -15,54 +15,32 @@ import { ForgetPasswordButton } from './components/ForgetPasswordButton';
 import { EmailField } from './components/EmailField';
 import { Form, Formik } from 'formik';
 import { RememberMeCheckbox } from './components/RememberMeCheckbox';
-import UserAPI, { V1LoginDto } from '../../api/user';
 import { UserContext } from '../../layouts/base/contexts/UserContext';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { SEARCH_PAGE } from '../../routes/routePaths';
 import { AuthorizationContext } from '../../contexts/AuthorizationContext';
-import { AxiosError } from 'axios';
-import { useAuthContextValue } from './useAuthContextValue';
+import { useAuthContextValue } from './hooks/useAuthContextValue';
+import { useLoginButton } from './hooks/useLoginButton';
 
-type FormikValuesProps = {
+export type LoginFormikProps = {
   email: string;
   password: string;
   remember: boolean;
 };
-const initialValues: FormikValuesProps = {
+const initialValues: LoginFormikProps = {
   email: '',
   password: '',
   remember: true,
 };
 
-const LOGIN_FAIL_ERROR_MESSAGE = 'Проверьте правильность логина и пароля';
-
 export const LoginPage = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
-  const navigate = useNavigate();
 
-  const { isAuthorized, setUser } = useContext(UserContext);
+  const { isAuthorized } = useContext(UserContext);
   if (isAuthorized) return <Navigate to={SEARCH_PAGE} />;
 
   const authContextValue = useAuthContextValue();
-
-  const onFormSubmit = async (values: FormikValuesProps) => {
-    const loginData: V1LoginDto = {
-      rememberMe: values.remember,
-      email: values.email,
-      password: values.password,
-    };
-
-    UserAPI.login(loginData)
-      .then((user) => {
-        setUser(user);
-        navigate(SEARCH_PAGE);
-      })
-      .catch((err: AxiosError) => {
-        if (err.response.status === 401) {
-          authContextValue.setError(LOGIN_FAIL_ERROR_MESSAGE);
-        }
-      });
-  };
+  const { onSubmit } = useLoginButton();
 
   return (
     <Flex background={'white'}>
@@ -76,7 +54,7 @@ export const LoginPage = () => {
           borderWidth="2px"
           borderRadius={{ base: 'none', sm: 'xl' }}
         >
-          <Formik initialValues={initialValues} onSubmit={onFormSubmit}>
+          <Formik initialValues={initialValues} onSubmit={onSubmit}>
             <Form>
               <Stack spacing="6">
                 <Stack spacing="5">

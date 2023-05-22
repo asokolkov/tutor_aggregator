@@ -1,11 +1,14 @@
-export type AccountType = 'Tutor' | 'Student';
+export enum AccountType {
+  tutor = 'Tutor',
+  student = 'Student',
+}
 export type V1UserDto = {
   id?: string;
   firstName?: string | null;
   lastName?: string | null;
   phone?: string | null;
   email?: string | null;
-  accountType?: AccountType;
+  accountType?: V1AccountTypeDto;
   registrationCompleted?: boolean;
 };
 export type V1LoginDto = {
@@ -13,7 +16,10 @@ export type V1LoginDto = {
   password?: string | null;
   rememberMe?: boolean;
 };
-export type V1AccountTypeDto = 'Tutor' | 'Student';
+export enum V1AccountTypeDto {
+  tutor = 'Tutor',
+  student = 'Student',
+}
 export type V1RegisterDto = {
   email?: string | null;
   password?: string | null;
