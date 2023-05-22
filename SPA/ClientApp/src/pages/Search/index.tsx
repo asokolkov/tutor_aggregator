@@ -16,7 +16,8 @@ export const SearchPage = () => {
   if (!hasSearchValues) return <Navigate to={MAIN_PAGE} />;
 
   const { query, values, setValues } = useSearchParams();
-  const { isLoading, data, isFetchingNextPage, fetchNextPage } = query;
+  const { isLoading, data, isFetchingNextPage, fetchNextPage, hasNextPage } =
+    query;
 
   if (isLoading)
     return <LoadBar description={'Загружаем список преподавателей'} />;
@@ -48,13 +49,15 @@ export const SearchPage = () => {
           ))}
         </Flex>
 
-        <Button
-          onClick={() => fetchNextPage()}
-          isLoading={isFetchingNextPage}
-          variant="green"
-        >
-          Загрузить еще...
-        </Button>
+        {hasNextPage && (
+          <Button
+            onClick={() => fetchNextPage()}
+            isLoading={isFetchingNextPage}
+            variant="green"
+          >
+            Загрузить еще...
+          </Button>
+        )}
       </VStack>
     </>
   );

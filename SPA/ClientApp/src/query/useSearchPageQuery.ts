@@ -19,8 +19,7 @@ export function useSearchPageQuery(values: SearchValuesProps) {
         30
       ),
     keepPreviousData: true,
-    getNextPageParam: (_, allPages) => {
-      return allPages.length;
-    },
+    getNextPageParam: (lastPage, allPages) =>
+      lastPage.hasNext ? allPages.length : undefined,
   });
 }
