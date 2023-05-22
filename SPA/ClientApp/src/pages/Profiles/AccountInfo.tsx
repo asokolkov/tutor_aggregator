@@ -9,7 +9,6 @@ import {
 } from '@chakra-ui/react';
 import { TextRow } from './components/TextRow';
 import { UserContext } from '../../layouts/base/contexts/UserContext';
-import { ProfileContext } from './contexts/ProfileContext';
 import UserAPI from '../../api/user';
 import { LOGIN_PAGE } from '../../routes/routePaths';
 import { useNavigate } from 'react-router-dom';
@@ -17,18 +16,16 @@ import { V1AccountTypeDto } from '../../api/models';
 
 export const AccountInfo = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
-  const userContext = useContext(UserContext);
-  const isTutor = userContext.user.accountType === V1AccountTypeDto.tutor;
+  const { user, removeUser } = useContext(UserContext);
+  const isTutor = user.accountType === V1AccountTypeDto.tutor;
   const navigate = useNavigate();
 
   const signOut = async () => {
     await UserAPI.signOut();
-    userContext.removeUser();
+    removeUser();
     navigate(LOGIN_PAGE);
   };
 
-  const profileContext = useContext(ProfileContext);
-  if (profileContext.isLoading) return <></>;
   return (
     <Box width={'100%'} shadow={'md'} borderRadius={'5px'} borderWidth={'1px'}>
       <Flex
@@ -38,7 +35,7 @@ export const AccountInfo = () => {
       >
         <Heading
           textAlign={'center'}
-          margin={isDesktop ? '0 0 15px 0' : '0 0 10px 0px'}
+          margin={isDesktop ? '0 0 15px 0' : '0 0 10px 0'}
         >
           Аккаунт
         </Heading>
@@ -47,8 +44,8 @@ export const AccountInfo = () => {
             label={'Тип профиля'}
             text={isTutor ? 'репетитор' : 'ученик'}
           />
-          <TextRow label={'Почта'} text={'Почта не прикручена в апишке'} />
-          <TextRow label={'Телефон'} text={'Телефон не прикручен в апишке'} />
+          <TextRow label={'Почта'} text={user.email} />
+          <TextRow label={'Телефон'} text={user.phone} />
         </Flex>
         <Button onClick={signOut} variant="red" margin={'1em 0 1em 0'}>
           Выйти из аккаунта

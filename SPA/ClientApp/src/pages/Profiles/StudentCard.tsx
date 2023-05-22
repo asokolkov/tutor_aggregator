@@ -25,8 +25,6 @@ import { TextAreaRow } from './components/TextAreaRow';
 export const StudentCard: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   const profileContext = useContext(ProfileContext);
-
-  if (profileContext.isLoading) return <></>;
   const student = profileContext.studentProfile;
 
   const onSubmit = async (values: FormikValues) => {
