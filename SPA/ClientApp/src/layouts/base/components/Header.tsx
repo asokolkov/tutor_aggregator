@@ -25,8 +25,8 @@ const Header: React.FC = () => {
   return (
     <Container padding={'0vh 5vw 1vh 5vw'} as="header" maxW="100%">
       <Flex py={{ base: '5', lg: '5' }} w="100%" wrap={'nowrap'}>
-        <HStack spacing="5" justify={'left'} align={'center'} w="100%">
-          <Link to={MAIN_PAGE}>
+        <HStack spacing="5" justify={'left'} align={'center'} flexGrow="1">
+          <Link to={MAIN_PAGE} style={{ flexShrink: '0' }}>
             <Image src={logo} boxSize="50px" />
           </Link>
           <VStack spacing="0px">

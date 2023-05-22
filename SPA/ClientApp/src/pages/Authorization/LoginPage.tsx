@@ -25,7 +25,7 @@ export const LoginPage = () => {
 
   return (
     <Flex>
-      <VStack margin={'20px'} width={'100%'}>
+      <VStack width={'100%'}>
         <Header title={'Войти в аккаунт'} />
         <Box
           className="login-container"

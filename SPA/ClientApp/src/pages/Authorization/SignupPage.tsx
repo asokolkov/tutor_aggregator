@@ -35,7 +35,7 @@ export const SignupPage = () => {
 
   return (
     <Flex>
-      <VStack margin={'20px'} width={'100%'}>
+      <VStack width={'100%'}>
         <Header title={'Зарегистрировать аккаунт'} />
         <Box
           className="login-container"
