@@ -1,39 +1,9 @@
 import axiosInstance from './_share';
-
-export interface Lesson {
-  id: string;
-  price: number;
-  status: LessonStatus;
-  type: LessonType;
-  start: string;
-  end: string;
-  tutor: Person;
-  student: Person;
-}
-
-export enum LessonStatus {
-  Empty = 'Empty',
-  Booked = 'Booked',
-  Finished = 'Finished',
-  Deleted = 'Deleted',
-  ExpiredEmpty = 'ExpiredEmpty',
-  ExpiredBooked = 'ExpiredBooked',
-}
-
-export enum LessonType {
-  Online = 'Online',
-  Offline = 'Offline',
-}
-
-interface Person {
-  id: string;
-  firstName: string;
-  lastName: string;
-}
+import { LessonType, V1LessonDto } from './models';
 
 export default class LessonsAPI {
   static async getTutorLessons(tutorId: string, date: Date) {
-    const response = await axiosInstance.get<Lesson[]>(
+    const response = await axiosInstance.get<V1LessonDto[]>(
       `/api/v1/tutors/${tutorId}/lessons`,
       {
         params: {

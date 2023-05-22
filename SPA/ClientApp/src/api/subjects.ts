@@ -1,8 +1,9 @@
-import axiosInstance, { Subject } from './_share';
+import axiosInstance from './_share';
+import { V1SubjectDto } from './models';
 
 export default class SubjectsAPI {
-  static async getSubjects(): Promise<Subject[]> {
-    const response = await axiosInstance.get<Subject[]>('api/v1/subjects');
+  static async getSubjects(): Promise<V1SubjectDto[]> {
+    const response = await axiosInstance.get<V1SubjectDto[]>('api/v1/subjects');
     return response.data;
   }
 }
