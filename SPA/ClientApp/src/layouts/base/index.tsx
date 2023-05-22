@@ -3,7 +3,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import { Container } from '@chakra-ui/react';
 import { UserContext } from './contexts/UserContext';
-import { LoadBar } from '../../pages/sharedComponents/LoadBar/LoadBar';
+import { LoadBar } from '../../components/LoadBar/LoadBar';
 import React, { useMemo } from 'react';
 import { SearchStateContext } from '../../contexts/SearchStateContext';
 import { useSearchValues } from './hooks/useSearchValues';

@@ -1,5 +1,5 @@
 import { Slot, SlotProps } from './Slot';
-import { LessonType } from '../../../api/lessons';
+import { LessonType } from '../../api/lessons';
 
 export default {
   component: Slot,

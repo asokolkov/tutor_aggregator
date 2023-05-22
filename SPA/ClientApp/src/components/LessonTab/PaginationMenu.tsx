@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Button, HStack, Text } from '@chakra-ui/react';
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import { dayAndMonth } from '../Slot/_helpers';
-import { ButtonVariant } from '../../../assets/theme/themeEnum';
+import { ButtonVariant } from '../../assets/theme/themeEnum';
 
 type Props = {
   start: Date;

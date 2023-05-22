@@ -1,10 +1,10 @@
 import { Avatar, Heading, VStack, Button } from '@chakra-ui/react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RatingStars } from '../../sharedComponents/ReviewStars/RatingStars';
+import { RatingStars } from '../../../components/ReviewStars/RatingStars';
 import categoryIcon from '../../../assets/images/category-icon.png';
 import jobIcon from '../../../assets/images/job-icon.png';
-import InfoWithIcon from '../../sharedComponents/InfoWithIcon';
+import InfoWithIcon from '../../../components/InfoWithIcon';
 import { getTutorCardByIdPath } from '../../../routes/routes';
 import { V1TutorDto } from '../../../api/models';
 import { getFullName } from '../../../utils/names';

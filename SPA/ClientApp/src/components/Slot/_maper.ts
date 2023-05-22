@@ -1,4 +1,4 @@
-import { Lesson } from '../../../api/lessons';
+import { Lesson } from '../../api/lessons';
 import { getTimeFromDate } from './_helpers';
 import { SlotProps } from './Slot';
 

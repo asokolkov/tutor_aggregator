@@ -1,7 +1,7 @@
 import { Text, VStack } from '@chakra-ui/react';
 import { Card } from './Card';
 import { ReviewSection } from './ReviewSection';
-import { LoadBar } from '../sharedComponents/LoadBar/LoadBar';
+import { LoadBar } from '../../components/LoadBar/LoadBar';
 import { useTutorCardPageQuery } from '../../query/useTutorCardPageQuery';
 import React, { useMemo } from 'react';
 import { TutorCardContext } from '../../contexts/TutorCardContext';

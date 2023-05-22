@@ -1,7 +1,7 @@
 import { Button, Flex, Text, VStack } from '@chakra-ui/react';
 import SearchCard from './components/SearchCard';
 import { SearchParamsSection } from './SearchParamsSection';
-import { LoadBar } from '../sharedComponents/LoadBar/LoadBar';
+import { LoadBar } from '../../components/LoadBar/LoadBar';
 import {
   SearchValuesProps,
   useSearchPageQuery,

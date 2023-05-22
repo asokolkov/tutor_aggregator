@@ -5,12 +5,12 @@ import { UserContext } from '../../layouts/base/contexts/UserContext';
 import {
   useLessonTab,
   useWindowDimensions,
-} from '../sharedComponents/LessonTab/useLessonTab';
-import { PaginationMenu } from '../sharedComponents/LessonTab/PaginationMenu';
-import { dateShift } from '../sharedComponents/Slot/_helpers';
-import { LoadBar } from '../sharedComponents/LoadBar/LoadBar';
+} from '../../components/LessonTab/useLessonTab';
+import { PaginationMenu } from '../../components/LessonTab/PaginationMenu';
+import { dateShift } from '../../components/Slot/_helpers';
+import { LoadBar } from '../../components/LoadBar/LoadBar';
 import { DayColumnWithSlots } from './components/DayColumnWithSlots';
-import './TutorBookPage.css';
+import './styles.css';
 import { Navigate } from 'react-router-dom';
 import { LOGIN_PAGE } from '../../routes/routePaths';
 

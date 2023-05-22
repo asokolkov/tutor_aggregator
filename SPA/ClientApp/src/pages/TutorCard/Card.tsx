@@ -6,7 +6,7 @@ import requirementsIcon from '../../assets/images/requirements-icon.png';
 import React, { useMemo } from 'react';
 import { ButtonSection } from './components/ButtonSection';
 import { CardInfoContext } from '../../contexts/CardInfoContext';
-import InfoWithIcon from '../sharedComponents/InfoWithIcon';
+import InfoWithIcon from '../../components/InfoWithIcon';
 
 export const Card: React.FC<CardInfoProps> = (props) => {
   const providerValue = useMemo(() => ({ ...props }), [props]);

@@ -2,8 +2,8 @@ import { Lesson } from '../../../api/lessons';
 import * as React from 'react';
 import { VStack } from '@chakra-ui/react';
 import { Title } from '../../Lessons/components/LessonCalendarTab/Title';
-import { Slot } from '../../sharedComponents/Slot/Slot';
-import { MapSlot } from '../../sharedComponents/Slot/_maper';
+import { Slot } from '../../../components/Slot/Slot';
+import { MapSlot } from '../../../components/Slot/_maper';
 
 type Props = {
   lessons: Lesson[];

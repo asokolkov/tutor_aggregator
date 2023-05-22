@@ -1,4 +1,4 @@
-import { useLessonsQuery } from '../../../query/useLessonsQuery';
+import { useLessonsQuery } from '../../query/useLessonsQuery';
 import { useEffect, useState } from 'react';
 
 function datesForQuery(date: Date, count: number): Date[] {

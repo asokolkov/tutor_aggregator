@@ -3,7 +3,7 @@ import { Flex, VStack, Text } from '@chakra-ui/react';
 import {
   dayAndMonth,
   russianDayOfTheWeekByIndex,
-} from '../../../sharedComponents/Slot/_helpers';
+} from '../../../../components/Slot/_helpers';
 
 type Props = {
   date: Date;

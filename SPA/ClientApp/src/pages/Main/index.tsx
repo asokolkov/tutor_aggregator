@@ -5,7 +5,7 @@ import { MainDescriptionForStudents } from './components/MainDescriptionForStude
 import { MainDescriptionForTutors } from './components/MainDescriptionForTutors';
 import { useLocationQuery } from '../../query/useLocationQuery';
 import { useSubjectQuery } from '../../query/useSubjectQuery';
-import { LoadBar } from '../sharedComponents/LoadBar/LoadBar';
+import { LoadBar } from '../../components/LoadBar/LoadBar';
 import { SearchParamsContext } from '../../contexts/SearchParamsContext';
 
 export const MainPage = () => {

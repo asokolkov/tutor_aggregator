@@ -4,7 +4,7 @@ import { PriceAndTypeInfo } from './PriceAndTypeInfo';
 import { StudentName } from './StudentName';
 import { ButtonGroupTutor } from './ButtonGroupTutor';
 import { useContext } from 'react';
-import { SlotContext } from '../../../contexts/SlotContext';
+import { SlotContext } from '../../contexts/SlotContext';
 import { ButtonGroupStudent } from './ButtonGroupStudent';
 
 export const SlotInfo: React.FC = () => {

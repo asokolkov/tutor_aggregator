@@ -1,5 +1,5 @@
 import { CardInfoProps } from './Card';
-import { mapCollectionToString } from './utils/mapCollectionToString';
+import { mapCollectionToString } from '../../utils/mapCollectionToString';
 import { SingleReviewProps } from './components/SingleReview';
 import { V1ReviewDto, V1TutorDto } from '../../api/models';
 

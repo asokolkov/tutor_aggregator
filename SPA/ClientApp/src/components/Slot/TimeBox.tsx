@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { SlotContext } from '../../../contexts/SlotContext';
+import { SlotContext } from '../../contexts/SlotContext';
 import { VStack, Text } from '@chakra-ui/react';
 
 export const TimeBox: React.FC = () => {

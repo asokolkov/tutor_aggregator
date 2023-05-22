@@ -1,6 +1,6 @@
 import { Avatar, Text, HStack, VStack } from '@chakra-ui/react';
 import React from 'react';
-import { RatingStars } from '../../sharedComponents/ReviewStars/RatingStars';
+import { RatingStars } from '../../../components/ReviewStars/RatingStars';
 
 export const SingleReview: React.FC<SingleReviewProps> = (props) => {
   return (

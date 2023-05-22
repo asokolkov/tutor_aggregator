@@ -2,14 +2,14 @@ import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { DayColumnWithSlots } from './components/LessonCalendarTab/DayColumnWithSlots';
-import { LoadBar } from '../sharedComponents/LoadBar/LoadBar';
+import { LoadBar } from '../../components/LoadBar/LoadBar';
 import { VStack } from '@chakra-ui/react';
 import {
   useLessonTab,
   useWindowDimensions,
-} from '../sharedComponents/LessonTab/useLessonTab';
-import { PaginationMenu } from '../sharedComponents/LessonTab/PaginationMenu';
-import { dateShift } from '../sharedComponents/Slot/_helpers';
+} from '../../components/LessonTab/useLessonTab';
+import { PaginationMenu } from '../../components/LessonTab/PaginationMenu';
+import { dateShift } from '../../components/Slot/_helpers';
 
 export const LessonCalendarTab: React.FC = () => {
   const { user } = useContext(UserContext);

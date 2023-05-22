@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Button, HStack, useDisclosure } from '@chakra-ui/react';
 import { ChatIcon, LockIcon } from '@chakra-ui/icons';
 import { useContext } from 'react';
-import { SlotContext } from '../../../contexts/SlotContext';
+import { SlotContext } from '../../contexts/SlotContext';
 import { BookLessonModal } from './modals/BookLessonModal';
-import { UserContext } from '../../../layouts/base/contexts/UserContext';
+import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { CancelLessonModal } from './modals/CancelLessonModal';
 
 export const ButtonGroupStudent: React.FC = () => {
