@@ -31,7 +31,10 @@ export const SearchPage = () => {
       <VStack spacing={'32px'} align={'start'}>
         <Formik initialValues={values} onSubmit={setValues}>
           <Form style={{ width: '100%' }}>
-            <SearchParamsSection />
+            <SearchParamsSection
+              subject={values.subject}
+              district={values.district}
+            />
           </Form>
         </Formik>
 
