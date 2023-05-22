@@ -41,6 +41,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.Name = "auth_cookie";
     options.Cookie.SameSite = SameSiteMode.None;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 
     options.Events.OnRedirectToLogin = context =>
     {
