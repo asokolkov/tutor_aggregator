@@ -7,7 +7,7 @@ type Props = {
 export const Header: React.FC<Props> = ({ title }) => {
   return (
     <Stack textAlign="center">
-      <Heading>{title}</Heading>
+      <Heading variant={'brand.h1'}>{title}</Heading>
     </Stack>
   );
 };

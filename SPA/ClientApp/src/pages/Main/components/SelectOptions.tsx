@@ -8,12 +8,21 @@ export const SelectOptions: React.FC<SelectOptionsProps> = ({
   label,
   name,
   placeholder,
+  isDesktop,
 }) => {
   const [field] = useField({ name });
 
   return (
-    <FormControl display={'flex'} flexDirection={'column'}>
-      <FormLabel variant={'misc.field-title'} margin={'0 0 2px 0'}>
+    <FormControl
+      display={'flex'}
+      flexDirection={isDesktop ? 'column' : 'row'}
+      alignItems={isDesktop ? 'flex-start' : 'center'}
+    >
+      <FormLabel
+        variant={'misc.field-title'}
+        margin={isDesktop ? '0 0 2px 0' : '0 2px 0 0'}
+        width={isDesktop ? 'auto' : '100px'}
+      >
         {label}
       </FormLabel>
       <Select
@@ -40,4 +49,5 @@ type SelectOptionsProps = {
   label: string;
   name: string;
   placeholder?: string;
+  isDesktop: boolean;
 };

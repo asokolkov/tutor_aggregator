@@ -22,7 +22,7 @@ export const CitySelection: React.FC = () => {
           bg={'white'}
           leftIcon={<FiMapPin />}
           iconSpacing={'5px'}
-          height={'auto'}
+          height={'20px'}
           fontSize="xs"
           color="subtle"
           padding={'0 20px 0 0'}
@@ -32,7 +32,11 @@ export const CitySelection: React.FC = () => {
             borderColor: 'white',
           }}
         >
-          <Text as={'u'} _hover={{ color: 'gray' }}>
+          <Text
+            variant={'misc.logo-addition'}
+            _hover={{ color: 'black' }}
+            color={'custom.blue.300'}
+          >
             {CURRENT_CITY}
           </Text>
         </Button>

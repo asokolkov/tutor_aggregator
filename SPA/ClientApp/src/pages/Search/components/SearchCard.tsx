@@ -16,7 +16,8 @@ const SearchCard: React.FC<SearchCardInfoProps> = ({ tutor }) => {
   const navigate = useNavigate();
   return (
     <VStack
-      w="310px"
+      minWidth="300px"
+      flexGrow={'1'}
       borderWidth="2px"
       borderColor="blue.200"
       borderRadius="10px"
@@ -47,7 +48,7 @@ const SearchCard: React.FC<SearchCardInfoProps> = ({ tutor }) => {
 
       <Button
         variant="green"
-        h="48px"
+        size={'md'}
         w="100%"
         onClick={() => navigate(getTutorCardByIdPath(id))}
       >

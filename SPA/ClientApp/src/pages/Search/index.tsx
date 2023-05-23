@@ -1,4 +1,4 @@
-import { Button, Flex, Text, VStack } from '@chakra-ui/react';
+import { Button, Flex, Text, useMediaQuery } from '@chakra-ui/react';
 import SearchCard from './components/SearchCard';
 import { SearchParamsSection } from './SearchParamsSection';
 import { LoadBar } from '../../components/LoadBar/LoadBar';
@@ -12,6 +12,7 @@ import { SearchStateContext } from '../../layouts/base/contexts/SearchStateConte
 import { useSearchParams } from './hooks/useSearchParams';
 
 export const SearchPage = () => {
+  const [isLargerThanTablet] = useMediaQuery('(min-width: 768px)');
   const { hasSearchValues } = useContext(SearchStateContext);
   if (!hasSearchValues) return <Navigate to={MAIN_PAGE} />;
 
@@ -19,17 +20,18 @@ export const SearchPage = () => {
   const { isLoading, data, isFetchingNextPage, fetchNextPage, hasNextPage } =
     query;
 
-  if (isLoading)
-    return <LoadBar description={'Загружаем список преподавателей'} />;
+  if (isLoading) return <LoadBar description={'Загружаем результаты поиска'} />;
   return (
-    <>
-      <Link to={MAIN_PAGE}>
-        <Text variant="misc.link" color={Color.blue300}>
-          <ArrowBackIcon />
-          Вернуться на главную страницу
-        </Text>
-      </Link>
-      <VStack spacing={'32px'} align={'start'}>
+    <Flex direction={'column'} gap={'30px'}>
+      <Flex direction={'column'} gap={'10px'}>
+        <Link to={MAIN_PAGE}>
+          <Text variant="misc.link" color={Color.blue300}>
+            <ArrowBackIcon />
+            {isLargerThanTablet
+              ? 'Вернуться на главную страницу'
+              : 'На главную'}
+          </Text>
+        </Link>
         <Formik initialValues={values} onSubmit={setValues}>
           <Form style={{ width: '100%' }}>
             <SearchParamsSection
@@ -38,27 +40,26 @@ export const SearchPage = () => {
             />
           </Form>
         </Formik>
+      </Flex>
+      <Flex width="100%" flexWrap="wrap" gap="16px">
+        {data.pages.map((x, i) => (
+          <React.Fragment key={+(data.pageParams[i] ?? 0)}>
+            {x.items.map((item) => (
+              <SearchCard tutor={item} key={item.id}></SearchCard>
+            ))}
+          </React.Fragment>
+        ))}
+      </Flex>
 
-        <Flex flexWrap="wrap" gap="16px">
-          {data.pages.map((x, i) => (
-            <React.Fragment key={+(data.pageParams[i] ?? 0)}>
-              {x.items.map((item) => (
-                <SearchCard tutor={item} key={item.id}></SearchCard>
-              ))}
-            </React.Fragment>
-          ))}
-        </Flex>
-
-        {hasNextPage && (
-          <Button
-            onClick={() => fetchNextPage()}
-            isLoading={isFetchingNextPage}
-            variant="green"
-          >
-            Загрузить еще...
-          </Button>
-        )}
-      </VStack>
-    </>
+      {hasNextPage && (
+        <Button
+          onClick={() => fetchNextPage()}
+          isLoading={isFetchingNextPage}
+          variant="blue.300"
+        >
+          Загрузить еще...
+        </Button>
+      )}
+    </Flex>
   );
 };
