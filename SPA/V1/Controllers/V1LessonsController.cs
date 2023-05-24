@@ -52,6 +52,7 @@ public sealed class V1LessonsController : ControllerBase
     public async Task<IActionResult> BookAsync(Guid id)
     {
         var studentId = User.GetId();
+        //note: очень сильное дублирование с анавторайзд, может решить атрибутами и стандартными либами?
         if (studentId is null)
             return Unauthorized();
 

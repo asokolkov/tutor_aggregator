@@ -60,6 +60,7 @@ internal sealed class TutorsRepository : ITutorsRepository
             tutorEntity.Job = tutor.Job;
             tutorEntity.Location = mapper.Map<LocationEntity>(tutor.Location);
 
+            //note: очень много сетевых вызовов к бд 
             var educationsEntities = mapper.Map<ICollection<TutorEducationEntity>>(tutor.Educations).ToList();
             foreach (var educationEntity in educationsEntities)
             {

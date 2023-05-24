@@ -54,7 +54,9 @@ builder.Services.ConfigureApplicationCookie(options =>
         return Task.CompletedTask;
     };
 });
-
+//note: где домен
+//note: вообще нет тестов, хочется хотя бы пару позитивных тестов на ключевой функционал приложения
+//note: есть гит, зачем комментарии?
 // builder.Services.AddAuthentication()
 //     .AddGoogle(options =>
 //     {
