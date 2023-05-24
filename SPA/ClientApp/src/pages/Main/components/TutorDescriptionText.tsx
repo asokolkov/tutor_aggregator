@@ -9,7 +9,11 @@ export const TutorDescriptionText: React.FC<Props> = ({
 }) => {
   return (
     <VStack align={isDesktop ? 'flex-end' : 'center'}>
-      <Text variant="brand.h1" color={Color.blue300} align="right">
+      <Text
+        variant="brand.h1"
+        color={Color.blue300}
+        align={isDesktop ? 'right' : 'center'}
+      >
         {title}
       </Text>
       <Text color={Color.blue300} align={isDesktop ? 'right' : 'center'}>

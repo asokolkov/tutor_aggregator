@@ -9,7 +9,11 @@ export const StudentDescriptionText: React.FC<Props> = ({
 }) => {
   return (
     <VStack align={isDesktop ? 'flex-start' : 'center'}>
-      <Text variant="brand.h1" color={Color.blue300}>
+      <Text
+        variant="brand.h1"
+        color={Color.blue300}
+        align={isDesktop ? 'start' : 'center'}
+      >
         {title}
       </Text>
       <Text color={Color.blue300} align={isDesktop ? 'start' : 'center'}>
