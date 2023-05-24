@@ -44,7 +44,7 @@ internal sealed class TutorsRepository : ITutorsRepository
         return mapper.Map<Tutor>(await table.FindAsync(id));
     }
 
-    public async Task<Tutor?> Update(Guid id, UpdateTutor tutor)
+    public async Task<Tutor?> Update(Guid id, UpdateTutor updateTutor)
     {
         await using var transaction = await context.Database.BeginTransactionAsync();
         await transaction.CreateSavepointAsync("BeforeUpdate");
@@ -54,63 +54,44 @@ internal sealed class TutorsRepository : ITutorsRepository
             if (tutorEntity is null)
                 return null;
 
+            var tutor = mapper.Map<TutorEntity>(updateTutor);
+
             tutorEntity.FirstName = tutor.FirstName;
             tutorEntity.LastName = tutor.LastName;
-            tutorEntity.Description = tutor.Description;
+            tutorEntity.Age = tutor.Age;
             tutorEntity.Job = tutor.Job;
-            tutorEntity.Location = mapper.Map<LocationEntity>(tutor.Location);
+            tutorEntity.Description = tutor.Description;
 
-            var educationsEntities = mapper.Map<ICollection<TutorEducationEntity>>(tutor.Educations).ToList();
-            foreach (var educationEntity in educationsEntities)
+            if (tutor.Location is null)
             {
-                var education = await context.TutorEducations.FindAsync(educationEntity.Id);
-                if (education is null)
-                    context.TutorEducations.Add(educationEntity);
+                tutorEntity.Location = null;
             }
-
-            tutorEntity.Educations = educationsEntities;
-
-            var awardsEntities = mapper.Map<ICollection<AwardEntity>>(tutor.Awards).ToList();
-            foreach (var awardEntity in awardsEntities)
+            else
             {
-                var award = await context.Awards.FindAsync(awardEntity.Id);
-                if (award is null)
-                    context.Awards.Add(awardEntity);
+                var locationEntity = await context.Locations.FindAsync(tutor.Location.Id);
+                if (locationEntity is null)
+                    return null;
+                tutorEntity.Location = locationEntity;
             }
-
-            tutorEntity.Awards = awardsEntities;
-
-            var requirementsEntities = mapper.Map<ICollection<RequirementEntity>>(tutor.Requirements).ToList();
-            foreach (var requirementEntity in requirementsEntities)
+            
+            if (tutor.Subjects.Count == 0)
             {
-                var requirement = await context.Requirements.FindAsync(requirementEntity.Id);
-                if (requirement is null)
-                    context.Requirements.Add(requirementEntity);
+                tutorEntity.Subjects = new List<SubjectEntity>();
             }
-
-            tutorEntity.Requirements = requirementsEntities;
-
-            var contactsEntities = mapper.Map<ICollection<TutorContactEntity>>(tutor.Contacts).ToList();
-            foreach (var contactEntity in contactsEntities)
+            else
             {
-                var contact = await context.TutorsContacts.FindAsync(contactEntity.Id);
-                if (contact is null)
-                    context.TutorsContacts.Add(contactEntity);
+                var newSubjects = new List<SubjectEntity>();
+                foreach (var subject in tutor.Subjects)
+                {
+                    var subjectEntity = await context.Subjects.FindAsync(subject.Id);
+                    if (subjectEntity is null)
+                        return null;
+                    newSubjects.Add(subjectEntity);
+                }
+                tutorEntity.Subjects = newSubjects;
             }
-
-            tutorEntity.Contacts = contactsEntities;
-
-            var subjectsEntities = mapper.Map<ICollection<SubjectEntity>>(tutor.Subjects).ToList();
-            for (var i = 0; i < subjectsEntities.Count; i++)
-            {
-                var subject = await context.Subjects.FindAsync(subjectsEntities[i].Id);
-                if (subject is null)
-                    context.Subjects.Add(subjectsEntities[i]);
-                else
-                    subjectsEntities[i] = subject;
-            }
-
-            tutorEntity.Subjects = subjectsEntities;
+            
+            
 
             await context.SaveChangesAsync();
             await transaction.CommitAsync();
