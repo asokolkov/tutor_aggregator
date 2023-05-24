@@ -53,7 +53,7 @@ export const TutorBookPage: React.FC = () => {
   const isLoading = queries.some((query) => query.isLoading);
 
   return (
-    <VStack spacing="20px">
+    <VStack spacing="20px" w="100%">
       <PaginationMenu
         start={currentDate}
         end={getShiftedDate(currentDate, columnCount - 1)}
