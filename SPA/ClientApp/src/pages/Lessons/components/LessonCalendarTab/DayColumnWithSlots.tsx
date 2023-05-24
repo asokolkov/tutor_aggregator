@@ -19,7 +19,12 @@ export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
 
   return (
     <>
-      <VStack w="356px" spacing="30px" style={{ breakInside: 'avoid' }}>
+      <VStack
+        w="356px"
+        spacing="30px"
+        style={{ breakInside: 'avoid' }}
+        minH="50vh"
+      >
         <Title
           date={date}
           totalCount={lessons.length}

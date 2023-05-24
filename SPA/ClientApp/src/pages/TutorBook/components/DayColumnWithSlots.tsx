@@ -14,7 +14,12 @@ export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
   const bookedCount = lessons.filter((x) => x.student).length;
 
   return (
-    <VStack w="260px" spacing="30px">
+    <VStack
+      w="260px"
+      spacing="30px"
+      style={{ breakInside: 'avoid' }}
+      minH="50vh"
+    >
       <Title
         date={date}
         totalCount={lessons.length}
