@@ -61,6 +61,30 @@ internal sealed class TutorsRepository : ITutorsRepository
             tutorEntity.Age = tutor.Age;
             tutorEntity.Job = tutor.Job;
             tutorEntity.Description = tutor.Description;
+            
+            context.Awards.RemoveRange(tutorEntity.Awards);
+            var awardsEntities = new List<AwardEntity>();
+            foreach (var award in tutor.Awards)
+                awardsEntities.Add((await context.Awards.AddAsync(award)).Entity);
+            tutorEntity.Awards = awardsEntities;
+            
+            context.TutorEducations.RemoveRange(tutorEntity.Educations);
+            var educationsEntities = new List<TutorEducationEntity>();
+            foreach (var education in tutor.Educations)
+                educationsEntities.Add((await context.TutorEducations.AddAsync(education)).Entity);
+            tutorEntity.Educations = educationsEntities;
+            
+            context.TutorsContacts.RemoveRange(tutorEntity.Contacts);
+            var contactsEntities = new List<TutorContactEntity>();
+            foreach (var contact in tutor.Contacts)
+                contactsEntities.Add((await context.TutorsContacts.AddAsync(contact)).Entity);
+            tutorEntity.Contacts = contactsEntities;
+            
+            context.Requirements.RemoveRange(tutorEntity.Requirements);
+            var requirementsEntities = new List<RequirementEntity>();
+            foreach (var requirement in tutor.Requirements)
+                requirementsEntities.Add((await context.Requirements.AddAsync(requirement)).Entity);
+            tutorEntity.Requirements = requirementsEntities;
 
             if (tutor.Location is null)
             {
@@ -90,8 +114,6 @@ internal sealed class TutorsRepository : ITutorsRepository
                 }
                 tutorEntity.Subjects = newSubjects;
             }
-            
-            
 
             await context.SaveChangesAsync();
             await transaction.CommitAsync();
