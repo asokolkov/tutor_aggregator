@@ -10,8 +10,7 @@ import { useSearchParamsContext } from './hooks/useSearchParamsContext';
 export const MainPage = () => {
   const { providerValue, isLoading } = useSearchParamsContext();
 
-  if (isLoading)
-    return <LoadBar description="Загружаем данные о районах и предметах" />;
+  if (isLoading) return <LoadBar description="Загружаем данные" />;
   return (
     <VStack spacing="40px">
       <SearchParamsContext.Provider value={providerValue}>
