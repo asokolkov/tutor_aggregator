@@ -1,71 +1,36 @@
 import * as React from 'react';
-import { useContext, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+import { useContext } from 'react';
 import { SlotContext } from '../contexts/SlotContext';
 import LessonsAPI from '../../../api/lessons';
-import { lessonsKey } from '../../../query/queryKeys';
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Text,
-} from '@chakra-ui/react';
-import { DisclosureProps } from '../../disclosureProps';
+import { Text } from '@chakra-ui/react';
+import { modal } from '../../LessonModalsHOC/Modal';
+import { modalFooter } from '../../LessonModalsHOC/ModalFooter';
+import { ButtonVariant } from '../../../assets/theme/themeEnum';
 
-type Props = {
-  disclosure: DisclosureProps;
+const onSuccess = async (lessonId: string) => {
+  await LessonsAPI.cancelLesson(lessonId);
 };
-export const CancelLessonModal: React.FC<Props> = ({ disclosure }) => {
-  const { isOpen, onClose } = disclosure;
-  const [isSubmitLoading, setSubmitLoading] = useState(false);
-  const queryClient = useQueryClient();
-  const { tutorName, lessonId, timeRange } = useContext(SlotContext);
 
-  const onSubmit = async () => {
-    setSubmitLoading(true);
-    await LessonsAPI.cancelLesson(lessonId);
-    setSubmitLoading(false);
-    onClose();
-  };
+const modalTitle = 'Вы действительно хотите отменить запись на занятие?';
 
-  const mutation = useMutation({
-    mutationFn: onSubmit,
-    onSuccess: () => queryClient.invalidateQueries([lessonsKey]),
-  });
+const Body: React.FC = () => {
+  const { tutorName, timeRange } = useContext(SlotContext);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered size="lg">
-      <ModalOverlay />
-      <ModalContent>
-        <ModalBody>
-          <ModalHeader>
-            Вы действительно хотите отменить запись на занятие?
-          </ModalHeader>
-          <ModalCloseButton />
-          <Text>Будет отменена запись к преподвавателю:</Text>
-          <Text variant="regular.bold">{tutorName}</Text>
-          <Text>Время занятия:</Text>
-          <Text variant="regular.bold">{`Время: ${timeRange}`}</Text>
-        </ModalBody>
-
-        <ModalFooter>
-          <Button
-            isLoading={isSubmitLoading}
-            colorScheme="blue"
-            onClick={() => mutation.mutate()}
-          >
-            Отменить
-          </Button>
-          <Button variant="ghost" onClick={onClose}>
-            Закрыть без отмены
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+    <>
+      <Text>Будет отменена запись к преподвавателю:</Text>
+      <Text variant="regular.bold">{tutorName}</Text>
+      <Text>Время занятия:</Text>
+      <Text variant="regular.bold">{`Время: ${timeRange}`}</Text>
+    </>
   );
 };
+
+const Footer = modalFooter(ButtonVariant.red, 'Отменить', 'Закрыть без отмены');
+
+export const CancelLessonModal = modal(
+  Body,
+  Footer,
+  onSuccess,
+  modalTitle
+);
