@@ -2,7 +2,7 @@
 
 using Domain;
 
-internal interface IStudentsRepository
+public interface IStudentsRepository
 {
     Task<Page<Student>> GetAsync(int page, int size);
     

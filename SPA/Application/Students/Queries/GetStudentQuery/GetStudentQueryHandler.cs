@@ -8,7 +8,7 @@ namespace SPA.Application.Students.Queries.GetStudentQuery;
 using Domain;
 
 [UsedImplicitly]
-internal class GetStudentQueryHandler : IRequestHandler<GetStudentQuery, Student?> 
+public class GetStudentQueryHandler : IRequestHandler<GetStudentQuery, Student?> 
 {
     private readonly IStudentsRepository repository;
     

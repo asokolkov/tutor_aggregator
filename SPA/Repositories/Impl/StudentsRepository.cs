@@ -8,13 +8,13 @@ using Microsoft.EntityFrameworkCore;
 
 #nullable enable
 
-internal sealed class StudentsRepository : IStudentsRepository
+public sealed class StudentsRepository : IStudentsRepository
 {
-    private readonly ApplicationContext context;
+    private readonly IApplicationContext context;
     private readonly DbSet<StudentEntity> table;
     private readonly IMapper mapper;
 
-    public StudentsRepository(ApplicationContext context, IMapper mapper)
+    public StudentsRepository(IApplicationContext context, IMapper mapper)
     {
         this.context = context;
         this.mapper = mapper;
@@ -35,53 +35,43 @@ internal sealed class StudentsRepository : IStudentsRepository
 
     public async Task<Student?> GetAsync(Guid id)
     {
-        return mapper.Map<Student>(await table.FindAsync(id));
+        var t = await context.Students.FindAsync(id);
+        return mapper.Map<Student>(t);
     }
 
     public async Task<Student?> Update(Guid id, UpdateStudent student)
     {
-        await using var transaction = await context.Database.BeginTransactionAsync();
-        await transaction.CreateSavepointAsync("BeforeUpdate");
-        try
-        {
-            var studentEntity = await table.FindAsync(id);
-            if (studentEntity is null)
-                return default;
-
-            studentEntity.FirstName = student.FirstName;
-            studentEntity.LastName = student.LastName;
-            studentEntity.Age = student.Age;
-            studentEntity.Description = student.Description;
-            
-            if (student.Education != null)
-            {
-                var educationEntity = mapper.Map<StudentEducationEntity>(student.Education);
-                var education = await context.StudentEducations.FindAsync(educationEntity.Id);
-                if (education is null)
-                    context.StudentEducations.Add(educationEntity);
-                else
-                    educationEntity = education;
-                studentEntity.Education = educationEntity;
-            }
-            
-            var contactsEntities = mapper.Map<ICollection<StudentContactEntity>>(student.Contacts).ToList();
-            foreach (var contactEntity in contactsEntities)
-            {
-                var contact = await context.StudentsContacts.FindAsync(contactEntity.Id);
-                if (contact is null)
-                    context.StudentsContacts.Add(contactEntity);
-            }
-            studentEntity.Contacts = contactsEntities;
-            
-            await context.SaveChangesAsync();
-            await transaction.CommitAsync();
-            return mapper.Map<Student>(studentEntity);
-        }
-        catch (Exception)
-        {
-            await transaction.RollbackToSavepointAsync("BeforeUpdate");
+        var studentEntity = await table.FindAsync(id);
+        if (studentEntity is null)
             return default;
+
+        studentEntity.FirstName = student.FirstName;
+        studentEntity.LastName = student.LastName;
+        studentEntity.Age = student.Age;
+        studentEntity.Description = student.Description;
+            
+        if (student.Education != null)
+        {
+            var educationEntity = mapper.Map<StudentEducationEntity>(student.Education);
+            var education = await context.StudentEducations.FindAsync(educationEntity.Id);
+            if (education is null)
+                context.StudentEducations.Add(educationEntity);
+            else
+                educationEntity = education;
+            studentEntity.Education = educationEntity;
         }
+            
+        var contactsEntities = mapper.Map<ICollection<StudentContactEntity>>(student.Contacts).ToList();
+        foreach (var contactEntity in contactsEntities)
+        {
+            var contact = await context.StudentsContacts.FindAsync(contactEntity.Id);
+            if (contact is null)
+                context.StudentsContacts.Add(contactEntity);
+        }
+        studentEntity.Contacts = contactsEntities;
+            
+        await context.SaveChangesAsync();
+        return mapper.Map<Student>(studentEntity);
     }
 
     public async Task<Student?> Insert(Student student)

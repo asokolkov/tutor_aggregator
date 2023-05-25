@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.DataGenerator", "Tool
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfCore.MigrationsTool", "EfCore.MigrationsTool\EfCore.MigrationsTool.csproj", "{AC34EE35-0480-43AE-9315-B55B0063A1F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.SPA", "Tests.SPA\Tests.SPA.csproj", "{3A8545EF-C25A-43C3-A269-67F51E87C86A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{AC34EE35-0480-43AE-9315-B55B0063A1F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC34EE35-0480-43AE-9315-B55B0063A1F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC34EE35-0480-43AE-9315-B55B0063A1F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A8545EF-C25A-43C3-A269-67F51E87C86A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A8545EF-C25A-43C3-A269-67F51E87C86A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A8545EF-C25A-43C3-A269-67F51E87C86A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A8545EF-C25A-43C3-A269-67F51E87C86A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -3,7 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
 
-public sealed class ApplicationContext : DbContext
+public class ApplicationContext : DbContext, IApplicationContext
 {
     public DbSet<TutorEntity> Tutors { get; set; } = null!;
     public DbSet<LessonEntity> Lessons { get; set; } = null!;
@@ -21,6 +21,11 @@ public sealed class ApplicationContext : DbContext
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
     {
+    }
+    
+    public async Task<int> SaveChangesAsync()
+    {
+        return await base.SaveChangesAsync();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

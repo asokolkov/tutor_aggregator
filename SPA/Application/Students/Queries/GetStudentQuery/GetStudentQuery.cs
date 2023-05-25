@@ -5,4 +5,4 @@ namespace SPA.Application.Students.Queries.GetStudentQuery;
 
 using Domain;
 
-internal record GetStudentQuery(Guid Id) : IRequest<Student?>;
+public record GetStudentQuery(Guid Id) : IRequest<Student?>;
