@@ -11,37 +11,35 @@ using Microsoft.EntityFrameworkCore;
 public sealed class StudentsRepository : IStudentsRepository
 {
     private readonly IApplicationContext context;
-    private readonly DbSet<StudentEntity> table;
     private readonly IMapper mapper;
 
     public StudentsRepository(IApplicationContext context, IMapper mapper)
     {
         this.context = context;
         this.mapper = mapper;
-        table = context.Students;
     }
 
     public async Task<Page<Student>> GetAsync(int page, int size)
     {
-        var studentEntities = await table
+        var studentEntities = await context.Students
             .OrderBy(e => e.Id)
             .Skip(page * size)
             .Take(size)
             .ToListAsync();
         var students = mapper.Map<List<Student>>(studentEntities);
 
-        return new Page<Student>(students, table.Count(), page, size);
+        return new Page<Student>(students, context.Students.Count(), page, size);
     }
 
     public async Task<Student?> GetAsync(Guid id)
     {
-        var t = await context.Students.FindAsync(id);
-        return mapper.Map<Student>(t);
+        var entity = await context.Students.FirstOrDefaultAsync(x => x.Id == id);
+        return mapper.Map<Student>(entity);
     }
 
     public async Task<Student?> Update(Guid id, UpdateStudent student)
     {
-        var studentEntity = await table.FindAsync(id);
+        var studentEntity = await context.Students.FindAsync(id);
         if (studentEntity is null)
             return default;
 
@@ -77,7 +75,7 @@ public sealed class StudentsRepository : IStudentsRepository
     public async Task<Student?> Insert(Student student)
     {
         var studentEntity = mapper.Map<StudentEntity>(student);
-        await table.AddAsync(studentEntity);
+        await context.Students.AddAsync(studentEntity);
         await context.SaveChangesAsync();
         return mapper.Map<Student>(studentEntity);
     }
