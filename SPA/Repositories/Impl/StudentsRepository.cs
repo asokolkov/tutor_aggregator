@@ -19,7 +19,7 @@ public sealed class StudentsRepository : IStudentsRepository
         this.mapper = mapper;
     }
 
-    public async Task<Page<Student>> GetAsync(int page, int size)
+    public async Task<Page<Student>> GetPageAsync(int page, int size)
     {
         var studentEntities = await context.Students
             .OrderBy(e => e.Id)

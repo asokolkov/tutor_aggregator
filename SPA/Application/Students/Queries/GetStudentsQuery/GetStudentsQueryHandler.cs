@@ -19,6 +19,6 @@ internal class GetStudentsQueryHandler : IRequestHandler<GetStudentsQuery, Page<
 
     public async Task<Page<Student?>> Handle(GetStudentsQuery request, CancellationToken cancellationToken)
     {
-        return await repository.GetAsync(request.PageNumber, request.PageSize);
+        return await repository.GetPageAsync(request.PageNumber, request.PageSize);
     }
 }

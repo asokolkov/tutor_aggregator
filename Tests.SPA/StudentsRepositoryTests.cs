@@ -13,6 +13,7 @@ public class StudentsRepositoryTests
 {
     private List<StudentEntity> data = null!;
     private StudentsRepository repository = null!;
+    private const int PageSize = 1;
 
     [SetUp]
     public void Setup()
@@ -36,41 +37,62 @@ public class StudentsRepositoryTests
     }
 
     [Test]
-    public async Task GetAsync_Test()
+    public async Task GetAsync_ExistingStudent_ReturnsStudent()
     {
-        var studentA = await repository.GetAsync(data[0].Id);
-        var studentB = await repository.GetAsync(Guid.NewGuid());
-        
+        var student = await repository.GetAsync(data[0].Id);
         Assert.Multiple(() =>
         {
-            Assert.That(studentA?.Id, Is.EqualTo(data[0].Id));
-            Assert.That(studentA, Is.InstanceOf<Student>());
-            Assert.That(studentB, Is.Null);
+            Assert.That(student!.Id, Is.EqualTo(data[0].Id));
+            Assert.That(student, Is.InstanceOf<Student>());
         });
     }
     
     [Test]
-    public async Task GetAsync_Page_Test()
+    public async Task GetAsync_NonExistingStudent_ReturnsNull()
     {
-        const int size = 1;
-        var pageA = await repository.GetAsync(0, size);
-        var pageB = await repository.GetAsync(data.Count - 1, size);
-        var pageC = await repository.GetAsync(data.Count, size);
-        
+        var student = await repository.GetAsync(Guid.NewGuid());
+        Assert.That(student, Is.Null);
+    }
+
+    [Test]
+    public async Task GetPageAsync_FirstPage_ReturnsPage()
+    {
+        var page = await repository.GetPageAsync(0, PageSize);
         Assert.Multiple(() =>
         {
-            Assert.That(pageA, Is.InstanceOf<Page<Student>>());
-            Assert.That(pageA.Items, Has.Count.EqualTo(size));
-            Assert.That(pageA.TotalCount, Is.EqualTo(data.Count));
-            Assert.That(pageA.HasNext, Is.True);
-            Assert.That(pageA.HasPrevious, Is.False);
-            
-            Assert.That(pageB.HasNext, Is.False);
-            Assert.That(pageB.HasPrevious, Is.True);
-            
-            Assert.That(pageC.Items, Has.Count.EqualTo(0));
-            Assert.That(pageC.HasNext, Is.False);
-            Assert.That(pageC.HasPrevious, Is.True);
+            Assert.That(page, Is.InstanceOf<Page<Student>>());
+            Assert.That(page.Items, Has.Count.EqualTo(PageSize));
+            Assert.That(page.TotalCount, Is.EqualTo(data.Count));
+            Assert.That(page.HasNext, Is.True);
+            Assert.That(page.HasPrevious, Is.False);
+        });
+    }
+    
+    [Test]
+    public async Task GetPageAsync_LastPage_ReturnsPage()
+    {
+        var page = await repository.GetPageAsync(data.Count - 1, PageSize);
+        Assert.Multiple(() =>
+        {
+            Assert.That(page, Is.InstanceOf<Page<Student>>());
+            Assert.That(page.Items, Has.Count.EqualTo(PageSize));
+            Assert.That(page.TotalCount, Is.EqualTo(data.Count));
+            Assert.That(page.HasNext, Is.False);
+            Assert.That(page.HasPrevious, Is.True);
+        });
+    }
+    
+    [Test]
+    public async Task GetPageAsync_AfterLastPage_ReturnsPage()
+    {
+        var page = await repository.GetPageAsync(data.Count, PageSize);
+        Assert.Multiple(() =>
+        {
+            Assert.That(page, Is.InstanceOf<Page<Student>>());
+            Assert.That(page.Items, Has.Count.EqualTo(0));
+            Assert.That(page.TotalCount, Is.EqualTo(3));
+            Assert.That(page.HasNext, Is.False);
+            Assert.That(page.HasPrevious, Is.True);
         });
     }
 }
