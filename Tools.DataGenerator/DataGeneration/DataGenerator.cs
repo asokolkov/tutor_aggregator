@@ -31,7 +31,8 @@ internal sealed class DataGenerator : IDataGenerator
     public async Task FillDatabase()
     {
         var locations = await CreateLocations();
-        var tutors = await CreateTutors(locations);
+        var subjects = await CreateSubjects();
+        var tutors = await CreateTutors(locations, subjects);
         var students = await CreateStudents();
 
         foreach (var student in students)
@@ -43,7 +44,6 @@ internal sealed class DataGenerator : IDataGenerator
         foreach (var tutor in tutors)
         {
             tutor.Contacts = await CreateTutorContacts();
-            tutor.Subjects = await CreateSubjects();
             tutor.Educations = await CreateTutorEducations();
             tutor.Awards = await CreateAwards();
             tutor.Requirements = await CreateRequirements();
@@ -166,7 +166,7 @@ internal sealed class DataGenerator : IDataGenerator
                     Description = Guid.NewGuid().ToString(),
                     Tutor = tutor,
                     Student = extraction.Get(students)!,
-                    Rating = extraction.GetDouble() * 10,
+                    Rating = extraction.GetDouble() * 5,
                     UpdatedAt = extraction.GetTime()
                 });
     }
@@ -190,24 +190,19 @@ internal sealed class DataGenerator : IDataGenerator
         return result;
     }
 
-    private async Task<ICollection<SubjectEntity>> CreateSubjects()
+    private async Task<List<SubjectEntity>> CreateSubjects()
     {
         var result = new List<SubjectEntity>();
-        foreach (var subject in extraction.GetCollection(data["subjects"]))
-        {
-            var subjectEntity = await applicationContext.Subjects.FirstOrDefaultAsync(x => x.Description == subject);
-            if (subjectEntity != null)
-                result.Add(subjectEntity);
-            else
-            {
-                var subjectEntry = await applicationContext.Subjects.AddAsync(new SubjectEntity
-                {
-                    Id = Guid.NewGuid(),
-                    Description = subject!
-                });
 
-                result.Add(subjectEntry.Entity);
-            }
+        foreach (var subject in data["subjects"])
+        {
+            var subjectEntity = new SubjectEntity
+            {
+                Id = Guid.NewGuid(),
+                Description = subject!
+            };
+            var subjectEntry = await applicationContext.Subjects.AddAsync(subjectEntity);
+            result.Add(subjectEntry.Entity);
         }
 
         return result;
@@ -251,7 +246,8 @@ internal sealed class DataGenerator : IDataGenerator
         return result;
     }
 
-    private async Task<List<TutorEntity>> CreateTutors(List<LocationEntity> locationEntities)
+    private async Task<List<TutorEntity>> CreateTutors(List<LocationEntity> locationEntities,
+        List<SubjectEntity> subjectEntities)
     {
         var result = new List<TutorEntity>();
 
@@ -268,7 +264,8 @@ internal sealed class DataGenerator : IDataGenerator
                 LastName = user.LastName!,
                 Description = extraction.Get(data["descriptions"], true),
                 Job = extraction.Get(data["jobs"], true),
-                Location = extraction.Get(locationEntities, true)
+                Location = extraction.Get(locationEntities, true),
+                Subjects = extraction.GetCollection(subjectEntities)
             };
             
             var tutorEntry = await applicationContext.Tutors.AddAsync(tutorEntity);
