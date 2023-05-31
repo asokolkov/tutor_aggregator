@@ -1,6 +1,6 @@
 ﻿namespace SPA.Domain;
 
-internal sealed class Avatar
+public sealed class Avatar
 {
     public Guid Id { get; init; }
 

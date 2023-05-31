@@ -1,12 +1,12 @@
-﻿namespace SPA.Repositories.Impl;
+﻿#nullable enable
 
 using AutoMapper;
-using Domain;
 using EFCore.Postgres.Application.Contexts;
 using EFCore.Postgres.Application.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using SPA.Domain;
 
-#nullable enable
+namespace SPA.Repositories.Impl;
 
 public sealed class StudentsRepository : IStudentsRepository
 {
@@ -47,7 +47,7 @@ public sealed class StudentsRepository : IStudentsRepository
         studentEntity.LastName = student.LastName;
         studentEntity.Age = student.Age;
         studentEntity.Description = student.Description;
-            
+
         if (student.Education != null)
         {
             var educationEntity = mapper.Map<StudentEducationEntity>(student.Education);
@@ -58,7 +58,7 @@ public sealed class StudentsRepository : IStudentsRepository
                 educationEntity = education;
             studentEntity.Education = educationEntity;
         }
-            
+
         var contactsEntities = mapper.Map<ICollection<StudentContactEntity>>(student.Contacts).ToList();
         foreach (var contactEntity in contactsEntities)
         {
@@ -66,8 +66,9 @@ public sealed class StudentsRepository : IStudentsRepository
             if (contact is null)
                 context.StudentsContacts.Add(contactEntity);
         }
+
         studentEntity.Contacts = contactsEntities;
-            
+
         await context.SaveChangesAsync();
         return mapper.Map<Student>(studentEntity);
     }

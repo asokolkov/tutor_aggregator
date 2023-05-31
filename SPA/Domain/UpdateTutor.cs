@@ -1,6 +1,6 @@
 ﻿namespace SPA.Domain;
 
-internal sealed class UpdateTutor
+public sealed class UpdateTutor
 {
     public string FirstName { get; set; }
 
