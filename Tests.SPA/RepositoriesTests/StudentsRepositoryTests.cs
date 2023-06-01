@@ -7,7 +7,7 @@ using NUnit.Framework;
 using SPA.Domain;
 using SPA.Repositories.Impl;
 
-namespace Tests.SPA;
+namespace Tests.SPA.RepositoriesTests;
 
 internal sealed class StudentsRepositoryTests
 {

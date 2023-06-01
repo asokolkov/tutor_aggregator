@@ -7,7 +7,7 @@ using NUnit.Framework;
 using SPA.Domain;
 using SPA.Repositories.Impl;
 
-namespace Tests.SPA;
+namespace Tests.SPA.RepositoriesTests;
 
 internal sealed class TutorRepositoryTests
 {
@@ -94,10 +94,10 @@ internal sealed class TutorRepositoryTests
 
         var config = new MapperConfiguration(cfg =>
         {
-            cfg.CreateMap<TutorEntity, Tutor>();
-            cfg.CreateMap<LocationEntity, Location>();
-            cfg.CreateMap<SubjectEntity, Subject>();
-            cfg.CreateMap<ReviewEntity, Review>();
+            cfg.CreateMap<TutorEntity, Tutor>().ReverseMap();
+            cfg.CreateMap<LocationEntity, Location>().ReverseMap();
+            cfg.CreateMap<SubjectEntity, Subject>().ReverseMap();
+            cfg.CreateMap<ReviewEntity, Review>().ReverseMap();
         });
         var mapper = new Mapper(config);
 
