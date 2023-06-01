@@ -22,25 +22,36 @@ public sealed class TutorsRepository : ITutorsRepository
     public async Task<Page<Tutor>> GetPageAsync(int page, int size, string subject, string city,
         string district, int maxPrice, int rating)
     {
-        var tutorsEntities = await context.Tutors
+        var filteredEntities = await context.Tutors
             .OrderBy(x => x.FirstName)
             .Where(x => rating == -1 || (int)x.Rating == rating)
             .Where(x => city == "" || (x.Location != null ? x.Location.City : null) == city)
             .Where(x => district == "" || (x.Location != null ? x.Location.District : null) == district)
             .Where(x => subject == "" || x.Subjects.FirstOrDefault(y => y.Description == subject) != null)
             .Where(x => maxPrice == -1 || (x.Lessons.Any() ? x.Lessons.Max(y => y.Price) : -1) <= maxPrice)
-            .Skip(page * size)
-            .Take(size)
             .ToListAsync();
-        var tutors = mapper.Map<List<Tutor>>(tutorsEntities);
+        
+        var entities = mapper.Map<List<Tutor>>(filteredEntities.Skip(page * size).Take(size));
 
-        return new Page<Tutor>(tutors, context.Tutors.Count(), page, size);
+        return new Page<Tutor>(entities, filteredEntities.Count, page, size);
     }
 
     public async Task<Tutor?> GetAsync(Guid id)
     {
         var entity = await context.Tutors.FirstOrDefaultAsync(x => x.Id == id);
         return mapper.Map<Tutor>(entity);
+    }
+    
+    public async Task<Page<Review>> GetTutorReviews(Guid id, int page, int size)
+    {
+        var tutor = await context.Tutors.FirstOrDefaultAsync(x => x.Id == id);
+
+        if (tutor?.Reviews is null)
+            return new Page<Review>(Array.Empty<Review>(), 0, page, size);
+
+        var reviews = mapper.Map<List<Review>>(tutor.Reviews.Skip(page * size).Take(size));
+
+        return new Page<Review>(reviews, tutor.Reviews.Count, page, size);
     }
 
     public async Task<Tutor?> Update(Guid id, UpdateTutor tutor)
@@ -117,21 +128,5 @@ public sealed class TutorsRepository : ITutorsRepository
         await context.Tutors.AddAsync(tutorEntity);
         await context.SaveChangesAsync();
         return mapper.Map<Tutor>(tutorEntity);
-    }
-
-    public async Task<Page<Review>> GetTutorReviews(Guid id, int page, int size)
-    {
-        var tutor = await context.Tutors.FindAsync(id);
-
-        if (tutor?.Reviews is null)
-            return new Page<Review>(Array.Empty<Review>(), 0, page, size);
-
-        var reviewsEntities = tutor.Reviews
-            .Skip(page * size)
-            .Take(size)
-            .ToList();
-        var reviews = mapper.Map<List<Review>>(reviewsEntities);
-
-        return new Page<Review>(reviews, tutor.Reviews.Count, page, size);
     }
 }

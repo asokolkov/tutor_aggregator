@@ -22,27 +22,68 @@ internal sealed class TutorRepositoryTests
         {
             new()
             {
-                Id = new Guid("daf362fc-4487-4338-8776-d5bca5bc2632"), FirstName = "A", LastName = "A",
-                Description = "A", Age = 1, Educations = new List<TutorEducationEntity>(), Lessons = new List<LessonEntity>(),
-                Reviews = new List<ReviewEntity>(), Contacts = new List<TutorContactEntity>(), Rating = 1, Job = "A",
-                Location = new LocationEntity(), Awards = new List<AwardEntity>(), Requirements = new List<RequirementEntity>(), 
+                Id = Guid.NewGuid(), 
+                FirstName = "A", 
+                LastName = "A", 
+                Description = "A", 
+                Job = "A", 
+                Age = 1, 
+                Rating = 1,
+                Location = new LocationEntity { Id = Guid.NewGuid(), City = "X", District = "X" },
+                Educations = new List<TutorEducationEntity>(), 
+                Lessons = new List<LessonEntity>(),
+                Reviews = new List<ReviewEntity>
+                {
+                    new() { Id = Guid.NewGuid(), Description = "A1", Rating = 1 },
+                    new() { Id = Guid.NewGuid(), Description = "A2", Rating = 2 }
+                }, 
+                Contacts = new List<TutorContactEntity>(),
+                Awards = new List<AwardEntity>(), 
+                Requirements = new List<RequirementEntity>(), 
                 Subjects = new List<SubjectEntity>()
             },
             new()
             {
-                Id = new Guid("40503af9-7569-4015-879e-6f70d0088de1"), FirstName = "B", LastName = "B",
-                Description = "B", Age = 2, Educations = new List<TutorEducationEntity>(), Lessons = new List<LessonEntity>(),
-                Reviews = new List<ReviewEntity>(), Contacts = new List<TutorContactEntity>(), Rating = 2, Job = "B",
-                Location = new LocationEntity(), Awards = new List<AwardEntity>(), Requirements = new List<RequirementEntity>(), 
-                Subjects = new List<SubjectEntity>()
+                Id = Guid.NewGuid(), 
+                FirstName = "B", 
+                LastName = "B", 
+                Description = "B", 
+                Job = "B", 
+                Age = 2, 
+                Rating = 2,
+                Location = new LocationEntity(),
+                Educations = new List<TutorEducationEntity>(), 
+                Lessons = new List<LessonEntity>(),
+                Reviews = new List<ReviewEntity>(), 
+                Contacts = new List<TutorContactEntity>(),
+                Awards = new List<AwardEntity>(), 
+                Requirements = new List<RequirementEntity>(), 
+                Subjects = new List<SubjectEntity>
+                {
+                    new() { Id = Guid.NewGuid(), Description = "X" },
+                    new() { Id = Guid.NewGuid(), Description = "Y" }
+                }
             },
             new()
             {
-                Id = new Guid("3c7ffa34-a234-43dc-ab20-849b211190c2"), FirstName = "C", LastName = "C",
-                Description = "C", Age = 3, Educations = new List<TutorEducationEntity>(), Lessons = new List<LessonEntity>(),
-                Reviews = new List<ReviewEntity>(), Contacts = new List<TutorContactEntity>(), Rating = 3, Job = "C",
-                Location = new LocationEntity(), Awards = new List<AwardEntity>(), Requirements = new List<RequirementEntity>(), 
-                Subjects = new List<SubjectEntity>()
+                Id = Guid.NewGuid(), 
+                FirstName = "C", 
+                LastName = "C", 
+                Description = "C", 
+                Job = "C", 
+                Age = 3, 
+                Rating = 3,
+                Location = new LocationEntity { Id = Guid.NewGuid(), City = "Y", District = "Y" },
+                Educations = new List<TutorEducationEntity>(), 
+                Lessons = new List<LessonEntity>(),
+                Reviews = new List<ReviewEntity>(), 
+                Contacts = new List<TutorContactEntity>(),
+                Awards = new List<AwardEntity>(), 
+                Requirements = new List<RequirementEntity>(), 
+                Subjects = new List<SubjectEntity>
+                {
+                    new() { Id = Guid.NewGuid(), Description = "X" }
+                }
             }
         };
 
@@ -55,6 +96,8 @@ internal sealed class TutorRepositoryTests
         {
             cfg.CreateMap<TutorEntity, Tutor>();
             cfg.CreateMap<LocationEntity, Location>();
+            cfg.CreateMap<SubjectEntity, Subject>();
+            cfg.CreateMap<ReviewEntity, Review>();
         });
         var mapper = new Mapper(config);
 
@@ -114,10 +157,94 @@ internal sealed class TutorRepositoryTests
         Assert.Multiple(() =>
         {
             Assert.That(page, Is.InstanceOf<Page<Tutor>>());
-            Assert.That(page.Items, Has.Count.EqualTo(0));
+            Assert.That(page.Items, Has.Count.Zero);
             Assert.That(page.TotalCount, Is.EqualTo(3));
             Assert.That(page.HasNext, Is.False);
             Assert.That(page.HasPrevious, Is.True);
+        });
+    }
+    
+    [Test]
+    public async Task GetPageAsync_SubjectFilter_ReturnsPage()
+    {
+        var page = await repository.GetPageAsync(0, PageSize, "X", "", "", -1, -1);
+        Assert.Multiple(() =>
+        {
+            Assert.That(page, Is.InstanceOf<Page<Tutor>>());
+            Assert.That(page.Items, Has.Count.EqualTo(PageSize));
+            Assert.That(page.TotalCount, Is.EqualTo(2));
+            Assert.That(page.HasNext, Is.True);
+            Assert.That(page.HasPrevious, Is.False);
+        });
+    }
+    
+    [Test]
+    public async Task GetPageAsync_CityFilter_ReturnsPage()
+    {
+        var page = await repository.GetPageAsync(0, PageSize, "", "X", "", -1, -1);
+        Assert.Multiple(() =>
+        {
+            Assert.That(page, Is.InstanceOf<Page<Tutor>>());
+            Assert.That(page.Items, Has.Count.EqualTo(PageSize));
+            Assert.That(page.TotalCount, Is.EqualTo(1));
+            Assert.That(page.HasNext, Is.False);
+            Assert.That(page.HasPrevious, Is.False);
+        });
+    }
+    
+    [Test]
+    public async Task GetPageAsync_DistrictFilter_ReturnsPage()
+    {
+        var page = await repository.GetPageAsync(0, PageSize, "", "", "Y", -1, -1);
+        Assert.Multiple(() =>
+        {
+            Assert.That(page, Is.InstanceOf<Page<Tutor>>());
+            Assert.That(page.Items, Has.Count.EqualTo(PageSize));
+            Assert.That(page.TotalCount, Is.EqualTo(1));
+            Assert.That(page.HasNext, Is.False);
+            Assert.That(page.HasPrevious, Is.False);
+        });
+    }
+    
+    [Test]
+    public async Task GetTutorReviews_FirstPage_ReturnsPage()
+    {
+        var page = await repository.GetTutorReviews(data[0].Id, 0, PageSize);
+        Assert.Multiple(() =>
+        {
+            Assert.That(page, Is.InstanceOf<Page<Review>>());
+            Assert.That(page.Items, Has.Count.EqualTo(PageSize));
+            Assert.That(page.TotalCount, Is.EqualTo(2));
+            Assert.That(page.HasNext, Is.True);
+            Assert.That(page.HasPrevious, Is.False);
+        });
+    }
+    
+    [Test]
+    public async Task GetTutorReviews_WrongTutorId_ReturnsEmptyPage()
+    {
+        var page = await repository.GetTutorReviews(Guid.NewGuid(), 0, PageSize);
+        Assert.Multiple(() =>
+        {
+            Assert.That(page, Is.InstanceOf<Page<Review>>());
+            Assert.That(page.Items, Has.Count.Zero);
+            Assert.That(page.TotalCount, Is.Zero);
+            Assert.That(page.HasNext, Is.False);
+            Assert.That(page.HasPrevious, Is.False);
+        });
+    }
+    
+    [Test]
+    public async Task GetTutorReviews_EmptyReviews_ReturnsEmptyPage()
+    {
+        var page = await repository.GetTutorReviews(data[1].Id, 0, PageSize);
+        Assert.Multiple(() =>
+        {
+            Assert.That(page, Is.InstanceOf<Page<Review>>());
+            Assert.That(page.Items, Has.Count.Zero);
+            Assert.That(page.TotalCount, Is.Zero);
+            Assert.That(page.HasNext, Is.False);
+            Assert.That(page.HasPrevious, Is.False);
         });
     }
 }
