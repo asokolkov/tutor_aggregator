@@ -8,20 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 internal sealed class LocationsRepository : ILocationsRepository
 {
-    private readonly ApplicationContext context;
-    private readonly DbSet<LocationEntity> table;
+    private readonly IApplicationContext context;
     private readonly IMapper mapper;
 
-    public LocationsRepository(ApplicationContext context, IMapper mapper)
+    public LocationsRepository(IApplicationContext context, IMapper mapper)
     {
         this.context = context;
         this.mapper = mapper;
-        table = context.Locations;
     }
 
     public async Task<List<Location>> GetAsync()
     {
-        var entities = await table
+        var entities = await context.Locations
             .OrderBy(e => e.Id)
             .ToListAsync();
         return mapper.Map<List<Location>>(entities);
@@ -29,44 +27,22 @@ internal sealed class LocationsRepository : ILocationsRepository
 
     public async Task<Location> Get(Guid id)
     {
-        return mapper.Map<Location>(await table.FindAsync(id));
+        return mapper.Map<Location>(await context.Locations.FindAsync(id));
     }
 
     public async Task<Location> Update(Location location)
     {
-        await using var transaction = await context.Database.BeginTransactionAsync();
-        await transaction.CreateSavepointAsync("BeforeUpdate");
-        try
-        {
-            var tutorEntity = mapper.Map<LocationEntity>(location);
-            var entityEntry = table.Update(tutorEntity);
-            await context.SaveChangesAsync();
-            await transaction.CommitAsync();
-            return mapper.Map<Location>(entityEntry.Entity);
-        }
-        catch (Exception)
-        {
-            await transaction.RollbackToSavepointAsync("BeforeUpdate");
-            return default;
-        }
+        var tutorEntity = mapper.Map<LocationEntity>(location);
+        var entityEntry = context.Locations.Update(tutorEntity);
+        await context.SaveChangesAsync();
+        return mapper.Map<Location>(entityEntry.Entity);
     }
 
     public async Task<Location> Insert(Location location)
     {
-        await using var transaction = await context.Database.BeginTransactionAsync();
-        await transaction.CreateSavepointAsync("BeforeInsert");
-        try
-        {
-            var tutorEntity = mapper.Map<LocationEntity>(location);
-            var entityEntry = await table.AddAsync(tutorEntity);
-            await context.SaveChangesAsync();
-            await transaction.CommitAsync();
-            return mapper.Map<Location>(entityEntry.Entity);
-        }
-        catch (Exception)
-        {
-            await transaction.RollbackToSavepointAsync("BeforeInsert");
-            return default;
-        }
+        var tutorEntity = mapper.Map<LocationEntity>(location);
+        var entityEntry = await context.Locations.AddAsync(tutorEntity);
+        await context.SaveChangesAsync();
+        return mapper.Map<Location>(entityEntry.Entity);
     }
 }

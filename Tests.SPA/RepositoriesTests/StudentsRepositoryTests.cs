@@ -42,7 +42,7 @@ internal sealed class StudentsRepositoryTests
 
         var mockSet = data.AsQueryable().BuildMockDbSet();
         var mockContext = Substitute.For<IApplicationContext>();
-
+        
         mockContext.Students.Returns(mockSet);
 
         var config = new MapperConfiguration(cfg => cfg.CreateMap<StudentEntity, Student>());

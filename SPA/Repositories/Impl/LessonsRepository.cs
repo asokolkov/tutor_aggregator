@@ -11,10 +11,10 @@ namespace SPA.Repositories.Impl;
 
 internal sealed class LessonsRepository : ILessonsRepository
 {
-    private readonly ApplicationContext context;
+    private readonly IApplicationContext context;
     private readonly IMapper mapper;
 
-    public LessonsRepository(ApplicationContext context, IMapper mapper)
+    public LessonsRepository(IApplicationContext context, IMapper mapper)
     {
         this.context = context;
         this.mapper = mapper;

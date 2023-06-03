@@ -9,10 +9,10 @@ namespace SPA.Repositories.Impl;
 
 internal sealed class ReviewsRepository : IReviewsRepository
 {
-    private readonly ApplicationContext context;
+    private readonly IApplicationContext context;
     private readonly IMapper mapper;
 
-    public ReviewsRepository(ApplicationContext context, IMapper mapper)
+    public ReviewsRepository(IApplicationContext context, IMapper mapper)
     {
         this.context = context;
         this.mapper = mapper;
@@ -38,22 +38,11 @@ internal sealed class ReviewsRepository : IReviewsRepository
             UpdatedAt = DateTimeOffset.Now.ToUniversalTime()
         };
         
-        await using var transaction = await context.Database.BeginTransactionAsync();
-        await transaction.CreateSavepointAsync("BeforeInsert");
-        try
-        {
-            await context.Reviews.AddAsync(reviewEntity);
-            tutor.Rating = tutor.Reviews.Concat(new[] { reviewEntity }).Average(x => x.Rating);
-            await context.SaveChangesAsync();
-            await transaction.CommitAsync();
-        }
-        catch (Exception)
-        {
-            await transaction.RollbackToSavepointAsync("BeforeInsert");
-            return default;
-        }
+        var reviewEntry = await context.Reviews.AddAsync(reviewEntity);
+        tutor.Rating = tutor.Reviews.Concat(new[] { reviewEntity }).Average(x => x.Rating);
+        await context.SaveChangesAsync();
 
-        return mapper.Map<Review>(reviewEntity);
+        return mapper.Map<Review>(reviewEntry.Entity);
     }
 
     public Task<Review> Delete(Review review)

@@ -7,10 +7,10 @@ namespace SPA.Repositories.Impl;
 
 internal sealed class AvatarsRepository : IAvatarsRepository
 {
-    private readonly ApplicationContext context;
+    private readonly IApplicationContext context;
     private readonly IMapper mapper;
 
-    public AvatarsRepository(ApplicationContext context, IMapper mapper)
+    public AvatarsRepository(IApplicationContext context, IMapper mapper)
     {
         this.context = context;
         this.mapper = mapper;
