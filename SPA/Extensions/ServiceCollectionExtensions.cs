@@ -16,6 +16,8 @@ using SPA.Application.Users.Queries.GetCurrentUserQuery;
 
 namespace SPA.Extensions;
 
+using System.Reflection;
+using Application.Behaviors;
 using Application.Tutors.Queries.GetReviewsQuery;
 using Authorization;
 using Domain;
@@ -54,7 +56,7 @@ internal static class ServiceCollectionExtensions
             .AddScoped<IRequestHandler<GetLocationsQuery, List<Location>>, GetLocationsQueryHandler>()
             .AddScoped<IRequestHandler<GetLocationQuery, Location>, GetLocationQueryHandler>()
             .AddScoped<IRequestHandler<UpdateLocationCommand, Location>, UpdateLocationCommandHandler>();
-        
+
         services
             .AddScoped<IRequestHandler<GetSubjectsQuery, List<Subject>>, GetSubjectQueryHandler>();
 
@@ -71,7 +73,7 @@ internal static class ServiceCollectionExtensions
         services
             .AddScoped<IUserService, UserService>()
             .AddScoped<ILessonsManager, LessonsManager>();
-        
+
         services
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<ITutorsRepository, TutorsRepository>()
@@ -88,5 +90,15 @@ internal static class ServiceCollectionExtensions
             .AddScoped<IAuthorizationHandler, CreateLessonAuthorizationHandler>()
             .AddScoped<IAuthorizationHandler, BookLessonAuthorizationHandler>()
             .AddScoped<IAuthorizationHandler, CreateReviewAuthorizationHandler>();
+    }
+
+    public static IServiceCollection AddMediatR(this IServiceCollection services)
+    {
+        var assembly = Assembly.GetCallingAssembly();
+
+        services.AddMediatR(assembly);
+
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+        return services;
     }
 }
