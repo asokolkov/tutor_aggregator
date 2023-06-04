@@ -29,6 +29,16 @@ public sealed class V1StudentsController : Controller
         this.mapper = mapper;
         this.linkGenerator = linkGenerator;
     }
+    
+    [HttpGet("{id:guid}")]
+    [SwaggerResponse(200, "OK", typeof(V1StudentDto))]
+    [SwaggerResponse(404, "NotFound")]
+    public async Task<IActionResult> Get(Guid id)
+    {
+        var query = new GetStudentQuery(id);
+        var model = await mediator.Send(query);
+        return model is not null ? Ok(mapper.Map<V1StudentDto>(model)) : NotFound();
+    }
 
     [HttpGet(Name = nameof(GetPage))]
     [SwaggerResponse(200, "OK", typeof(V1PageDto<V1StudentDto>))]
@@ -56,18 +66,10 @@ public sealed class V1StudentsController : Controller
         return Ok(mapper.Map<V1PageDto<V1StudentDto>>(modelsPage));
     }
 
-    [HttpGet("{id:guid}")]
-    [SwaggerResponse(200, "OK", typeof(V1StudentDto))]
-    public async Task<IActionResult> Get(Guid id)
-    {
-        var query = new GetStudentQuery(id);
-        var model = await mediator.Send(query);
-        return Ok(mapper.Map<V1StudentDto>(model));
-    }
-
     [HttpPut]
     [SwaggerResponse(200, "OK", typeof(V1StudentDto))]
     [SwaggerResponse(401, "Unauthorized")]
+    [SwaggerResponse(404, "NotFound")]
     public async Task<IActionResult> Update([FromBody] V1UpdateStudentDto old)
     {
         var userId = User.GetId();
@@ -77,8 +79,8 @@ public sealed class V1StudentsController : Controller
         var updateStudent = mapper.Map<UpdateStudent>(old);
         
         var query = new UpdateStudentCommand(userId.Value, updateStudent);
-        var student = await mediator.Send(query);
-        return Ok(mapper.Map<V1StudentDto>(student));
+        var model = await mediator.Send(query);
+        return model is not null ? Ok(mapper.Map<V1StudentDto>(model)) : NotFound();
     }
 
     [Authorize]

@@ -8,7 +8,7 @@ namespace SPA.Application.Students.Queries.GetStudentsQuery;
 using Domain;
 
 [UsedImplicitly]
-internal class GetStudentsQueryHandler : IRequestHandler<GetStudentsQuery, Page<Student?>>
+public class GetStudentsQueryHandler : IRequestHandler<GetStudentsQuery, Page<Student>>
 {
     private readonly IStudentsRepository repository;
 
@@ -17,7 +17,7 @@ internal class GetStudentsQueryHandler : IRequestHandler<GetStudentsQuery, Page<
         this.repository = repository;
     }
 
-    public async Task<Page<Student?>> Handle(GetStudentsQuery request, CancellationToken cancellationToken)
+    public async Task<Page<Student>> Handle(GetStudentsQuery request, CancellationToken cancellationToken)
     {
         return await repository.GetPageAsync(request.PageNumber, request.PageSize);
     }

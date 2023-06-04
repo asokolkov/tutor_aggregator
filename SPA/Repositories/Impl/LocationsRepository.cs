@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 internal sealed class LocationsRepository : ILocationsRepository
 {
-    private readonly IApplicationContext context;
+    private readonly ApplicationContext context;
     private readonly IMapper mapper;
 
-    public LocationsRepository(IApplicationContext context, IMapper mapper)
+    public LocationsRepository(ApplicationContext context, IMapper mapper)
     {
         this.context = context;
         this.mapper = mapper;

@@ -5,4 +5,4 @@ namespace SPA.Application.Students.Queries.GetStudentsQuery;
 
 using Domain;
 
-internal record GetStudentsQuery(int PageNumber, int PageSize) : IRequest<Page<Student?>>;
+public record GetStudentsQuery(int PageNumber, int PageSize) : IRequest<Page<Student>>;

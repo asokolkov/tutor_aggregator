@@ -9,10 +9,10 @@ namespace SPA.Repositories.Impl;
 
 internal sealed class ReviewsRepository : IReviewsRepository
 {
-    private readonly IApplicationContext context;
+    private readonly ApplicationContext context;
     private readonly IMapper mapper;
 
-    public ReviewsRepository(IApplicationContext context, IMapper mapper)
+    public ReviewsRepository(ApplicationContext context, IMapper mapper)
     {
         this.context = context;
         this.mapper = mapper;

@@ -3,7 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
 
-public class ApplicationContext : DbContext, IApplicationContext
+public class ApplicationContext : DbContext
 {
     public DbSet<TutorEntity> Tutors { get; set; } = null!;
     public DbSet<LessonEntity> Lessons { get; set; } = null!;

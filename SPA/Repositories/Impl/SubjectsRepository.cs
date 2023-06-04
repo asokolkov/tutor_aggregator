@@ -8,10 +8,10 @@ namespace SPA.Repositories.Impl;
 
 internal sealed class SubjectsRepository : ISubjectsRepository
 {
-    private readonly IApplicationContext context;
+    private readonly ApplicationContext context;
     private readonly IMapper mapper;
 
-    public SubjectsRepository(IApplicationContext context, IMapper mapper)
+    public SubjectsRepository(ApplicationContext context, IMapper mapper)
     {
         this.context = context;
         this.mapper = mapper;
