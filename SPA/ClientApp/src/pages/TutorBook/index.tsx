@@ -13,9 +13,11 @@ import { DayColumnWithSlots } from './components/DayColumnWithSlots';
 import './styles.css';
 import { Navigate } from 'react-router-dom';
 import { LOGIN_PAGE } from '../../routes/routePaths';
+import { useTutorId } from '../../routes/params';
 
 export const TutorBookPage: React.FC = () => {
-  const { isAuthorized, user } = useContext(UserContext);
+  const { isAuthorized } = useContext(UserContext);
+  const tutorId = useTutorId();
 
   if (!isAuthorized) {
     return <Navigate to={LOGIN_PAGE} />;
@@ -49,11 +51,11 @@ export const TutorBookPage: React.FC = () => {
     });
   };
 
-  const { queries } = useLessonTab(user.id, columnCount, currentDate);
+  const { queries } = useLessonTab(tutorId, columnCount, currentDate);
   const isLoading = queries.some((query) => query.isLoading);
 
   return (
-    <VStack spacing="20px">
+    <VStack spacing="20px" w="100%">
       <PaginationMenu
         start={currentDate}
         end={getShiftedDate(currentDate, columnCount - 1)}

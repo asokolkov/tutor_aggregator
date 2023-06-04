@@ -109,6 +109,7 @@ app.UseEndpoints(configure => { configure.MapControllers(); });
 app.UseSpa(spa =>
 {
     spa.Options.SourcePath = "ClientApp";
+    spa.Options.DevServerPort = 7000;
     spa.Options.DefaultPageStaticFileOptions = new StaticFileOptions
     {
         OnPrepareResponse = context =>

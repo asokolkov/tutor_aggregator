@@ -2,7 +2,7 @@
     column-count: 1;
     break-inside: avoid;
     column-rule: solid 1px;
-    column-gap: 48px;
+    column-gap: 24px;
 }
 
 @media(min-width: 768px) {

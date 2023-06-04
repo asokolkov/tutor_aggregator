@@ -58,7 +58,7 @@ export const textVariants = {
       fontFamily: 'PT Sans',
       fontSize: '40px',
       fontWeight: 'bold',
-      lineHeight: '120%',
+      lineHeight: '110%',
     },
   },
 };

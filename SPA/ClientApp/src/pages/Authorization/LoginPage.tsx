@@ -14,6 +14,7 @@ import { AuthorizationContext } from './contexts/AuthorizationContext';
 import { useLoginButton } from './hooks/useLoginButton';
 import { useFormikValues } from './hooks/useFormikValues';
 import './styles.css';
+import { ButtonVariant } from '../../assets/theme/themeEnum';
 
 export const LoginPage = () => {
   const { loginInitValues } = useFormikValues();
@@ -25,7 +26,7 @@ export const LoginPage = () => {
 
   return (
     <Flex>
-      <VStack width={'100%'}>
+      <VStack width={'100%'} spacing={'16px'}>
         <Header title={'Войти в аккаунт'} />
         <Box
           className="login-container"
@@ -49,7 +50,7 @@ export const LoginPage = () => {
                 </HStack>
                 <Stack spacing="6">
                   <Button
-                    variant={'solid'}
+                    variant={ButtonVariant.green}
                     size={'lg'}
                     colorScheme={'blue'}
                     type="submit"
@@ -57,11 +58,11 @@ export const LoginPage = () => {
                     Войти
                   </Button>
                 </Stack>
-                <SignupSuggestion />
               </Stack>
             </Form>
           </Formik>
         </Box>
+        <SignupSuggestion />
       </VStack>
     </Flex>
   );

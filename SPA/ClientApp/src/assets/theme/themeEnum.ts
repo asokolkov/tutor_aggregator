@@ -15,4 +15,9 @@ export enum Color {
   gray = 'gray.200',
   white = 'white',
   black = 'black',
+  green_hover = 'custom.green.hover',
+  red_hover = 'custom.red.hover',
+  blue100_hover = 'custom.blue.hover.100',
+  blue200_hover = 'custom.blue.hover.200',
+  blue300_hover = 'custom.blue.hover.300',
 }

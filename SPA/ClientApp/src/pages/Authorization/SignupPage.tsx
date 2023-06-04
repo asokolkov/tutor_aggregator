@@ -24,6 +24,7 @@ import { AuthorizationContext } from './contexts/AuthorizationContext';
 import { useRegisterButton } from './hooks/useRegisterButton';
 import { useFormikValues } from './hooks/useFormikValues';
 import './styles.css';
+import { ButtonVariant } from '../../assets/theme/themeEnum';
 
 export const SignupPage = () => {
   const { signupInitValues } = useFormikValues();
@@ -35,7 +36,7 @@ export const SignupPage = () => {
 
   return (
     <Flex>
-      <VStack width={'100%'}>
+      <VStack width={'100%'} spacing={'16px'}>
         <Header title={'Зарегистрировать аккаунт'} />
         <Box
           className="login-container"
@@ -46,10 +47,10 @@ export const SignupPage = () => {
         >
           <Formik initialValues={signupInitValues} onSubmit={onSubmit}>
             <Form>
-              <NameSurnameField />
-              <PhoneNumberField />
-              <TutorOrStudentSwitchField />
               <Stack spacing="6">
+                <TutorOrStudentSwitchField />
+                <NameSurnameField />
+                <PhoneNumberField />
                 <Stack spacing="5">
                   <AuthorizationContext.Provider value={providerValues}>
                     <EmailField />
@@ -60,13 +61,13 @@ export const SignupPage = () => {
                   <Checkbox>
                     Принимаю{' '}
                     <Link color="teal.500" href="#">
-                      условия сервиса.
+                      условия сервиса
                     </Link>
                   </Checkbox>
                 </HStack>
                 <Stack spacing="6">
                   <Button
-                    variant={'solid'}
+                    variant={ButtonVariant.green}
                     size={'lg'}
                     colorScheme={'blue'}
                     type="submit"
@@ -74,11 +75,11 @@ export const SignupPage = () => {
                     Зарегистрироваться
                   </Button>
                 </Stack>
-                <LoginSuggestion />
               </Stack>
             </Form>
           </Formik>
         </Box>
+        <LoginSuggestion />
       </VStack>
     </Flex>
   );

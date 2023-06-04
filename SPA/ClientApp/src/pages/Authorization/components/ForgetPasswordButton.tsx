@@ -5,7 +5,7 @@ import { FORGOT_PASSWORD_PAGE } from '../../../routes/routePaths';
 
 export const ForgetPasswordButton: React.FC = () => {
   return (
-    <Button variant="link" colorScheme="blue" size="sm">
+    <Button variant="link" colorScheme="blue" size="md">
       <Link to={FORGOT_PASSWORD_PAGE}>Забыли пароль?</Link>
     </Button>
   );
