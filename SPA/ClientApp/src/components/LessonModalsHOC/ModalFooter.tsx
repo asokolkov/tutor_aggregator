@@ -20,15 +20,15 @@ export function modalFooter(
   }) => {
     return (
       <ModalFooter>
+        <Button variant="ghost" colorScheme="blue" onClick={onClose}>
+          {closeText}
+        </Button>
         <Button
           isLoading={isSubmitLoading}
           variant={actionVariant}
           onClick={() => mutateFunction()}
         >
           {actionText}
-        </Button>
-        <Button variant="ghost" colorScheme="blue" onClick={onClose}>
-          {closeText}
         </Button>
       </ModalFooter>
     );
