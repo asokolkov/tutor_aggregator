@@ -28,11 +28,16 @@ const renderButtonSection = (variant: SlotVariant): React.FC => {
 export const SlotInfo: React.FC = () => {
   const { isBooked, variant } = useContext(SlotContext);
   const ButtonSection = renderButtonSection(variant);
+  const isNameVisible =
+    !(
+      variant === SlotVariant.tutorCalendar ||
+      variant === SlotVariant.studentCalendar
+    ) || isBooked;
 
   return (
     <VStack w="100%" spacing="0px">
       <PriceAndTypeInfo />
-      {isBooked && <Name />}
+      {isNameVisible && <Name />}
       {ButtonSection && <ButtonSection />}
     </VStack>
   );
