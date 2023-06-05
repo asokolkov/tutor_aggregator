@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, useDisclosure, VStack } from '@chakra-ui/react';
 import { Title } from './Title';
-import { Slot } from '../../../../components/Slot/Slot';
+import { Slot, SlotVariant } from '../../../../components/Slot/Slot';
 import { AddIcon } from '@chakra-ui/icons';
 import { NewSlotModal } from '../../modals/NewSlotModal';
 import { MapSlot } from '../../../../components/Slot/_maper';
@@ -32,7 +32,10 @@ export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
         />
         <VStack spacing="16px" w="100%">
           {lessons.map((lesson) => (
-            <Slot {...MapSlot(lesson)} key={lesson.id} />
+            <Slot
+              {...MapSlot(lesson, SlotVariant.tutorCalendar)}
+              key={lesson.id}
+            />
           ))}
           <Button
             rightIcon={<AddIcon />}

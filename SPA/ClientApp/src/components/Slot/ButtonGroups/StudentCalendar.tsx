@@ -2,12 +2,12 @@ import * as React from 'react';
 import { Button, HStack, useDisclosure } from '@chakra-ui/react';
 import { ChatIcon, LockIcon } from '@chakra-ui/icons';
 import { useContext } from 'react';
-import { SlotContext } from './contexts/SlotContext';
-import { BookLessonModal } from './modals/BookLessonModal';
-import { UserContext } from '../../layouts/base/contexts/UserContext';
-import { CancelLessonModal } from './modals/CancelLessonModal';
+import { SlotContext } from '../contexts/SlotContext';
+import { BookLessonModal } from '../modals/BookLessonModal';
+import { UserContext } from '../../../layouts/base/contexts/UserContext';
+import { CancelLessonModal } from '../modals/CancelLessonModal';
 
-export const ButtonGroupStudent: React.FC = () => {
+export const StudentCalendar: React.FC = () => {
   const { isBooked, student } = useContext(SlotContext);
   const bookDisclosure = useDisclosure();
   const cancelDisclosure = useDisclosure();
@@ -20,7 +20,7 @@ export const ButtonGroupStudent: React.FC = () => {
       return (
         <Button
           rightIcon={<ChatIcon />}
-          w="100%"
+          flexGrow="1"
           h="30px"
           variant="red"
           onClick={cancelDisclosure.onOpen}

@@ -45,4 +45,13 @@ export type SlotProps = {
     name: string;
     id: string;
   };
+  variant: SlotVariant;
 };
+
+export enum SlotVariant {
+  tutorCalendar = 'Tutor Calendar',
+  studentCalendar = 'Student Calendar',
+  activeList = 'Active List',
+  pastList = 'Past List',
+  canceledList = 'CanceledList',
+}

@@ -1,4 +1,4 @@
-import { Slot } from './Slot';
+import { Slot, SlotVariant } from './Slot';
 import { LessonType, V1AccountTypeDto } from '../../api/models';
 import { Meta } from '@storybook/react';
 
@@ -16,6 +16,7 @@ const args = {
   student: { id: '', name: '' },
   tutorName: '',
   type: LessonType.offline,
+  variant: SlotVariant.tutorCalendar,
 };
 export const Tutor = {
   args: { ...args, accountType: V1AccountTypeDto.tutor },

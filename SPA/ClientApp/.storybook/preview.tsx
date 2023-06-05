@@ -34,7 +34,7 @@ const preview: Preview = {
       const userProviderValue: UserContextProps = {
         isAuthorized: true,
         removeUser(): void {},
-        setUser(u: V1UserDto): void {},
+        setUser(_: V1UserDto): void {},
         user,
       };
       return (

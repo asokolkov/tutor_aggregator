@@ -2,23 +2,38 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { VStack } from '@chakra-ui/react';
 import { PriceAndTypeInfo } from './PriceAndTypeInfo';
-import { StudentName } from './StudentName';
-import { ButtonGroupTutor } from './ButtonGroupTutor';
+import { Name } from './Name';
+import { TutorCalendar } from './ButtonGroups/TutorCalendar';
 import { SlotContext } from './contexts/SlotContext';
-import { ButtonGroupStudent } from './ButtonGroupStudent';
-import { UserContext } from '../../layouts/base/contexts/UserContext';
-import { V1AccountTypeDto } from '../../api/models';
+import { StudentCalendar } from './ButtonGroups/StudentCalendar';
+import { SlotVariant } from './Slot';
+import { ActiveList } from './ButtonGroups/ActiveList';
+import { PastList } from './ButtonGroups/PastList';
+
+const renderButtonSection = (variant: SlotVariant): React.FC => {
+  switch (variant) {
+    case SlotVariant.tutorCalendar:
+      return TutorCalendar;
+    case SlotVariant.studentCalendar:
+      return StudentCalendar;
+    case SlotVariant.activeList:
+      return ActiveList;
+    case SlotVariant.pastList:
+      return PastList;
+    default:
+      return undefined;
+  }
+};
 
 export const SlotInfo: React.FC = () => {
-  const { isBooked } = useContext(SlotContext);
-  const { user } = useContext(UserContext);
-  const isForTutor = user.accountType === V1AccountTypeDto.tutor;
+  const { isBooked, variant } = useContext(SlotContext);
+  const ButtonSection = renderButtonSection(variant);
 
   return (
     <VStack w="100%" spacing="0px">
       <PriceAndTypeInfo />
-      {isBooked && isForTutor && <StudentName />}
-      {isForTutor ? <ButtonGroupTutor /> : <ButtonGroupStudent />}
+      {isBooked && <Name />}
+      {ButtonSection && <ButtonSection />}
     </VStack>
   );
 };
