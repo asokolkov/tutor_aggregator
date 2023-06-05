@@ -39,10 +39,7 @@ export function modal(
 
     const mutation = useMutation({
       mutationFn,
-      onSuccess: async () => {
-        console.log('invalidate');
-        await queryClient.invalidateQueries([lessonsKey]);
-      },
+      onSuccess: () => queryClient.invalidateQueries([lessonsKey]),
     });
 
     return (
