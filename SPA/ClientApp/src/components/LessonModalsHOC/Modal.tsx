@@ -32,14 +32,17 @@ export function modal(
 
     const mutationFn = async () => {
       setSubmitLoading(true);
-      onSubmit(lessonId);
+      await onSubmit(lessonId);
       setSubmitLoading(false);
       onClose();
     };
 
     const mutation = useMutation({
       mutationFn,
-      onSuccess: () => queryClient.invalidateQueries([lessonsKey]),
+      onSuccess: async () => {
+        console.log('invalidate');
+        await queryClient.invalidateQueries([lessonsKey]);
+      },
     });
 
     return (
