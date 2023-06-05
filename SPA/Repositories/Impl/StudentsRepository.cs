@@ -29,7 +29,7 @@ internal sealed class StudentsRepository : IStudentsRepository
             .Take(size)
             .ToListAsync();
         var students = mapper.Map<List<Student>>(studentEntities);
-
+        
         return new Page<Student>(students, table.Count(), page, size);
     }
 
@@ -38,7 +38,7 @@ internal sealed class StudentsRepository : IStudentsRepository
         return mapper.Map<Student>(await table.FindAsync(id));
     }
 
-    public async Task<Student?> Update(Guid id, UpdateStudent student)
+    public async Task<Student?> Update(Guid id, UpdateStudent updateStudent)
     {
         await using var transaction = await context.Database.BeginTransactionAsync();
         await transaction.CreateSavepointAsync("BeforeUpdate");
@@ -47,30 +47,22 @@ internal sealed class StudentsRepository : IStudentsRepository
             var studentEntity = await table.FindAsync(id);
             if (studentEntity is null)
                 return default;
+            
+            var student = mapper.Map<StudentEntity>(updateStudent);
 
             studentEntity.FirstName = student.FirstName;
             studentEntity.LastName = student.LastName;
             studentEntity.Age = student.Age;
             studentEntity.Description = student.Description;
+
+            if (studentEntity.Education is not null)
+                context.StudentEducations.Remove(studentEntity.Education);
+            studentEntity.Education = student.Education is not null ? (await context.StudentEducations.AddAsync(student.Education)).Entity : null;
             
-            if (student.Education != null)
-            {
-                var educationEntity = mapper.Map<StudentEducationEntity>(student.Education);
-                var education = await context.StudentEducations.FindAsync(educationEntity.Id);
-                if (education is null)
-                    context.StudentEducations.Add(educationEntity);
-                else
-                    educationEntity = education;
-                studentEntity.Education = educationEntity;
-            }
-            
-            var contactsEntities = mapper.Map<ICollection<StudentContactEntity>>(student.Contacts).ToList();
-            foreach (var contactEntity in contactsEntities)
-            {
-                var contact = await context.StudentsContacts.FindAsync(contactEntity.Id);
-                if (contact is null)
-                    context.StudentsContacts.Add(contactEntity);
-            }
+            context.StudentsContacts.RemoveRange(studentEntity.Contacts);
+            var contactsEntities = new List<StudentContactEntity>();
+            foreach (var contact in student.Contacts)
+                contactsEntities.Add((await context.StudentsContacts.AddAsync(contact)).Entity);
             studentEntity.Contacts = contactsEntities;
             
             await context.SaveChangesAsync();
