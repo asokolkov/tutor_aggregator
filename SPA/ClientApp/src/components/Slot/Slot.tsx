@@ -22,7 +22,7 @@ export const Slot: React.FC<SlotProps> = (props) => {
           borderRadius="10px"
           borderWidth="2px"
           borderColor="blue.200"
-          w={props.isForTutor ? '356px' : '260px'}
+          w="100%"
           spacing="0"
         >
           <TimeBox />
@@ -37,7 +37,6 @@ export type SlotProps = {
   startTime: string;
   endTime: string;
   lessonId: string;
-  isForTutor: boolean;
   isBooked: boolean;
   type: LessonType;
   price: number;

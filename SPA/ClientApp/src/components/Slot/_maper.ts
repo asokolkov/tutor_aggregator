@@ -2,7 +2,7 @@ import { getTimeFromDate } from '../../utils/datetime';
 import { SlotProps } from './Slot';
 import { V1LessonDto } from '../../api/models';
 
-export function MapSlot(lesson: V1LessonDto, isForTutor: boolean): SlotProps {
+export function MapSlot(lesson: V1LessonDto): SlotProps {
   const endTime = lesson.end
     ? getTimeFromDate(new Date(lesson.end))
     : undefined;
@@ -14,7 +14,6 @@ export function MapSlot(lesson: V1LessonDto, isForTutor: boolean): SlotProps {
     endTime,
     startTime,
     isBooked: !!lesson.student,
-    isForTutor,
     price: lesson.price,
     tutorName: lesson.tutor
       ? `${lesson.tutor.firstName} ${lesson.tutor.lastName}`
