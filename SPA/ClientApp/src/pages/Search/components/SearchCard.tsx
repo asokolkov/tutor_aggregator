@@ -1,10 +1,16 @@
-import { Avatar, Heading, VStack, Button } from '@chakra-ui/react';
+import {
+  Avatar,
+  Heading,
+  VStack,
+  Button,
+  TagLabel,
+  Tag,
+  TagLeftIcon,
+} from '@chakra-ui/react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RatingStars } from '../../../components/ReviewStars/RatingStars';
-import categoryIcon from '../../../assets/images/category-icon.png';
-import jobIcon from '../../../assets/images/job-icon.png';
-import InfoWithIcon from '../../../components/InfoWithIcon';
+import { MdSchool, MdBusinessCenter } from 'react-icons/md';
 import { getTutorCardByIdPath } from '../../../routes/routes';
 import { V1TutorDto } from '../../../api/models';
 import { getFullName } from '../../../utils/names';
@@ -16,8 +22,6 @@ const SearchCard: React.FC<SearchCardInfoProps> = ({ tutor }) => {
   const navigate = useNavigate();
   return (
     <VStack
-      minWidth="300px"
-      flexGrow={'1'}
       borderWidth="2px"
       borderColor="blue.200"
       borderRadius="10px"
@@ -36,13 +40,29 @@ const SearchCard: React.FC<SearchCardInfoProps> = ({ tutor }) => {
           </VStack>
         </VStack>
 
-        <VStack spacing="5px" align="flex-start" w="100%">
-          <InfoWithIcon
-            icon={categoryIcon}
-            text={educations.map((e) => e.value).join(', ')}
-            categoryText={''}
-          />
-          <InfoWithIcon icon={jobIcon} text={job} categoryText={''} />
+        <VStack align="flex-start" w="100%" spacing={'0'}>
+          {educations.length >= 1 && (
+            <Tag
+              size={'lg'}
+              variant="subtle"
+              colorScheme="white-alpha"
+              padding={'0'}
+            >
+              <TagLeftIcon boxSize="20px" as={MdSchool} />
+              <TagLabel>{educations.map((e) => e.value).join(', ')}</TagLabel>
+            </Tag>
+          )}
+          {job && (
+            <Tag
+              size={'lg'}
+              variant="subtle"
+              colorScheme="white-alpha"
+              padding={'0'}
+            >
+              <TagLeftIcon boxSize="20px" as={MdBusinessCenter} />
+              <TagLabel>{job}</TagLabel>
+            </Tag>
+          )}
         </VStack>
       </VStack>
 

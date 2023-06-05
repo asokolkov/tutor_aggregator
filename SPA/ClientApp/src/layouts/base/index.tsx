@@ -18,7 +18,7 @@ const BaseLayout: React.FC = () => {
     <UserContext.Provider value={userProviderValues}>
       <SearchStateContext.Provider value={providerValues}>
         <Header />
-        <Container padding={'0vh 5vw 16vh 5vw'} maxW={'100%'}>
+        <Container padding={'0 5vw 0 5vw'} maxW={'100%'}>
           <Outlet />
         </Container>
         <Footer />

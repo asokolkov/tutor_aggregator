@@ -1,4 +1,10 @@
-import { Button, Flex, Text, useMediaQuery } from '@chakra-ui/react';
+import {
+  Button,
+  Flex,
+  Text,
+  SimpleGrid,
+  useBreakpointValue,
+} from '@chakra-ui/react';
 import SearchCard from './components/SearchCard';
 import { SearchParamsSection } from './SearchParamsSection';
 import { LoadBar } from '../../components/LoadBar/LoadBar';
@@ -12,7 +18,10 @@ import { SearchStateContext } from '../../layouts/base/contexts/SearchStateConte
 import { useSearchParams } from './hooks/useSearchParams';
 
 export const SearchPage = () => {
-  const [isLargerThanTablet] = useMediaQuery('(min-width: 768px)');
+  const isLargerThanTablet = useBreakpointValue(
+    { base: false, lg: true },
+    { ssr: false, fallback: 'lg' }
+  );
   const { hasSearchValues } = useContext(SearchStateContext);
   if (!hasSearchValues) return <Navigate to={MAIN_PAGE} />;
 
@@ -41,7 +50,7 @@ export const SearchPage = () => {
           </Form>
         </Formik>
       </Flex>
-      <Flex width="100%" flexWrap="wrap" gap="16px">
+      <SimpleGrid columns={[1, 1, 2, 3, 4, 5]} spacing="16px">
         {data.pages.map((x, i) => (
           <React.Fragment key={+(data.pageParams[i] ?? 0)}>
             {x.items.map((item) => (
@@ -49,7 +58,7 @@ export const SearchPage = () => {
             ))}
           </React.Fragment>
         ))}
-      </Flex>
+      </SimpleGrid>
 
       {hasNextPage && (
         <Button
