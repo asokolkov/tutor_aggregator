@@ -6,6 +6,7 @@ import { AxiosError } from 'axios';
 
 export const ErrorPage: React.FC = () => {
   const error = useRouteError();
+  const isRouteResponse = isRouteErrorResponse(error);
   const isNetworkError =
     error instanceof AxiosError && error.message === 'Network Error';
 
@@ -15,14 +16,14 @@ export const ErrorPage: React.FC = () => {
         {!isNetworkError && <Image src={teacherIcon} w="312px" />}
         <VStack>
           <Text variant="regular.h1">Произошла ошибка!</Text>
-          <Text variant="regular.h2">Пожалуйста, повторите попытку позже</Text>
-          <Text>
-            {isRouteErrorResponse(error) &&
-              error.status === 404 &&
-              'Страница не найдена'}
+          <Text variant="regular.h2">
+            {isRouteResponse && error.status === 404
+              ? 'Страница не найдена'
+              : 'Пожалуйста, повторите попытку позже'}
           </Text>
           <Text>
-            {error instanceof AxiosError &&
+            {!isRouteResponse &&
+              error instanceof AxiosError &&
               'Произошла ошибка при запросе. Пожалуйста, повторите поптыку позже.'}
           </Text>
         </VStack>
