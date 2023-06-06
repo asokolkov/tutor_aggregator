@@ -16,6 +16,7 @@ export function MapCardInfo(
       'Не указано',
     fullName: `${tutor?.firstName} ${tutor?.lastName}`,
     location: tutor?.location?.district || 'Не указано',
+    job: tutor?.job,
     requirements:
       mapCollectionToString(tutor?.requirements?.map((x) => x.value)) ||
       'Не указано',

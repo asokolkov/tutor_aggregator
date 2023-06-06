@@ -17,6 +17,7 @@ const args: CardInfoProps = {
   requirements: '',
   subjects: '',
   isLoading: false,
+  job: '',
 };
 
 type Story = StoryObj<typeof Card>;
