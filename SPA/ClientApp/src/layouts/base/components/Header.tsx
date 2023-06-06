@@ -20,7 +20,8 @@ import { MiniHeaderMenu } from './MiniHeaderMenu';
 import { HeaderAuthMenu } from './HeaderAuthMenu';
 
 const Header: React.FC = () => {
-  const userState = useContext(UserContext);
+  let userState = useContext(UserContext);
+  userState = undefined;
   const [isLargerThanTablet] = useMediaQuery('(min-width: 768px)');
 
   return (

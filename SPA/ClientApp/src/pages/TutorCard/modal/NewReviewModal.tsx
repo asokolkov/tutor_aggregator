@@ -16,7 +16,7 @@ import { Formik, FormikValues, Form } from 'formik';
 import { useTutorId } from '../../../routes/params';
 import { ReviewModalForm } from '../components/ReviewModalForm';
 import { reviewKey } from '../../../query/queryKeys';
-import { ErrorElement } from '../../../components/ErrorElement';
+import { ErrorElement } from '../../../components/Errors/ErrorElement';
 
 interface Props {
   disclosure: DisclosureProps;

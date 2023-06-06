@@ -13,7 +13,7 @@ import { DisclosureProps } from '../disclosureProps';
 import { useMutation, useQueryClient } from 'react-query';
 import { SlotContext } from '../Slot/contexts/SlotContext';
 import { lessonsKey } from '../../query/queryKeys';
-import { ErrorElement } from '../ErrorElement';
+import { ErrorElement } from '../Errors/ErrorElement';
 
 type Props = {
   disclosure: DisclosureProps;
