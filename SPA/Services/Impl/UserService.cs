@@ -51,6 +51,6 @@ internal sealed class UserService : IUserService
             }
         };
 
-        return await studentRepository.Insert(student);
+        return await studentRepository.InsertAsync(student);
     }
 }

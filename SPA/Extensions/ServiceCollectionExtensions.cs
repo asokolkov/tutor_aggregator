@@ -6,7 +6,7 @@ using SPA.Application.Locations.Queries.GetLocationsQuery;
 using SPA.Application.Students.Commands.UpdateStudentCommand;
 using SPA.Application.Students.Queries.GetLessonsQuery;
 using SPA.Application.Students.Queries.GetStudentQuery;
-using SPA.Application.Students.Queries.GetStudentsQuery;
+using SPA.Application.Students.Queries.GetStudentsPageQuery;
 using SPA.Application.Subjects.Queries.GetSubjectsQuery;
 using SPA.Application.Tutors.Commands.CreateReviewCommand;
 using SPA.Application.Tutors.Commands.UpdateTutorCommand;
@@ -39,7 +39,7 @@ internal static class ServiceCollectionExtensions
         services.AddMediatR(typeof(Program));
 
         services
-            .AddScoped<IRequestHandler<GetStudentsQuery, Page<Student>>, GetStudentsQueryHandler>()
+            .AddScoped<IRequestHandler<GetStudentsPageQuery, Page<Student>>, GetStudentsPageQueryHandler>()
             .AddScoped<IRequestHandler<GetStudentQuery, Student>, GetStudentQueryHandler>()
             .AddScoped<IRequestHandler<UpdateStudentCommand, Student>, UpdateStudentCommandHandler>();
 
