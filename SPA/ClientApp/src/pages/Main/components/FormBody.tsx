@@ -1,12 +1,16 @@
 import * as React from 'react';
 import { SelectOptions } from './SelectOptions';
-import { Button, Grid, GridItem, useMediaQuery } from '@chakra-ui/react';
+import { Button, Grid, GridItem, useBreakpointValue } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { SearchParamsContext } from '../contexts/SearchParamsContext';
 
 export const FormBody: React.FC = () => {
   const { subjectsData, locationsData } = useContext(SearchParamsContext);
-  const [isLargerThanTablet] = useMediaQuery('(min-width: 768px)');
+  const isLargerThanTablet = useBreakpointValue(
+    { base: false, lg: true },
+    { ssr: false, fallback: 'lg' }
+  );
+
   return (
     <Grid
       templateAreas={

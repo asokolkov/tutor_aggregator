@@ -5,16 +5,18 @@ import {
   Grid,
   GridItem,
   Text,
-  useMediaQuery,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import { SelectOption } from './components/SelectOption';
 import { useOptionMap } from './hooks/useOptionMap';
 import { CheckIcon } from '@chakra-ui/icons';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const SearchParamsSection: React.FC<Props> = ({ district, subject }) => {
   const { ReviewOptions, PriceOptions } = useOptionMap();
-  const [isLargerThanTablet] = useMediaQuery('(min-width: 768px)');
+  const isLargerThanTablet = useBreakpointValue(
+    { base: false, lg: true },
+    { ssr: false, fallback: 'lg' }
+  );
   if (!subject) {
     subject = 'Любой предмет';
   }
@@ -28,12 +30,20 @@ export const SearchParamsSection: React.FC<Props> = ({ district, subject }) => {
       align={'center'}
       justify={'space-between'}
       margin={'0 -5vw 0 -5vw'}
-      padding={isLargerThanTablet ? '20px 5vw' : '16px'}
-      bg="custom.blue.100"
+      bg={
+        isLargerThanTablet
+          ? 'linear-gradient(90deg, #C4D7E2 57%, #7C98AA 43%)'
+          : 'custom.blue.100'
+      }
+      padding={'20px 5vw'}
       width={'calc(100% + 10vw)'}
       gap={isLargerThanTablet ? '20px' : '12px'}
     >
-      <Flex direction={'column'} gap={isLargerThanTablet ? '8px' : '2px'}>
+      <Flex
+        direction={'column'}
+        gap={isLargerThanTablet ? '8px' : '2px'}
+        maxWidth={isLargerThanTablet ? '55%' : '100%'}
+      >
         <Text
           variant={'brand.h1'}
           align={isLargerThanTablet ? 'left' : 'center'}
@@ -59,9 +69,7 @@ export const SearchParamsSection: React.FC<Props> = ({ district, subject }) => {
         gridTemplateRows={isLargerThanTablet ? 'auto' : 'auto auto'}
         gridTemplateColumns={isLargerThanTablet ? '2fr 2fr 1fr' : '1fr 40px'}
         gap={isLargerThanTablet ? '10px' : '8px'}
-        width={isLargerThanTablet ? '40vw' : '92vw'}
-        maxWidth={isLargerThanTablet ? '720px' : '92vw'}
-        minWidth={isLargerThanTablet ? '450px' : '92vw'}
+        width={isLargerThanTablet ? '40%' : '92vw'}
       >
         <GridItem area={'price'}>
           <SelectOption
