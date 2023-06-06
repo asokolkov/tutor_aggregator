@@ -20,8 +20,7 @@ import { MiniHeaderMenu } from './MiniHeaderMenu';
 import { HeaderAuthMenu } from './HeaderAuthMenu';
 
 const Header: React.FC = () => {
-  let userState = useContext(UserContext);
-  userState = undefined;
+  let { isAuthorized } = useContext(UserContext);
   const [isLargerThanTablet] = useMediaQuery('(min-width: 768px)');
 
   return (
@@ -44,7 +43,7 @@ const Header: React.FC = () => {
             <CitySelection />
           </VStack>
         </HStack>
-        {userState.isAuthorized ? (
+        {isAuthorized ? (
           isLargerThanTablet ? (
             <HeaderMenu />
           ) : (
