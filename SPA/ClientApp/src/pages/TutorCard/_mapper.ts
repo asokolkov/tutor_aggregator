@@ -6,9 +6,7 @@ import { V1ReviewDto, V1TutorDto } from '../../api/models';
 export function MapCardInfo(tutor: V1TutorDto): CardInfoProps {
   return {
     id: tutor.id,
-    contacts:
-      mapCollectionToString(tutor.contacts?.map((x) => x.value)) ||
-      'Не указано',
+    contacts: tutor.contacts,
     description: tutor.description,
     education:
       mapCollectionToString(tutor.educations?.map((x) => x.value)) ||

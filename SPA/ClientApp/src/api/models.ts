@@ -190,3 +190,5 @@ export type V1CreateReviewDto = {
   rating?: number;
   description?: string | null;
 };
+
+export type V1ContactsDto = V1StudentContactDto | V1TutorContactDto;

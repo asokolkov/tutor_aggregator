@@ -13,11 +13,7 @@ import {
 import { DisclosureProps } from '../disclosureProps';
 import InfoWithIcon from '../InfoWithIcon';
 import { SiTelegram } from 'react-icons/si';
-import {
-  V1ContactTypeDto,
-  V1StudentContactDto,
-  V1TutorContactDto,
-} from '../../api/models';
+import { V1ContactsDto, V1ContactTypeDto } from '../../api/models';
 import { IoMdMail } from 'react-icons/io';
 import { BsTelephoneOutboundFill } from 'react-icons/bs';
 
@@ -68,5 +64,5 @@ export const ContactsModal: React.FC<Props> = ({ disclosure, contacts }) => {
 
 type Props = {
   disclosure: DisclosureProps;
-  contacts: (V1StudentContactDto | V1TutorContactDto)[];
+  contacts: V1ContactsDto[];
 };

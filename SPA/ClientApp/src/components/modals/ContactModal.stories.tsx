@@ -1,10 +1,6 @@
 import { ContactsModal } from './ContactsModal';
 import { Meta } from '@storybook/react';
-import {
-  V1ContactTypeDto,
-  V1StudentContactDto,
-  V1TutorContactDto,
-} from '../../api/models';
+import { V1ContactsDto, V1ContactTypeDto } from '../../api/models';
 import { DisclosureProps } from '../disclosureProps';
 
 const meta: Meta<typeof ContactsModal> = {
@@ -13,22 +9,22 @@ const meta: Meta<typeof ContactsModal> = {
 
 export default meta;
 
-const telegramContact: V1StudentContactDto = {
+const telegramContact: V1ContactsDto = {
   type: V1ContactTypeDto.telegram,
   value: 'artemijkurganov',
 };
 
-const emailContact: V1StudentContactDto = {
+const emailContact: V1ContactsDto = {
   type: V1ContactTypeDto.email,
   value: 'tutoraggregator@gmail.com',
 };
 
-const phoneContact: V1StudentContactDto = {
+const phoneContact: V1ContactsDto = {
   type: V1ContactTypeDto.phone,
   value: '+79991234567',
 };
 
-const contacts: (V1StudentContactDto | V1TutorContactDto)[] = [
+const contacts: V1ContactsDto[] = [
   telegramContact,
   telegramContact,
   telegramContact,

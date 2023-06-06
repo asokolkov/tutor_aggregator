@@ -7,6 +7,7 @@ import { BiMap } from 'react-icons/bi';
 import { FaUserGraduate } from 'react-icons/fa';
 import { ImBooks } from 'react-icons/im';
 import { HiOutlineClipboardCheck } from 'react-icons/hi';
+import { V1ContactsDto } from '../../api/models';
 
 export const Card: React.FC<CardInfoProps> = (props) => {
   const providerValue = useMemo(() => ({ ...props }), [props]);
@@ -55,7 +56,7 @@ export const Card: React.FC<CardInfoProps> = (props) => {
 export type CardInfoProps = {
   id: string;
   fullName: string;
-  contacts: string;
+  contacts: V1ContactsDto[];
   description: string;
   location: string;
   subjects: string;
