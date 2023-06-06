@@ -4,16 +4,21 @@ import {
   VStack,
   Box,
   Flex,
+  Divider,
   useBreakpointValue,
 } from '@chakra-ui/react';
-import categoryIcon from '../../assets/images/category-icon.png';
-import locationIcon from '../../assets/images/location-icon.png';
-import educationIcon from '../../assets/images/educations-icon.png';
-import requirementsIcon from '../../assets/images/requirements-icon.png';
 import React, { useMemo } from 'react';
 import { ButtonSection } from './components/ButtonSection';
 import { CardInfoContext } from './contexts/CardInfoContext';
 import InfoWithIcon from '../../components/InfoWithIcon';
+import {
+  MdLocationOn,
+  MdBookmark,
+  MdSchool,
+  MdWork,
+  MdAssignment,
+} from 'react-icons/md';
+import { V1ContactsDto } from '../../api/models';
 
 export const Card: React.FC<CardInfoProps> = (props) => {
   const providerValue = useMemo(() => ({ ...props }), [props]);
@@ -70,22 +75,28 @@ export const Card: React.FC<CardInfoProps> = (props) => {
             w="100%"
           >
             <InfoWithIcon
-              icon={locationIcon}
+              Icon={MdLocationOn}
               categoryText={'Район'}
               text={props.location}
             />
             <InfoWithIcon
-              icon={educationIcon}
+              Icon={MdBookmark}
+              categoryText={'Предметы'}
+              text={props.subjects}
+            />
+            <Divider borderColor={'custom.blue.100'}></Divider>
+            <InfoWithIcon
+              Icon={MdSchool}
               categoryText={'Образование'}
               text={props.education}
             />
             <InfoWithIcon
-              icon={categoryIcon}
-              categoryText={'Предметы'}
-              text={props.subjects}
+              Icon={MdWork}
+              categoryText={'Работа'}
+              text={props.education}
             />
             <InfoWithIcon
-              icon={requirementsIcon}
+              Icon={MdAssignment}
               categoryText={'Требования'}
               text={props.requirements}
             />
@@ -100,7 +111,7 @@ export const Card: React.FC<CardInfoProps> = (props) => {
 export type CardInfoProps = {
   id: string;
   fullName: string;
-  contacts: string;
+  contacts: V1ContactsDto[];
   description: string;
   location: string;
   subjects: string;

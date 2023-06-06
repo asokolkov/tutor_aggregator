@@ -1,31 +1,24 @@
 import React, { useContext } from 'react';
-import {
-  Button,
-  PopoverContent,
-  PopoverCloseButton,
-  PopoverArrow,
-  PopoverTrigger,
-  Popover,
-  PopoverBody,
-} from '@chakra-ui/react';
+import { Button, useDisclosure } from '@chakra-ui/react';
 import { CardInfoContext } from '../contexts/CardInfoContext';
+import { ContactsModal } from '../../../components/modals/ContactsModal';
 
 const ContactsPopoverButton: React.FC = () => {
-  const context = useContext(CardInfoContext);
+  const { contacts } = useContext(CardInfoContext);
+  const disclosure = useDisclosure();
 
   return (
-    <Popover isLazy>
-      <PopoverTrigger>
-        <Button variant="blue.300" w="100%" flex="1 0 208px">
-          Показать контакты
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent>
-        <PopoverArrow />
-        <PopoverCloseButton height={'3em'} />
-        <PopoverBody fontSize={'lg'}>{context.contacts}</PopoverBody>
-      </PopoverContent>
-    </Popover>
+    <>
+      <ContactsModal disclosure={disclosure} contacts={contacts} />
+      <Button
+        variant="blue.300"
+        w="100%"
+        flex="1 0 208px"
+        onClick={disclosure.onOpen}
+      >
+        Показать контакты
+      </Button>
+    </>
   );
 };
 
