@@ -4,16 +4,20 @@ import {
   VStack,
   Box,
   Flex,
+  Divider,
   useBreakpointValue,
 } from '@chakra-ui/react';
 import React, { useMemo } from 'react';
 import { ButtonSection } from './components/ButtonSection';
 import { CardInfoContext } from './contexts/CardInfoContext';
 import InfoWithIcon from '../../components/InfoWithIcon';
-import { BiMap } from 'react-icons/bi';
-import { FaUserGraduate } from 'react-icons/fa';
-import { ImBooks } from 'react-icons/im';
-import { HiOutlineClipboardCheck } from 'react-icons/hi';
+import {
+  MdLocationOn,
+  MdBookmark,
+  MdSchool,
+  MdWork,
+  MdAssignment,
+} from 'react-icons/md';
 import { V1ContactsDto } from '../../api/models';
 
 export const Card: React.FC<CardInfoProps> = (props) => {
@@ -71,22 +75,28 @@ export const Card: React.FC<CardInfoProps> = (props) => {
             w="100%"
           >
             <InfoWithIcon
-              Icon={BiMap}
+              Icon={MdLocationOn}
               categoryText={'Район'}
               text={props.location}
             />
             <InfoWithIcon
-              Icon={FaUserGraduate}
+              Icon={MdBookmark}
+              categoryText={'Предметы'}
+              text={props.subjects}
+            />
+            <Divider borderColor={'custom.blue.100'}></Divider>
+            <InfoWithIcon
+              Icon={MdSchool}
               categoryText={'Образование'}
               text={props.education}
             />
             <InfoWithIcon
-              Icon={ImBooks}
-              categoryText={'Предметы'}
-              text={props.subjects}
+              Icon={MdWork}
+              categoryText={'Работа'}
+              text={props.education}
             />
             <InfoWithIcon
-              Icon={HiOutlineClipboardCheck}
+              Icon={MdAssignment}
               categoryText={'Требования'}
               text={props.requirements}
             />

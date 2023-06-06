@@ -14,8 +14,7 @@ import { DisclosureProps } from '../disclosureProps';
 import InfoWithIcon from '../InfoWithIcon';
 import { SiTelegram } from 'react-icons/si';
 import { V1ContactsDto, V1ContactTypeDto } from '../../api/models';
-import { IoMdMail } from 'react-icons/io';
-import { BsTelephoneOutboundFill } from 'react-icons/bs';
+import { MdPhone, MdEmail } from 'react-icons/md';
 
 export const ContactsModal: React.FC<Props> = ({ disclosure, contacts }) => {
   const { isOpen, onClose } = disclosure;
@@ -29,7 +28,7 @@ export const ContactsModal: React.FC<Props> = ({ disclosure, contacts }) => {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Контакты</ModalHeader>
+        <ModalHeader>Контакты преподавателя</ModalHeader>
         <ModalCloseButton />
 
         <ModalBody>
@@ -40,12 +39,12 @@ export const ContactsModal: React.FC<Props> = ({ disclosure, contacts }) => {
               text={contactsByType(V1ContactTypeDto.telegram)}
             />
             <InfoWithIcon
-              Icon={IoMdMail}
+              Icon={MdEmail}
               categoryText="Почта"
               text={contactsByType(V1ContactTypeDto.email)}
             />
             <InfoWithIcon
-              Icon={BsTelephoneOutboundFill}
+              Icon={MdPhone}
               categoryText="Телефон"
               text={contactsByType(V1ContactTypeDto.phone)}
             />
@@ -53,7 +52,7 @@ export const ContactsModal: React.FC<Props> = ({ disclosure, contacts }) => {
         </ModalBody>
 
         <ModalFooter>
-          <Button variant="green" onClick={onClose}>
+          <Button variant="blue.100" onClick={onClose}>
             Закрыть
           </Button>
         </ModalFooter>
