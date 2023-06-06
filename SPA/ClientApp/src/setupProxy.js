@@ -13,6 +13,7 @@ const context = [
   '/signin-google',
   '/account',
   '/signin-vk',
+  '/swagger'
 ];
 
 module.exports = function (app) {
