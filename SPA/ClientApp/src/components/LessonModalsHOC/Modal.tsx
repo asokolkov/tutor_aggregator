@@ -36,16 +36,13 @@ export function modal(
     const mutationFn = async () => {
       setError(false);
       setSubmitLoading(true);
-      onSubmit(lessonId)
-        .then(() => {
-          onClose();
-        })
-        .catch(() => {
-          setError(true);
-        })
-        .finally(() => {
-          setSubmitLoading(false);
-        });
+      try {
+        await onSubmit(lessonId);
+        onClose();
+      } catch {
+        setError(true);
+      }
+      setSubmitLoading(false);
     };
 
     const mutation = useMutation({
@@ -58,7 +55,6 @@ export function modal(
         <ModalOverlay />
         <ModalContent>
           <ModalBody>
-            {isError && <ErrorElement />}
             <ModalHeader>{modalTitle}</ModalHeader>
             <ModalCloseButton />
             <BodyComponent />
@@ -68,6 +64,7 @@ export function modal(
             onClose={onClose}
             mutateFunction={mutation.mutate}
           />
+          {isError && <ErrorElement />}
         </ModalContent>
       </Modal>
     );

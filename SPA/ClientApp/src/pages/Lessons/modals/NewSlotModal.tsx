@@ -38,8 +38,10 @@ export const NewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
   const { isOpen, onClose } = disclosure;
   const queryClient = useQueryClient();
 
-  const { onSubmit, isSubmitLoading, formErrorMessage } =
-    useNewSlotModalSubmit(date);
+  const { onSubmit, isSubmitLoading, formErrorMessage } = useNewSlotModalSubmit(
+    date,
+    onClose
+  );
 
   const { initValues } = useFormikValues();
 
@@ -55,7 +57,6 @@ export const NewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
         <Formik
           onSubmit={(v: SlotInputValuesProps) => {
             mutation.mutate(v);
-            onClose();
           }}
           initialValues={initValues}
         >

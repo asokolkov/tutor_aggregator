@@ -4,11 +4,13 @@ import { LessonType } from '../../../api/models';
 import { useState } from 'react';
 import { getHoursAndMinutes } from '../../../utils/datetime';
 
-export function useNewSlotModalSubmit(date: Date) {
+export function useNewSlotModalSubmit(date: Date, onClose: () => void) {
   const [formErrorMessage, setFormErrorMessage] = useState('');
   const [isSubmitLoading, setSubmitLoading] = useState(false);
+  const [isError, setError] = useState(false);
 
   const onSubmit = async (values: SlotInputValuesProps) => {
+    setError(false);
     setSubmitLoading(true);
     const startValues = getHoursAndMinutes(values.startTime);
     const endValues = getHoursAndMinutes(values.endTime);
@@ -23,12 +25,17 @@ export function useNewSlotModalSubmit(date: Date) {
     endDate.setHours(endValues.hours);
     endDate.setMinutes(endValues.minutes);
 
-    await LessonsAPI.createNewSlot(
-      startDate,
-      endDate,
-      values.price,
-      values.isOnline ? LessonType.online : LessonType.offline
-    );
+    try {
+      await LessonsAPI.createNewSlot(
+        startDate,
+        endDate,
+        values.price,
+        values.isOnline ? LessonType.online : LessonType.offline
+      );
+      onClose();
+    } catch {
+      setError(true);
+    }
     setSubmitLoading(false);
   };
 
@@ -41,7 +48,7 @@ export function useNewSlotModalSubmit(date: Date) {
     return true;
   };
 
-  return { onSubmit, isSubmitLoading, formErrorMessage };
+  return { onSubmit, isSubmitLoading, formErrorMessage, isError };
 }
 
 type TimeBoxValues = {

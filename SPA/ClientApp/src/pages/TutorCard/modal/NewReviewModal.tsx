@@ -16,6 +16,7 @@ import { Formik, FormikValues, Form } from 'formik';
 import { useTutorId } from '../../../routes/params';
 import { ReviewModalForm } from '../components/ReviewModalForm';
 import { reviewKey } from '../../../query/queryKeys';
+import { ErrorElement } from '../../../components/ErrorElement';
 
 interface Props {
   disclosure: DisclosureProps;
@@ -24,6 +25,8 @@ interface Props {
 const NewReviewModal: React.FC<Props> = ({ disclosure }) => {
   const { isOpen, onClose } = disclosure;
   const [isSubmitLoading, setSubmitLoading] = useState(false);
+  const [isError, setError] = useState(false);
+
   const queryClient = useQueryClient();
   const tutorId = useTutorId();
 
@@ -33,10 +36,15 @@ const NewReviewModal: React.FC<Props> = ({ disclosure }) => {
   };
 
   const onSubmit = async (values: FormikValues) => {
+    setError(false);
     setSubmitLoading(true);
-    await TutorsAPI.addReview(tutorId, values.rating, values.text);
+    try {
+      await TutorsAPI.addReview(tutorId, values.rating, values.text);
+      onClose();
+    } catch {
+      setError(true);
+    }
     setSubmitLoading(false);
-    onClose();
   };
 
   const mutation = useMutation({
@@ -63,6 +71,7 @@ const NewReviewModal: React.FC<Props> = ({ disclosure }) => {
                 Отправить
               </Button>
             </ModalFooter>
+            {isError && <ErrorElement />}
           </Form>
         </Formik>
       </ModalContent>
