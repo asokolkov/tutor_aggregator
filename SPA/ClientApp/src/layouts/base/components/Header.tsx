@@ -6,6 +6,7 @@ import {
   Text,
   VStack,
   useMediaQuery,
+  Skeleton,
 } from '@chakra-ui/react';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
@@ -16,11 +17,10 @@ import logo from '../../../assets/images/teacher_icon.png';
 import { CitySelection } from './CitySelection';
 import { LoginButton, RegisterButton } from './HeaderButtons';
 import { HeaderMenu } from './HeaderMenu';
-import { MiniHeaderMenu } from './MiniHeaderMenu';
 import { HeaderAuthMenu } from './HeaderAuthMenu';
 
 const Header: React.FC = () => {
-  const userState = useContext(UserContext);
+  const { isLoading, isAuthorized } = useContext(UserContext);
   const [isLargerThanTablet] = useMediaQuery('(min-width: 768px)');
 
   return (
@@ -43,20 +43,18 @@ const Header: React.FC = () => {
             <CitySelection />
           </VStack>
         </HStack>
-        {userState.isAuthorized ? (
-          isLargerThanTablet ? (
+        <Skeleton isLoaded={!isLoading}>
+          {!isLoading && isAuthorized ? (
             <HeaderMenu />
+          ) : isLargerThanTablet ? (
+            <HStack spacing="16px">
+              <LoginButton />
+              <RegisterButton />
+            </HStack>
           ) : (
-            <MiniHeaderMenu />
-          )
-        ) : isLargerThanTablet ? (
-          <HStack spacing="16px">
-            <LoginButton />
-            <RegisterButton />
-          </HStack>
-        ) : (
-          <HeaderAuthMenu />
-        )}
+            <HeaderAuthMenu />
+          )}
+        </Skeleton>
       </Flex>
     </Container>
   );

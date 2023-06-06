@@ -7,6 +7,7 @@ import {
   Button,
   Avatar,
   Box,
+  useMediaQuery,
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Color } from '../../../assets/theme/themeEnum';
@@ -25,6 +26,7 @@ import { getFullName } from '../../../utils/names';
 export const HeaderMenu: React.FC = () => {
   const navigate = useNavigate();
   const { removeUser, user } = useContext(UserContext);
+  const [isLargerThanTablet] = useMediaQuery('(min-width: 768px)');
 
   const signOut = async () => {
     await UserAPI.signOut();
@@ -45,7 +47,7 @@ export const HeaderMenu: React.FC = () => {
             size="xs"
             mr="8px"
           ></Avatar>
-          Мой профиль
+          {isLargerThanTablet && 'Мой профиль'}
         </Box>
       </MenuButton>
 

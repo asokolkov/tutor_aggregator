@@ -6,5 +6,6 @@ type UserContextProps = {
   setUser: (u: V1UserDto) => void;
   removeUser: () => void;
   isAuthorized: boolean;
+  isLoading: boolean;
 };
 export const UserContext = React.createContext<UserContextProps>(undefined);

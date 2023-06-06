@@ -11,7 +11,7 @@ export function useUser() {
   const isUserAuth = user !== undefined;
 
   const providerValues = useMemo(
-    () => ({ user, setUser, removeUser, isAuthorized: isUserAuth }),
+    () => ({ user, setUser, removeUser, isAuthorized: isUserAuth, isLoading }),
     [user, setUser, removeUser, isUserAuth, isLoading]
   );
 
