@@ -24,3 +24,7 @@ export const Default = {
     tutor: mockTutor,
   },
 };
+
+export const Loading = {
+  args: { ...Default.args, isLoading: true },
+};

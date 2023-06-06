@@ -14,22 +14,24 @@ import { MdSchool, MdBusinessCenter } from 'react-icons/md';
 import { getTutorCardByIdPath } from '../../../routes/routes';
 import { V1TutorDto } from '../../../api/models';
 import { getFullName } from '../../../utils/names';
+import { SearchCardSkeleton } from './SearchCard.skeleton';
 
-const SearchCard: React.FC<SearchCardInfoProps> = ({ tutor }) => {
+const SearchCard: React.FC<SearchCardInfoProps> = ({ tutor, isLoading }) => {
+  const navigate = useNavigate();
+  if (isLoading) return <SearchCardSkeleton />;
   const { firstName, lastName, educations, job, rating, id } = tutor;
   const fullName = getFullName(firstName, lastName);
 
-  const navigate = useNavigate();
   return (
     <VStack
+      minH="402px"
       borderWidth="2px"
       borderColor="blue.200"
       borderRadius="10px"
       padding="20px"
       spacing="20px"
-      justify="space-between"
     >
-      <VStack spacing="20px" w="100%">
+      <VStack spacing="20px" w="100%" flexGrow="1">
         <VStack spacing="10px">
           <Avatar name={fullName} border="0px" size="2xl" />
           <VStack spacing="5px">
@@ -82,4 +84,5 @@ export default SearchCard;
 
 export type SearchCardInfoProps = {
   tutor: V1TutorDto;
+  isLoading?: boolean;
 };

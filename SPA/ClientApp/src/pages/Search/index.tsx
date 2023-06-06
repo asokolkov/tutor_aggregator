@@ -7,7 +7,6 @@ import {
 } from '@chakra-ui/react';
 import SearchCard from './components/SearchCard';
 import { SearchParamsSection } from './SearchParamsSection';
-import { LoadBar } from '../../components/LoadBar/LoadBar';
 import { Form, Formik } from 'formik';
 import React, { useContext } from 'react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
@@ -16,6 +15,8 @@ import { MAIN_PAGE } from '../../routes/routePaths';
 import { Color } from '../../assets/theme/themeEnum';
 import { SearchStateContext } from '../../layouts/base/contexts/SearchStateContext';
 import { useSearchParams } from './hooks/useSearchParams';
+import { InfiniteData } from 'react-query';
+import { V1TutorDtoV1PageDto } from '../../api/models';
 
 export const SearchPage = () => {
   const isLargerThanTablet = useBreakpointValue(
@@ -29,7 +30,6 @@ export const SearchPage = () => {
   const { isLoading, data, isFetchingNextPage, fetchNextPage, hasNextPage } =
     query;
 
-  if (isLoading) return <LoadBar description={'Загружаем результаты поиска'} />;
   return (
     <Flex direction={'column'} gap={'30px'}>
       <Flex direction={'column'} gap={'10px'}>
@@ -51,13 +51,7 @@ export const SearchPage = () => {
         </Formik>
       </Flex>
       <SimpleGrid columns={[1, 1, 2, 3, 4, 5]} spacing="16px">
-        {data.pages.map((x, i) => (
-          <React.Fragment key={+(data.pageParams[i] ?? 0)}>
-            {x.items.map((item) => (
-              <SearchCard tutor={item} key={item.id}></SearchCard>
-            ))}
-          </React.Fragment>
-        ))}
+        {isLoading ? <LoadingSkeleton /> : <LoadedData data={data} />}
       </SimpleGrid>
 
       {hasNextPage && (
@@ -70,5 +64,25 @@ export const SearchPage = () => {
         </Button>
       )}
     </Flex>
+  );
+};
+
+const LoadingSkeleton: React.FC = () => {
+  return <>{Array(10).fill(<SearchCard tutor={undefined} isLoading />)}</>;
+};
+
+const LoadedData: React.FC<{ data: InfiniteData<V1TutorDtoV1PageDto> }> = ({
+  data,
+}) => {
+  return (
+    <>
+      {data.pages.map((x, i) => (
+        <React.Fragment key={+(data.pageParams[i] ?? 0)}>
+          {x.items.map((item) => (
+            <SearchCard tutor={item} key={item.id}></SearchCard>
+          ))}
+        </React.Fragment>
+      ))}
+    </>
   );
 };
