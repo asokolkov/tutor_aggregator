@@ -28,9 +28,7 @@ export const SelectOptions: React.FC<SelectOptionsProps> = ({
       >
         {label}
       </FormLabel>
-      {isLoading ? (
-        <Skeleton w="100%" h="40px" />
-      ) : (
+      <Skeleton isLoaded={!isLoading} w="100%">
         <Select
           {...field}
           bg="white"
@@ -48,7 +46,7 @@ export const SelectOptions: React.FC<SelectOptionsProps> = ({
             </option>
           ))}
         </Select>
-      )}
+      </Skeleton>
     </FormControl>
   );
 };
