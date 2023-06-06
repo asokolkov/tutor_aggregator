@@ -21,22 +21,21 @@ internal sealed class TutorsRepository : ITutorsRepository
         table = context.Tutors;
     }
 
-    public async Task<Page<Tutor>> GetAsync(int page, int size, string subject, string city, string district, int maxPrice,
-        int rating)
+    public async Task<Page<Tutor>> GetAsync(int page, int size, string subject, string city, string district,
+        int maxPrice, int rating)
     {
-        var tutorsEntities = await table
-            .OrderBy(x => x)
-            .Where(x => (int)x.Rating == rating || rating == -1)
-            .Where(x => (x.Location != null ? x.Location.City : null) == city || city == "")
-            .Where(x => (x.Location != null ? x.Location.District : null) == district || district == "")
-            .Where(x => x.Subjects.FirstOrDefault(y => y.Description == subject) != null || subject == "")
-            .Where(x => x.Lessons.Max(y => y.Price) <= maxPrice || maxPrice == -1)
-            .Skip(page * size)
-            .Take(size)
+        var filteredEntities = await context.Tutors
+            .OrderBy(x => x.FirstName)
+            .Where(x => rating == -1 || (int)x.Rating == rating)
+            .Where(x => city == "" || (x.Location != null ? x.Location.City : null) == city)
+            .Where(x => district == "" || (x.Location != null ? x.Location.District : null) == district)
+            .Where(x => subject == "" || x.Subjects.FirstOrDefault(y => y.Description == subject) != null)
+            .Where(x => maxPrice == -1 || (x.Lessons.Any() ? x.Lessons.Max(y => y.Price) : -1) <= maxPrice)
             .ToListAsync();
-        var tutors = mapper.Map<List<Tutor>>(tutorsEntities);
 
-        return new Page<Tutor>(tutors, table.Count(), page, size);
+        var entities = mapper.Map<List<Tutor>>(filteredEntities.Skip(page * size).Take(size));
+
+        return new Page<Tutor>(entities, filteredEntities.Count, page, size);
     }
 
     public async Task<Tutor?> GetAsync(Guid id)
@@ -61,25 +60,25 @@ internal sealed class TutorsRepository : ITutorsRepository
             tutorEntity.Age = tutor.Age;
             tutorEntity.Job = tutor.Job;
             tutorEntity.Description = tutor.Description;
-            
+
             context.Awards.RemoveRange(tutorEntity.Awards);
             var awardsEntities = new List<AwardEntity>();
             foreach (var award in tutor.Awards)
                 awardsEntities.Add((await context.Awards.AddAsync(award)).Entity);
             tutorEntity.Awards = awardsEntities;
-            
+
             context.TutorEducations.RemoveRange(tutorEntity.Educations);
             var educationsEntities = new List<TutorEducationEntity>();
             foreach (var education in tutor.Educations)
                 educationsEntities.Add((await context.TutorEducations.AddAsync(education)).Entity);
             tutorEntity.Educations = educationsEntities;
-            
+
             context.TutorsContacts.RemoveRange(tutorEntity.Contacts);
             var contactsEntities = new List<TutorContactEntity>();
             foreach (var contact in tutor.Contacts)
                 contactsEntities.Add((await context.TutorsContacts.AddAsync(contact)).Entity);
             tutorEntity.Contacts = contactsEntities;
-            
+
             context.Requirements.RemoveRange(tutorEntity.Requirements);
             var requirementsEntities = new List<RequirementEntity>();
             foreach (var requirement in tutor.Requirements)
@@ -97,7 +96,7 @@ internal sealed class TutorsRepository : ITutorsRepository
                     return null;
                 tutorEntity.Location = locationEntity;
             }
-            
+
             if (tutor.Subjects.Count == 0)
             {
                 tutorEntity.Subjects = new List<SubjectEntity>();
@@ -112,6 +111,7 @@ internal sealed class TutorsRepository : ITutorsRepository
                         return null;
                     newSubjects.Add(subjectEntity);
                 }
+
                 tutorEntity.Subjects = newSubjects;
             }
 
