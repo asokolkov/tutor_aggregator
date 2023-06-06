@@ -89,7 +89,11 @@ export type V1StudentEducationDto = {
   value?: string | null;
   grade?: number;
 };
-export type V1ContactTypeDto = 'Phone' | 'Email' | 'Telegram';
+export enum V1ContactTypeDto {
+  phone = 'Phone',
+  email = 'Email',
+  telegram = 'Telegram',
+}
 export type V1StudentContactDto = {
   id?: string | null;
   type?: V1ContactTypeDto;
@@ -186,3 +190,5 @@ export type V1CreateReviewDto = {
   rating?: number;
   description?: string | null;
 };
+
+export type V1ContactsDto = V1StudentContactDto | V1TutorContactDto;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext } from 'react';
+import { ChangeEvent, useContext } from 'react';
 import {
   Avatar,
   Box,
@@ -21,6 +21,8 @@ import StudentAPI from '../../api/students';
 import { TooltipType } from './components/_shared';
 import { SelectOptionsRow } from './components/SelectOptionsRow';
 import { TextAreaRow } from './components/TextAreaRow';
+import { FileUpload } from './components/FileUpload';
+import AvatarAPI from '../../api/avatars';
 
 export const StudentCard: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
@@ -30,6 +32,11 @@ export const StudentCard: React.FC = () => {
   const onSubmit = async (values: FormikValues) => {
     const newStudent = updateStudentFromFormikValues(student, values);
     await StudentAPI.putCurrentProfileValues(newStudent);
+  };
+
+  const onAvatarChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const avatarFile = event.target.files[0];
+    await AvatarAPI.uploadAvatar(avatarFile);
   };
   return (
     <Box
@@ -60,13 +67,16 @@ export const StudentCard: React.FC = () => {
                 colorScheme={'blue'}
                 showBorder
               ></Avatar>
-              <Button
-                size={'xs'}
-                colorScheme={'blue'}
-                margin={isDesktop ? '0 0 0 0' : '0 0 1.5em 0'}
-              >
-                Изменить фото
-              </Button>
+              <FileUpload accept="image/*" onChange={onAvatarChange}>
+                <Button
+                  size={'xs'}
+                  colorScheme={'blue'}
+                  margin={isDesktop ? '0 0 0 0' : '0 0 1.5em 0'}
+                  justifyContent="center"
+                >
+                  Изменить фото
+                </Button>
+              </FileUpload>
             </Flex>
             <Flex
               width={'100%'}
