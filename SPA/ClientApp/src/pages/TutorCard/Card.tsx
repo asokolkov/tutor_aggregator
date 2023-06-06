@@ -1,12 +1,12 @@
 import { Avatar, Text, HStack, VStack, Box } from '@chakra-ui/react';
-import categoryIcon from '../../assets/images/category-icon.png';
-import locationIcon from '../../assets/images/location-icon.png';
-import educationIcon from '../../assets/images/educations-icon.png';
-import requirementsIcon from '../../assets/images/requirements-icon.png';
 import React, { useMemo } from 'react';
 import { ButtonSection } from './components/ButtonSection';
 import { CardInfoContext } from './contexts/CardInfoContext';
 import InfoWithIcon from '../../components/InfoWithIcon';
+import { BiMap } from 'react-icons/bi';
+import { FaUserGraduate } from 'react-icons/fa';
+import { ImBooks } from 'react-icons/im';
+import { HiOutlineClipboardCheck } from 'react-icons/hi';
 
 export const Card: React.FC<CardInfoProps> = (props) => {
   const providerValue = useMemo(() => ({ ...props }), [props]);
@@ -25,22 +25,22 @@ export const Card: React.FC<CardInfoProps> = (props) => {
         <VStack spacing="20px" w="100%">
           <VStack spacing="16px" align="flex-start" w="100%">
             <InfoWithIcon
-              icon={locationIcon}
+              icon={<BiMap type="solid" />}
               categoryText={'Район'}
               text={props.location}
             />
             <InfoWithIcon
-              icon={educationIcon}
+              icon={<FaUserGraduate />}
               categoryText={'Оразование'}
               text={props.education}
             />
             <InfoWithIcon
-              icon={categoryIcon}
+              icon={<ImBooks />}
               categoryText={'Предметы'}
               text={props.subjects}
             />
             <InfoWithIcon
-              icon={requirementsIcon}
+              icon={<HiOutlineClipboardCheck />}
               categoryText={'Требования'}
               text={props.requirements}
             />

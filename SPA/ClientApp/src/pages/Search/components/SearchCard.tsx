@@ -2,12 +2,12 @@ import { Avatar, Heading, VStack, Button } from '@chakra-ui/react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RatingStars } from '../../../components/ReviewStars/RatingStars';
-import categoryIcon from '../../../assets/images/category-icon.png';
-import jobIcon from '../../../assets/images/job-icon.png';
 import InfoWithIcon from '../../../components/InfoWithIcon';
 import { getTutorCardByIdPath } from '../../../routes/routes';
 import { V1TutorDto } from '../../../api/models';
 import { getFullName } from '../../../utils/names';
+import { FaUserGraduate } from 'react-icons/fa';
+import { MdOutlineWork } from 'react-icons/md';
 
 const SearchCard: React.FC<SearchCardInfoProps> = ({ tutor }) => {
   const { firstName, lastName, educations, job, rating, id } = tutor;
@@ -38,11 +38,11 @@ const SearchCard: React.FC<SearchCardInfoProps> = ({ tutor }) => {
 
         <VStack spacing="5px" align="flex-start" w="100%">
           <InfoWithIcon
-            icon={categoryIcon}
+            icon={<FaUserGraduate />}
             text={educations.map((e) => e.value).join(', ')}
             categoryText={''}
           />
-          <InfoWithIcon icon={jobIcon} text={job} categoryText={''} />
+          <InfoWithIcon icon={<MdOutlineWork />} text={job} categoryText={''} />
         </VStack>
       </VStack>
 
