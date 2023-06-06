@@ -7,12 +7,12 @@ export function useTutorCardPageQuery() {
   const tutorId = useTutorId();
 
   const tutorQuery = useQuery({
-    queryKey: [tutorCardKey],
+    queryKey: [tutorCardKey, tutorId],
     queryFn: () => TutorsAPI.getTutorById(tutorId),
   });
 
   const reviewQuery = useQuery({
-    queryKey: [reviewKey],
+    queryKey: [reviewKey, tutorId],
     queryFn: () => TutorsAPI.getReviewsByTutorId(tutorId),
   });
 

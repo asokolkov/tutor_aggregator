@@ -9,7 +9,12 @@ import {
 import React from 'react';
 import { RatingStars } from '../../../components/ReviewStars/RatingStars';
 
-export const SingleReview: React.FC<SingleReviewProps> = (props) => {
+export const SingleReview: React.FC<SingleReviewProps> = ({
+  text,
+  fullName,
+  rating,
+  date,
+}) => {
   const isLargerThanTablet = useBreakpointValue(
     { base: false, lg: true },
     { ssr: false, fallback: 'lg' }
@@ -25,17 +30,17 @@ export const SingleReview: React.FC<SingleReviewProps> = (props) => {
       borderRadius="10px"
       p="16px"
     >
-      <Avatar name={props.fullName} size={isLargerThanTablet ? 'md' : 'sm'} />
+      <Avatar name={fullName} size={isLargerThanTablet ? 'md' : 'sm'} />
       <VStack spacing={'16px'} align={'start'}>
         <Stack
           spacing={isLargerThanTablet ? '16px' : '5px'}
           direction={isLargerThanTablet ? 'row' : 'column'}
         >
-          <Text variant="regular.h3">{props.fullName}</Text>
-          <RatingStars rating={props.rating} />
-          <Text variant="misc.field-title">{props.date}</Text>
+          <Text variant="regular.h3">{fullName}</Text>
+          <RatingStars rating={rating} />
+          <Text variant="misc.field-title">{date}</Text>
         </Stack>
-        <Text>{props.text}</Text>
+        <Text>{text}</Text>
       </VStack>
     </HStack>
   );

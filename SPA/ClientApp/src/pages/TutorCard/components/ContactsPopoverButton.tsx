@@ -4,12 +4,14 @@ import { CardInfoContext } from '../contexts/CardInfoContext';
 import { ContactsModal } from '../../../components/modals/ContactsModal';
 
 const ContactsPopoverButton: React.FC = () => {
-  const { contacts } = useContext(CardInfoContext);
+  const { contacts, isLoading } = useContext(CardInfoContext);
   const disclosure = useDisclosure();
 
   return (
     <>
-      <ContactsModal disclosure={disclosure} contacts={contacts} />
+      {!isLoading && (
+        <ContactsModal disclosure={disclosure} contacts={contacts} />
+      )}
       <Button
         variant="blue.300"
         w="100%"

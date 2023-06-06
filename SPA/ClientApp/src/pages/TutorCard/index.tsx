@@ -1,7 +1,6 @@
 import { Text, VStack } from '@chakra-ui/react';
 import { Card } from './Card';
 import { ReviewSection } from './ReviewSection';
-import { LoadBar } from '../../components/LoadBar/LoadBar';
 import { useTutorCardPageQuery } from '../../query/useTutorCardPageQuery';
 import React from 'react';
 import { MapCardInfo } from './_mapper';
@@ -16,9 +15,6 @@ export const TutorCardPage = () => {
   const tutor = tutorQuery.data;
   const reviews = reviewQuery.data;
 
-  if (reviewQuery.isLoading)
-    return <LoadBar description={'Загружаем карточку преподавателя'} />;
-
   return (
     <>
       <Link to={SEARCH_PAGE}>
@@ -29,7 +25,7 @@ export const TutorCardPage = () => {
       </Link>
       <VStack maxW={'100%'} spacing={'0px'}>
         <Card {...MapCardInfo(tutor, tutorQuery.isLoading)} />
-        <ReviewSection reviews={reviews} />
+        <ReviewSection reviews={reviews} isLoading={reviewQuery.isLoading} />
       </VStack>
     </>
   );

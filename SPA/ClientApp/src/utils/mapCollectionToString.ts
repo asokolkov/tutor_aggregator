@@ -1,3 +1,3 @@
 export const mapCollectionToString = (collection: string[]) => {
-  return collection.join(', ');
+  return collection?.join(', ');
 };

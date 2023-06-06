@@ -6,6 +6,7 @@ import {
   VStack,
   IconButton,
   useBreakpointValue,
+  Skeleton,
 } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { MapSingleReview } from './_mapper';
@@ -13,8 +14,9 @@ import NewReviewModal from './modal/NewReviewModal';
 import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { V1AccountTypeDto, V1ReviewDtoV1PageDto } from '../../api/models';
 import { AddIcon } from '@chakra-ui/icons';
+import { SingleReviewSkeleton } from './components/SingleReview.skeleton';
 
-export const ReviewSection: React.FC<Props> = ({ reviews }) => {
+export const ReviewSection: React.FC<Props> = ({ reviews, isLoading }) => {
   const { user, isAuthorized } = useContext(UserContext);
   const disclosure = useDisclosure();
   const isLargerThanTablet = useBreakpointValue(
@@ -32,31 +34,39 @@ export const ReviewSection: React.FC<Props> = ({ reviews }) => {
       >
         <Flex direction={'column'}>
           <Text variant="brand.h1">Отзывы</Text>
-          <Text variant="regular.bold">
-            Всего отзывов: {reviews.items.length}
-          </Text>
+          <Skeleton isLoaded={!isLoading}>
+            <Text variant="regular.bold">
+              Всего отзывов: {reviews?.items.length}
+            </Text>
+          </Skeleton>
         </Flex>
 
-        {isAuthorized && user.accountType === V1AccountTypeDto.student && (
-          <>
-            <IconButton
-              variant="green"
-              aria-label="Добавить отзыв"
-              size="sm"
-              icon={<AddIcon />}
-              onClick={disclosure.onOpen}
-            />
-            <NewReviewModal disclosure={disclosure} />
-          </>
-        )}
+        {!isLoading &&
+          isAuthorized &&
+          user.accountType === V1AccountTypeDto.student && (
+            <>
+              <IconButton
+                variant="green"
+                aria-label="Добавить отзыв"
+                size="sm"
+                icon={<AddIcon />}
+                onClick={disclosure.onOpen}
+              />
+              <NewReviewModal disclosure={disclosure} />
+            </>
+          )}
       </Flex>
-      {reviews.items.map((review) => (
-        <SingleReview {...MapSingleReview(review)} key={review.id} />
-      ))}
+
+      {isLoading
+        ? Array(3).fill(<SingleReviewSkeleton />)
+        : reviews.items.map((review) => (
+            <SingleReview {...MapSingleReview(review)} key={review.id} />
+          ))}
     </VStack>
   );
 };
 
 type Props = {
   reviews: V1ReviewDtoV1PageDto;
+  isLoading: boolean;
 };
