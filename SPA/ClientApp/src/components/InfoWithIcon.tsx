@@ -10,11 +10,16 @@ const InfoWithIcon: React.FC<SearchCardInfoRowProps> = ({
   const isWithCategoryText = categoryText.length > 0;
   const [isLargerThanMobile] = useMediaQuery('(min-width: 468px)');
   return (
-    <Flex flexDirection={isLargerThanMobile ? 'row' : 'column'} gap="8px">
+    <Flex
+      flexDirection={isLargerThanMobile ? 'row' : 'column'}
+      gap={isLargerThanMobile ? '8px' : '2px'}
+      align={isLargerThanMobile ? 'center' : 'stretch'}
+      width={'100%'}
+    >
       <Flex flexShrink="0" gap="8px">
         <Icon size={24} />
         {isWithCategoryText && (
-          <Text variant="regular.bold" width="124px" whiteSpace="nowrap">
+          <Text variant="regular.bold" width="130px" whiteSpace="nowrap">
             {categoryText}
           </Text>
         )}

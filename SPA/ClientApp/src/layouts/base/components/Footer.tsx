@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
   const [isLargerThanTablet] = useMediaQuery('(min-width: 768px)');
   return (
     <Container
-      padding="1vh 5vw 2vh 5vw"
+      padding="30px 5vw 2vh 5vw"
       as="footer"
       role="contentinfo"
       maxWidth={'100%'}
