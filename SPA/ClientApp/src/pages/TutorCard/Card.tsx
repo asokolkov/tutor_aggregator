@@ -25,22 +25,22 @@ export const Card: React.FC<CardInfoProps> = (props) => {
         <VStack spacing="20px" w="100%">
           <VStack spacing="16px" align="flex-start" w="100%">
             <InfoWithIcon
-              icon={<BiMap type="solid" />}
+              Icon={BiMap}
               categoryText={'Район'}
               text={props.location}
             />
             <InfoWithIcon
-              icon={<FaUserGraduate />}
+              Icon={FaUserGraduate}
               categoryText={'Оразование'}
               text={props.education}
             />
             <InfoWithIcon
-              icon={<ImBooks />}
+              Icon={ImBooks}
               categoryText={'Предметы'}
               text={props.subjects}
             />
             <InfoWithIcon
-              icon={<HiOutlineClipboardCheck />}
+              Icon={HiOutlineClipboardCheck}
               categoryText={'Требования'}
               text={props.requirements}
             />

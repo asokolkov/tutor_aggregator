@@ -38,11 +38,11 @@ const SearchCard: React.FC<SearchCardInfoProps> = ({ tutor }) => {
 
         <VStack spacing="5px" align="flex-start" w="100%">
           <InfoWithIcon
-            icon={<FaUserGraduate />}
+            Icon={FaUserGraduate}
             text={educations.map((e) => e.value).join(', ')}
             categoryText={''}
           />
-          <InfoWithIcon icon={<MdOutlineWork />} text={job} categoryText={''} />
+          <InfoWithIcon Icon={MdOutlineWork} text={job} categoryText={''} />
         </VStack>
       </VStack>
 

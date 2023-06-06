@@ -1,8 +1,9 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Flex, Text, useMediaQuery } from '@chakra-ui/react';
+import { IconType } from 'react-icons';
 
 const InfoWithIcon: React.FC<SearchCardInfoRowProps> = ({
-  icon,
+  Icon,
   text,
   categoryText,
 }) => {
@@ -10,9 +11,8 @@ const InfoWithIcon: React.FC<SearchCardInfoRowProps> = ({
   const [isLargerThanMobile] = useMediaQuery('(min-width: 468px)');
   return (
     <Flex flexDirection={isLargerThanMobile ? 'row' : 'column'} gap="8px">
-      <Flex flexShrink="0">
-        {/*<Image src={icon} alt="" w="24px" h="24px" mr="6px" />*/}
-        {icon}
+      <Flex flexShrink="0" gap="8px">
+        <Icon size={24} />
         {isWithCategoryText && (
           <Text variant="regular.bold" width="124px" whiteSpace="nowrap">
             {categoryText}
@@ -27,7 +27,7 @@ const InfoWithIcon: React.FC<SearchCardInfoRowProps> = ({
 export default InfoWithIcon;
 
 interface SearchCardInfoRowProps {
-  icon: ReactNode;
+  Icon: IconType;
   categoryText: string;
   text: string;
 }
