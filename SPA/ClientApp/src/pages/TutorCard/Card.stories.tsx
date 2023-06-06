@@ -1,5 +1,6 @@
 import { Card, CardInfoProps } from './Card';
 import { Default as ContactModalStory } from '../../components/modals/ContactModal.stories';
+import { StoryObj } from '@storybook/react';
 export default {
   component: Card,
 };
@@ -15,8 +16,15 @@ const args: CardInfoProps = {
   location: '',
   requirements: '',
   subjects: '',
+  isLoading: false,
 };
 
-export const Default = {
+type Story = StoryObj<typeof Card>;
+
+export const Default: Story = {
   args,
+};
+
+export const Loading: Story = {
+  args: { ...Default.args, isLoading: true },
 };

@@ -6,6 +6,8 @@ import {
   Flex,
   Divider,
   useBreakpointValue,
+  SkeletonCircle,
+  Skeleton,
 } from '@chakra-ui/react';
 import React, { useMemo } from 'react';
 import { ButtonSection } from './components/ButtonSection';
@@ -26,6 +28,7 @@ export const Card: React.FC<CardInfoProps> = (props) => {
     { base: false, lg: true },
     { ssr: false, fallback: 'lg' }
   );
+  const { isLoading } = props;
 
   return (
     <CardInfoContext.Provider value={providerValue}>
@@ -44,27 +47,36 @@ export const Card: React.FC<CardInfoProps> = (props) => {
             isLargerThanTablet ? '10px 10px 10px 5vw' : '20px 10px 0 10px'
           }
         >
-          <Avatar name={props.fullName} size={'2xl'} />
+          {isLoading ? (
+            <SkeletonCircle size="128px" />
+          ) : (
+            <Avatar name={props.fullName} size={'2xl'} />
+          )}
         </Box>
         <VStack
           spacing="8px"
           align="flex-start"
           p={isLargerThanTablet ? '10px 5vw 10px 30px' : '10px 10px 20px 10px'}
         >
-          <Text
-            variant="regular.h1"
-            textAlign={isLargerThanTablet ? 'left' : 'center'}
-            width={'100%'}
-          >
-            {props.fullName}
-          </Text>
-          <Text
-            variant="regular.h3"
-            textAlign={isLargerThanTablet ? 'left' : 'center'}
-            width={'100%'}
-          >
-            {props.description}
-          </Text>
+          <Skeleton isLoaded={!isLoading}>
+            <Text
+              variant="regular.h1"
+              textAlign={isLargerThanTablet ? 'left' : 'center'}
+              width={'100%'}
+            >
+              {props.fullName}
+            </Text>
+          </Skeleton>
+
+          <Skeleton isLoaded={!isLoading}>
+            <Text
+              variant="regular.h3"
+              textAlign={isLargerThanTablet ? 'left' : 'center'}
+              width={'100%'}
+            >
+              {props.description}
+            </Text>
+          </Skeleton>
         </VStack>
       </Flex>
       <VStack spacing="20px" padding="20px 0" w="100%">
@@ -79,22 +91,26 @@ export const Card: React.FC<CardInfoProps> = (props) => {
               categoryText={'Район'}
               text={props.location}
             />
+
             <InfoWithIcon
               Icon={MdBookmark}
               categoryText={'Предметы'}
               text={props.subjects}
             />
+
             <Divider borderColor={'custom.blue.100'}></Divider>
             <InfoWithIcon
               Icon={MdSchool}
               categoryText={'Образование'}
               text={props.education}
             />
+
             <InfoWithIcon
               Icon={MdWork}
               categoryText={'Работа'}
               text={props.education}
             />
+
             <InfoWithIcon
               Icon={MdAssignment}
               categoryText={'Требования'}
@@ -117,4 +133,5 @@ export type CardInfoProps = {
   subjects: string;
   education: string;
   requirements: string;
+  isLoading: boolean;
 };

@@ -3,22 +3,26 @@ import { mapCollectionToString } from '../../utils/mapCollectionToString';
 import { SingleReviewProps } from './components/SingleReview';
 import { V1ReviewDto, V1TutorDto } from '../../api/models';
 
-export function MapCardInfo(tutor: V1TutorDto): CardInfoProps {
+export function MapCardInfo(
+  tutor: V1TutorDto,
+  isLoading: boolean
+): CardInfoProps {
   return {
-    id: tutor.id,
-    contacts: tutor.contacts,
-    description: tutor.description,
+    id: tutor?.id,
+    contacts: tutor?.contacts,
+    description: tutor?.description,
     education:
-      mapCollectionToString(tutor.educations?.map((x) => x.value)) ||
+      mapCollectionToString(tutor?.educations?.map((x) => x.value)) ||
       'Не указано',
-    fullName: `${tutor.firstName} ${tutor.lastName}`,
-    location: tutor.location?.district || 'Не указано',
+    fullName: `${tutor?.firstName} ${tutor?.lastName}`,
+    location: tutor?.location?.district || 'Не указано',
     requirements:
-      mapCollectionToString(tutor.requirements?.map((x) => x.value)) ||
+      mapCollectionToString(tutor?.requirements?.map((x) => x.value)) ||
       'Не указано',
     subjects:
-      mapCollectionToString(tutor.subjects?.map((x) => x.description)) ||
+      mapCollectionToString(tutor?.subjects?.map((x) => x.description)) ||
       'Не указано',
+    isLoading,
   };
 }
 

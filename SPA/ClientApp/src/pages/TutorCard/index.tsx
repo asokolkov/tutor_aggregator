@@ -16,7 +16,7 @@ export const TutorCardPage = () => {
   const tutor = tutorQuery.data;
   const reviews = reviewQuery.data;
 
-  if (tutorQuery.isLoading || reviewQuery.isLoading)
+  if (reviewQuery.isLoading)
     return <LoadBar description={'Загружаем карточку преподавателя'} />;
 
   return (
@@ -28,7 +28,7 @@ export const TutorCardPage = () => {
         </Text>
       </Link>
       <VStack maxW={'100%'} spacing={'0px'}>
-        <Card {...MapCardInfo(tutor)} />
+        <Card {...MapCardInfo(tutor, tutorQuery.isLoading)} />
         <ReviewSection reviews={reviews} />
       </VStack>
     </>

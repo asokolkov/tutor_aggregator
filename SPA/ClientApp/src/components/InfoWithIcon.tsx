@@ -1,6 +1,7 @@
-import React from 'react';
-import { Flex, Text, useMediaQuery } from '@chakra-ui/react';
+import React, { useContext } from 'react';
+import { Flex, Skeleton, Text, useMediaQuery } from '@chakra-ui/react';
 import { IconType } from 'react-icons';
+import { CardInfoContext } from '../pages/TutorCard/contexts/CardInfoContext';
 
 const InfoWithIcon: React.FC<SearchCardInfoRowProps> = ({
   Icon,
@@ -9,6 +10,7 @@ const InfoWithIcon: React.FC<SearchCardInfoRowProps> = ({
 }) => {
   const isWithCategoryText = categoryText.length > 0;
   const [isLargerThanMobile] = useMediaQuery('(min-width: 468px)');
+  const cardContext = useContext(CardInfoContext);
   return (
     <Flex
       flexDirection={isLargerThanMobile ? 'row' : 'column'}
@@ -24,7 +26,9 @@ const InfoWithIcon: React.FC<SearchCardInfoRowProps> = ({
           </Text>
         )}
       </Flex>
-      <Text>{text}</Text>
+      <Skeleton isLoaded={!cardContext?.isLoading} w="100%">
+        <Text>{text || 'Не указано'}</Text>
+      </Skeleton>
     </Flex>
   );
 };
