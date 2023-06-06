@@ -11,7 +11,7 @@ using SPA.Application.Subjects.Queries.GetSubjectsQuery;
 using SPA.Application.Tutors.Commands.CreateReviewCommand;
 using SPA.Application.Tutors.Commands.UpdateTutorCommand;
 using SPA.Application.Tutors.Queries.GetTutorQuery;
-using SPA.Application.Tutors.Queries.GetTutorsQuery;
+using SPA.Application.Tutors.Queries.GetTutorsPageQuery;
 using SPA.Application.Users.Queries.GetCurrentUserQuery;
 
 namespace SPA.Extensions;
@@ -44,7 +44,7 @@ internal static class ServiceCollectionExtensions
             .AddScoped<IRequestHandler<UpdateStudentCommand, Student>, UpdateStudentCommandHandler>();
 
         services
-            .AddScoped<IRequestHandler<GetTutorsQuery, Page<Tutor>>, GetTutorsQueryHandler>()
+            .AddScoped<IRequestHandler<GetTutorsPageQuery, Page<Tutor>>, GetTutorsPageQueryHandler>()
             .AddScoped<IRequestHandler<GetTutorQuery, Tutor>, GetTutorQueryHandler>()
             .AddScoped<IRequestHandler<UpdateTutorCommand, Tutor>, UpdateTutorCommandHandler>()
             .AddScoped<IRequestHandler<GetReviewsQuery, Page<Review>>, GetReviewsCommandHandler>()

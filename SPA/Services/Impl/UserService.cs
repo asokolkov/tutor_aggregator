@@ -34,7 +34,7 @@ internal sealed class UserService : IUserService
             }
         };
 
-        return await tutorsRepository.Insert(tutor);
+        return await tutorsRepository.InsertAsync(tutor);
     }
 
     public async Task<Student> CreateStudent(ApplicationUser user)

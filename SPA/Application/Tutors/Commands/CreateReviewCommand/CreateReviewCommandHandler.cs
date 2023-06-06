@@ -1,4 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿#nullable enable
+
+using JetBrains.Annotations;
 using MediatR;
 using SPA.Domain;
 using SPA.Repositories;
@@ -6,7 +8,7 @@ using SPA.Repositories;
 namespace SPA.Application.Tutors.Commands.CreateReviewCommand;
 
 [UsedImplicitly]
-internal class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand, Review> 
+internal class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand, Review?> 
 {
     private readonly IReviewsRepository repository;
     
@@ -15,7 +17,7 @@ internal class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand,
         this.repository = repository;
     }
 
-    public async Task<Review> Handle(CreateReviewCommand request, CancellationToken cancellationToken)
+    public async Task<Review?> Handle(CreateReviewCommand request, CancellationToken cancellationToken)
     {
         return await repository.Insert(request.TutorId, request.StudentId, request.Review);
     }
