@@ -28,9 +28,4 @@ const Body: React.FC = () => {
 
 const Footer = modalFooter(ButtonVariant.red, 'Отменить', 'Закрыть без отмены');
 
-export const CancelLessonModal = modal(
-  Body,
-  Footer,
-  onSuccess,
-  modalTitle
-);
+export const CancelLessonModal = modal(Body, Footer, onSuccess, modalTitle);
