@@ -11,9 +11,10 @@ export function useSearchParamsContext() {
     () => ({
       locationsData: locationsQuery.data,
       subjectsData: subjectQuery.data,
+      isLoading,
     }),
     [locationsQuery, subjectQuery]
   );
 
-  return { providerValue, isLoading };
+  return { providerValue };
 }

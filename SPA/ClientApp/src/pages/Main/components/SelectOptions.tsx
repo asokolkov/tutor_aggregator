@@ -1,6 +1,8 @@
-import { FormControl, FormLabel, Select } from '@chakra-ui/react';
+import { FormControl, FormLabel, Select, Skeleton } from '@chakra-ui/react';
 import * as React from 'react';
 import { useField } from 'formik';
+import { SearchParamsContext } from '../contexts/SearchParamsContext';
+import { useContext } from 'react';
 
 export const SelectOptions: React.FC<SelectOptionsProps> = ({
   options,
@@ -11,6 +13,7 @@ export const SelectOptions: React.FC<SelectOptionsProps> = ({
   isDesktop,
 }) => {
   const [field] = useField({ name });
+  const { isLoading } = useContext(SearchParamsContext);
 
   return (
     <FormControl
@@ -25,20 +28,27 @@ export const SelectOptions: React.FC<SelectOptionsProps> = ({
       >
         {label}
       </FormLabel>
-      <Select
-        {...field}
-        bg="white"
-        color="black"
-        width={'100%'}
-        fontSize={'lg'}
-        placeholder={placeholder}
-      >
-        {options?.map((option) => (
-          <option value={optionsMap ? optionsMap[option] : option} key={option}>
-            {option}
-          </option>
-        ))}
-      </Select>
+      {isLoading ? (
+        <Skeleton w="100%" h="40px" />
+      ) : (
+        <Select
+          {...field}
+          bg="white"
+          color="black"
+          width={'100%'}
+          fontSize={'lg'}
+          placeholder={placeholder}
+        >
+          {options?.map((option) => (
+            <option
+              value={optionsMap ? optionsMap[option] : option}
+              key={option}
+            >
+              {option}
+            </option>
+          ))}
+        </Select>
+      )}
     </FormControl>
   );
 };

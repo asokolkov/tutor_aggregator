@@ -30,7 +30,7 @@ export const FormBody: React.FC = () => {
       <GridItem area={'subject'}>
         <SelectOptions
           label={'Предмет'}
-          options={subjectsData.map((subject) => subject.description)}
+          options={subjectsData?.map((subject) => subject.description)}
           name="subject"
           placeholder="Любой"
           isDesktop={isLargerThanTablet}
@@ -39,7 +39,7 @@ export const FormBody: React.FC = () => {
       <GridItem area={'district'}>
         <SelectOptions
           label={'Район'}
-          options={locationsData.map((location) => location.district)}
+          options={locationsData?.map((location) => location.district)}
           name="district"
           placeholder="Любой"
           isDesktop={isLargerThanTablet}
