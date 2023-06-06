@@ -42,9 +42,9 @@ public sealed class V1TutorsController : Controller
         return model is not null ? Ok(mapper.Map<V1TutorDto>(model)) : NotFound();
     }
     
-    [HttpGet(Name = nameof(GetPageAsync))]
+    [HttpGet(Name = nameof(GetTutorsPageAsync))]
     [SwaggerResponse(200, "OK", typeof(V1PageDto<V1TutorDto>))]
-    public async Task<IActionResult> GetPageAsync([FromQuery] int page = 0,
+    public async Task<IActionResult> GetTutorsPageAsync([FromQuery] int page = 0,
         [FromQuery] int size = 30, [FromQuery] string subject = "", [FromQuery] string city = "",
         [FromQuery] string district = "", [FromQuery] int maxPrice = -1, [FromQuery] int rating = -1)
     {
@@ -57,11 +57,11 @@ public sealed class V1TutorsController : Controller
         var modelsPage = await mediator.Send(query);
         
         var previousPageLink = modelsPage.HasPrevious 
-            ? linkGenerator.GetUriByRouteValues(HttpContext, nameof(GetPageAsync), new { pageNumber = page - 1, size }) 
+            ? linkGenerator.GetUriByRouteValues(HttpContext, nameof(GetTutorsPageAsync), new { pageNumber = page - 1, size }) 
             : null;
         
         var nextPageLink = modelsPage.HasNext 
-            ? linkGenerator.GetUriByRouteValues(HttpContext, nameof(GetPageAsync), new { pageNumber = page + 1, size }) 
+            ? linkGenerator.GetUriByRouteValues(HttpContext, nameof(GetTutorsPageAsync), new { pageNumber = page + 1, size }) 
             : null;
         
         var paginationHeader = new { previousPageLink, nextPageLink };

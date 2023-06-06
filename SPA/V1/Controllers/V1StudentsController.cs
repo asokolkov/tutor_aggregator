@@ -40,9 +40,9 @@ public sealed class V1StudentsController : Controller
         return model is not null ? Ok(mapper.Map<V1StudentDto>(model)) : NotFound();
     }
 
-    [HttpGet(Name = nameof(GetPageAsync))]
+    [HttpGet(Name = nameof(GetStudentsPageAsync))]
     [SwaggerResponse(200, "OK", typeof(V1PageDto<V1StudentDto>))]
-    public async Task<IActionResult> GetPageAsync([FromQuery] int page = 0, [FromQuery] int size = 30)
+    public async Task<IActionResult> GetStudentsPageAsync([FromQuery] int page = 0, [FromQuery] int size = 30)
     {
         if (page < 0)
             return BadRequest("Page must not be less than 0");
@@ -53,11 +53,11 @@ public sealed class V1StudentsController : Controller
         var modelsPage = await mediator.Send(query);
         
         var previousPageLink = modelsPage.HasPrevious 
-            ? linkGenerator.GetUriByRouteValues(HttpContext, nameof(GetPageAsync), new { pageNumber = page - 1, size }) 
+            ? linkGenerator.GetUriByRouteValues(HttpContext, nameof(GetStudentsPageAsync), new { pageNumber = page - 1, size }) 
             : null;
         
         var nextPageLink = modelsPage.HasNext 
-            ? linkGenerator.GetUriByRouteValues(HttpContext, nameof(GetPageAsync), new { pageNumber = page + 1, size }) 
+            ? linkGenerator.GetUriByRouteValues(HttpContext, nameof(GetStudentsPageAsync), new { pageNumber = page + 1, size }) 
             : null;
         
         var paginationHeader = new { previousPageLink, nextPageLink };
