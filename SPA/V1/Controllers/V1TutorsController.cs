@@ -39,7 +39,6 @@ public sealed class V1TutorsController : Controller
     {
         var query = new GetTutorQuery(id);
         var model = await mediator.Send(query);
-        
         return model is not null ? Ok(mapper.Map<V1TutorDto>(model)) : NotFound();
     }
     
@@ -94,7 +93,6 @@ public sealed class V1TutorsController : Controller
     {
         var command = new GetReviewsQuery(id, page, size);
         var modelsPage = await mediator.Send(command);
-        
         return Ok(mapper.Map<V1PageDto<V1ReviewDto>>(modelsPage));
     }
 

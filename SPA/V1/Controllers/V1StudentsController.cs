@@ -37,7 +37,6 @@ public sealed class V1StudentsController : Controller
     {
         var query = new GetStudentQuery(id);
         var model = await mediator.Send(query);
-        
         return model is not null ? Ok(mapper.Map<V1StudentDto>(model)) : NotFound();
     }
 

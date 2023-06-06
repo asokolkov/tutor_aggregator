@@ -63,9 +63,9 @@ internal sealed class LessonsRepository : ILessonsRepository
         var lessonEntity = mapper.Map<LessonEntity>(lesson);
         lessonEntity.Tutor = tutorEntity;
         
-        await context.Lessons.AddAsync(lessonEntity);
+        var entry = await context.Lessons.AddAsync(lessonEntity);
         await context.SaveChangesAsync();
-        return mapper.Map<Lesson>(lessonEntity);
+        return mapper.Map<Lesson>(entry.Entity);
     }
 
     public async Task<Lesson?> MakeBookedAsync(Guid studentId, Guid lessonId)

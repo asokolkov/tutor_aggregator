@@ -23,10 +23,10 @@ public class V1SubjectsController : ControllerBase
 
     [HttpGet]
     [SwaggerResponse(200, "OK", typeof(ICollection<V1SubjectDto>))]
-    public async Task<IActionResult> GetSubjectsAsync()
+    public async Task<IActionResult> GetAsync()
     {
-        var getSubjectsQuery = new GetSubjectsQuery();
-        var subjects = await mediator.Send(getSubjectsQuery);
-        return Ok(mapper.Map<List<V1SubjectDto>>(subjects));
+        var query = new GetSubjectsQuery();
+        var models = await mediator.Send(query);
+        return Ok(mapper.Map<List<V1SubjectDto>>(models));
     }
 }

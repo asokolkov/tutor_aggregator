@@ -1,14 +1,13 @@
-﻿namespace SPA.Repositories;
+﻿#nullable enable
+
+namespace SPA.Repositories;
 
 using Domain;
 
 internal interface ILocationsRepository
 {
+    Task<Location?> GetAsync(Guid id);
     Task<List<Location>> GetAsync();
-    
-    Task<Location> Get(Guid id);
-
-    Task<Location> Update(Location location);
-    
-    Task<Location> Insert(Location location);
+    Task<Location?> InsertAsync(Location location);
+    Task<Location?> UpdateAsync(Location location);
 }
