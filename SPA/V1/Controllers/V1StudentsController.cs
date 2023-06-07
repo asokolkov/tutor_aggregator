@@ -2,7 +2,7 @@
 using SPA.Application.Students.Commands.UpdateStudentCommand;
 using SPA.Application.Students.Queries.GetLessonsQuery;
 using SPA.Application.Students.Queries.GetStudentQuery;
-using SPA.Application.Students.Queries.GetStudentsPageQuery;
+using SPA.Application.Students.Queries.GetStudentsQuery;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace SPA.V1.Controllers;
@@ -49,7 +49,7 @@ public sealed class V1StudentsController : Controller
         if (size < 1)
             return BadRequest("Size must not be less than 1");
 
-        var query = new GetStudentsPageQuery(page, size);
+        var query = new GetStudentsQuery(page, size);
         var modelsPage = await mediator.Send(query);
         
         var previousPageLink = modelsPage.HasPrevious 

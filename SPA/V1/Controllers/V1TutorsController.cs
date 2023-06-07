@@ -8,7 +8,7 @@ using SPA.Application.Tutors.Commands.UpdateTutorCommand;
 using SPA.Application.Tutors.Queries.GetLessonsQuery;
 using SPA.Application.Tutors.Queries.GetReviewsQuery;
 using SPA.Application.Tutors.Queries.GetTutorQuery;
-using SPA.Application.Tutors.Queries.GetTutorsPageQuery;
+using SPA.Application.Tutors.Queries.GetTutorsQuery;
 using SPA.Authorization;
 using SPA.Domain;
 using SPA.Extensions;
@@ -53,7 +53,7 @@ public sealed class V1TutorsController : Controller
         if (size < 1)
             return BadRequest("Size must not be less than 1");
 
-        var query = new GetTutorsPageQuery(page, size, subject, city, district, maxPrice, rating);
+        var query = new GetTutorsQuery(page, size, subject, city, district, maxPrice, rating);
         var modelsPage = await mediator.Send(query);
         
         var previousPageLink = modelsPage.HasPrevious 
