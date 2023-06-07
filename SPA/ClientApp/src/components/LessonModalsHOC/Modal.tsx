@@ -12,7 +12,7 @@ import { ModalFooterProps } from './ModalFooter';
 import { DisclosureProps } from '../disclosureProps';
 import { useMutation, useQueryClient } from 'react-query';
 import { SlotContext } from '../Slot/contexts/SlotContext';
-import { lessonsKey } from '../../query/queryKeys';
+import { allLessonsKey, lessonsByDateKey } from '../../query/queryKeys';
 
 type Props = {
   disclosure: DisclosureProps;
@@ -39,7 +39,11 @@ export function modal(
 
     const mutation = useMutation({
       mutationFn,
-      onSuccess: () => queryClient.invalidateQueries([lessonsKey]),
+      onSuccess: () =>
+        Promise.all([
+          queryClient.invalidateQueries([lessonsByDateKey]),
+          queryClient.invalidateQueries([allLessonsKey]),
+        ]),
     });
 
     return (
