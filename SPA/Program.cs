@@ -4,9 +4,11 @@ using EFCore.Postgres.Identity;
 using EFCore.Postgres.Identity.Models;
 using Humanizer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json.Converters;
+using SPA.ApiErrors;
 using SPA.Authorization;
 using SPA.Authorization.Requirements.Impl;
 using SPA.Extensions;
@@ -16,15 +18,18 @@ using SameSiteMode = Microsoft.AspNetCore.Http.SameSiteMode;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers()
+builder.Services
+    .AddControllers(options => options.Filters.Add<ApiErrorExceptionFilter>())
     .AddNewtonsoftJson(builder =>
         builder.SerializerSettings.Converters.Add(new StringEnumConverter()));
+
 builder.Services.SetUpServices(builder.Configuration);
-builder.Services.AddControllers();
 builder.Services.AddLogging(configure => { configure.AddConsole(); });
 
+builder.Services.AddSingleton<IActionResultExecutor<ApiErrorResult>,ApiErrorResultExecutor>();
 builder.Services.AddHostedService<DatabaseStartupService<ApplicationIdentityContext>>();
 builder.Services.AddHostedService<DatabaseStartupService<ApplicationContext>>();
+builder.Services.AddHostedService<DatabaseInitializationService>();
 
 builder.Services
     .AddSwaggerGen()
@@ -54,34 +59,8 @@ builder.Services.ConfigureApplicationCookie(options =>
         return Task.CompletedTask;
     };
 });
-
-// builder.Services.AddAuthentication()
-//     .AddGoogle(options =>
-//     {
-//         options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-//         options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-//     })
-//     .AddOAuth("Vk", options =>
-//     {
-//         options.ClientId = builder.Configuration["Authentication:Vk:ClientId"];
-//         options.ClientSecret = builder.Configuration["Authentication:Vk:ClientSecret"];
-//         options.ClaimsIssuer = "Vk";
-//         options.CallbackPath = new PathString("/signin-vk");
-//         options.AuthorizationEndpoint = "https://oauth.vk.com/authorize";
-//         options.TokenEndpoint = "https://oauth.vk.com/access_token";
-//         options.Scope.Add("email");
-//         options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "user_id");
-//         options.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
-//         options.SaveTokens = true;
-//         options.Events = new OAuthEvents
-//         {
-//             OnCreatingTicket = context =>
-//             {
-//                 context.RunClaimActions(context.TokenResponse.Response.RootElement);
-//                 return Task.CompletedTask;
-//             }
-//         };
-//     });
+//note: где домен
+//note: вообще нет тестов, хочется хотя бы пару позитивных тестов на ключевой функционал приложения
 
 builder.Services.AddAuthorization(
     authorization =>
