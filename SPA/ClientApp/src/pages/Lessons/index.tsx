@@ -8,7 +8,6 @@ import { LessonCalendarTab } from './LessonCalendarTab';
 import { V1AccountTypeDto } from '../../api/models';
 import './styles.css';
 import { ActiveListTab } from './ActiveListTab';
-import { ArchiveListTab } from './ArchiveListTab';
 
 export const LessonsPage = () => {
   const { isAuthorized, user } = useContext(UserContext);
@@ -22,7 +21,6 @@ export const LessonsPage = () => {
       <TabList>
         {isTutor && <Tab>Твое расписание</Tab>}
         <Tab>Активные</Tab>
-        <Tab>Архивные</Tab>
       </TabList>
 
       <TabPanels>
@@ -32,14 +30,9 @@ export const LessonsPage = () => {
           </TabPanel>
         )}
         {!isTutor && (
-          <>
-            <TabPanel>
-              <ActiveListTab />
-            </TabPanel>
-            <TabPanel>
-              <ArchiveListTab />
-            </TabPanel>
-          </>
+          <TabPanel>
+            <ActiveListTab />
+          </TabPanel>
         )}
       </TabPanels>
     </Tabs>
