@@ -31,12 +31,16 @@ export const LessonsPage = () => {
             <LessonCalendarTab />
           </TabPanel>
         )}
-        <TabPanel>
-          <ActiveListTab />
-        </TabPanel>
-        <TabPanel>
-          <ArchiveListTab />
-        </TabPanel>
+        {!isTutor && (
+          <>
+            <TabPanel>
+              <ActiveListTab />
+            </TabPanel>
+            <TabPanel>
+              <ArchiveListTab />
+            </TabPanel>
+          </>
+        )}
       </TabPanels>
     </Tabs>
   );

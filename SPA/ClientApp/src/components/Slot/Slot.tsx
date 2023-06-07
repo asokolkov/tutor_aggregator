@@ -29,6 +29,7 @@ export const Slot: React.FC<SlotProps> = (props) => {
           borderWidth="2px"
           borderColor="blue.200"
           overflow="hidden"
+          width="100%"
         >
           {isDateBoxVisible && <DateBox />}
           <HStack w="100%" spacing="0">
