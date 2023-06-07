@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useContext } from 'react';
 import { Flex, Text } from '@chakra-ui/react';
-import { SlotContext } from '../contexts/SlotContext';
-import { Color } from '../../../assets/theme/themeEnum';
-import { SlotVariant } from '../Slot';
+import { SlotContext } from './contexts/SlotContext';
+import { Color } from '../../assets/theme/themeEnum';
+import { SlotVariant } from './Slot';
 
 export const DateBox: React.FC = () => {
   const { dateAndDay, variant } = useContext(SlotContext);

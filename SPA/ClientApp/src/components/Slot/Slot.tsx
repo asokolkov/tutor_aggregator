@@ -5,7 +5,7 @@ import { SlotContext } from './contexts/SlotContext';
 import { SlotInfo } from './SlotInfo';
 import { useMemo } from 'react';
 import { LessonType } from '../../api/models';
-import { DateBox } from './modals/DateBox';
+import { DateBox } from './DateBox';
 
 export const Slot: React.FC<SlotProps> = (props) => {
   const providerValue = useMemo(
