@@ -1,4 +1,5 @@
 ﻿#nullable enable
+
 using JetBrains.Annotations;
 using MediatR;
 using SPA.Repositories;

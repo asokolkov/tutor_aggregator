@@ -12,141 +12,134 @@ internal sealed class TutorsRepository : ITutorsRepository
 {
     private readonly ApplicationContext context;
     private readonly IMapper mapper;
-    private readonly DbSet<TutorEntity> table;
 
     public TutorsRepository(ApplicationContext context, IMapper mapper)
     {
         this.context = context;
         this.mapper = mapper;
-        table = context.Tutors;
-    }
-
-    public async Task<Page<Tutor>> GetAsync(int page, int size, string subject, string city, string district, int maxPrice,
-        int rating)
-    {
-        var tutorsEntities = await table
-            .OrderBy(x => x)
-            .Where(x => (int)x.Rating == rating || rating == -1)
-            .Where(x => (x.Location != null ? x.Location.City : null) == city || city == "")
-            .Where(x => (x.Location != null ? x.Location.District : null) == district || district == "")
-            .Where(x => x.Subjects.FirstOrDefault(y => y.Description == subject) != null || subject == "")
-            .Where(x => x.Lessons.Max(y => y.Price) <= maxPrice || maxPrice == -1)
-            .Skip(page * size)
-            .Take(size)
-            .ToListAsync();
-        var tutors = mapper.Map<List<Tutor>>(tutorsEntities);
-
-        return new Page<Tutor>(tutors, table.Count(), page, size);
     }
 
     public async Task<Tutor?> GetAsync(Guid id)
     {
-        return mapper.Map<Tutor>(await table.FindAsync(id));
+        return mapper.Map<Tutor>(await context.Tutors.FindAsync(id));
     }
 
-    public async Task<Tutor?> Update(Guid id, UpdateTutor updateTutor)
+    public async Task<Page<Tutor>> GetPageAsync(int page, int size, string subject, string city, string district,
+        int maxPrice, int rating)
     {
-        await using var transaction = await context.Database.BeginTransactionAsync();
-        await transaction.CreateSavepointAsync("BeforeUpdate");
+        var filteredEntities = await context.Tutors
+            .OrderBy(x => x.Id)
+            .Where(x => rating == -1 || (int)x.Rating == rating)
+            .Where(x => city == "" || (x.Location != null ? x.Location.City : null) == city)
+            .Where(x => district == "" || (x.Location != null ? x.Location.District : null) == district)
+            .Where(x => subject == "" || x.Subjects.FirstOrDefault(y => y.Description == subject) != null)
+            .Where(x => maxPrice == -1 || (x.Lessons.Any() ? x.Lessons.Max(y => y.Price) : -1) <= maxPrice)
+            .ToListAsync();
+
+        var entities = mapper.Map<List<Tutor>>(filteredEntities.Skip(page * size).Take(size));
+
+        return new Page<Tutor>(entities, filteredEntities.Count, page, size);
+    }
+
+    public async Task<Tutor?> InsertAsync(Tutor tutor)
+    {
+        var entity = mapper.Map<TutorEntity>(tutor);
+        var entry = await context.Tutors.AddAsync(entity);
+        await context.SaveChangesAsync();
+        return mapper.Map<Tutor>(entry.Entity);
+    }
+
+    public async Task<Tutor?> UpdateAsync(Guid id, UpdateTutor updateTutor)
+    {
+        var entity = await context.Tutors.FindAsync(id);
+        if (entity is null)
+            return null;
+
+        var modelEntity = mapper.Map<TutorEntity>(updateTutor);
+
+        entity.FirstName = modelEntity.FirstName;
+        entity.LastName = modelEntity.LastName;
+        entity.Age = modelEntity.Age;
+        entity.Job = modelEntity.Job;
+        entity.Description = modelEntity.Description;
+
+        context.Awards.RemoveRange(entity.Awards);
+        var awardsEntities = new List<AwardEntity>();
+        foreach (var award in modelEntity.Awards)
+            awardsEntities.Add((await context.Awards.AddAsync(award)).Entity);
+        entity.Awards = awardsEntities;
+
+        context.TutorEducations.RemoveRange(entity.Educations);
+        var educationsEntities = new List<TutorEducationEntity>();
+        foreach (var education in modelEntity.Educations)
+            educationsEntities.Add((await context.TutorEducations.AddAsync(education)).Entity);
+        entity.Educations = educationsEntities;
+
+        context.TutorsContacts.RemoveRange(entity.Contacts);
+        var contactsEntities = new List<TutorContactEntity>();
+        foreach (var contact in modelEntity.Contacts)
+            contactsEntities.Add((await context.TutorsContacts.AddAsync(contact)).Entity);
+        entity.Contacts = contactsEntities;
+
+        context.Requirements.RemoveRange(entity.Requirements);
+        var requirementsEntities = new List<RequirementEntity>();
+        foreach (var requirement in modelEntity.Requirements)
+            requirementsEntities.Add((await context.Requirements.AddAsync(requirement)).Entity);
+        entity.Requirements = requirementsEntities;
+
+        if (modelEntity.Location is null)
+        {
+            entity.Location = null;
+        }
+        else
+        {
+            var locationEntity = await context.Locations.FindAsync(modelEntity.Location.Id);
+            if (locationEntity is null)
+                return null;
+            entity.Location = locationEntity;
+        }
+
+        if (modelEntity.Subjects.Count == 0)
+        {
+            entity.Subjects = new List<SubjectEntity>();
+        }
+        else
+        {
+            var newSubjects = new List<SubjectEntity>();
+            foreach (var subject in modelEntity.Subjects)
+            {
+                var subjectEntity = await context.Subjects.FindAsync(subject.Id);
+                if (subjectEntity is null)
+                    return null;
+                newSubjects.Add(subjectEntity);
+            }
+            entity.Subjects = newSubjects;
+        }
+        
         try
         {
-            var tutorEntity = await table.FindAsync(id);
-            if (tutorEntity is null)
-                return null;
-
-            var tutor = mapper.Map<TutorEntity>(updateTutor);
-
-            tutorEntity.FirstName = tutor.FirstName;
-            tutorEntity.LastName = tutor.LastName;
-            tutorEntity.Age = tutor.Age;
-            tutorEntity.Job = tutor.Job;
-            tutorEntity.Description = tutor.Description;
-            
-            context.Awards.RemoveRange(tutorEntity.Awards);
-            var awardsEntities = new List<AwardEntity>();
-            foreach (var award in tutor.Awards)
-                awardsEntities.Add((await context.Awards.AddAsync(award)).Entity);
-            tutorEntity.Awards = awardsEntities;
-            
-            context.TutorEducations.RemoveRange(tutorEntity.Educations);
-            var educationsEntities = new List<TutorEducationEntity>();
-            foreach (var education in tutor.Educations)
-                educationsEntities.Add((await context.TutorEducations.AddAsync(education)).Entity);
-            tutorEntity.Educations = educationsEntities;
-            
-            context.TutorsContacts.RemoveRange(tutorEntity.Contacts);
-            var contactsEntities = new List<TutorContactEntity>();
-            foreach (var contact in tutor.Contacts)
-                contactsEntities.Add((await context.TutorsContacts.AddAsync(contact)).Entity);
-            tutorEntity.Contacts = contactsEntities;
-            
-            context.Requirements.RemoveRange(tutorEntity.Requirements);
-            var requirementsEntities = new List<RequirementEntity>();
-            foreach (var requirement in tutor.Requirements)
-                requirementsEntities.Add((await context.Requirements.AddAsync(requirement)).Entity);
-            tutorEntity.Requirements = requirementsEntities;
-
-            if (tutor.Location is null)
-            {
-                tutorEntity.Location = null;
-            }
-            else
-            {
-                var locationEntity = await context.Locations.FindAsync(tutor.Location.Id);
-                if (locationEntity is null)
-                    return null;
-                tutorEntity.Location = locationEntity;
-            }
-            
-            if (tutor.Subjects.Count == 0)
-            {
-                tutorEntity.Subjects = new List<SubjectEntity>();
-            }
-            else
-            {
-                var newSubjects = new List<SubjectEntity>();
-                foreach (var subject in tutor.Subjects)
-                {
-                    var subjectEntity = await context.Subjects.FindAsync(subject.Id);
-                    if (subjectEntity is null)
-                        return null;
-                    newSubjects.Add(subjectEntity);
-                }
-                tutorEntity.Subjects = newSubjects;
-            }
-
             await context.SaveChangesAsync();
-            await transaction.CommitAsync();
-            return mapper.Map<Tutor>(tutorEntity);
         }
-        catch (Exception)
+        catch (Exception exception)
         {
-            await transaction.RollbackToSavepointAsync("BeforeUpdate");
-            return default;
+            return null;
         }
+
+        return mapper.Map<Tutor>(entity);
     }
 
-    public async Task<Tutor?> Insert(Tutor tutor)
+    public async Task<Page<Review>> GetTutorReviewsAsync(Guid id, int page, int size)
     {
-        var tutorEntity = mapper.Map<TutorEntity>(tutor);
-        await table.AddAsync(tutorEntity);
-        await context.SaveChangesAsync();
-        return mapper.Map<Tutor>(tutorEntity);
-    }
-
-    public async Task<Page<Review>> GetTutorReviews(Guid id, int page, int size)
-    {
-        var tutor = await context.Tutors.FindAsync(id);
-
-        if (tutor?.Reviews is null)
+        var entity = await context.Tutors.FindAsync(id);
+        if (entity?.Reviews is null)
             return new Page<Review>(Array.Empty<Review>(), 0, page, size);
 
-        var reviewsEntities = tutor.Reviews
+        var reviewsEntities = entity.Reviews
             .Skip(page * size)
             .Take(size)
             .ToList();
         var reviews = mapper.Map<List<Review>>(reviewsEntities);
 
-        return new Page<Review>(reviews, tutor.Reviews.Count, page, size);
+        return new Page<Review>(reviews, entity.Reviews.Count, page, size);
     }
 }

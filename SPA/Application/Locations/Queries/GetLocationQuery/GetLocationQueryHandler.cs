@@ -1,4 +1,5 @@
 ﻿#nullable enable
+
 using JetBrains.Annotations;
 using MediatR;
 using SPA.Repositories;
@@ -19,6 +20,6 @@ internal class GetLocationQueryHandler : IRequestHandler<GetLocationQuery, Locat
 
     public async Task<Location?> Handle(GetLocationQuery request, CancellationToken cancellationToken)
     {
-        return await repository.Get(request.Id);
+        return await repository.GetAsync(request.Id);
     }
 }

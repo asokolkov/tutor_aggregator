@@ -17,6 +17,6 @@ internal class GetReviewsCommandHandler : IRequestHandler<GetReviewsQuery, Page<
 
     public async Task<Page<Review>> Handle(GetReviewsQuery request, CancellationToken cancellationToken)
     {
-        return await repository.GetTutorReviews(request.TutorId, request.PageNumber, request.PageSize);
+        return await repository.GetTutorReviewsAsync(request.TutorId, request.PageNumber, request.PageSize);
     }
 }

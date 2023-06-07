@@ -23,7 +23,7 @@ public sealed class V1LocationsController : Controller
 
     [HttpGet]
     [SwaggerResponse(200, "OK", typeof(ICollection<V1LocationDto>))]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> GetAsync()
     {
         var query = new GetLocationsQuery();
         var models = await mediator.Send(query);
@@ -32,7 +32,7 @@ public sealed class V1LocationsController : Controller
 
     [HttpGet("{id:guid}")]
     [SwaggerResponse(200, "OK", typeof(V1LocationDto))]
-    public async Task<IActionResult> Get(Guid id)
+    public async Task<IActionResult> GetAsync(Guid id)
     {
         var query = new GetLocationQuery(id);
         var model = await mediator.Send(query);

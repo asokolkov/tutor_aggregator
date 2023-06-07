@@ -28,6 +28,8 @@ public sealed class V1LessonsController : ControllerBase
     [Authorize(Policy = Policies.CreateLessonPolicy)]
     [HttpPost]
     [SwaggerResponse(200, "OK", typeof(ICollection<V1LessonDto>))]
+    [SwaggerResponse(401, "Unauthorized")]
+    [SwaggerResponse(404, "NotFound")]
     public async Task<IActionResult> CreateAsync([FromBody] V1CreateLessonDto createLessonDto)
     {
         var tutorId = User.GetId();
@@ -38,17 +40,16 @@ public sealed class V1LessonsController : ControllerBase
             return BadRequest();
 
         var query = new CreateLessonCommand(tutorId.Value, createLessonDto.Start, createLessonDto.End, createLessonDto.Price, createLessonDto.Type);
+        var model = await mediator.Send(query);
 
-        var lesson = await mediator.Send(query);
-        if (lesson is null)
-            return BadRequest();
-
-        return Ok(mapper.Map<V1LessonDto>(lesson));
+        return model is not null ? Ok(mapper.Map<V1LessonDto>(model)) : NotFound();
     }
 
     [Authorize(Policy = Policies.BookLessonPolicy)]
     [HttpPatch("{id:guid}/book")]
     [SwaggerResponse(200, "OK", typeof(V1LessonDto))]
+    [SwaggerResponse(401, "Unauthorized")]
+    [SwaggerResponse(404, "NotFound")]
     public async Task<IActionResult> BookAsync(Guid id)
     {
         var studentId = User.GetId();
@@ -56,40 +57,31 @@ public sealed class V1LessonsController : ControllerBase
         if (studentId is null)
             return Unauthorized();
 
-        var getTutorQuery = new BookLessonCommand(studentId.Value, id);
+        var query = new BookLessonCommand(studentId.Value, id);
+        var model = await mediator.Send(query);
 
-        var lesson = await mediator.Send(getTutorQuery);
-        if (lesson is null)
-            return BadRequest();
-
-        return Ok(mapper.Map<V1LessonDto>(lesson));
+        return model is not null ? Ok(mapper.Map<V1LessonDto>(model)) : NotFound();
     }
 
     [Authorize(Policy = Policies.DeleteLessonPolicy)]
     [HttpPatch("{id:guid}/delete")]
     [SwaggerResponse(200, "OK", typeof(V1LessonDto))]
+    [SwaggerResponse(404, "NotFound")]
     public async Task<IActionResult> DeleteAsync(Guid id)
     {
         var command = new DeleteLessonCommand(id);
-        
-        var lesson = await mediator.Send(command);
-        if (lesson is null)
-            return BadRequest();
-        
-        return Ok(mapper.Map<V1LessonDto>(lesson));
+        var model = await mediator.Send(command);
+        return model is not null ? Ok(mapper.Map<V1LessonDto>(model)) : NotFound();
     }
     
     [Authorize(Policy = Policies.CancelLessonPolicy)]
     [HttpPatch("{id:guid}/cancel")]
     [SwaggerResponse(200, "OK", typeof(V1LessonDto))]
+    [SwaggerResponse(404, "NotFound")]
     public async Task<IActionResult> CancelAsync(Guid id)
     {
         var command = new CancelLessonCommand(id);
-        
-        var lesson = await mediator.Send(command);
-        if (lesson is null)
-            return BadRequest();
-        
-        return Ok(mapper.Map<V1LessonDto>(lesson));
+        var model = await mediator.Send(command);
+        return model is not null ? Ok(mapper.Map<V1LessonDto>(model)) : NotFound();
     }
 }
