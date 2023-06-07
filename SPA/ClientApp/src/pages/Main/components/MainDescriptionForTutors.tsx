@@ -1,11 +1,21 @@
 import * as React from 'react';
-import { Text, Flex, VStack, Image, useMediaQuery } from '@chakra-ui/react';
+import {
+  Text,
+  Flex,
+  VStack,
+  Image,
+  useBreakpointValue,
+} from '@chakra-ui/react';
 import illustration from '../../../assets/images/mainpage_illustration2.png';
 import { TutorDescriptionText } from './TutorDescriptionText';
 import { Color } from '../../../assets/theme/themeEnum';
 
 export const MainDescriptionForTutors: React.FC = () => {
-  const [isLargerThanTablet] = useMediaQuery('(min-width: 768px)');
+  const isLargerThanTablet = useBreakpointValue(
+    { base: false, lg: true },
+    { ssr: false, fallback: 'lg' }
+  );
+
   return (
     <VStack
       spacing="0"
@@ -14,7 +24,7 @@ export const MainDescriptionForTutors: React.FC = () => {
       width="calc(100% + 10vw)"
       boxShadow="0px -40px 58px -60px rgba(0,0,0,0.75)"
     >
-      <Flex justify="center" padding="10px">
+      <Flex justify="center" padding="10px 20px">
         <Text
           variant="brand.h1"
           color={Color.blue300}
@@ -34,7 +44,7 @@ export const MainDescriptionForTutors: React.FC = () => {
       >
         <Flex
           direction="column"
-          width={isLargerThanTablet ? '40%' : '100%'}
+          width={isLargerThanTablet ? '40%' : 'calc(100% - 10vw)'}
           gap="30px"
         >
           <TutorDescriptionText

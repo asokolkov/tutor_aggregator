@@ -24,13 +24,8 @@ const Header: React.FC = () => {
   const [isLargerThanTablet] = useMediaQuery('(min-width: 768px)');
 
   return (
-    <Container padding={'0vh 5vw 1vh 5vw'} as="header" maxW="100%">
-      <Flex
-        py={{ base: '5', lg: '5' }}
-        w="100%"
-        wrap={'nowrap'}
-        align={'center'}
-      >
+    <Container padding={'30px 5vw 30px 5vw'} as="header" maxW="100%">
+      <Flex w="100%" wrap={'nowrap'} align={'center'}>
         <HStack spacing="3" justify={'left'} align={'center'} flexGrow="1">
           <Link to={MAIN_PAGE} style={{ flexShrink: '0' }}>
             <Image src={logo} boxSize="50px" />

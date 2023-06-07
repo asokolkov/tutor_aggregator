@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Flex, Text, useMediaQuery } from '@chakra-ui/react';
+import { Flex, Text, useBreakpointValue } from '@chakra-ui/react';
 import searchIcon from '../../../assets/images/search_icon_bg.png';
 import { FormBody } from './FormBody';
 import { Form, Formik } from 'formik';
@@ -9,7 +9,10 @@ import { useSubmitButton } from '../hooks/useSubmitButton';
 export const MainSearchBox: React.FC = () => {
   const { initValues } = useFormikValues();
   const { onSubmit } = useSubmitButton();
-  const [isLargerThanTablet] = useMediaQuery('(min-width: 768px)');
+  const isLargerThanTablet = useBreakpointValue(
+    { base: false, lg: true },
+    { ssr: false, fallback: 'lg' }
+  );
 
   return (
     <Flex

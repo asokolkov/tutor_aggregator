@@ -90,7 +90,8 @@ internal sealed class LessonsRepository : ILessonsRepository
         var lesson = await context.Lessons.FindAsync(id);
         if (lesson is null || (lesson.Status != LessonStatus.Empty && lesson.Status != LessonStatus.Booked))
             return null;
-        
+        //note: не нашел где используется и как это удаление, тут проблема можнет быть в том, что этот фильтр теперь нужно накладывать на все записи
+        //note: есть идея перекладывать в служебную табоичку
         lesson.Status = LessonStatus.Deleted;
 
         await context.SaveChangesAsync();
@@ -100,6 +101,7 @@ internal sealed class LessonsRepository : ILessonsRepository
     public async Task<Lesson?> MakeEmptyAsync(Guid id)
     {
         var lesson = await context.Lessons.FindAsync(id);
+        //note: кажется проверка статуса здесь это доменная логика, а не репозиторная
         if (lesson is null || lesson.Status != LessonStatus.Booked)
             return null;
         

@@ -17,7 +17,15 @@ export const PhoneNumberField: React.FC = () => {
       <HStack>
         <InputGroup>
           <InputLeftAddon children="+7" />
-          <Input id="tel" type="tel" placeholder="9991234567" {...field} />
+          <Input
+            type="tel"
+            placeholder="9991234567"
+            pattern="9[0-9]{9}"
+            minLength={10}
+            maxLength={10}
+            required
+            {...field}
+          />
         </InputGroup>
       </HStack>
     </FormControl>

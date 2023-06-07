@@ -10,12 +10,10 @@ namespace SPA.Services.Impl;
 internal sealed class LessonsManager : ILessonsManager
 {
     private readonly ILessonsRepository lessonsRepository;
-    private readonly IStudentsRepository studentsRepository;
     
-    public LessonsManager(ILessonsRepository lessonsRepository, IStudentsRepository studentsRepository)
+    public LessonsManager(ILessonsRepository lessonsRepository)
     {
         this.lessonsRepository = lessonsRepository;
-        this.studentsRepository = studentsRepository;
     }
     
     public async Task<Lesson?> BookAsync(Guid studentId, Guid lessonId)
