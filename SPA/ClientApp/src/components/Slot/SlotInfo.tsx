@@ -16,7 +16,9 @@ const renderButtonSection = (variant: SlotVariant): React.FC => {
       return TutorCalendar;
     case SlotVariant.studentCalendar:
       return StudentCalendar;
-    case SlotVariant.activeList:
+    case SlotVariant.activeCloseList:
+      return ActiveList;
+    case SlotVariant.activeAllList:
       return ActiveList;
     case SlotVariant.pastList:
       return PastList;

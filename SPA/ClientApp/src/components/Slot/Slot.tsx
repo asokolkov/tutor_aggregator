@@ -61,7 +61,8 @@ export type SlotProps = {
 export enum SlotVariant {
   tutorCalendar = 'Tutor Calendar',
   studentCalendar = 'Student Calendar',
-  activeList = 'Active List',
+  activeCloseList = 'Active close',
+  activeAllList = 'Active all',
   pastList = 'Past List',
   canceledList = 'CanceledList',
 }

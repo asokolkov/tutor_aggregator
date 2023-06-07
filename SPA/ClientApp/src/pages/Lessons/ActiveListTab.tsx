@@ -13,30 +13,31 @@ export const ActiveListTab: React.FC = () => {
   if (query.isLoading) return <LoadBar />;
   return (
     <Flex gap="30px">
-      <NearLessons lessons={query.data.slice(0, 3)} />
+      <LessonsList
+        lessons={query.data.slice(0, 3)}
+        slotVariant={SlotVariant.activeCloseList}
+        title="Ближайшие занятия"
+      />
       <Box backgroundColor={Color.blue300} w="1px" flexShrink="0"></Box>
-      <AllLessons lessons={query.data} />
+      <LessonsList
+        lessons={query.data}
+        slotVariant={SlotVariant.activeAllList}
+        title="Все занятия"
+      />
     </Flex>
   );
 };
 
-export const NearLessons: React.FC<Props> = ({ lessons }) => {
+export const LessonsList: React.FC<Props> = ({
+  lessons,
+  slotVariant,
+  title,
+}) => {
   return (
     <Flex gap="20px" direction="column" w="100%">
-      <Text variant="regular.h2">Ближайшие занятия</Text>
+      <Text variant="regular.h2">{title}</Text>
       {lessons.map((lesson) => (
-        <Slot {...MapSlot(lesson, SlotVariant.activeList)} />
-      ))}
-    </Flex>
-  );
-};
-
-export const AllLessons: React.FC<Props> = ({ lessons }) => {
-  return (
-    <Flex gap="20px" direction="column" w="100%">
-      <Text variant="regular.h2">Все занятия</Text>
-      {lessons.map((lesson) => (
-        <Slot {...MapSlot(lesson, SlotVariant.activeList)} />
+        <Slot {...MapSlot(lesson, slotVariant)} />
       ))}
     </Flex>
   );
@@ -44,4 +45,6 @@ export const AllLessons: React.FC<Props> = ({ lessons }) => {
 
 type Props = {
   lessons: V1LessonDto[];
+  slotVariant: SlotVariant;
+  title: string;
 };
