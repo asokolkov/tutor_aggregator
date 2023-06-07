@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { SlotContext } from '../contexts/SlotContext';
 import LessonsAPI from '../../../api/lessons';
-import { lessonsKey } from '../../../query/queryKeys';
+import { lessonsByDateKey } from '../../../query/queryKeys';
 import {
   Button,
   Modal,
@@ -35,7 +35,7 @@ export const BookLessonModal: React.FC<Props> = ({ disclosure }) => {
 
   const mutation = useMutation({
     mutationFn: onSubmit,
-    onSuccess: () => queryClient.invalidateQueries([lessonsKey]),
+    onSuccess: () => queryClient.invalidateQueries([lessonsByDateKey]),
   });
 
   return (
