@@ -28,11 +28,13 @@ internal sealed class StudentsRepository : IStudentsRepository
     {
         var filteredEntities = await context.Students
             .OrderBy(e => e.Id)
+            .Skip(page * size)
+            .Take(size)
             .ToListAsync();
         
-        var entities = mapper.Map<List<Student>>(filteredEntities.Skip(page * size).Take(size));
+        var entities = mapper.Map<List<Student>>(filteredEntities);
         
-        return new Page<Student>(entities, filteredEntities.Count, page, size);
+        return new Page<Student>(entities, context.Students.Count(), page, size);
     }
     
     public async Task<Student?> InsertAsync(Student student)
