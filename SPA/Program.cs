@@ -26,7 +26,7 @@ builder.Services
 builder.Services.SetUpServices(builder.Configuration);
 builder.Services.AddLogging(configure => { configure.AddConsole(); });
 
-builder.Services.AddSingleton<IActionResultExecutor<ApiErrorResult>,ApiErrorResultExecutor>();
+builder.Services.AddSingleton<IActionResultExecutor<ApiErrorResult>, ApiErrorResultExecutor>();
 builder.Services.AddHostedService<DatabaseStartupService<ApplicationIdentityContext>>();
 builder.Services.AddHostedService<DatabaseStartupService<ApplicationContext>>();
 builder.Services.AddHostedService<DatabaseInitializationService>();
@@ -91,11 +91,10 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 app.UseStaticFiles();
 app.UseSpaStaticFiles();
