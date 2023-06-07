@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { useAllLessonsQuery } from '../../query/useAllLessonsQuery';
 import { LoadBar } from '../../components/LoadBar/LoadBar';
-import { V1LessonDto } from '../../api/models';
+import { LessonStatus, V1LessonDto } from '../../api/models';
 import { Slot, SlotVariant } from '../../components/Slot/Slot';
 import { MapSlot } from '../../components/Slot/_maper';
 import { Color } from '../../assets/theme/themeEnum';
@@ -11,16 +11,18 @@ export const ActiveListTab: React.FC = () => {
   const { query } = useAllLessonsQuery();
 
   if (query.isLoading) return <LoadBar />;
+  const data = query.data.filter((x) => x.status === LessonStatus.booked);
+  const closeData = data.slice(0, 3);
   return (
     <Flex gap="30px">
       <LessonsList
-        lessons={query.data.slice(0, 3)}
+        lessons={closeData}
         slotVariant={SlotVariant.activeCloseList}
         title="Ближайшие занятия"
       />
       <Box backgroundColor={Color.blue300} w="1px" flexShrink="0"></Box>
       <LessonsList
-        lessons={query.data}
+        lessons={data}
         slotVariant={SlotVariant.activeAllList}
         title="Все занятия"
       />

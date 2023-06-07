@@ -35,13 +35,14 @@ export type V1ExternalRegisterDto = {
   phone?: string | null;
   accountType?: AccountType;
 };
-export type LessonStatus =
-  | 'Empty'
-  | 'Booked'
-  | 'Finished'
-  | 'Deleted'
-  | 'ExpiredEmpty'
-  | 'ExpiredBooked';
+export enum LessonStatus {
+  empty = 'Empty',
+  booked = 'Booked',
+  finished = 'Finished',
+  deleted = 'Deleted',
+  expiredEmpty = 'ExpiredEmpty',
+  expiredBooked = 'ExpiredBooked',
+}
 export enum LessonType {
   online = 'Online',
   offline = 'Offline',
