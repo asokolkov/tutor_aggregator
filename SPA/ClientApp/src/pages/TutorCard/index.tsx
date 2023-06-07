@@ -22,12 +22,12 @@ export const TutorCardPage = () => {
   return (
     <>
       <Link to={SEARCH_PAGE}>
-        <Text variant="misc.link" color={Color.blue300}>
+        <Text variant="misc.link" color={Color.blue300} padding={'0 0 10px 0'}>
           <ArrowBackIcon />
           Вернуться в поиск
         </Text>
       </Link>
-      <VStack maxW={'100%'} spacing={'40px'}>
+      <VStack maxW={'100%'} spacing={'0px'}>
         <Card {...MapCardInfo(tutor)} />
         <ReviewSection reviews={reviews} />
       </VStack>

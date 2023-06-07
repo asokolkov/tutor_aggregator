@@ -1,71 +1,28 @@
 import * as React from 'react';
-import { useContext, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+import { useContext } from 'react';
 import { SlotContext } from '../contexts/SlotContext';
 import LessonsAPI from '../../../api/lessons';
-import { lessonsByDateKey } from '../../../query/queryKeys';
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Text,
-} from '@chakra-ui/react';
-import { DisclosureProps } from '../../disclosureProps';
+import { Text } from '@chakra-ui/react';
+import { modalFooter } from '../../LessonModalsHOC/ModalFooter';
+import { modal } from '../../LessonModalsHOC/Modal';
 
-type Props = {
-  disclosure: DisclosureProps;
+const onSubmit = async (lessonId: string) => {
+  await LessonsAPI.bookLesson(lessonId);
 };
-export const BookLessonModal: React.FC<Props> = ({ disclosure }) => {
-  const { isOpen, onClose } = disclosure;
-  const [isSubmitLoading, setSubmitLoading] = useState(false);
-  const queryClient = useQueryClient();
-  const { tutorName, lessonId, timeRange } = useContext(SlotContext);
 
-  const onSubmit = async () => {
-    setSubmitLoading(true);
-    await LessonsAPI.bookLesson(lessonId);
-    setSubmitLoading(false);
-    onClose();
-  };
+const modalTitle = 'Вы действительно хотите записаться на занятие?';
 
-  const mutation = useMutation({
-    mutationFn: onSubmit,
-    onSuccess: () => queryClient.invalidateQueries([lessonsByDateKey]),
-  });
-
+const Footer = modalFooter(undefined, 'Записаться');
+const Body: React.FC = () => {
+  const { tutorName, timeRange } = useContext(SlotContext);
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered size="lg">
-      <ModalOverlay />
-      <ModalContent>
-        <ModalBody>
-          <ModalHeader>
-            Вы действительно хотите записаться на занятие?
-          </ModalHeader>
-          <ModalCloseButton />
-          <Text>Вы записываетесь на занятие к преподавателю:</Text>
-          <Text variant="regular.bold">{tutorName}</Text>
-          <Text>Время занятия:</Text>
-          <Text variant="regular.bold">{timeRange}</Text>
-        </ModalBody>
-
-        <ModalFooter>
-          <Button
-            isLoading={isSubmitLoading}
-            colorScheme="blue"
-            onClick={() => mutation.mutate()}
-          >
-            Записаться
-          </Button>
-          <Button variant="ghost" onClick={onClose}>
-            Отмена
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+    <>
+      <Text>Вы записываетесь на занятие к преподавателю:</Text>
+      <Text variant="regular.bold">{tutorName}</Text>
+      <Text>Время занятия:</Text>
+      <Text variant="regular.bold">{timeRange}</Text>
+    </>
   );
 };
+
+export const BookLessonModal = modal(Body, Footer, onSubmit, modalTitle);

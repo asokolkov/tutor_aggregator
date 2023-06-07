@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  Flex,
-  HStack,
-  Link,
-  Stack,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Stack, VStack } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { PasswordField } from './components/PasswordField';
 import { Header } from './components/Header';
@@ -57,14 +48,6 @@ export const SignupPage = () => {
                     <PasswordField />
                   </AuthorizationContext.Provider>
                 </Stack>
-                <HStack justify="space-between">
-                  <Checkbox>
-                    Принимаю{' '}
-                    <Link color="teal.500" href="#">
-                      условия сервиса
-                    </Link>
-                  </Checkbox>
-                </HStack>
                 <Stack spacing="6">
                   <Button
                     variant={ButtonVariant.green}

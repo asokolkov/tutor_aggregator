@@ -1,12 +1,10 @@
-import { Box, Button, Flex, VStack, HStack, Stack } from '@chakra-ui/react';
+import { Box, Button, Flex, VStack, Stack } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { PasswordField } from './components/PasswordField';
 import { Header } from './components/Header';
 import { SignupSuggestion } from './components/SignupSuggestion';
-import { ForgetPasswordButton } from './components/ForgetPasswordButton';
 import { EmailField } from './components/EmailField';
 import { Form, Formik } from 'formik';
-import { RememberMeCheckbox } from './components/RememberMeCheckbox';
 import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { Navigate } from 'react-router-dom';
 import { MAIN_PAGE } from '../../routes/routePaths';
@@ -44,10 +42,6 @@ export const LoginPage = () => {
                     <PasswordField />
                   </AuthorizationContext.Provider>
                 </Stack>
-                <HStack justify={'space-between'}>
-                  <RememberMeCheckbox />
-                  <ForgetPasswordButton />
-                </HStack>
                 <Stack spacing="6">
                   <Button
                     variant={ButtonVariant.green}
