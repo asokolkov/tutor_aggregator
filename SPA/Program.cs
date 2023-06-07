@@ -29,6 +29,7 @@ builder.Services.AddLogging(configure => { configure.AddConsole(); });
 builder.Services.AddSingleton<IActionResultExecutor<ApiErrorResult>,ApiErrorResultExecutor>();
 builder.Services.AddHostedService<DatabaseStartupService<ApplicationIdentityContext>>();
 builder.Services.AddHostedService<DatabaseStartupService<ApplicationContext>>();
+builder.Services.AddHostedService<DatabaseInitializationService>();
 
 builder.Services
     .AddSwaggerGen()
