@@ -44,11 +44,6 @@ public sealed class V1StudentsController : Controller
     [SwaggerResponse(200, "OK", typeof(V1PageDto<V1StudentDto>))]
     public async Task<IActionResult> GetStudentsPageAsync([FromQuery] int page = 0, [FromQuery] int size = 30)
     {
-        if (page < 0)
-            return BadRequest("Page must not be less than 0");
-        if (size < 1)
-            return BadRequest("Size must not be less than 1");
-
         var query = new GetStudentsQuery(page, size);
         var modelsPage = await mediator.Send(query);
         

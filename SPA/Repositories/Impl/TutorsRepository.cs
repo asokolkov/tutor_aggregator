@@ -24,16 +24,16 @@ internal sealed class TutorsRepository : ITutorsRepository
         return mapper.Map<Tutor>(await context.Tutors.FindAsync(id));
     }
 
-    public async Task<Page<Tutor>> GetPageAsync(int page, int size, string subject, string city, string district,
-        int maxPrice, int rating)
+    public async Task<Page<Tutor>> GetPageAsync(int page, int size, string? subject, string? city, string? district,
+        int? maxPrice, int? rating)
     {
         var filteredEntities = await context.Tutors
             .OrderBy(x => x.Id)
-            .Where(x => rating == -1 || (int)x.Rating == rating)
-            .Where(x => city == "" || (x.Location != null ? x.Location.City : null) == city)
-            .Where(x => district == "" || (x.Location != null ? x.Location.District : null) == district)
-            .Where(x => subject == "" || x.Subjects.FirstOrDefault(y => y.Description == subject) != null)
-            .Where(x => maxPrice == -1 || (x.Lessons.Any() ? x.Lessons.Max(y => y.Price) : -1) <= maxPrice)
+            .Where(x => rating == null || (int)x.Rating == rating)
+            .Where(x => city == null || (x.Location != null ? x.Location.City : null) == city)
+            .Where(x => district == null || (x.Location != null ? x.Location.District : null) == district)
+            .Where(x => subject == null || x.Subjects.FirstOrDefault(y => y.Description == subject) != null)
+            .Where(x => maxPrice == null || (x.Lessons.Any() ? x.Lessons.Max(y => y.Price) : -1) <= maxPrice)
             .ToListAsync();
 
         var entities = mapper.Map<List<Tutor>>(filteredEntities.Skip(page * size).Take(size));
