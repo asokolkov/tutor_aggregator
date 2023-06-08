@@ -1,4 +1,5 @@
 import { buttonTextVariant } from './button';
+import './styles.css';
 
 export const textVariants = {
   baseStyle: {
@@ -49,15 +50,15 @@ export const textVariants = {
     },
 
     'brand.logo': {
-      fontFamily: 'PT Sans',
+      fontFamily: "'PT Sans', sans-serif",
       fontSize: '32px',
-      fontWeight: 'bold',
+      fontWeight: '700',
       lineHeight: '120%',
     },
     'brand.h1': {
-      fontFamily: 'PT Sans',
+      fontFamily: "'PT Sans', sans-serif",
       fontSize: '40px',
-      fontWeight: 'bold',
+      fontWeight: '700',
       lineHeight: '110%',
     },
   },
