@@ -1,12 +1,6 @@
 import * as React from 'react';
-import { ChangeEvent, useContext } from 'react';
-import {
-  Avatar,
-  Box,
-  Button,
-  Flex,
-  useBreakpointValue,
-} from '@chakra-ui/react';
+import { useContext } from 'react';
+import { Box, Flex, useBreakpointValue } from '@chakra-ui/react';
 import { SubmitButton } from './components/SubmitButton';
 import profileIcon from '../../assets/images/profile_icon_bg.png';
 import { InputRow } from './components/InputRow';
@@ -21,8 +15,7 @@ import StudentAPI from '../../api/students';
 import { TooltipType } from './components/_shared';
 import { SelectOptionsRow } from './components/SelectOptionsRow';
 import { TextAreaRow } from './components/TextAreaRow';
-import { FileUpload } from './components/FileUpload';
-import AvatarAPI from '../../api/avatars';
+import { AvatarSection } from './components/AvatarSection';
 
 export const StudentCard: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
@@ -34,10 +27,6 @@ export const StudentCard: React.FC = () => {
     await StudentAPI.putCurrentProfileValues(newStudent);
   };
 
-  const onAvatarChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    const avatarFile = event.target.files[0];
-    await AvatarAPI.uploadAvatar(avatarFile);
-  };
   return (
     <Box
       width={'100%'}
@@ -59,25 +48,7 @@ export const StudentCard: React.FC = () => {
             padding={isDesktop ? '1.5em 5em 1.5em 3em' : '1em 1em 1em 1em'}
             direction={isDesktop ? 'row' : 'column'}
           >
-            <Flex direction={'column'} align={'center'}>
-              <Avatar
-                w={'10em'}
-                h={'10em'}
-                margin={'0 0 10px 0'}
-                colorScheme={'blue'}
-                showBorder
-              ></Avatar>
-              <FileUpload accept="image/*" onChange={onAvatarChange}>
-                <Button
-                  size={'xs'}
-                  colorScheme={'blue'}
-                  margin={isDesktop ? '0 0 0 0' : '0 0 1.5em 0'}
-                  justifyContent="center"
-                >
-                  Изменить фото
-                </Button>
-              </FileUpload>
-            </Flex>
+            <AvatarSection />
             <Flex
               width={'100%'}
               align={'left'}

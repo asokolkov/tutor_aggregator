@@ -2,8 +2,11 @@ import axiosInstance from './_share';
 
 export default class AvatarAPI {
   static async uploadAvatar(avatar: File) {
-    const byteAvatar = await toBase64(avatar);
-    await axiosInstance.post('/api/v1/avatars', byteAvatar);
+    const formData = new FormData();
+    formData.append('avatar', avatar, avatar.name);
+    await axiosInstance.post('/api/v1/avatars', formData, {
+      headers: { 'Content-Type': `multipart/form-data` },
+    });
   }
 
   static async getAvatarById(id: string): Promise<string> {
@@ -11,11 +14,3 @@ export default class AvatarAPI {
     return response.data;
   }
 }
-
-const toBase64 = (file: File) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-  });
