@@ -1,18 +1,10 @@
-﻿using SPA.Application.Avatars.Commands.InsertAvatarCommand;
-using SPA.Application.Avatars.Queries.GetAvatarQuery;
-using SPA.Application.Locations.Commands.UpdateLocationCommand;
-using SPA.Application.Locations.Queries.GetLocationQuery;
-using SPA.Application.Locations.Queries.GetLocationsQuery;
-using SPA.Application.Students.Commands.UpdateStudentCommand;
-using SPA.Application.Students.Queries.GetLessonsQuery;
+﻿using SPA.Application.Students.Commands.UpdateStudentCommand;
 using SPA.Application.Students.Queries.GetStudentQuery;
 using SPA.Application.Students.Queries.GetStudentsQuery;
-using SPA.Application.Subjects.Queries.GetSubjectsQuery;
 using SPA.Application.Tutors.Commands.CreateReviewCommand;
 using SPA.Application.Tutors.Commands.UpdateTutorCommand;
 using SPA.Application.Tutors.Queries.GetTutorQuery;
 using SPA.Application.Tutors.Queries.GetTutorsQuery;
-using SPA.Application.Users.Queries.GetCurrentUserQuery;
 
 namespace SPA.Extensions;
 
