@@ -28,6 +28,7 @@ import {
   InputTime,
 } from '../components/LessonCalendarTab/ModalInputs';
 import { useNewSlotModalSubmit } from '../hooks/useNewSlotModalSubmit';
+import { ErrorElement } from '../../../components/Errors/ErrorElement';
 
 type Props = {
   disclosure: DisclosureProps;
@@ -38,10 +39,13 @@ export const NewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
   const { isOpen, onClose } = disclosure;
   const queryClient = useQueryClient();
 
-  const { onSubmit, isSubmitLoading, formErrorMessage } = useNewSlotModalSubmit(
-    date,
-    onClose
-  );
+  const {
+    onSubmit,
+    isSubmitLoading,
+    formErrorMessage,
+    isError,
+    requestErrorMessage,
+  } = useNewSlotModalSubmit(date, onClose);
 
   const { initValues } = useFormikValues();
 
@@ -101,6 +105,7 @@ export const NewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
             </ModalFooter>
           </Form>
         </Formik>
+        {isError && <ErrorElement message={requestErrorMessage} />}
       </ModalContent>
     </Modal>
   );
