@@ -66,25 +66,54 @@ internal sealed class TutorsRepository : ITutorsRepository
         context.Awards.RemoveRange(entity.Awards);
         var awardsEntities = new List<AwardEntity>();
         foreach (var award in modelEntity.Awards)
-            awardsEntities.Add((await context.Awards.AddAsync(award)).Entity);
+        {
+            var newAward = new AwardEntity
+            {
+                Id = award.Id != default ? award.Id : Guid.NewGuid(),
+                Value = award.Value
+            };
+            awardsEntities.Add((await context.Awards.AddAsync(newAward)).Entity);
+        }
         entity.Awards = awardsEntities;
 
         context.TutorEducations.RemoveRange(entity.Educations);
         var educationsEntities = new List<TutorEducationEntity>();
         foreach (var education in modelEntity.Educations)
-            educationsEntities.Add((await context.TutorEducations.AddAsync(education)).Entity);
+        {
+            var newEducation = new TutorEducationEntity
+            {
+                Id = education.Id != default ? education.Id : Guid.NewGuid(),
+                Value = education.Value
+            };
+            educationsEntities.Add((await context.TutorEducations.AddAsync(newEducation)).Entity);
+        }
         entity.Educations = educationsEntities;
 
         context.TutorsContacts.RemoveRange(entity.Contacts);
         var contactsEntities = new List<TutorContactEntity>();
         foreach (var contact in modelEntity.Contacts)
-            contactsEntities.Add((await context.TutorsContacts.AddAsync(contact)).Entity);
+        {
+            var newContact = new TutorContactEntity
+            {
+                Id = contact.Id != default ? contact.Id : Guid.NewGuid(),
+                Type = contact.Type,
+                Value = contact.Value
+            };
+            contactsEntities.Add((await context.TutorsContacts.AddAsync(newContact)).Entity);
+        }
         entity.Contacts = contactsEntities;
 
         context.Requirements.RemoveRange(entity.Requirements);
         var requirementsEntities = new List<RequirementEntity>();
         foreach (var requirement in modelEntity.Requirements)
-            requirementsEntities.Add((await context.Requirements.AddAsync(requirement)).Entity);
+        {
+            var newRequirement = new RequirementEntity
+            {
+                Id = requirement.Id != default ? requirement.Id : Guid.NewGuid(),
+                Value = requirement.Value
+            };
+            requirementsEntities.Add((await context.Requirements.AddAsync(newRequirement)).Entity);
+        }
         entity.Requirements = requirementsEntities;
 
         if (modelEntity.Location is null)
@@ -93,7 +122,7 @@ internal sealed class TutorsRepository : ITutorsRepository
         }
         else
         {
-            var locationEntity = await context.Locations.FindAsync(modelEntity.Location.Id);
+            var locationEntity = await context.Locations.FirstOrDefaultAsync(x => x.City == modelEntity.Location.City && x.District == modelEntity.Location.District);
             if (locationEntity is null)
                 return null;
             entity.Location = locationEntity;
@@ -108,7 +137,7 @@ internal sealed class TutorsRepository : ITutorsRepository
             var newSubjects = new List<SubjectEntity>();
             foreach (var subject in modelEntity.Subjects)
             {
-                var subjectEntity = await context.Subjects.FindAsync(subject.Id);
+                var subjectEntity = await context.Subjects.FirstOrDefaultAsync(x => x.Description == subject.Description);
                 if (subjectEntity is null)
                     return null;
                 newSubjects.Add(subjectEntity);
