@@ -27,18 +27,25 @@ export function useTutorForm(tutor: V1TutorDto) {
       name: getFullName(tutor.firstName, tutor.lastName),
       district: tutor.location?.district ?? '',
       subject: tutor.subjects[0]?.description ?? '',
-      education: tutor.educations[0]?.value,
-      job: tutor.job,
-      requirements: tutor.requirements[0]?.value,
-      about: tutor.description,
-      phone: contactByType(V1ContactTypeDto.phone),
-      telegram: contactByType(V1ContactTypeDto.telegram),
-      email: contactByType(V1ContactTypeDto.email),
+      education: tutor.educations[0]?.value ?? '',
+      job: tutor.job ?? '',
+      requirements: tutor.requirements[0]?.value ?? '',
+      about: tutor.description ?? '',
+      phone: contactByType(V1ContactTypeDto.phone) ?? '',
+      telegram: contactByType(V1ContactTypeDto.telegram) ?? '',
+      email: contactByType(V1ContactTypeDto.email) ?? '',
     };
   };
 
   const updateTutor = (values: TutorInitValues) => {
+    tutor.age = 1;
     tutor.educations[0] = { value: values.education };
+    tutor.location = values.district
+      ? { district: values.district, city: 'Екатеринбург' }
+      : null;
+    if (values.subject) {
+      tutor.subjects[0] = { description: values.subject };
+    } else tutor.subjects = [];
     tutor.job = values.job;
     tutor.requirements[0] = { value: values.requirements };
     tutor.description = values.about;
@@ -63,12 +70,12 @@ export type StudentInitValues = {
 export function useStudentForm(student: V1StudentDto) {
   const mapStudent = (): StudentInitValues => ({
     name: getFullName(student.firstName, student.lastName),
-    age: '',
-    about: '',
+    age: student.age.toString(),
+    about: student.description,
   });
 
   const updateStudent = (values: StudentInitValues) => {
-    student.age = +values.age;
+    student.age = +values.age ?? 1;
     student.description = values.about;
     return student;
   };

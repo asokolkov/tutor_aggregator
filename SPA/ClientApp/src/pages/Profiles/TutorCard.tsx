@@ -42,7 +42,7 @@ export const TutorCard: React.FC = () => {
       backgroundRepeat={'no-repeat'}
       backgroundSize={'14em'}
     >
-      <Formik initialValues={mapTutor()} onSubmit={() => {}}>
+      <Formik initialValues={mapTutor()} onSubmit={onSubmit}>
         <Form>
           <Flex
             padding={isDesktop ? '1.5em 5em 1.5em 3em' : '1em 1em 1em 1em'}
@@ -95,7 +95,6 @@ export const TutorCard: React.FC = () => {
               />
               <SelectOptionsRow
                 label={'Район'}
-                isRequired
                 options={locations.map((x) => x.district)}
                 name={'district'}
                 placeholder={'Любой'}
@@ -106,7 +105,6 @@ export const TutorCard: React.FC = () => {
               />
               <SelectOptionsRow
                 label={'Предметы'}
-                isRequired
                 options={subjects.map((x) => x.description)}
                 name={'subject'}
                 placeholder={'Любой'}
