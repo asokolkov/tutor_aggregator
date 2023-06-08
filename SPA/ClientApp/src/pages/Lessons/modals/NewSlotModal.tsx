@@ -36,16 +36,17 @@ type Props = {
 };
 
 export const NewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
-  const { isOpen, onClose } = disclosure;
   const queryClient = useQueryClient();
 
   const {
+    isOpen,
     onSubmit,
     isSubmitLoading,
     formErrorMessage,
     isError,
     requestErrorMessage,
-  } = useNewSlotModalSubmit(date, onClose);
+    resetModalAndClose,
+  } = useNewSlotModalSubmit(date, disclosure);
 
   const { initValues } = useFormikValues();
 
@@ -55,7 +56,7 @@ export const NewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
   });
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal isOpen={isOpen} onClose={resetModalAndClose} isCentered>
       <ModalOverlay />
       <ModalContent>
         <Formik
@@ -99,7 +100,7 @@ export const NewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
               >
                 Добавить
               </Button>
-              <Button variant="ghost" onClick={onClose}>
+              <Button variant="ghost" onClick={resetModalAndClose}>
                 Отмена
               </Button>
             </ModalFooter>
