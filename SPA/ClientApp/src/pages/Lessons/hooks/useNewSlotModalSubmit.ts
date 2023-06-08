@@ -3,11 +3,13 @@ import LessonsAPI from '../../../api/lessons';
 import { LessonType } from '../../../api/models';
 import { useState } from 'react';
 import { getHoursAndMinutes } from '../../../utils/datetime';
+import { Axios, AxiosError, isAxiosError } from 'axios';
 
 export function useNewSlotModalSubmit(date: Date, onClose: () => void) {
   const [formErrorMessage, setFormErrorMessage] = useState('');
   const [isSubmitLoading, setSubmitLoading] = useState(false);
   const [isError, setError] = useState(false);
+  const [requestErrorMessage, setRequestErrorMessage] = useState('');
 
   const onSubmit = async (values: SlotInputValuesProps) => {
     setError(false);
@@ -33,7 +35,12 @@ export function useNewSlotModalSubmit(date: Date, onClose: () => void) {
         values.isOnline ? LessonType.online : LessonType.offline
       );
       onClose();
-    } catch {
+    } catch (err) {
+      if (isAxiosError(err) && err.response.status === 409) {
+        setRequestErrorMessage(
+          'На это время уже создан слот. Укажите другое время начала и конца занятия.'
+        );
+      }
       setError(true);
     }
     setSubmitLoading(false);
@@ -48,7 +55,13 @@ export function useNewSlotModalSubmit(date: Date, onClose: () => void) {
     return true;
   };
 
-  return { onSubmit, isSubmitLoading, formErrorMessage, isError };
+  return {
+    onSubmit,
+    isSubmitLoading,
+    formErrorMessage,
+    isError,
+    requestErrorMessage,
+  };
 }
 
 type TimeBoxValues = {

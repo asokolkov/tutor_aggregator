@@ -39,8 +39,13 @@ export const NewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
   const { isOpen, onClose } = disclosure;
   const queryClient = useQueryClient();
 
-  const { onSubmit, isSubmitLoading, formErrorMessage, isError } =
-    useNewSlotModalSubmit(date, onClose);
+  const {
+    onSubmit,
+    isSubmitLoading,
+    formErrorMessage,
+    isError,
+    requestErrorMessage,
+  } = useNewSlotModalSubmit(date, onClose);
 
   const { initValues } = useFormikValues();
 
@@ -100,7 +105,7 @@ export const NewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
             </ModalFooter>
           </Form>
         </Formik>
-        {isError && <ErrorElement />}
+        {isError && <ErrorElement message={requestErrorMessage} />}
       </ModalContent>
     </Modal>
   );
