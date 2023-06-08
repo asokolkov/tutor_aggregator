@@ -8,9 +8,4 @@ export default class AvatarAPI {
       headers: { 'Content-Type': `multipart/form-data` },
     });
   }
-
-  static async getAvatarById(id: string): Promise<string> {
-    const response = await axiosInstance.get(`/api/v1/avatars/${id}`);
-    return response.data;
-  }
 }
