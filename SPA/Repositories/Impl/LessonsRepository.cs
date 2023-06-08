@@ -33,23 +33,19 @@ internal sealed class LessonsRepository : ILessonsRepository
         return mapper.Map<ICollection<Lesson>>(entities);
     }
 
-    public async Task<ICollection<Lesson>> GetTutorLessonsAsync(Guid tutorId, DateTimeOffset date)
+    public async Task<ICollection<Lesson>> GetTutorLessonsAsync(Guid tutorId, DateTimeOffset dateTime)
     {
-        var zeroTimeZoneDate = date.ToOffset(TimeSpan.Zero).UtcDateTime.Date;
+        var startDate = dateTime.ToOffset(TimeSpan.Zero);
+        var endDate = startDate.Add(new TimeSpan(24, 0, 0));
 
         var entities = await context.Lessons
             .Where(e => 
                 e.Tutor.Id == tutorId && 
-                e.Start.UtcDateTime.Date == zeroTimeZoneDate &&
-                (e.Status == LessonStatus.Empty || e.Status == LessonStatus.Booked))
+                DateTimeOffset.Compare(startDate, e.Start) < 0 &&
+                DateTimeOffset.Compare(endDate, e.End) > 0 &&
+                e.Status != LessonStatus.Deleted)
             .ToListAsync();
         var models = mapper.Map<ICollection<Lesson>>(entities);
-
-        foreach (var model in models)
-        {
-            model.Start = model.Start.ToOffset(date.Offset);
-            model.End = model.End.ToOffset(date.Offset);
-        }
 
         return models;
     }

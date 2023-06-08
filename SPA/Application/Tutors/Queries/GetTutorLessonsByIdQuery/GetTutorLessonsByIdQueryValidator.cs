@@ -8,6 +8,6 @@ internal sealed class GetTutorLessonsByIdQueryValidator : AbstractValidator<GetT
 {
     public GetTutorLessonsByIdQueryValidator()
     {
-        RuleFor(query => query.TutorId);
+        RuleFor(query => query.TutorId).NotEmpty();
     }
 }
