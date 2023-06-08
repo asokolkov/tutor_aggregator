@@ -2,12 +2,12 @@ import axiosInstance from './_share';
 import { LessonType, V1LessonDto } from './models';
 
 export default class LessonsAPI {
-  static async getTutorLessons(tutorId: string, date: Date) {
+  static async getTutorLessons(tutorId: string, dateTime: Date) {
     const response = await axiosInstance.get<V1LessonDto[]>(
       `/api/v1/tutors/${tutorId}/lessons`,
       {
         params: {
-          date,
+          dateTime,
         },
       }
     );
