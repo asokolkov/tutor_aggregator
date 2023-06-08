@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import { Container } from '@chakra-ui/react';
+import { Container, Flex } from '@chakra-ui/react';
 import { UserContext } from './contexts/UserContext';
 import { LoadBar } from '../../components/LoadBar/LoadBar';
 import React from 'react';
@@ -17,11 +17,13 @@ const BaseLayout: React.FC = () => {
   return (
     <UserContext.Provider value={userProviderValues}>
       <SearchStateContext.Provider value={providerValues}>
-        <Header />
-        <Container padding={'0 5vw 0 5vw'} maxW={'100%'}>
-          <Outlet />
-        </Container>
-        <Footer />
+        <Flex minH={'100vh'} direction={'column'} justify={'space-between'}>
+          <Container padding={'0 5vw 0 5vw'} maxW={'100%'}>
+            <Header />
+            <Outlet />
+          </Container>
+          <Footer />
+        </Flex>
       </SearchStateContext.Provider>
     </UserContext.Provider>
   );
