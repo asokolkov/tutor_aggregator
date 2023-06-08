@@ -1,9 +1,16 @@
 import React from 'react';
-import { V1StudentDto, V1TutorDto } from '../../../api/models';
+import {
+  V1LocationDto,
+  V1StudentDto,
+  V1SubjectDto,
+  V1TutorDto,
+} from '../../../api/models';
 
 type ContextProps = {
-  tutorProfile: V1TutorDto;
-  studentProfile: V1StudentDto;
+  tutor: V1TutorDto;
+  student: V1StudentDto;
+  subjects: V1SubjectDto[];
+  locations: V1LocationDto[];
   isLoading: boolean;
 };
 
