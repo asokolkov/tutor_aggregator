@@ -9,8 +9,8 @@ export interface TutorSearchParams {
   subject: string;
   city: string;
   district: string;
-  maxPrice: number;
-  rating: number;
+  maxPrice: string;
+  rating: string;
 }
 
 class TutorsAPI {
@@ -18,8 +18,8 @@ class TutorsAPI {
     searchParams: TutorSearchParams = {
       city: null,
       district: null,
-      maxPrice: -1,
-      rating: -1,
+      maxPrice: null,
+      rating: null,
       subject: null,
     },
     page = 1,

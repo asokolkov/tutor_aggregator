@@ -1,4 +1,12 @@
-import { Box, Button, Flex, Stack, VStack } from '@chakra-ui/react';
+import {
+  Alert,
+  AlertIcon,
+  Box,
+  Button,
+  Flex,
+  Stack,
+  VStack,
+} from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { PasswordField } from './components/PasswordField';
 import { Header } from './components/Header';
@@ -47,13 +55,17 @@ export const SignupPage = () => {
                     <EmailField />
                     <PasswordField />
                   </AuthorizationContext.Provider>
+                  <Alert status="info">
+                    <AlertIcon />
+                    Телефон и почта будут видны остальным пользователям.
+                  </Alert>
                 </Stack>
                 <Stack spacing="6">
                   <Button
                     variant={ButtonVariant.green}
                     size={'lg'}
-                    colorScheme={'blue'}
                     type="submit"
+                    marginTop={'30px'}
                   >
                     Зарегистрироваться
                   </Button>

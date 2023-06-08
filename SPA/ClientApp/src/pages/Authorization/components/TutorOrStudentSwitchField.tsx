@@ -7,11 +7,11 @@ export const TutorOrStudentSwitchField: React.FC = () => {
   return (
     <FormControl>
       <HStack justify="center">
-        <Text fontSize="md" whiteSpace="nowrap" color="muted">
+        <Text fontSize="md" whiteSpace="nowrap" color="custom.blue.300">
           Ученик
         </Text>
-        <Switch size="lg" colorScheme="Gray 200" id="isRequired" {...field} />
-        <Text fontSize="md" whiteSpace="nowrap" color="muted">
+        <Switch size="lg" colorScheme="blackAlpha" id="isRequired" {...field} />
+        <Text fontSize="md" whiteSpace="nowrap" color="custom.blue.300">
           Репетитор
         </Text>
       </HStack>

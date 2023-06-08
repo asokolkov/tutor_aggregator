@@ -60,12 +60,31 @@ internal sealed class StudentsRepository : IStudentsRepository
 
         if (entity.Education is not null)
             context.StudentEducations.Remove(entity.Education);
-        entity.Education = modelEntity.Education is not null ? (await context.StudentEducations.AddAsync(modelEntity.Education)).Entity : null;
+        if (modelEntity.Education is null)
+            entity.Education = null;
+        else
+        {
+            var newEducation = new StudentEducationEntity
+            {
+                Id = modelEntity.Education.Id != default ? modelEntity.Education.Id : Guid.NewGuid(),
+                Value = modelEntity.Education.Value,
+                Grade = modelEntity.Education.Grade
+            };
+            entity.Education = (await context.StudentEducations.AddAsync(newEducation)).Entity;
+        }
             
         context.StudentsContacts.RemoveRange(entity.Contacts);
         var contactsEntities = new List<StudentContactEntity>();
         foreach (var contact in modelEntity.Contacts)
-            contactsEntities.Add((await context.StudentsContacts.AddAsync(contact)).Entity);
+        {
+            var newContact = new StudentContactEntity
+            {
+                Id = contact.Id != default ? contact.Id : Guid.NewGuid(),
+                Type = contact.Type,
+                Value = contact.Value
+            };
+            contactsEntities.Add((await context.StudentsContacts.AddAsync(newContact)).Entity);
+        }
         entity.Contacts = contactsEntities;
             
         try
