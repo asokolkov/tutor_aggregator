@@ -53,6 +53,19 @@ internal sealed class LessonsRepository : ILessonsRepository
 
         return models;
     }
+    
+    public async Task<ICollection<Lesson>> GetTutorLessonsAsync(Guid tutorId)
+    {
+        var entities = await context.Lessons
+            .Where(e => 
+                e.Tutor.Id == tutorId && 
+                e.Status != LessonStatus.Empty &&
+                e.Status != LessonStatus.ExpiredEmpty)
+            .ToListAsync();
+        var models = mapper.Map<ICollection<Lesson>>(entities);
+
+        return models;
+    }
 
     public async Task<Lesson?> InsertAsync(Guid tutorId, Lesson lesson)
     {

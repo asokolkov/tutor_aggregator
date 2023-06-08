@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SPA.Application.Tutors.Commands.CreateReviewCommand;
 using SPA.Application.Tutors.Commands.UpdateTutorCommand;
-using SPA.Application.Tutors.Queries.GetLessonsQuery;
 using SPA.Application.Tutors.Queries.GetReviewsQuery;
+using SPA.Application.Tutors.Queries.GetTutorLessonsByIdQuery;
+using SPA.Application.Tutors.Queries.GetTutorLessonsQuery;
 using SPA.Application.Tutors.Queries.GetTutorQuery;
 using SPA.Application.Tutors.Queries.GetTutorsQuery;
 using SPA.Authorization;
@@ -131,8 +132,24 @@ public sealed class V1TutorsController : Controller
     [SwaggerResponse(200, "OK", typeof(ICollection<V1LessonDto>))]
     public async Task<IActionResult> GetLessonsAsync(Guid id, [FromQuery] DateTimeOffset date)
     {
-        var query = new GetTutorLessonsQuery(id, date);
+        var query = new GetTutorLessonsByIdQuery(id, date);
         var models = await mediator.Send(query);
+        return Ok(mapper.Map<ICollection<V1LessonDto>>(models));
+    }
+    
+    [Authorize]
+    [HttpGet("current/lessons")]
+    [SwaggerResponse(200, "OK", typeof(ICollection<V1LessonDto>))]
+    [SwaggerResponse(401, "Unauthorized")]
+    public async Task<IActionResult> GetLessonsAsync()
+    {
+        var userId = User.GetId();
+        if (userId is null)
+            return Unauthorized();
+        
+        var query = new GetTutorLessonsQuery(userId.Value);
+        var models = await mediator.Send(query);
+        
         return Ok(mapper.Map<ICollection<V1LessonDto>>(models));
     }
 }

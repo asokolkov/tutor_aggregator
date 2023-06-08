@@ -2,7 +2,7 @@
 using SPA.Domain;
 using SPA.Repositories;
 
-namespace SPA.Application.Tutors.Queries.GetLessonsQuery;
+namespace SPA.Application.Tutors.Queries.GetTutorLessonsQuery;
 
 internal sealed class GetTutorLessonsQueryHandler : IRequestHandler<GetTutorLessonsQuery, ICollection<Lesson>>
 {
@@ -15,6 +15,6 @@ internal sealed class GetTutorLessonsQueryHandler : IRequestHandler<GetTutorLess
 
     public async Task<ICollection<Lesson>> Handle(GetTutorLessonsQuery request, CancellationToken cancellationToken)
     {
-        return await repository.GetTutorLessonsAsync(request.TutorId, request.Date);
+        return await repository.GetTutorLessonsAsync(request.TutorId);
     }
 }
