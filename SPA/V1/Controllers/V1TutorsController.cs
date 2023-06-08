@@ -1,3 +1,5 @@
+#nullable enable
+
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -45,14 +47,9 @@ public sealed class V1TutorsController : Controller
     [HttpGet(Name = nameof(GetTutorsPageAsync))]
     [SwaggerResponse(200, "OK", typeof(V1PageDto<V1TutorDto>))]
     public async Task<IActionResult> GetTutorsPageAsync([FromQuery] int page = 0,
-        [FromQuery] int size = 30, [FromQuery] string subject = "", [FromQuery] string city = "",
-        [FromQuery] string district = "", [FromQuery] int maxPrice = -1, [FromQuery] int rating = -1)
+        [FromQuery] int size = 30, [FromQuery] string? subject = null, [FromQuery] string? city = null,
+        [FromQuery] string? district = null, [FromQuery] int? maxPrice = null, [FromQuery] int? rating = null)
     {
-        if (page < 0)
-            return BadRequest("Page must not be less than 0");
-        if (size < 1)
-            return BadRequest("Size must not be less than 1");
-
         var query = new GetTutorsQuery(page, size, subject, city, district, maxPrice, rating);
         var modelsPage = await mediator.Send(query);
         
