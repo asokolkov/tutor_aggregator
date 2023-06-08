@@ -12,7 +12,7 @@ type Props = ProfilePageProps & {
 export const TextAreaRow: React.FC<Props> = (props) => {
   const [field] = useField({ name: props.name });
   return (
-    <Flex align={'start'} margin={'0 0 10px 0'}>
+    <Flex align={'start'}>
       <FormControl display={'flex'} alignItems={'center'}>
         <FormLabel
           fontSize={'xl'}
