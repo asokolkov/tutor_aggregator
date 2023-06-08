@@ -7,21 +7,20 @@ import { TextAreaRow } from './components/TextAreaRow';
 import { SubmitButton } from './components/SubmitButton';
 import profileIcon from '../../assets/images/profile_icon_bg.png';
 import { ProfileContext } from './contexts/ProfileContext';
-import { Form, Formik, FormikValues } from 'formik';
-import {
-  mapTutorToFormikValues,
-  updateTutorFromFormikValues,
-} from './FormHelper';
+import { Form, Formik } from 'formik';
 import TutorsAPI from '../../api/tutors';
 import { TooltipType } from './components/_shared';
 import { AvatarSection } from './components/AvatarSection';
+import { TutorInitValues, useTutorForm } from './hooks/useForm';
+import { TutorWarning } from './components/TutorWarning';
 
 export const TutorCard: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
-  const profileContext = useContext(ProfileContext);
-  const tutor = profileContext.tutorProfile;
-  const onSubmit = async (values: FormikValues) => {
-    const newTutor = updateTutorFromFormikValues(tutor, values);
+  const { tutor, locations, subjects } = useContext(ProfileContext);
+  const { updateTutor, mapTutor } = useTutorForm(tutor);
+
+  const onSubmit = async (values: TutorInitValues) => {
+    const newTutor = updateTutor(values);
     await TutorsAPI.putCurrentProfileValues(newTutor);
   };
 
@@ -37,7 +36,7 @@ export const TutorCard: React.FC = () => {
       backgroundRepeat={'no-repeat'}
       backgroundSize={'14em'}
     >
-      <Formik initialValues={mapTutorToFormikValues(tutor)} onSubmit={onSubmit}>
+      <Formik initialValues={mapTutor()} onSubmit={onSubmit}>
         <Form>
           <Flex
             padding={isDesktop ? '1.5em 5em 1.5em 3em' : '1em 1em 1em 1em'}
@@ -49,7 +48,9 @@ export const TutorCard: React.FC = () => {
               align={'left'}
               direction={'column'}
               margin={isDesktop ? '0 0 0 3em' : '0 0 0 0'}
+              gap="10px"
             >
+              <TutorWarning />
               <InputRow
                 label={'ФИО'}
                 isDisabled
@@ -64,8 +65,7 @@ export const TutorCard: React.FC = () => {
                 label={'Город'}
                 isDisabled
                 isRequired
-                optionLabels={['Екатеринбург']}
-                optionValues={['Екатеринбург']}
+                options={['Екатеринбург']}
                 name={'city'}
                 tooltip={{
                   label: 'Мы пока работаем только в одном городе',
@@ -74,12 +74,22 @@ export const TutorCard: React.FC = () => {
               />
               <SelectOptionsRow
                 label={'Район'}
-                isRequired
-                optionLabels={['Уралмаш', 'Академический', 'Ленинский']}
-                optionValues={['Уралмаш', 'Академический', 'Ленинский']}
+                options={locations.map((x) => x.district)}
                 name={'district'}
+                placeholder={'Любой'}
                 tooltip={{
                   label: 'Выберите район для репетиторства',
+                  type: TooltipType.Info,
+                }}
+              />
+              <SelectOptionsRow
+                label={'Предметы'}
+                options={subjects.map((x) => x.description)}
+                name={'subject'}
+                placeholder={'Любой'}
+                tooltip={{
+                  label:
+                    'Выберите предметы, по которым вы будете репетиторствовать',
                   type: TooltipType.Info,
                 }}
               />
@@ -102,40 +112,6 @@ export const TutorCard: React.FC = () => {
                   type: TooltipType.Info,
                 }}
               />
-              <TextAreaRow
-                label={'Награды'}
-                placeholder={
-                  // eslint-disable-next-line max-len
-                  'Сертификат о прохождении курса по бэкенду от ТЮМГУ (2018)\n' +
-                  'Лауреат «Работник службы поддержки года», г. Тюмень (2022)'
-                }
-                name={'awards'}
-                tooltip={{
-                  label:
-                    'Укажите дипломы, сертификаты и премии для вашего профиля. Каждая награда — на новой строке',
-                  type: TooltipType.Info,
-                }}
-              />
-              <Divider color={'gray'} margin={'0 0 10px 0'} />
-              {/*<ProfilePageCheckboxesRow*/}
-              {/*  label={'Предметы'}*/}
-              {/*  isRequired={true}*/}
-              {/*  options={[*/}
-              {/*    'Математика',*/}
-              {/*    'Программирование',*/}
-              {/*    'Русский язык',*/}
-              {/*    'Дискретная математика',*/}
-              {/*  ]}*/}
-              {/*  checkedOptions={['Программирование', 'Русский язык']}*/}
-              {/*  tooltip={[*/}
-              {/*    <Tooltip*/}
-              {/*      label="Выберите предметы, по которым вы будете репетиторствовать"*/}
-              {/*      placement={'left-start'}*/}
-              {/*    >*/}
-              {/*      <InfoIcon margin={'0 0 0 10px'} />*/}
-              {/*    </Tooltip>,*/}
-              {/*  ]}*/}
-              {/*/>*/}
               <InputRow
                 label={'Требования'}
                 name={'requirements'}
@@ -148,16 +124,29 @@ export const TutorCard: React.FC = () => {
                   type: TooltipType.Info,
                 }}
               />
+              <Divider color={'gray'} margin={'0 0 10px 0'} />
               <InputRow
-                label={'Контакты'}
-                name={'contacts'}
-                placeholder={
-                  'По телефону: +7999565815. В Телеграме @theoilside'
-                }
-                isRequired
+                label={'Телефон'}
+                name={'phone'}
                 tooltip={{
                   label:
-                    'Укажите контакты, по которым с вами будут связываться ученики',
+                    'Укажите номер телефона, по которому с вами будут связываться ученики',
+                  type: TooltipType.Info,
+                }}
+              />
+              <InputRow
+                label={'Почта'}
+                name={'email'}
+                tooltip={{
+                  label: 'Укажите почту, по которой с вами можно связаться',
+                  type: TooltipType.Info,
+                }}
+              />
+              <InputRow
+                label={'Telegram'}
+                name={'telegram'}
+                tooltip={{
+                  label: 'Укажите id телегам, где вам могут написать ученики',
                   type: TooltipType.Info,
                 }}
               />

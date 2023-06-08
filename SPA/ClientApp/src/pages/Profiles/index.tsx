@@ -5,30 +5,25 @@ import { TutorCard } from './TutorCard';
 import { VStack } from '@chakra-ui/react';
 import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { StudentCard } from './StudentCard';
-import { useProfileInfo } from '../../query/useProfilePageQuery';
 import { ProfileContext } from './contexts/ProfileContext';
 import { Navigate } from 'react-router-dom';
 import { LOGIN_PAGE } from '../../routes/routePaths';
 import { LoadBar } from '../../components/LoadBar/LoadBar';
 import { V1AccountTypeDto } from '../../api/models';
+import { useProfilePage } from './hooks/useProfilePage';
 
 export const ProfilePage = () => {
-  const userContext = useContext(UserContext);
+  const { isAuthorized, user } = useContext(UserContext);
+  if (!isAuthorized) return <Navigate to={LOGIN_PAGE} />;
 
-  if (!userContext.isAuthorized) {
-    return <Navigate to={LOGIN_PAGE} />;
-  }
-
-  const { isLoading, tutorProfile, studentProfile } = useProfileInfo(
-    userContext.user.accountType
-  );
+  const { tutor, student, subjects, locations, isLoading } = useProfilePage();
 
   const providerValues = useMemo(
-    () => ({ isLoading, tutorProfile, studentProfile }),
-    [isLoading, studentProfile, tutorProfile]
+    () => ({ tutor, student, subjects, locations, isLoading }),
+    [tutor, student, subjects, locations, isLoading]
   );
 
-  const isTutor = userContext.user.accountType === V1AccountTypeDto.tutor;
+  const isTutor = user.accountType === V1AccountTypeDto.tutor;
   if (isLoading)
     return <LoadBar description={'Загружаем данные вашего профиля'} />;
 

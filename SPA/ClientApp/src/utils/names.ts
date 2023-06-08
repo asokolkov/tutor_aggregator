@@ -1,3 +1,3 @@
-export function getFullName(name: string, familyName: string) {
-  return `${familyName} ${name}`;
+export function getFullName(firstName: string, lastName: string) {
+  return `${lastName} ${firstName}`;
 }
