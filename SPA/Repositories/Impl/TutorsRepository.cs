@@ -29,10 +29,10 @@ internal sealed class TutorsRepository : ITutorsRepository
     {
         var filteredEntities = await context.Tutors
             .OrderBy(x => x.Id)
+            .Where(x => x.Location != null && (city == null || x.Location.City == city))
+            .Where(x => x.Location != null && (district == null || x.Location.District == district))
+            .Where(x => x.Subjects.Count > 0 && (subject == null || x.Subjects.FirstOrDefault(y => y.Description == subject) != null))
             .Where(x => rating == null || (int)x.Rating == rating)
-            .Where(x => city == null || (x.Location != null ? x.Location.City : null) == city)
-            .Where(x => district == null || (x.Location != null ? x.Location.District : null) == district)
-            .Where(x => subject == null || x.Subjects.FirstOrDefault(y => y.Description == subject) != null)
             .Where(x => maxPrice == null || (x.Lessons.Any() ? x.Lessons.Max(y => y.Price) : -1) <= maxPrice)
             .ToListAsync();
 
