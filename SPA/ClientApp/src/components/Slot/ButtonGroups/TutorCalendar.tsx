@@ -1,19 +1,20 @@
 import * as React from 'react';
-import { Button, HStack, IconButton, useDisclosure } from '@chakra-ui/react';
 import { useContext } from 'react';
+import { Button, HStack, IconButton, useDisclosure } from '@chakra-ui/react';
 import { SlotContext } from '../contexts/SlotContext';
 import { ChatIcon, DeleteIcon } from '@chakra-ui/icons';
 import { DeleteSlotModal } from '../modals/DeleteSlotModal';
+import { BookedBy } from '../Slot';
 
 export const TutorCalendar: React.FC = () => {
-  const { isBooked } = useContext(SlotContext);
+  const { bookedBy } = useContext(SlotContext);
   const disclosure = useDisclosure();
 
   return (
     <>
       <DeleteSlotModal disclosure={disclosure} />
       <HStack w="100%" p="8px" spacing="4px">
-        {isBooked ? (
+        {bookedBy !== BookedBy.nobody ? (
           <Button
             rightIcon={<ChatIcon />}
             flexGrow="1"

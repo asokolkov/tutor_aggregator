@@ -11,8 +11,10 @@ export const Slot: React.FC<SlotProps> = (props) => {
   const providerValue = useMemo(
     () => ({
       ...props,
-      timeRange: `${props.startTime} - ${props.endTime}`,
+      timeRange: `${props.startDate} - ${props.endDate}`,
       tutorName: props.tutorName || 'Неизвестно',
+      startDate: new Date(props.startDate),
+      endDate: new Date(props.endDate),
     }),
     [props]
   );
@@ -43,16 +45,14 @@ export const Slot: React.FC<SlotProps> = (props) => {
 };
 
 export type SlotProps = {
-  startTime: string;
-  endTime: string;
-  dateAndDay: string;
+  startDate: Date;
+  endDate: Date;
   lessonId: string;
-  isBooked: boolean;
+  bookedBy: BookedBy;
   type: LessonType;
   price: number;
   tutorName: string;
   studentName: string;
-  isBookedByCurrent: boolean;
   variant: SlotVariant;
 };
 
@@ -63,4 +63,10 @@ export enum SlotVariant {
   activeAllList = 'Active all',
   pastList = 'Past List',
   canceledList = 'CanceledList',
+}
+
+export enum BookedBy {
+  nobody = 'Nobody',
+  someone = 'Someone',
+  current = 'Current',
 }

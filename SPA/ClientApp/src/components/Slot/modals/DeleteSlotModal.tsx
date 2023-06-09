@@ -6,6 +6,7 @@ import { SlotContext } from '../contexts/SlotContext';
 import { modalFooter } from '../../LessonModalsHOC/ModalFooter';
 import { modal } from '../../LessonModalsHOC/Modal';
 import { ButtonVariant } from '../../../assets/theme/themeEnum';
+import { BookedBy } from '../Slot';
 
 const onSubmit = async (lessonId: string) => {
   await LessonsAPI.deleteLesson(lessonId);
@@ -13,10 +14,10 @@ const onSubmit = async (lessonId: string) => {
 
 const modalTitle = 'Вы действительно хотите удалить слот?';
 const Body: React.FC = () => {
-  const { timeRange, studentName, isBooked } = useContext(SlotContext);
+  const { timeRange, studentName, bookedBy } = useContext(SlotContext);
   return (
     <VStack align={'start'}>
-      {isBooked && (
+      {bookedBy !== BookedBy.nobody && (
         <Alert status="warning">
           <AlertIcon />
           <Text>

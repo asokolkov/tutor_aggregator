@@ -1,17 +1,18 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import { Button, HStack, useDisclosure } from '@chakra-ui/react';
 import { ChatIcon, LockIcon } from '@chakra-ui/icons';
-import { useContext } from 'react';
 import { SlotContext } from '../contexts/SlotContext';
 import { BookLessonModal } from '../modals/BookLessonModal';
 import { CancelLessonModal } from '../modals/CancelLessonModal';
+import { BookedBy } from '../Slot';
 
 export const StudentCalendar: React.FC = () => {
-  const { isBooked, isBookedByCurrent } = useContext(SlotContext);
+  const { bookedBy } = useContext(SlotContext);
   const bookDisclosure = useDisclosure();
   const cancelDisclosure = useDisclosure();
   const renderButton = () => {
-    if (isBookedByCurrent)
+    if (bookedBy === BookedBy.current)
       return (
         <Button
           rightIcon={<ChatIcon />}
@@ -24,7 +25,7 @@ export const StudentCalendar: React.FC = () => {
         </Button>
       );
 
-    if (isBooked)
+    if (bookedBy != BookedBy.nobody)
       return (
         <Button w="100%" h="30px" variant="blue.200" rightIcon={<LockIcon />}>
           Слот занят

@@ -1,12 +1,9 @@
 import type { Preview } from '@storybook/react';
 import theme from '../src/assets/theme/index';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { withRouter } from 'storybook-addon-react-router-v6';
-import {
-  UserContext,
-  UserContextProps,
-} from '../src/layouts/base/contexts/UserContext';
-import { V1AccountTypeDto, V1UserDto } from '../src/api/models';
+import { V1AccountTypeDto } from '../src/api/models';
+import { withQueryClient } from './decorators/withQueryClient';
+import { withUserProvider } from './decorators/withUserProvider';
 
 const preview: Preview = {
   parameters: {
@@ -22,31 +19,15 @@ const preview: Preview = {
     },
   },
 
-  decorators: [
-    (story, context) => {
-      const user: V1UserDto = {
-        id: 'current',
-        accountType: context.args.accountType || V1AccountTypeDto.tutor,
-        firstName: 'Имя',
-        lastName: 'Фамилия',
-      };
-
-      const userProviderValue: UserContextProps = {
-        isAuthorized: true,
-        removeUser(): void {},
-        setUser(_: V1UserDto): void {},
-        user,
-      };
-      return (
-        <UserContext.Provider value={userProviderValue}>
-          <QueryClientProvider client={new QueryClient()}>
-            {story()}
-          </QueryClientProvider>
-        </UserContext.Provider>
-      );
+  args: { accountType: V1AccountTypeDto.tutor },
+  argTypes: {
+    accountType: {
+      control: 'select',
+      options: Object.values(V1AccountTypeDto),
     },
-    withRouter,
-  ],
+  },
+
+  decorators: [withUserProvider, withQueryClient, withRouter],
 };
 
 export default preview;
