@@ -11,7 +11,7 @@ export const Slot: React.FC<SlotProps> = (props) => {
   const providerValue = useMemo(
     () => ({
       ...props,
-      timeRange: `${props.startTime || '??:??'} - ${props.endTime || '??:??'}`,
+      timeRange: `${props.startTime} - ${props.endTime}`,
       tutorName: props.tutorName || 'Неизвестно',
     }),
     [props]
@@ -51,10 +51,8 @@ export type SlotProps = {
   type: LessonType;
   price: number;
   tutorName: string;
-  student?: {
-    name: string;
-    id: string;
-  };
+  studentName: string;
+  isBookedByCurrent: boolean;
   variant: SlotVariant;
 };
 

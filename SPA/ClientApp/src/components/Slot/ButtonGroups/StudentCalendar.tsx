@@ -4,17 +4,12 @@ import { ChatIcon, LockIcon } from '@chakra-ui/icons';
 import { useContext } from 'react';
 import { SlotContext } from '../contexts/SlotContext';
 import { BookLessonModal } from '../modals/BookLessonModal';
-import { UserContext } from '../../../layouts/base/contexts/UserContext';
 import { CancelLessonModal } from '../modals/CancelLessonModal';
 
 export const StudentCalendar: React.FC = () => {
-  const { isBooked, student } = useContext(SlotContext);
+  const { isBooked, isBookedByCurrent } = useContext(SlotContext);
   const bookDisclosure = useDisclosure();
   const cancelDisclosure = useDisclosure();
-  const { user } = useContext(UserContext);
-
-  const isBookedByCurrent = user?.id === student?.id;
-
   const renderButton = () => {
     if (isBookedByCurrent)
       return (

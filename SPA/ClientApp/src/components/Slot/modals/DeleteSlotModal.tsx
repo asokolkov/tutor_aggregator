@@ -13,14 +13,14 @@ const onSubmit = async (lessonId: string) => {
 
 const modalTitle = 'Вы действительно хотите удалить слот?';
 const Body: React.FC = () => {
-  const { timeRange, student, isBooked } = useContext(SlotContext);
+  const { timeRange, studentName, isBooked } = useContext(SlotContext);
   return (
     <VStack align={'start'}>
       {isBooked && (
         <Alert status="warning">
           <AlertIcon />
           <Text>
-            На данный слот записан ученик <b>{student.name}</b>. Запись будет
+            На данный слот записан ученик <b>{studentName}</b>. Запись будет
             отменена
           </Text>
         </Alert>
