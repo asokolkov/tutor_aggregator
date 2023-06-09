@@ -16,7 +16,6 @@ import logo from '../../../assets/images/teacher_icon.png';
 import { CitySelection } from './CitySelection';
 import { LoginButton, RegisterButton } from './HeaderButtons';
 import { HeaderMenu } from './HeaderMenu';
-import { MiniHeaderMenu } from './MiniHeaderMenu';
 import { HeaderAuthMenu } from './HeaderAuthMenu';
 
 const Header: React.FC = () => {
@@ -44,11 +43,7 @@ const Header: React.FC = () => {
           </VStack>
         </HStack>
         {isAuthorized ? (
-          isLargerThanTablet ? (
-            <HeaderMenu />
-          ) : (
-            <MiniHeaderMenu />
-          )
+          <HeaderMenu />
         ) : isLargerThanTablet ? (
           <HStack spacing="16px">
             <LoginButton />

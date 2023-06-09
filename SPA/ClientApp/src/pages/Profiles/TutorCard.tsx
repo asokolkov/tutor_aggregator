@@ -1,13 +1,6 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import {
-  Avatar,
-  Box,
-  Button,
-  Divider,
-  Flex,
-  useBreakpointValue,
-} from '@chakra-ui/react';
+import { Box, Divider, Flex, useBreakpointValue } from '@chakra-ui/react';
 import { SelectOptionsRow } from './components/SelectOptionsRow';
 import { InputRow } from './components/InputRow';
 import { TextAreaRow } from './components/TextAreaRow';
@@ -17,6 +10,7 @@ import { ProfileContext } from './contexts/ProfileContext';
 import { Form, Formik } from 'formik';
 import TutorsAPI from '../../api/tutors';
 import { TooltipType } from './components/_shared';
+import { AvatarSection } from './components/AvatarSection';
 import { TutorInitValues, useTutorForm } from './hooks/useForm';
 import { TutorWarning } from './components/TutorWarning';
 
@@ -48,22 +42,7 @@ export const TutorCard: React.FC = () => {
             padding={isDesktop ? '1.5em 5em 1.5em 3em' : '1em 1em 1em 1em'}
             direction={isDesktop ? 'row' : 'column'}
           >
-            <Flex direction={'column'} align={'center'}>
-              <Avatar
-                w={'10em'}
-                h={'10em'}
-                margin={'0 0 10px 0'}
-                colorScheme={'blue'}
-                showBorder
-              ></Avatar>
-              <Button
-                size={'xs'}
-                colorScheme={'blue'}
-                margin={isDesktop ? '0 0 0 0' : '0 0 1.5em 0'}
-              >
-                Изменить фото
-              </Button>
-            </Flex>
+            <AvatarSection />
             <Flex
               width={'100%'}
               align={'left'}

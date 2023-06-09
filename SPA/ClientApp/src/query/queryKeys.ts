@@ -9,3 +9,4 @@ export const studentKey = 'student';
 export const lessonsKey = 'lessons';
 export const locationsKey = 'locations';
 export const subjectsKey = 'subjects';
+export const avatarKey = 'avatar';
