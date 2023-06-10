@@ -1,14 +1,12 @@
-﻿#nullable enable
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using MediatR;
+using SPA.Domain;
 using SPA.Repositories;
 
 namespace SPA.Application.Students.Queries.GetStudentsQuery;
 
-using Domain;
-
 [UsedImplicitly]
-public class GetStudentsQueryHandler : IRequestHandler<GetStudentsQuery, Page<Student>>
+internal class GetStudentsQueryHandler : IRequestHandler<GetStudentsQuery, Page<Student>>
 {
     private readonly IStudentsRepository repository;
 

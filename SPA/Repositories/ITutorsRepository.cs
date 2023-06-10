@@ -4,11 +4,11 @@ using Domain;
 
 #nullable enable
 
-public interface ITutorsRepository
+internal interface ITutorsRepository
 {
-    Task<Page<Tutor>> GetPageAsync(int page, int size, string subject, string city, string district, int maxPrice, int rating);
     Task<Tutor?> GetAsync(Guid id);
-    Task<Tutor?> Update(Guid id, UpdateTutor tutor);
-    Task<Tutor?> Insert(Tutor tutor);
-    Task<Page<Review>> GetTutorReviews(Guid tutorId, int page, int size);
+    Task<Page<Tutor>> GetPageAsync(int page, int size, string? subject, string? city, string? district, int? maxPrice, int? rating);
+    Task<Tutor?> InsertAsync(Tutor tutor);
+    Task<Tutor?> UpdateAsync(Guid id, UpdateTutor tutor);
+    Task<Page<Review>> GetTutorReviewsAsync(Guid tutorId, int page, int size);
 }

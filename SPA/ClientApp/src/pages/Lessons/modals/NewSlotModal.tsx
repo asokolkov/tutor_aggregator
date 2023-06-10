@@ -28,6 +28,7 @@ import {
   InputTime,
 } from '../components/LessonCalendarTab/ModalInputs';
 import { useNewSlotModalSubmit } from '../hooks/useNewSlotModalSubmit';
+import { ErrorElement } from '../../../components/Errors/ErrorElement';
 
 type Props = {
   disclosure: DisclosureProps;
@@ -35,11 +36,17 @@ type Props = {
 };
 
 export const NewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
-  const { isOpen, onClose } = disclosure;
   const queryClient = useQueryClient();
 
-  const { onSubmit, isSubmitLoading, formErrorMessage } =
-    useNewSlotModalSubmit(date);
+  const {
+    isOpen,
+    onSubmit,
+    isSubmitLoading,
+    formErrorMessage,
+    isError,
+    requestErrorMessage,
+    resetModalAndClose,
+  } = useNewSlotModalSubmit(date, disclosure);
 
   const { initValues } = useFormikValues();
 
@@ -49,13 +56,12 @@ export const NewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
   });
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal isOpen={isOpen} onClose={resetModalAndClose} isCentered>
       <ModalOverlay />
       <ModalContent>
         <Formik
           onSubmit={(v: SlotInputValuesProps) => {
             mutation.mutate(v);
-            onClose();
           }}
           initialValues={initValues}
         >
@@ -94,12 +100,13 @@ export const NewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
               >
                 Добавить
               </Button>
-              <Button variant="ghost" onClick={onClose}>
+              <Button variant="ghost" onClick={resetModalAndClose}>
                 Отмена
               </Button>
             </ModalFooter>
           </Form>
         </Formik>
+        {isError && <ErrorElement message={requestErrorMessage} />}
       </ModalContent>
     </Modal>
   );

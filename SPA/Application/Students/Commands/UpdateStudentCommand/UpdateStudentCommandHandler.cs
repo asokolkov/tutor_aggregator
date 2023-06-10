@@ -9,7 +9,7 @@ namespace SPA.Application.Students.Commands.UpdateStudentCommand;
 using Domain;
 
 [UsedImplicitly]
-public class UpdateStudentCommandHandler : IRequestHandler<UpdateStudentCommand, Student?> 
+internal class UpdateStudentCommandHandler : IRequestHandler<UpdateStudentCommand, Student?> 
 {
     private readonly IStudentsRepository repository;
     
@@ -20,6 +20,6 @@ public class UpdateStudentCommandHandler : IRequestHandler<UpdateStudentCommand,
     
     public async Task<Student?> Handle(UpdateStudentCommand request, CancellationToken cancellationToken)
     {
-        return await repository.Update(request.StudentId, request.Student);
+        return await repository.UpdateAsync(request.StudentId, request.Student);
     }
 }

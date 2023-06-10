@@ -8,6 +8,8 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace SPA.V1.Controllers;
 
+using DataModels;
+
 [ApiController]
 [Route("api/v1/avatars")]
 public sealed class V1AvatarsController : ControllerBase
@@ -26,20 +28,25 @@ public sealed class V1AvatarsController : ControllerBase
     {
         var query = new GetAvatarQuery(id);
         var image = await mediator.Send(query);
-        return image is null ? NotFound(id) : Ok(image);
+        
+        return image is null ? NotFound(id) : File(image, "image/jpeg");
     }
 
     [HttpPost]
     [RequestSizeLimit(4 * 1024 * 1024)]
     [SwaggerResponse(401, "Unauthorized")]
     [SwaggerResponse(200, "OK")]
-    public async Task<IActionResult> Create([FromBody] byte[] image)
+    public async Task<IActionResult> Create([FromForm] V1CreateAvatarDto createAvatarDto)
     {
         var userId = User.GetId();
         if (userId is null)
-            return Unauthorized();
+            return Unauthorized();  
 
-        var query = new InsertAvatarCommand(userId.Value, image);
-        return Ok(await mediator.Send(query));
+        using var stream = new MemoryStream();
+        await createAvatarDto.Avatar.CopyToAsync(stream);
+        
+        var query = new InsertAvatarCommand(userId.Value, stream.ToArray());
+        await mediator.Send(query);
+        return Ok();
     }
 }

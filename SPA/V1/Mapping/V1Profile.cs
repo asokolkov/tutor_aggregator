@@ -15,12 +15,14 @@ internal sealed class V1Profile : Profile
 
         CreateMap<LessonEntity, Lesson>().ReverseMap();
         CreateMap<Lesson, V1LessonDto>().ReverseMap();
+        CreateMap<Page<Lesson>, V1PageDto<V1LessonDto>>().ReverseMap();
 
         CreateMap<Tutor, V1TutorInfoDto>().ReverseMap();
         CreateMap<Student, V1StudentInfoDto>().ReverseMap();
         
         CreateMap<LocationEntity, Location>().ReverseMap();
         CreateMap<Location, V1LocationDto>().ReverseMap();
+        CreateMap<Page<Location>, V1PageDto<V1LocationDto>>().ReverseMap();
         
         CreateMap<ReviewEntity, Review>().ReverseMap();
         CreateMap<Review, V1ReviewDto>().ForMember(dest => 
@@ -34,6 +36,7 @@ internal sealed class V1Profile : Profile
         
         CreateMap<SubjectEntity, Subject>().ReverseMap();
         CreateMap<Subject, V1SubjectDto>().ReverseMap();
+        CreateMap<Page<Subject>, V1PageDto<V1SubjectDto>>().ReverseMap();
         
         CreateMap<TutorContactEntity, TutorContact>().ReverseMap();
         CreateMap<TutorContact, V1TutorContactDto>().ReverseMap();
@@ -44,8 +47,8 @@ internal sealed class V1Profile : Profile
         CreateMap<User, V1UserDto>();
 
         CreateMap<V1UpdateTutorDto, UpdateTutor>();
-        CreateMap<UpdateTutor, TutorEntity>();
-        
+        CreateMap<UpdateTutor, TutorEntity>().ReverseMap();
+
         CreateMap<V1UpdateStudentDto, UpdateStudent>();
         CreateMap<UpdateStudent, StudentEntity>();
         

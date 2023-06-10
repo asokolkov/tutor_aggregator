@@ -1,10 +1,14 @@
 import * as React from 'react';
-import { Flex, Image, useMediaQuery } from '@chakra-ui/react';
+import { Flex, Image, useBreakpointValue } from '@chakra-ui/react';
 import illustration from '../../../assets/images/mainpage_illustration1.png';
 import { StudentDescriptionText } from './StudentDescriptionText';
 
 export const MainDescriptionForStudents: React.FC = () => {
-  const [isLargerThanTablet] = useMediaQuery('(min-width: 768px)');
+  const isLargerThanTablet = useBreakpointValue(
+    { base: false, lg: true },
+    { ssr: false, fallback: 'lg' }
+  );
+
   return (
     <Flex
       direction={isLargerThanTablet ? 'row' : 'column'}

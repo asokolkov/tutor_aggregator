@@ -17,9 +17,9 @@ import { ProfilePageProps, TooltipType } from './_shared';
 import { ProfileTip } from './ProfileTip';
 
 type Props = ProfilePageProps & {
-  options: Array<string>;
+  options: string[];
   label: string;
-  checkedOptions: Array<string>;
+  checkedOptions: string[];
 };
 
 export const CheckboxesRow: React.FC<Props> = (props) => {
@@ -29,7 +29,7 @@ export const CheckboxesRow: React.FC<Props> = (props) => {
     </Checkbox>
   ));
   return (
-    <Flex width={'100%'} margin={'0 0 10px 0'}>
+    <Flex width={'100%'}>
       <FormControl
         display={'flex'}
         alignItems={'center'}

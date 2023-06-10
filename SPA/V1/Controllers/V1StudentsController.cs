@@ -33,31 +33,26 @@ public sealed class V1StudentsController : Controller
     [HttpGet("{id:guid}")]
     [SwaggerResponse(200, "OK", typeof(V1StudentDto))]
     [SwaggerResponse(404, "NotFound")]
-    public async Task<IActionResult> Get(Guid id)
+    public async Task<IActionResult> GetAsync(Guid id)
     {
         var query = new GetStudentQuery(id);
         var model = await mediator.Send(query);
         return model is not null ? Ok(mapper.Map<V1StudentDto>(model)) : NotFound();
     }
 
-    [HttpGet(Name = nameof(GetPage))]
+    [HttpGet(Name = nameof(GetStudentsPageAsync))]
     [SwaggerResponse(200, "OK", typeof(V1PageDto<V1StudentDto>))]
-    public async Task<IActionResult> GetPage([FromQuery] int page = 0, [FromQuery] int size = 30)
+    public async Task<IActionResult> GetStudentsPageAsync([FromQuery] int page = 0, [FromQuery] int size = 30)
     {
-        if (page < 0)
-            return BadRequest("Page must not be less than 0");
-        if (size < 1)
-            return BadRequest("Size must not be less than 1");
-
         var query = new GetStudentsQuery(page, size);
         var modelsPage = await mediator.Send(query);
         
         var previousPageLink = modelsPage.HasPrevious 
-            ? linkGenerator.GetUriByRouteValues(HttpContext, nameof(GetPage), new { pageNumber = page - 1, size }) 
+            ? linkGenerator.GetUriByRouteValues(HttpContext, nameof(GetStudentsPageAsync), new { pageNumber = page - 1, size }) 
             : null;
         
         var nextPageLink = modelsPage.HasNext 
-            ? linkGenerator.GetUriByRouteValues(HttpContext, nameof(GetPage), new { pageNumber = page + 1, size }) 
+            ? linkGenerator.GetUriByRouteValues(HttpContext, nameof(GetStudentsPageAsync), new { pageNumber = page + 1, size }) 
             : null;
         
         var paginationHeader = new { previousPageLink, nextPageLink };
@@ -70,16 +65,15 @@ public sealed class V1StudentsController : Controller
     [SwaggerResponse(200, "OK", typeof(V1StudentDto))]
     [SwaggerResponse(401, "Unauthorized")]
     [SwaggerResponse(404, "NotFound")]
-    public async Task<IActionResult> Update([FromBody] V1UpdateStudentDto old)
+    public async Task<IActionResult> UpdateAsync([FromBody] V1UpdateStudentDto old)
     {
         var userId = User.GetId();
         if (userId is null)
             return Unauthorized();
-        
-        var updateStudent = mapper.Map<UpdateStudent>(old);
-        
-        var query = new UpdateStudentCommand(userId.Value, updateStudent);
+
+        var query = new UpdateStudentCommand(userId.Value, mapper.Map<UpdateStudent>(old));
         var model = await mediator.Send(query);
+        
         return model is not null ? Ok(mapper.Map<V1StudentDto>(model)) : NotFound();
     }
 
@@ -87,14 +81,17 @@ public sealed class V1StudentsController : Controller
     [HttpGet("profile")]
     [SwaggerResponse(200, "OK", typeof(V1StudentDto))]
     [SwaggerResponse(401, "Unauthorized")]
-    public async Task<IActionResult> GetStudentProfile()
+    [SwaggerResponse(404, "NotFound")]
+    public async Task<IActionResult> GetProfileAsync()
     {
         var userId = User.GetId();
         if (userId is null)
             return Unauthorized();
-        var getStudentQuery = new GetStudentQuery(userId.Value);
-        var student = await mediator.Send(getStudentQuery);
-        return Ok(mapper.Map<V1StudentDto>(student));
+        
+        var query = new GetStudentQuery(userId.Value);
+        var model = await mediator.Send(query);
+        
+        return model is not null ? Ok(mapper.Map<V1StudentDto>(model)) : NotFound();
     }
 
     [Authorize]
@@ -106,9 +103,11 @@ public sealed class V1StudentsController : Controller
         var userId = User.GetId();
         if (userId is null)
             return Unauthorized();
-        var getStudentLessonsQuery = new GetStudentLessonsQuery(userId.Value);
-        var lessons = await mediator.Send(getStudentLessonsQuery);
-        return Ok(mapper.Map<ICollection<V1LessonDto>>(lessons));
+        
+        var query = new GetStudentLessonsQuery(userId.Value);
+        var models = await mediator.Send(query);
+        
+        return Ok(mapper.Map<ICollection<V1LessonDto>>(models));
     }
     
     [Authorize]
@@ -120,8 +119,10 @@ public sealed class V1StudentsController : Controller
         var userId = User.GetId();
         if (userId is null)
             return Unauthorized();
-        var getStudentLessonsQuery = new GetStudentLessonsQuery(userId.Value);
-        var lessons = await mediator.Send(getStudentLessonsQuery);
-        return Ok(mapper.Map<ICollection<V1LessonDto>>(lessons));
+        
+        var query = new GetStudentLessonsQuery(userId.Value);
+        var models = await mediator.Send(query);
+        
+        return Ok(mapper.Map<ICollection<V1LessonDto>>(models));
     }
 }

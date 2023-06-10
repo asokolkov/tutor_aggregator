@@ -22,6 +22,8 @@ internal class InsertAvatarCommandHandler : IRequestHandler<InsertAvatarCommand,
             Id = request.Id,
             Image = request.Image
         };
+        
+        
         return await repository.InsertAsync(avatar);
     }
 }

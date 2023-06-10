@@ -13,7 +13,7 @@ type Props = ProfilePageProps & {
 export const InputRow: React.FC<Props> = (props) => {
   const [field] = useField({ name: props.name });
   return (
-    <Flex width={'100%'} margin={'0 0 10px 0'} align={'center'}>
+    <Flex width={'100%'} align={'center'}>
       <FormControl
         display={'flex'}
         alignItems={'center'}

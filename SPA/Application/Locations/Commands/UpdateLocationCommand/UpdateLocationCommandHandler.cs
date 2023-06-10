@@ -1,4 +1,5 @@
 ﻿#nullable enable
+
 using JetBrains.Annotations;
 using MediatR;
 using SPA.Repositories;
@@ -19,6 +20,6 @@ internal class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationComm
 
     public async Task<Location?> Handle(UpdateLocationCommand request, CancellationToken cancellationToken)
     {
-        return await repository.Update(request.Element);
+        return await repository.UpdateAsync(request.Element);
     }
 }

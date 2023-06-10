@@ -1,10 +1,9 @@
 ﻿using JetBrains.Annotations;
 using MediatR;
+using SPA.Domain;
 using SPA.Repositories;
 
 namespace SPA.Application.Tutors.Queries.GetTutorsQuery;
-
-using Domain;
 
 [UsedImplicitly]
 internal class GetTutorsQueryHandler : IRequestHandler<GetTutorsQuery, Page<Tutor>>

@@ -1,4 +1,6 @@
-﻿namespace SPA.Repositories.Impl;
+﻿#nullable enable
+
+namespace SPA.Repositories.Impl;
 
 using AutoMapper;
 using Domain;
@@ -17,6 +19,11 @@ internal sealed class LocationsRepository : ILocationsRepository
         this.mapper = mapper;
     }
 
+    public async Task<Location?> GetAsync(Guid id)
+    {
+        return mapper.Map<Location>(await context.Locations.FindAsync(id));
+    }
+    
     public async Task<List<Location>> GetAsync()
     {
         var entities = await context.Locations
@@ -24,25 +31,20 @@ internal sealed class LocationsRepository : ILocationsRepository
             .ToListAsync();
         return mapper.Map<List<Location>>(entities);
     }
-
-    public async Task<Location> Get(Guid id)
+    
+    public async Task<Location?> InsertAsync(Location location)
     {
-        return mapper.Map<Location>(await context.Locations.FindAsync(id));
+        var entity = mapper.Map<LocationEntity>(location);
+        var entry = await context.Locations.AddAsync(entity);
+        await context.SaveChangesAsync();
+        return mapper.Map<Location>(entry.Entity);
     }
 
-    public async Task<Location> Update(Location location)
+    public async Task<Location?> UpdateAsync(Location location)
     {
-        var tutorEntity = mapper.Map<LocationEntity>(location);
-        var entityEntry = context.Locations.Update(tutorEntity);
+        var entity = mapper.Map<LocationEntity>(location);
+        var entry = context.Locations.Update(entity);
         await context.SaveChangesAsync();
-        return mapper.Map<Location>(entityEntry.Entity);
-    }
-
-    public async Task<Location> Insert(Location location)
-    {
-        var tutorEntity = mapper.Map<LocationEntity>(location);
-        var entityEntry = await context.Locations.AddAsync(tutorEntity);
-        await context.SaveChangesAsync();
-        return mapper.Map<Location>(entityEntry.Entity);
+        return mapper.Map<Location>(entry.Entity);
     }
 }

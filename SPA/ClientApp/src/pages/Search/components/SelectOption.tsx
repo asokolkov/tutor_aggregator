@@ -21,7 +21,7 @@ export const SelectOption: React.FC<SelectOptionsProps> = ({
       <FormLabel
         fontSize={'md'}
         margin={isDesktop ? '0 0 2px 0' : '0 2px 0 0'}
-        width={isDesktop ? 'auto' : '130px'}
+        width={isDesktop ? 'auto' : '150px'}
       >
         {label}
       </FormLabel>
@@ -45,7 +45,7 @@ export const SelectOption: React.FC<SelectOptionsProps> = ({
 
 type SelectOptionsProps = {
   options: string[];
-  optionsMap?: { [index: string]: number };
+  optionsMap?: { [index: string]: string };
   label: string;
   name: string;
   placeholder?: string;

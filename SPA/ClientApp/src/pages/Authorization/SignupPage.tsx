@@ -1,10 +1,9 @@
 import {
+  Alert,
+  AlertIcon,
   Box,
   Button,
-  Checkbox,
   Flex,
-  HStack,
-  Link,
   Stack,
   VStack,
 } from '@chakra-ui/react';
@@ -56,21 +55,17 @@ export const SignupPage = () => {
                     <EmailField />
                     <PasswordField />
                   </AuthorizationContext.Provider>
+                  <Alert status="info">
+                    <AlertIcon />
+                    Телефон и почта будут видны остальным пользователям.
+                  </Alert>
                 </Stack>
-                <HStack justify="space-between">
-                  <Checkbox>
-                    Принимаю{' '}
-                    <Link color="teal.500" href="#">
-                      условия сервиса
-                    </Link>
-                  </Checkbox>
-                </HStack>
                 <Stack spacing="6">
                   <Button
                     variant={ButtonVariant.green}
                     size={'lg'}
-                    colorScheme={'blue'}
                     type="submit"
+                    marginTop={'30px'}
                   >
                     Зарегистрироваться
                   </Button>

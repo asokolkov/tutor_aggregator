@@ -33,23 +33,46 @@ internal sealed class LessonsRepository : ILessonsRepository
         return mapper.Map<ICollection<Lesson>>(entities);
     }
 
-    public async Task<ICollection<Lesson>> GetTutorLessonsAsync(Guid tutorId, DateTimeOffset date)
+    public async Task<ICollection<Lesson>> GetTutorLessonsAsync(Guid tutorId, DateTimeOffset dateTime)
     {
-        var zeroTimeZoneDate = date.ToOffset(TimeSpan.Zero).UtcDateTime.Date;
+        var startDate = dateTime.ToOffset(TimeSpan.Zero);
+        var endDate = startDate.Add(new TimeSpan(24, 0, 0));
 
         var entities = await context.Lessons
             .Where(e => 
                 e.Tutor.Id == tutorId && 
-                e.Start.UtcDateTime.Date == zeroTimeZoneDate &&
-                (e.Status == LessonStatus.Empty || e.Status == LessonStatus.Booked))
+                DateTimeOffset.Compare(startDate, e.Start) < 0 &&
+                DateTimeOffset.Compare(endDate, e.End) > 0 &&
+                e.Status != LessonStatus.Deleted)
             .ToListAsync();
         var models = mapper.Map<ICollection<Lesson>>(entities);
 
-        foreach (var model in models)
-        {
-            model.Start = model.Start.ToOffset(date.Offset);
-            model.End = model.End.ToOffset(date.Offset);
-        }
+        return models;
+    }
+
+    public async Task<ICollection<Lesson>> GetTutorLessonsAsync(Guid tutorId, DateTimeOffset start, DateTimeOffset end)
+    {
+        var entities = await context.Lessons
+            .Where(e => 
+                e.Tutor.Id == tutorId && 
+                DateTimeOffset.Compare(start, e.Start) < 0 &&
+                DateTimeOffset.Compare(end, e.End) > 0 &&
+                e.Status != LessonStatus.Deleted)
+            .ToListAsync();
+        var models = mapper.Map<ICollection<Lesson>>(entities);
+
+        return models;
+    }
+
+    public async Task<ICollection<Lesson>> GetTutorLessonsAsync(Guid tutorId)
+    {
+        var entities = await context.Lessons
+            .Where(e => 
+                e.Tutor.Id == tutorId && 
+                e.Status != LessonStatus.Empty &&
+                e.Status != LessonStatus.ExpiredEmpty)
+            .ToListAsync();
+        var models = mapper.Map<ICollection<Lesson>>(entities);
 
         return models;
     }
@@ -63,9 +86,9 @@ internal sealed class LessonsRepository : ILessonsRepository
         var lessonEntity = mapper.Map<LessonEntity>(lesson);
         lessonEntity.Tutor = tutorEntity;
         
-        await context.Lessons.AddAsync(lessonEntity);
+        var entry = await context.Lessons.AddAsync(lessonEntity);
         await context.SaveChangesAsync();
-        return mapper.Map<Lesson>(lessonEntity);
+        return mapper.Map<Lesson>(entry.Entity);
     }
 
     public async Task<Lesson?> MakeBookedAsync(Guid studentId, Guid lessonId)
@@ -90,7 +113,8 @@ internal sealed class LessonsRepository : ILessonsRepository
         var lesson = await context.Lessons.FindAsync(id);
         if (lesson is null || (lesson.Status != LessonStatus.Empty && lesson.Status != LessonStatus.Booked))
             return null;
-        
+        //note: не нашел где используется и как это удаление, тут проблема можнет быть в том, что этот фильтр теперь нужно накладывать на все записи
+        //note: есть идея перекладывать в служебную табоичку
         lesson.Status = LessonStatus.Deleted;
 
         await context.SaveChangesAsync();
@@ -100,6 +124,7 @@ internal sealed class LessonsRepository : ILessonsRepository
     public async Task<Lesson?> MakeEmptyAsync(Guid id)
     {
         var lesson = await context.Lessons.FindAsync(id);
+        //note: кажется проверка статуса здесь это доменная логика, а не репозиторная
         if (lesson is null || lesson.Status != LessonStatus.Booked)
             return null;
         

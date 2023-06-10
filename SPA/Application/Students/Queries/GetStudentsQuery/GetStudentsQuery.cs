@@ -1,8 +1,6 @@
-﻿#nullable enable
-using MediatR;
+﻿using MediatR;
+using SPA.Domain;
 
 namespace SPA.Application.Students.Queries.GetStudentsQuery;
 
-using Domain;
-
-public record GetStudentsQuery(int PageNumber, int PageSize) : IRequest<Page<Student>>;
+internal record GetStudentsQuery(int PageNumber, int PageSize) : IRequest<Page<Student>>;
