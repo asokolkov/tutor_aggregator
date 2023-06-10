@@ -16,6 +16,7 @@ using Domain;
 using EFCore.Postgres.Extensions;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Repositories;
 using Repositories.Impl;
@@ -66,6 +67,7 @@ internal static class ServiceCollectionExtensions
             .AddScoped<IAuthorizationHandler, CreateReviewAuthorizationHandler>();
 
         services.AddMediatR();
+        services.AddSingleton<ISystemClock, SystemClock>();
     }
 
     private static IServiceCollection AddMediatR(this IServiceCollection services)
