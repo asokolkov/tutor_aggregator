@@ -12,11 +12,9 @@ using System.Reflection;
 using Application.Behaviors;
 using Application.Tutors.Queries.GetReviewsQuery;
 using Authorization;
-using Domain;
 using EFCore.Postgres.Extensions;
 using FluentValidation;
 using MediatR;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Internal;
 using Repositories;
@@ -71,7 +69,7 @@ internal static class ServiceCollectionExtensions
         services.AddSingleton<ISystemClock, SystemClock>();
     }
 
-    private static IServiceCollection AddMediatR(this IServiceCollection services)
+    private static void AddMediatR(this IServiceCollection services)
     {
         var assembly = Assembly.GetCallingAssembly();
 
@@ -85,7 +83,5 @@ internal static class ServiceCollectionExtensions
             if (validatorInterface != null)
                 services.AddScoped(validatorInterface, type);
         }
-        
-        return services;
     }
 }
