@@ -19,6 +19,8 @@ import {
   MdAssignment,
 } from 'react-icons/md';
 import { V1ContactsDto } from '../../api/models';
+import { getAvatarUri } from '../../utils/helper';
+import { ContactModalContext } from '../../components/ContactsModal/contexts/ContactModalContext';
 
 export const Card: React.FC<CardInfoProps> = (props) => {
   const providerValue = useMemo(() => ({ ...props }), [props]);
@@ -44,7 +46,11 @@ export const Card: React.FC<CardInfoProps> = (props) => {
             isLargerThanTablet ? '10px 10px 10px 5vw' : '20px 10px 0 10px'
           }
         >
-          <Avatar name={props.fullName} size={'2xl'} />
+          <Avatar
+            name={props.fullName}
+            size={'2xl'}
+            src={getAvatarUri(props.id)}
+          />
         </Box>
         <VStack
           spacing="8px"
@@ -100,7 +106,9 @@ export const Card: React.FC<CardInfoProps> = (props) => {
               categoryText={'Требования'}
               text={props.requirements}
             />
-            <ButtonSection />
+            <ContactModalContext.Provider value={{ contacts: props.contacts }}>
+              <ButtonSection />
+            </ContactModalContext.Provider>
           </VStack>
         </VStack>
       </VStack>

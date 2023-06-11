@@ -17,7 +17,7 @@ function useStudentQuery() {
   });
 }
 
-export function useProfileInfo(accountType: V1AccountTypeDto) {
+export function useProfileQuery(accountType: V1AccountTypeDto) {
   const isTutor = accountType === V1AccountTypeDto.tutor;
   let isLoading: boolean;
   let tutorProfile: V1TutorDto;

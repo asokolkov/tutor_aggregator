@@ -19,7 +19,7 @@ import {
   SlotInputValuesProps,
   useFormikValues,
 } from '../hooks/useFormikValues';
-import { lessonsKey } from '../../../query/queryKeys';
+import { lessonsByDateKey } from '../../../query/queryKeys';
 import { getDayAndMonthFromDate } from '../../../utils/datetime';
 import { DisclosureProps } from '../../../components/disclosureProps';
 import {
@@ -28,6 +28,7 @@ import {
   InputTime,
 } from '../components/LessonCalendarTab/ModalInputs';
 import { useNewSlotModalSubmit } from '../hooks/useNewSlotModalSubmit';
+import { ErrorElement } from '../../../components/Errors/ErrorElement';
 
 type Props = {
   disclosure: DisclosureProps;
@@ -35,27 +36,32 @@ type Props = {
 };
 
 export const NewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
-  const { isOpen, onClose } = disclosure;
   const queryClient = useQueryClient();
 
-  const { onSubmit, isSubmitLoading, formErrorMessage } =
-    useNewSlotModalSubmit(date);
+  const {
+    isOpen,
+    onSubmit,
+    isSubmitLoading,
+    formErrorMessage,
+    isError,
+    requestErrorMessage,
+    resetModalAndClose,
+  } = useNewSlotModalSubmit(date, disclosure);
 
   const { initValues } = useFormikValues();
 
   const mutation = useMutation({
     mutationFn: onSubmit,
-    onSuccess: () => queryClient.invalidateQueries([lessonsKey]),
+    onSuccess: () => queryClient.invalidateQueries([lessonsByDateKey]),
   });
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal isOpen={isOpen} onClose={resetModalAndClose} isCentered>
       <ModalOverlay />
       <ModalContent>
         <Formik
           onSubmit={(v: SlotInputValuesProps) => {
             mutation.mutate(v);
-            onClose();
           }}
           initialValues={initValues}
         >
@@ -75,7 +81,7 @@ export const NewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
                   <InputTime label="Конец" placeholder="10:30" name="endTime" />
                   <InputNumber
                     label="₽ / час"
-                    placeholder="1000 ₽"
+                    placeholder="1000"
                     name="price"
                   />
                   <InputSwitch label="Онлайн" name="isOnline" />
@@ -85,21 +91,21 @@ export const NewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
                 </FormErrorMessage>
               </FormControl>
             </ModalBody>
-
             <ModalFooter>
               <Button
+                variant="ghost"
                 colorScheme="blue"
-                type="submit"
-                isLoading={isSubmitLoading}
+                onClick={resetModalAndClose}
               >
-                Добавить
-              </Button>
-              <Button variant="ghost" onClick={onClose}>
                 Отмена
+              </Button>
+              <Button type="submit" isLoading={isSubmitLoading}>
+                Добавить
               </Button>
             </ModalFooter>
           </Form>
         </Formik>
+        {isError && <ErrorElement message={requestErrorMessage} />}
       </ModalContent>
     </Modal>
   );

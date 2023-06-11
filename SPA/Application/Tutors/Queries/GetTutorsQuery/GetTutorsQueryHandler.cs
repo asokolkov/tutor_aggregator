@@ -1,10 +1,9 @@
 ﻿using JetBrains.Annotations;
 using MediatR;
+using SPA.Domain;
 using SPA.Repositories;
 
 namespace SPA.Application.Tutors.Queries.GetTutorsQuery;
-
-using Domain;
 
 [UsedImplicitly]
 internal class GetTutorsQueryHandler : IRequestHandler<GetTutorsQuery, Page<Tutor>>
@@ -18,7 +17,7 @@ internal class GetTutorsQueryHandler : IRequestHandler<GetTutorsQuery, Page<Tuto
 
     public async Task<Page<Tutor>> Handle(GetTutorsQuery request, CancellationToken cancellationToken)
     {
-        return await repository.GetAsync(request.PageNumber, request.PageSize, request.Subject, 
-            request.City, request.District, request.MaxPrice, request.Rating);
+        return await repository.GetPageAsync(request.PageNumber, request.PageSize, request.Subject, 
+            request.City, request.District, request.MaxPrice, request.Rating, request.LessonsType);
     }
 }

@@ -24,11 +24,13 @@ import { LessonsPage } from '../pages/Lessons';
 import { TutorBookPage } from '../pages/TutorBook';
 import { SuccessfulAppointmentPage } from '../pages/SuccessAppointment';
 import { MainPage } from '../pages/Main';
+import { ErrorPage } from '../components/Errors/ErrorPage';
 
 const router = createBrowserRouter([
   {
     path: DEFAULT_LAYOUT,
     element: <BaseLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: MAIN_PAGE,

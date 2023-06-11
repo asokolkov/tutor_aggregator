@@ -21,4 +21,7 @@ public class V1TutorInfoDto
     
     [JsonProperty("educations")]
     public IReadOnlyCollection<V1TutorEducationDto> Educations { get; init; }
+    
+    [JsonProperty("contacts")]
+    public IReadOnlyCollection<V1TutorContactDto> Contacts { get; init; }
 }

@@ -8,7 +8,7 @@ type Props = {
 
 export const TextRow: React.FC<Props> = (props) => {
   return (
-    <Flex margin={'0 0 10px 0'}>
+    <Flex>
       <FormControl display={'flex'}>
         <FormLabel
           fontSize={'xl'}

@@ -11,8 +11,9 @@ import {
 import { ModalFooterProps } from './ModalFooter';
 import { DisclosureProps } from '../disclosureProps';
 import { useMutation, useQueryClient } from 'react-query';
-import { SlotContext } from '../Slot/contexts/SlotContext';
-import { lessonsKey } from '../../query/queryKeys';
+import { allLessonsKey, lessonsByDateKey } from '../../query/queryKeys';
+import { ErrorElement } from '../Errors/ErrorElement';
+import { ModalContext } from '../Slot/contexts/ModalContext';
 
 type Props = {
   disclosure: DisclosureProps;
@@ -21,25 +22,36 @@ type Props = {
 export function modal(
   BodyComponent: React.FC,
   FooterComponent: React.FC<ModalFooterProps>,
-  onSubmit: (lessonId: string) => void,
+  onSubmit: (lessonId: string) => Promise<void>,
   modalTitle: string
 ): React.FC<Props> {
   return ({ disclosure }) => {
     const { isOpen, onClose } = disclosure;
+    const { data } = useContext(ModalContext);
     const [isSubmitLoading, setSubmitLoading] = useState(false);
+    const [isError, setError] = useState(false);
+
     const queryClient = useQueryClient();
-    const { lessonId } = useContext(SlotContext);
 
     const mutationFn = async () => {
+      setError(false);
       setSubmitLoading(true);
-      await onSubmit(lessonId);
+      try {
+        await onSubmit(data.lessonId);
+        onClose();
+      } catch {
+        setError(true);
+      }
       setSubmitLoading(false);
-      onClose();
     };
 
     const mutation = useMutation({
       mutationFn,
-      onSuccess: () => queryClient.invalidateQueries([lessonsKey]),
+      onSuccess: () =>
+        Promise.all([
+          queryClient.invalidateQueries([lessonsByDateKey]),
+          queryClient.invalidateQueries([allLessonsKey]),
+        ]),
     });
 
     return (
@@ -56,6 +68,7 @@ export function modal(
             onClose={onClose}
             mutateFunction={mutation.mutate}
           />
+          {isError && <ErrorElement />}
         </ModalContent>
       </Modal>
     );

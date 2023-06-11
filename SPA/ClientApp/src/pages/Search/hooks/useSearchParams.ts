@@ -3,8 +3,8 @@ import { SearchStateContext } from '../../../layouts/base/contexts/SearchStateCo
 import { useSearchPageQuery } from '../../../query/useSearchPageQuery';
 export interface SearchValuesProps {
   district: string;
-  price: number;
-  rating: number;
+  price: string;
+  rating: string;
   subject: string;
 }
 
@@ -13,8 +13,8 @@ export function useSearchParams() {
   const [values, setValues] = useState<SearchValuesProps>({
     district: searchValues.district,
     subject: searchValues.subject,
-    price: -1,
-    rating: -1,
+    price: '',
+    rating: '',
   });
 
   const query = useSearchPageQuery(values);

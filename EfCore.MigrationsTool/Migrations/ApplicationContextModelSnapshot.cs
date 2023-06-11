@@ -66,8 +66,8 @@ namespace EfCore.MigrationsTool.Migrations
                     b.Property<DateTimeOffset>("End")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("double precision");
+                    b.Property<int>("Price")
+                        .HasColumnType("integer");
 
                     b.Property<DateTimeOffset>("Start")
                         .HasColumnType("timestamp with time zone");

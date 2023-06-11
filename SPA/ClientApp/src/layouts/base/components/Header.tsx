@@ -16,15 +16,14 @@ import logo from '../../../assets/images/teacher_icon.png';
 import { CitySelection } from './CitySelection';
 import { LoginButton, RegisterButton } from './HeaderButtons';
 import { HeaderMenu } from './HeaderMenu';
-import { MiniHeaderMenu } from './MiniHeaderMenu';
 import { HeaderAuthMenu } from './HeaderAuthMenu';
 
 const Header: React.FC = () => {
-  const userState = useContext(UserContext);
+  let { isAuthorized } = useContext(UserContext);
   const [isLargerThanTablet] = useMediaQuery('(min-width: 768px)');
 
   return (
-    <Container padding={'30px 5vw 30px 5vw'} as="header" maxW="100%">
+    <Container padding={'30px 0 30px 0'} as="header" maxW="100%">
       <Flex w="100%" wrap={'nowrap'} align={'center'}>
         <HStack spacing="3" justify={'left'} align={'center'} flexGrow="1">
           <Link to={MAIN_PAGE} style={{ flexShrink: '0' }}>
@@ -43,12 +42,8 @@ const Header: React.FC = () => {
             <CitySelection />
           </VStack>
         </HStack>
-        {userState.isAuthorized ? (
-          isLargerThanTablet ? (
-            <HeaderMenu />
-          ) : (
-            <MiniHeaderMenu />
-          )
+        {isAuthorized ? (
+          <HeaderMenu />
         ) : isLargerThanTablet ? (
           <HStack spacing="16px">
             <LoginButton />
