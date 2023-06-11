@@ -15,13 +15,14 @@ export const FormBody: React.FC = () => {
     <Grid
       templateAreas={
         isLargerThanTablet
-          ? `"subject district button"`
+          ? `"subject online district button"`
           : `"subject"
+                  "online"
                   "district"
                   "button"`
       }
-      gridTemplateRows={isLargerThanTablet ? 'auto' : 'auto auto auto'}
-      gridTemplateColumns={isLargerThanTablet ? '40% 40% 20%' : '100%'}
+      gridTemplateRows={isLargerThanTablet ? 'auto' : 'auto auto auto auto'}
+      gridTemplateColumns={isLargerThanTablet ? '30% 20% 30% 20%' : '100%'}
       width={isLargerThanTablet ? '80vw' : '92vw'}
       maxWidth={'1100px'}
       alignItems={'flex-end'}
@@ -42,6 +43,15 @@ export const FormBody: React.FC = () => {
           options={locationsData.map((location) => location.district)}
           name="district"
           placeholder="Любой"
+          isDesktop={isLargerThanTablet}
+        />
+      </GridItem>
+      <GridItem area={'online'}>
+        <SelectOptions
+          label={'Формат'}
+          options={['Онлайн']}
+          name="online"
+          placeholder="Офлайн"
           isDesktop={isLargerThanTablet}
         />
       </GridItem>

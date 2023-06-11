@@ -46,6 +46,8 @@ export const SearchPage = () => {
             <SearchParamsSection
               subject={values.subject}
               district={values.district}
+              // TODO: передавать реальное значение isOnline
+              isOnline={Math.random() < 0.5}
             />
           </Form>
         </Formik>

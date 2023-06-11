@@ -21,7 +21,7 @@ export const SelectOptions: React.FC<SelectOptionsProps> = ({
       <FormLabel
         variant={'misc.field-title'}
         margin={isDesktop ? '0 0 2px 0' : '0 2px 0 0'}
-        width={isDesktop ? 'auto' : '100px'}
+        width={isDesktop ? 'auto' : '95px'}
       >
         {label}
       </FormLabel>
