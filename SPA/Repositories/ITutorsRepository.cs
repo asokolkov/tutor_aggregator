@@ -5,7 +5,7 @@ using LessonType = Domain.LessonType;
 
 #nullable enable
 
-internal interface ITutorsRepository
+public interface ITutorsRepository
 {
     Task<Tutor?> GetAsync(Guid id);
     Task<Page<Tutor>> GetPageAsync(int page, int size, string? subject, string? city, string? district, int? maxPrice, int? rating, LessonType? lessonsType);

@@ -10,7 +10,7 @@ using EntityLessonType = EFCore.Postgres.Application.Models.Entities.LessonType;
 
 namespace SPA.Repositories.Impl;
 
-internal sealed class TutorsRepository : ITutorsRepository
+public sealed class TutorsRepository : ITutorsRepository
 {
     private readonly ApplicationContext context;
     private readonly IMapper mapper;
@@ -34,8 +34,8 @@ internal sealed class TutorsRepository : ITutorsRepository
             .Where(x => x.Subjects.Count > 0)
             .Where(x => city == null || x.Location == null || x.Location.City == city)
             .Where(x => district == null || x.Location == null || x.Location.District == district)
-            .Where(x => subject == null || x.Subjects.FirstOrDefault(y => y.Description == subject) != null)
             .Where(x => rating == null || x.Rating >= rating)
+            .Where(x => subject == null || x.Subjects.FirstOrDefault(y => y.Description == subject) != null)
             .Where(x => maxPrice == null || x.Lessons.Any(y => y.Price <= maxPrice))
             .Where(x => lessonsType == null || x.Lessons.Any(y => y.Type == (EntityLessonType)lessonsType))
             .ToListAsync();
