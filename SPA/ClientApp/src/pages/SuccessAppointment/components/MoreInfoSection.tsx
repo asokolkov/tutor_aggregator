@@ -2,7 +2,6 @@ import { Text, VStack, HStack, Link } from '@chakra-ui/react';
 import React from 'react';
 import { Link as DomLink, useSearchParams } from 'react-router-dom';
 import { LESSONS_PAGE } from '../../../routes/routePaths';
-import { Color } from '../../../assets/theme/themeEnum';
 
 export const MoreInfoSection: React.FC = () => {
   const [search] = useSearchParams();
