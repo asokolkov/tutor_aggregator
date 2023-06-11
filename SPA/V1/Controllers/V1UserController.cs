@@ -26,15 +26,16 @@ public sealed class V1UserController : ControllerBase
     [HttpGet("current")]
     [SwaggerResponse(200, "OK", typeof(V1UserDto))]
     [SwaggerResponse(401, "Unauthorized")]
+    [SwaggerResponse(404, "NotFound")]
     public async Task<IActionResult> GetCurrentUserAsync()
     {
         var userId = User.GetId();
         if (userId is null)
             return Unauthorized();
-        var getUserQuery = new GetUserQuery(userId.Value);
-        var user = await mediator.Send(getUserQuery);
-        if (user is null)
-            return NotFound();
-        return Ok(mapper.Map<V1UserDto>(user));
+        
+        var query = new GetUserQuery(userId.Value);
+        var model = await mediator.Send(query);
+        
+        return model is not null ? Ok(mapper.Map<V1UserDto>(model)) : NotFound();
     }
 }

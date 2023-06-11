@@ -1,4 +1,5 @@
 ﻿#nullable enable
+
 using MediatR;
 
 namespace SPA.Application.Locations.Commands.UpdateLocationCommand;

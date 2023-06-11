@@ -15,7 +15,7 @@ public sealed class StudentEntity
     public StudentEducationEntity? Education { get; set; }
 
     public ICollection<StudentContactEntity> Contacts { get; set; }
-
+    //note: вряд ли это окей с точки зрения производительности всегда доставать все уроки  
     public ICollection<LessonEntity> Lessons { get; init; }
 
     public ICollection<ReviewEntity> Reviews { get; init; }

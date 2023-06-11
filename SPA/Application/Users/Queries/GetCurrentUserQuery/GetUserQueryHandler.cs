@@ -1,11 +1,11 @@
-﻿using JetBrains.Annotations;
+﻿#nullable enable
+
+using JetBrains.Annotations;
 using MediatR;
 using SPA.Domain;
 using SPA.Repositories;
 
 namespace SPA.Application.Users.Queries.GetCurrentUserQuery;
-
-#nullable enable
 
 [UsedImplicitly]
 internal sealed class GetUserQueryHandler : IRequestHandler<GetUserQuery, User?>

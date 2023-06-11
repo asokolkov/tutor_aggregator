@@ -1,8 +1,8 @@
-﻿using JetBrains.Annotations;
+﻿#nullable enable
+
+using JetBrains.Annotations;
 using MediatR;
 using SPA.Repositories;
-
-#nullable enable
 
 namespace SPA.Application.Tutors.Commands.UpdateTutorCommand;
 
@@ -20,6 +20,6 @@ internal class UpdateTutorCommandHandler : IRequestHandler<UpdateTutorCommand, T
 
     public async Task<Tutor?> Handle(UpdateTutorCommand request, CancellationToken cancellationToken)
     {
-        return await repository.Update(request.TutorId, request.Tutor);
+        return await repository.UpdateAsync(request.TutorId, request.Tutor);
     }
 }

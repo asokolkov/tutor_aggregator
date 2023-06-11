@@ -5,21 +5,17 @@ import { ProfilePageProps, TooltipType } from './_shared';
 import { ProfileTip } from './ProfileTip';
 
 type Props = ProfilePageProps & {
-  optionLabels: string[];
-  optionValues: string[];
+  options: string[];
   label: string;
   value?: string;
+  placeholder?: string;
 };
 
 export const SelectOptionsRow: React.FC<Props> = (props) => {
   const [field] = useField({ name: props.name });
-  const options = props.optionLabels.map((option, i) => (
-    <option value={props.optionValues[i]} key={props.optionLabels[i]}>
-      {option}
-    </option>
-  ));
+
   return (
-    <Flex width={'100%'} margin={'0 0 10px 0'}>
+    <Flex width={'100%'}>
       <FormControl
         display={'flex'}
         alignItems={'center'}
@@ -34,7 +30,7 @@ export const SelectOptionsRow: React.FC<Props> = (props) => {
           {props.label}
         </FormLabel>
         <Select
-          value={props.value}
+          placeholder={props.placeholder}
           bg="white"
           color={'#000000'}
           width={'100%'}
@@ -42,7 +38,11 @@ export const SelectOptionsRow: React.FC<Props> = (props) => {
           isDisabled={props.isDisabled}
           {...field}
         >
-          {options}
+          {props.options.map((option) => (
+            <option value={option} key={option}>
+              {option}
+            </option>
+          ))}
         </Select>
         <ProfileTip
           label={props.tooltip.label}
