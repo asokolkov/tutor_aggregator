@@ -12,6 +12,7 @@ type Props = {
 export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
   if (!lessons) lessons = [];
   const bookedCount = lessons.filter((x) => x.student).length;
+  const sortedLessons = lessons.sort((x) => new Date(x.start).getTime());
 
   return (
     <VStack
@@ -26,7 +27,7 @@ export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
         bookedCount={bookedCount}
       />
       <VStack spacing="16px" w="100%">
-        {lessons.map((lesson) => (
+        {sortedLessons.map((lesson) => (
           <Slot {...MapSlot(lesson, false)} key={lesson.id} />
         ))}
       </VStack>
