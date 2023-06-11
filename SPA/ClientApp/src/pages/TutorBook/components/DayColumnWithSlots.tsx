@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { VStack } from '@chakra-ui/react';
 import { Title } from '../../Lessons/components/LessonCalendarTab/Title';
-import { Slot } from '../../../components/Slot/Slot';
-import { MapSlot } from '../../../components/Slot/_maper';
+import { Slot, SlotVariant } from '../../../components/Slot/Slot';
 import { V1LessonDto } from '../../../api/models';
+import { useSlot } from '../../../components/Slot/hooks/useSlot';
 
 type Props = {
   lessons: V1LessonDto[];
@@ -27,9 +27,10 @@ export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
         bookedCount={bookedCount}
       />
       <VStack spacing="16px" w="100%">
-        {sortedLessons.map((lesson) => (
-          <Slot {...MapSlot(lesson, false)} key={lesson.id} />
-        ))}
+        {sortedLessons.map((lesson) => {
+          const { props } = useSlot(lesson, SlotVariant.studentCalendar);
+          return <Slot {...props} key={lesson.id} />;
+        })}
       </VStack>
     </VStack>
   );

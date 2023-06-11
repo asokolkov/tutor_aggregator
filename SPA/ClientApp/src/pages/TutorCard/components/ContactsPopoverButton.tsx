@@ -1,15 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Button, useDisclosure } from '@chakra-ui/react';
-import { CardInfoContext } from '../contexts/CardInfoContext';
-import { ContactsModal } from '../../../components/modals/ContactsModal';
+import { ContactsModal } from '../../../components/ContactsModal/ContactsModal';
 
 const ContactsPopoverButton: React.FC = () => {
-  const { contacts } = useContext(CardInfoContext);
   const disclosure = useDisclosure();
-
   return (
     <>
-      <ContactsModal disclosure={disclosure} contacts={contacts} />
+      <ContactsModal disclosure={disclosure} />
       <Button
         variant="blue.300"
         w="100%"

@@ -1,5 +1,5 @@
 import { Card, CardInfoProps } from './Card';
-import { Default as ContactModalStory } from '../../components/modals/ContactModal.stories';
+import { Default as ContactModalStory } from '../../components/ContactsModal/ContactModal.stories';
 export default {
   component: Card,
 };
