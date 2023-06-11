@@ -11,11 +11,11 @@ import { ActiveListTab } from './ActiveListTab';
 import { CancelLessonModal } from '../../components/Slot/modals/CancelLessonModal';
 import { BookLessonModal } from '../../components/Slot/modals/BookLessonModal';
 import { DeleteSlotModal } from '../../components/Slot/modals/DeleteSlotModal';
-import { ContactsModal } from '../../components/ContactsModal/ContactsModal';
 import { useModal } from '../../components/Slot/hooks/useModal';
 import { useContactSlotModal } from '../../components/ContactsModal/hooks/useContactSlotModal';
 import { ContactModalContext } from '../../components/ContactsModal/contexts/ContactModalContext';
 import { ModalContext } from '../../components/Slot/contexts/ModalContext';
+import { ContactsModal } from '../../components/ContactsModal/ContactsModal';
 
 export const LessonsPage = () => {
   const { isAuthorized, user } = useContext(UserContext);
