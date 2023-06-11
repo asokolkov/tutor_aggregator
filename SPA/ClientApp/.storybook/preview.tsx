@@ -22,7 +22,7 @@ const preview: Preview = {
   args: { accountType: V1AccountTypeDto.tutor },
   argTypes: {
     accountType: {
-      control: 'select',
+      control: 'radio',
       options: Object.values(V1AccountTypeDto),
     },
   },

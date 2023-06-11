@@ -58,11 +58,13 @@ export type V1TutorInfoDto = {
   rating?: number;
   job?: string | null;
   educations?: V1TutorEducationDto[] | null;
+  contacts?: V1TutorContactDto[];
 };
 export type V1StudentInfoDto = {
   id?: string;
   firstName?: string | null;
   lastName?: string | null;
+  contacts?: V1StudentContactDto[];
 };
 export type V1LessonDto = {
   id?: string | null;
