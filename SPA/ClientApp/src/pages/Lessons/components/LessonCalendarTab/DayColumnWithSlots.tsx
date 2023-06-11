@@ -15,6 +15,7 @@ type Props = {
 export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
   if (!lessons) lessons = [];
   const bookedCount = lessons.filter((x) => x.student).length;
+  const sortedLessons = lessons.sort((x) => new Date(x.start).getTime());
   const disclosure = useDisclosure();
 
   return (
@@ -31,7 +32,7 @@ export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
           bookedCount={bookedCount}
         />
         <VStack spacing="16px" w="100%">
-          {lessons.map((lesson) => {
+          {sortedLessons.map((lesson) => {
             const { props } = useSlot(lesson, SlotVariant.tutorCalendar);
             return <Slot {...props} key={lesson.id} />;
           })}
