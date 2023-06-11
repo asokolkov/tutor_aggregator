@@ -5,7 +5,7 @@ using SPA.Domain;
 
 namespace SPA.Repositories.Impl;
 
-internal sealed class AvatarsRepository : IAvatarsRepository
+public sealed class AvatarsRepository : IAvatarsRepository
 {
     private readonly ApplicationContext context;
     private readonly IMapper mapper;

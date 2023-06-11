@@ -4,7 +4,7 @@ using FluentValidation;
 using JetBrains.Annotations;
 
 [UsedImplicitly]
-internal sealed class InsertAvatarCommandValidator : AbstractValidator<InsertAvatarCommand>
+public sealed class InsertAvatarCommandValidator : AbstractValidator<InsertAvatarCommand>
 {
     public InsertAvatarCommandValidator()
     {

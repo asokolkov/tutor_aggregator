@@ -22,11 +22,6 @@ public class ApplicationContext : DbContext
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
     {
     }
-    
-    public async Task<int> SaveChangesAsync()
-    {
-        return await base.SaveChangesAsync();
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

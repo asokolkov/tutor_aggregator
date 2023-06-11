@@ -6,7 +6,7 @@ using SPA.Repositories;
 namespace SPA.Application.Avatars.Commands.InsertAvatarCommand;
 
 [UsedImplicitly]
-internal class InsertAvatarCommandHandler : IRequestHandler<InsertAvatarCommand, byte[]> 
+public class InsertAvatarCommandHandler : IRequestHandler<InsertAvatarCommand, byte[]> 
 {
     private readonly IAvatarsRepository repository;
     
