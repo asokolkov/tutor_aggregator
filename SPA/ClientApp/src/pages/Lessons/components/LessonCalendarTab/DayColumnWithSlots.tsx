@@ -36,14 +36,16 @@ export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
             const { props } = useSlot(lesson, SlotVariant.tutorCalendar);
             return <Slot {...props} key={lesson.id} />;
           })}
-          <Button
-            rightIcon={<AddIcon />}
-            variant={ButtonVariant.green}
-            w="100%"
-            onClick={disclosure.onOpen}
-          >
-            Добавить новый слот
-          </Button>
+          {date.getTime() + 24 * 60 * 60 * 1000 >= new Date().getTime() && (
+            <Button
+              rightIcon={<AddIcon />}
+              variant={ButtonVariant.green}
+              w="100%"
+              onClick={disclosure.onOpen}
+            >
+              Добавить новый слот
+            </Button>
+          )}
         </VStack>
       </VStack>
       <NewSlotModal disclosure={disclosure} date={date} />
