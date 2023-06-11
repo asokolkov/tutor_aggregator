@@ -10,11 +10,13 @@ import {
 } from '../../components/LessonTab/useLessonTab';
 import { PaginationMenu } from '../../components/LessonTab/PaginationMenu';
 import { getShiftedDate } from '../../utils/datetime';
+import { CancelLessonModal } from '../../components/Slot/modals/CancelLessonModal';
+import { BookLessonModal } from '../../components/Slot/modals/BookLessonModal';
+import { DeleteSlotModal } from '../../components/Slot/modals/DeleteSlotModal';
+import { ModalContext } from '../../components/Slot/contexts/ModalContext';
+import { useModal } from '../../components/Slot/hooks/useModal';
 
 export const LessonCalendarTab: React.FC = () => {
-  const { user } = useContext(UserContext);
-  const userId = user.id;
-
   const [columnCount, setColumnCount] = useState(1);
   const dimensions = useWindowDimensions();
 
@@ -46,8 +48,12 @@ export const LessonCalendarTab: React.FC = () => {
     });
   };
 
+  const { user } = useContext(UserContext);
+  const userId = user.id;
   const { queries } = useLessonTab(userId, columnCount, todayStartTime);
   const isLoading = queries.some((query) => query.isLoading);
+
+  const { modalProviderValue } = useModal();
 
   return (
     <VStack spacing="20px">
@@ -60,21 +66,26 @@ export const LessonCalendarTab: React.FC = () => {
       {isLoading ? (
         <LoadBar description={'Загружаем данные ваших уроков'} />
       ) : (
-        <div
-          className="lessons-tab-container"
-          style={{ columnRuleColor: 'blue.100' }}
-        >
-          {queries.map((query, i) => {
-            const date = getShiftedDate(todayStartTime, i);
-            return (
-              <DayColumnWithSlots
-                lessons={query.data}
-                date={date}
-                key={date.toString()}
-              />
-            );
-          })}
-        </div>
+        <ModalContext.Provider value={modalProviderValue}>
+          <div
+            className="lessons-tab-container"
+            style={{ columnRuleColor: 'blue.100' }}
+          >
+            <CancelLessonModal disclosure={modalProviderValue.cancelDisc} />
+            <BookLessonModal disclosure={modalProviderValue.bookDisc} />
+            <DeleteSlotModal disclosure={modalProviderValue.deleteDisc} />
+            {queries.map((query, i) => {
+              const date = getShiftedDate(todayStartTime, i);
+              return (
+                <DayColumnWithSlots
+                  lessons={query.data}
+                  date={date}
+                  key={date.toString()}
+                />
+              );
+            })}
+          </div>
+        </ModalContext.Provider>
       )}
     </VStack>
   );

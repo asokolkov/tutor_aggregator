@@ -1,16 +1,26 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { Button, HStack, useDisclosure } from '@chakra-ui/react';
+import { Button, HStack } from '@chakra-ui/react';
 import { ChatIcon, LockIcon } from '@chakra-ui/icons';
 import { SlotContext } from '../contexts/SlotContext';
-import { BookLessonModal } from '../modals/BookLessonModal';
-import { CancelLessonModal } from '../modals/CancelLessonModal';
 import { BookedBy } from '../Slot';
+import { ModalContext } from '../contexts/ModalContext';
+import { useDataForModal } from '../hooks/useDataForModal';
 
 export const StudentCalendar: React.FC = () => {
   const { bookedBy } = useContext(SlotContext);
-  const bookDisclosure = useDisclosure();
-  const cancelDisclosure = useDisclosure();
+  const { setData, cancelDisc, bookDisc } = useContext(ModalContext);
+  const { data } = useDataForModal();
+  const onCancelClick = () => {
+    setData(data);
+    cancelDisc.onOpen();
+  };
+
+  const onBookClick = () => {
+    setData(data);
+    bookDisc.onOpen();
+  };
+
   const renderButton = () => {
     if (bookedBy === BookedBy.current)
       return (
@@ -19,7 +29,7 @@ export const StudentCalendar: React.FC = () => {
           flexGrow="1"
           h="30px"
           variant="red"
-          onClick={cancelDisclosure.onOpen}
+          onClick={onCancelClick}
         >
           Отменить запись
         </Button>
@@ -38,7 +48,7 @@ export const StudentCalendar: React.FC = () => {
         w="100%"
         h="30px"
         variant="green"
-        onClick={bookDisclosure.onOpen}
+        onClick={onBookClick}
       >
         Записаться
       </Button>
@@ -46,12 +56,8 @@ export const StudentCalendar: React.FC = () => {
   };
 
   return (
-    <>
-      <HStack w="100%" p="8px" spacing="4px">
-        {renderButton()}
-      </HStack>
-      <BookLessonModal disclosure={bookDisclosure} />
-      <CancelLessonModal disclosure={cancelDisclosure} />
-    </>
+    <HStack w="100%" p="8px" spacing="4px">
+      {renderButton()}
+    </HStack>
   );
 };
