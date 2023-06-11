@@ -4,7 +4,7 @@ using SPA.Domain;
 
 namespace SPA.Repositories;
 
-internal interface ILessonsRepository
+public interface ILessonsRepository
 {
     Task<Lesson?> GetAsync(Guid id);
     Task<ICollection<Lesson>> GetStudentLessonsAsync(Guid studentId);

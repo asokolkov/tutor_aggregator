@@ -9,7 +9,7 @@ using LessonStatus = EFCore.Postgres.Application.Models.Entities.LessonStatus;
 
 namespace SPA.Repositories.Impl;
 
-internal sealed class LessonsRepository : ILessonsRepository
+public sealed class LessonsRepository : ILessonsRepository
 {
     private readonly ApplicationContext context;
     private readonly IMapper mapper;

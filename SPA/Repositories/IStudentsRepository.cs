@@ -4,7 +4,7 @@ namespace SPA.Repositories;
 
 using Domain;
 
-internal interface IStudentsRepository
+public interface IStudentsRepository
 {
     Task<Student?> GetAsync(Guid id);
     Task<Page<Student>> GetPageAsync(int page, int size);
