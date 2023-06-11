@@ -21,11 +21,17 @@ import { ContactModalContext } from './contexts/ContactModalContext';
 export const ContactsModal: React.FC<Props> = ({ disclosure }) => {
   const { isOpen, onClose } = disclosure;
   const { contacts } = useContext(ContactModalContext);
-  const contactsByType = (type: V1ContactTypeDto) =>
-    contacts
-      .filter((x) => x.type === type)
-      .map((x) => (type === V1ContactTypeDto.telegram ? '@' : '') + x.value)
-      .join(', ');
+  const contactsByType = (type: V1ContactTypeDto) => {
+    const singleContact = contacts.filter((x) => x.type === type)[0]?.value;
+    if (!singleContact) return undefined;
+    switch (type) {
+      case V1ContactTypeDto.phone:
+        return '+7' + singleContact;
+      case V1ContactTypeDto.telegram:
+        return '@' + singleContact;
+    }
+    return singleContact;
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -49,9 +55,7 @@ export const ContactsModal: React.FC<Props> = ({ disclosure }) => {
             <InfoWithIcon
               Icon={MdPhone}
               categoryText="Телефон"
-              text={
-                '+7' + contactsByType(V1ContactTypeDto.phone) || 'Не указано'
-              }
+              text={contactsByType(V1ContactTypeDto.phone) || 'Не указано'}
             />
           </VStack>
         </ModalBody>
