@@ -18,6 +18,6 @@ internal class GetTutorsQueryHandler : IRequestHandler<GetTutorsQuery, Page<Tuto
     public async Task<Page<Tutor>> Handle(GetTutorsQuery request, CancellationToken cancellationToken)
     {
         return await repository.GetPageAsync(request.PageNumber, request.PageSize, request.Subject, 
-            request.City, request.District, request.MaxPrice, request.Rating);
+            request.City, request.District, request.MaxPrice, request.Rating, request.LessonsType);
     }
 }
