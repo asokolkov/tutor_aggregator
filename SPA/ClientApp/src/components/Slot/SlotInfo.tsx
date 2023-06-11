@@ -31,10 +31,8 @@ export const SlotInfo: React.FC = () => {
   const { bookedBy, variant } = useContext(SlotContext);
   const ButtonSection = renderButtonSection(variant);
   const isNameVisible =
-    !(
-      variant === SlotVariant.tutorCalendar ||
-      variant === SlotVariant.studentCalendar
-    ) || bookedBy !== BookedBy.nobody;
+    bookedBy !== BookedBy.nobody && // booked by someone
+    variant !== SlotVariant.studentCalendar;
 
   return (
     <VStack w="100%" spacing="0px">
