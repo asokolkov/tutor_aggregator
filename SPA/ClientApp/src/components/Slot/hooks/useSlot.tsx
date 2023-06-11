@@ -1,4 +1,8 @@
-import { LessonStatus, V1LessonDto } from '../../../api/models';
+import {
+  LessonStatus,
+  V1AccountTypeDto,
+  V1LessonDto,
+} from '../../../api/models';
 import { BookedBy, SlotProps, SlotVariant } from '../Slot';
 import { getFullName } from '../../../utils/names';
 import { useContext } from 'react';
@@ -11,6 +15,10 @@ export function useSlot(
   const { user } = useContext(UserContext);
   const startDate = new Date(lesson.start);
   const endDate = new Date(lesson.end);
+  const contacts =
+    user.accountType === V1AccountTypeDto.tutor
+      ? lesson.student?.contacts
+      : lesson.tutor?.contacts ?? [];
 
   const bookedBy =
     lesson.status === LessonStatus.booked
@@ -33,7 +41,7 @@ export function useSlot(
       : undefined,
     type: lesson.type,
     lessonId: lesson.id,
-    contacts: [],
+    contacts,
   };
 
   return { props };
