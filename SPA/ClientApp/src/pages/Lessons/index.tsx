@@ -29,11 +29,9 @@ export const LessonsPage = () => {
             <LessonCalendarTab />
           </TabPanel>
         )}
-        {!isTutor && (
-          <TabPanel>
-            <ActiveListTab />
-          </TabPanel>
-        )}
+        <TabPanel>
+          <ActiveListTab />
+        </TabPanel>
       </TabPanels>
     </Tabs>
   );
