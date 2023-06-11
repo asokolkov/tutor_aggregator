@@ -10,14 +10,6 @@ import {
 } from '../../components/LessonTab/useLessonTab';
 import { PaginationMenu } from '../../components/LessonTab/PaginationMenu';
 import { getShiftedDate } from '../../utils/datetime';
-import { CancelLessonModal } from '../../components/Slot/modals/CancelLessonModal';
-import { BookLessonModal } from '../../components/Slot/modals/BookLessonModal';
-import { DeleteSlotModal } from '../../components/Slot/modals/DeleteSlotModal';
-import { ModalContext } from '../../components/Slot/contexts/ModalContext';
-import { useModal } from '../../components/Slot/hooks/useModal';
-import { ContactsModal } from '../../components/ContactsModal/ContactsModal';
-import { ContactModalContext } from '../../components/ContactsModal/contexts/ContactModalContext';
-import { useContactSlotModal } from '../../components/ContactsModal/hooks/useContactSlotModal';
 
 export const LessonCalendarTab: React.FC = () => {
   const [columnCount, setColumnCount] = useState(1);
@@ -56,8 +48,6 @@ export const LessonCalendarTab: React.FC = () => {
   const { queries } = useLessonTab(userId, columnCount, todayStartTime);
   const isLoading = queries.some((query) => query.isLoading);
 
-  const { modalProviderValue } = useModal();
-  const { contactsProviderValue } = useContactSlotModal();
   return (
     <VStack spacing="20px">
       <PaginationMenu
@@ -69,29 +59,21 @@ export const LessonCalendarTab: React.FC = () => {
       {isLoading ? (
         <LoadBar description={'Загружаем данные ваших уроков'} />
       ) : (
-        <ContactModalContext.Provider value={contactsProviderValue}>
-          <ModalContext.Provider value={modalProviderValue}>
-            <div
-              className="lessons-tab-container"
-              style={{ columnRuleColor: 'blue.100' }}
-            >
-              <CancelLessonModal disclosure={modalProviderValue.cancelDisc} />
-              <BookLessonModal disclosure={modalProviderValue.bookDisc} />
-              <DeleteSlotModal disclosure={modalProviderValue.deleteDisc} />
-              <ContactsModal disclosure={contactsProviderValue.disclosure} />
-              {queries.map((query, i) => {
-                const date = getShiftedDate(todayStartTime, i);
-                return (
-                  <DayColumnWithSlots
-                    lessons={query.data}
-                    date={date}
-                    key={date.toString()}
-                  />
-                );
-              })}
-            </div>
-          </ModalContext.Provider>
-        </ContactModalContext.Provider>
+        <div
+          className="lessons-tab-container"
+          style={{ columnRuleColor: 'blue.100' }}
+        >
+          {queries.map((query, i) => {
+            const date = getShiftedDate(todayStartTime, i);
+            return (
+              <DayColumnWithSlots
+                lessons={query.data}
+                date={date}
+                key={date.toString()}
+              />
+            );
+          })}
+        </div>
       )}
     </VStack>
   );

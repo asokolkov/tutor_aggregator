@@ -31,7 +31,7 @@ export const ContactsModal: React.FC<Props> = ({ disclosure }) => {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Контакты преподавателя</ModalHeader>
+        <ModalHeader>Контакты</ModalHeader>
         <ModalCloseButton />
 
         <ModalBody>
@@ -39,17 +39,19 @@ export const ContactsModal: React.FC<Props> = ({ disclosure }) => {
             <InfoWithIcon
               Icon={SiTelegram}
               categoryText="Телеграм"
-              text={contactsByType(V1ContactTypeDto.telegram)}
+              text={contactsByType(V1ContactTypeDto.telegram) || 'Не указано'}
             />
             <InfoWithIcon
               Icon={MdEmail}
               categoryText="Почта"
-              text={contactsByType(V1ContactTypeDto.email)}
+              text={contactsByType(V1ContactTypeDto.email) || 'Не указано'}
             />
             <InfoWithIcon
               Icon={MdPhone}
               categoryText="Телефон"
-              text={contactsByType(V1ContactTypeDto.phone)}
+              text={
+                '+7' + contactsByType(V1ContactTypeDto.phone) || 'Не указано'
+              }
             />
           </VStack>
         </ModalBody>
