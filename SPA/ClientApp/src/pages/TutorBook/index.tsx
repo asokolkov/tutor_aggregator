@@ -41,9 +41,14 @@ export const TutorBookPage: React.FC = () => {
     updateColumn();
   }, [dimensions]);
 
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const currentDate = new Date();
+  currentDate.setHours(0);
+  currentDate.setMinutes(0);
+  currentDate.setSeconds(0);
+
+  const [todayStartTime, setTodayStartTime] = useState(currentDate);
   const changeDate = (isForward: boolean) => {
-    setCurrentDate((prevDate) => {
+    setTodayStartTime((prevDate) => {
       const newDate = new Date(prevDate);
       const delta = isForward ? columnCount : -columnCount;
       newDate.setDate(prevDate.getDate() + delta);
@@ -51,14 +56,14 @@ export const TutorBookPage: React.FC = () => {
     });
   };
 
-  const { queries } = useLessonTab(tutorId, columnCount, currentDate);
+  const { queries } = useLessonTab(tutorId, columnCount, todayStartTime);
   const isLoading = queries.some((query) => query.isLoading);
 
   return (
     <VStack spacing="20px" w="100%">
       <PaginationMenu
-        start={currentDate}
-        end={getShiftedDate(currentDate, columnCount - 1)}
+        start={todayStartTime}
+        end={getShiftedDate(todayStartTime, columnCount - 1)}
         onDateChange={changeDate}
       />
       {isLoading ? (
@@ -69,7 +74,7 @@ export const TutorBookPage: React.FC = () => {
           style={{ columnRuleColor: 'blue.100' }}
         >
           {queries.map((query, i) => {
-            const date = getShiftedDate(currentDate, i);
+            const date = getShiftedDate(todayStartTime, i);
             return (
               <DayColumnWithSlots
                 lessons={query.data}
