@@ -7,12 +7,14 @@ export function useModal() {
   const cancelDisc = useDisclosure();
   const bookDisc = useDisclosure();
   const deleteDisc = useDisclosure();
+  const contactDisc = useDisclosure();
   const modalProviderValue = {
     data,
     setData,
     cancelDisc,
     bookDisc,
     deleteDisc,
+    contactDisc,
   };
   return { modalProviderValue };
 }

@@ -13,11 +13,14 @@ import {
 import { DisclosureProps } from '../disclosureProps';
 import InfoWithIcon from '../InfoWithIcon';
 import { SiTelegram } from 'react-icons/si';
-import { V1ContactsDto, V1ContactTypeDto } from '../../api/models';
+import { V1ContactTypeDto } from '../../api/models';
 import { MdPhone, MdEmail } from 'react-icons/md';
+import { useContext } from 'react';
+import { ContactModalContext } from './contexts/ContactModalContext';
 
-export const ContactsModal: React.FC<Props> = ({ disclosure, contacts }) => {
+export const ContactsModal: React.FC<Props> = ({ disclosure }) => {
   const { isOpen, onClose } = disclosure;
+  const { contacts } = useContext(ContactModalContext);
   const contactsByType = (type: V1ContactTypeDto) =>
     contacts
       .filter((x) => x.type === type)
@@ -63,5 +66,4 @@ export const ContactsModal: React.FC<Props> = ({ disclosure, contacts }) => {
 
 type Props = {
   disclosure: DisclosureProps;
-  contacts: V1ContactsDto[];
 };

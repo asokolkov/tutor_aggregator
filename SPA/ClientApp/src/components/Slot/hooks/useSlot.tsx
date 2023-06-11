@@ -33,6 +33,7 @@ export function useSlot(
       : undefined,
     type: lesson.type,
     lessonId: lesson.id,
+    contacts: [],
   };
 
   return { props };

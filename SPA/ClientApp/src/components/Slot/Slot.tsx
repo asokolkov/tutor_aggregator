@@ -4,7 +4,7 @@ import { TimeBox } from './TimeBox';
 import { SlotContext } from './contexts/SlotContext';
 import { SlotInfo } from './SlotInfo';
 import { useMemo } from 'react';
-import { LessonType } from '../../api/models';
+import { LessonType, V1ContactsDto } from '../../api/models';
 import { DateBox } from './DateBox';
 import { getTimeFromDate } from '../../utils/datetime';
 
@@ -15,7 +15,7 @@ export const Slot: React.FC<SlotProps> = (props) => {
       timeRange: `${getTimeFromDate(props.startDate)} - ${getTimeFromDate(
         props.endDate
       )}`,
-      tutorName: props.tutorName || 'Неизвестно',
+      tutorName: props.tutorName,
       startDate: new Date(props.startDate),
       endDate: new Date(props.endDate),
     }),
@@ -57,6 +57,7 @@ export type SlotProps = {
   tutorName: string;
   studentName: string;
   variant: SlotVariant;
+  contacts: V1ContactsDto[];
 };
 
 export enum SlotVariant {

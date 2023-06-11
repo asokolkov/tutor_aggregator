@@ -6,14 +6,22 @@ import { ChatIcon, DeleteIcon } from '@chakra-ui/icons';
 import { BookedBy } from '../Slot';
 import { ModalContext } from '../contexts/ModalContext';
 import { useDataForModal } from '../hooks/useDataForModal';
+import { ContactModalContext } from '../../ContactsModal/contexts/ContactModalContext';
 
 export const TutorCalendar: React.FC = () => {
-  const { bookedBy } = useContext(SlotContext);
+  const { bookedBy, contacts } = useContext(SlotContext);
   const { setData, deleteDisc } = useContext(ModalContext);
   const { data } = useDataForModal();
-  const onClick = () => {
+  const { setContacts, disclosure } = useContext(ContactModalContext);
+
+  const onDeleteClick = () => {
     setData(data);
     deleteDisc.onOpen();
+  };
+
+  const onContactsClick = () => {
+    setContacts(contacts);
+    disclosure.onOpen();
   };
 
   return (
@@ -24,6 +32,7 @@ export const TutorCalendar: React.FC = () => {
           flexGrow="1"
           h="30px"
           variant="blue.300"
+          onClick={onContactsClick}
         >
           Показать контакты
         </Button>
@@ -37,7 +46,7 @@ export const TutorCalendar: React.FC = () => {
         h="30px"
         width="30px"
         aria-label="Удалить слот"
-        onClick={onClick}
+        onClick={onDeleteClick}
         variant="red"
       />
     </HStack>

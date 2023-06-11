@@ -7,6 +7,10 @@ import { CancelLessonModal } from './modals/CancelLessonModal';
 import { BookLessonModal } from './modals/BookLessonModal';
 import { DeleteSlotModal } from './modals/DeleteSlotModal';
 import * as React from 'react';
+import { Default } from '../ContactsModal/ContactModal.stories';
+import { ContactModalContext } from '../ContactsModal/contexts/ContactModalContext';
+import { useContactSlotModal } from '../ContactsModal/hooks/useContactSlotModal';
+import { ContactsModal } from '../ContactsModal/ContactsModal';
 
 const containerDec: Decorator = (story) => (
   <div style={{ width: '476px' }}>{story()}</div>
@@ -14,16 +18,17 @@ const containerDec: Decorator = (story) => (
 
 const modalProviderDec: Decorator = (story) => {
   const { modalProviderValue } = useModal();
+  const { contactsProviderValue } = useContactSlotModal();
   return (
-    <ModalContext.Provider value={modalProviderValue}>
-      <>
+    <ContactModalContext.Provider value={contactsProviderValue}>
+      <ModalContext.Provider value={modalProviderValue}>
         <CancelLessonModal disclosure={modalProviderValue.cancelDisc} />
         <BookLessonModal disclosure={modalProviderValue.bookDisc} />
         <DeleteSlotModal disclosure={modalProviderValue.deleteDisc} />
-      </>
-
-      {story()}
-    </ModalContext.Provider>
+        <ContactsModal disclosure={contactsProviderValue.disclosure} />
+        {story()}
+      </ModalContext.Provider>
+    </ContactModalContext.Provider>
   );
 };
 
@@ -44,6 +49,7 @@ const slotProps: SlotProps = {
   tutorName: 'Учитель Учительевич',
   type: LessonType.offline,
   lessonId: '00000000-0000-0000-0000-000000000000',
+  contacts: Default.args.contacts,
 };
 
 export const Tutor: Story = {
