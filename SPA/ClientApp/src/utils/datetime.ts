@@ -1,8 +1,10 @@
-export const getTimeFromDate = (date: Date) =>
-  `${fullHours(date)}:${fullMinutes(date)}`;
+export const getTimeFromDate = (date: Date) => {
+  return date ? `${fullHours(date)}:${fullMinutes(date)}` : '??:??';
+};
 
-export const getDayAndMonthFromDate = (date: Date) =>
-  `${fullDate(date)}.${fullMonth(date)}`;
+export const getDayAndMonthFromDate = (date: Date) => {
+  return date ? `${fullDate(date)}.${fullMonth(date)}` : '??:??';
+};
 
 export const getShiftedDate = (date: Date, shift: number) => {
   const newDate = new Date(date);

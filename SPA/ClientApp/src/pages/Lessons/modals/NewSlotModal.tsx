@@ -19,7 +19,7 @@ import {
   SlotInputValuesProps,
   useFormikValues,
 } from '../hooks/useFormikValues';
-import { lessonsKey } from '../../../query/queryKeys';
+import { lessonsByDateKey } from '../../../query/queryKeys';
 import { getDayAndMonthFromDate } from '../../../utils/datetime';
 import { DisclosureProps } from '../../../components/disclosureProps';
 import {
@@ -52,7 +52,7 @@ export const NewSlotModal: React.FC<Props> = ({ disclosure, date }) => {
 
   const mutation = useMutation({
     mutationFn: onSubmit,
-    onSuccess: () => queryClient.invalidateQueries([lessonsKey]),
+    onSuccess: () => queryClient.invalidateQueries([lessonsByDateKey]),
   });
 
   return (

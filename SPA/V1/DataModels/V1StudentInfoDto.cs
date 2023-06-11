@@ -9,4 +9,7 @@ public sealed class V1StudentInfoDto
     [JsonProperty("firstName")] public string FirstName { get; init; }
 
     [JsonProperty("lastName")] public string LastName { get; init; }
+    
+    [JsonProperty("contacts")]
+    public IReadOnlyCollection<V1StudentContactDto> Contacts { get; init; }
 }

@@ -2,10 +2,11 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { Alert, AlertIcon, Text, VStack } from '@chakra-ui/react';
 import LessonsAPI from '../../../api/lessons';
-import { SlotContext } from '../contexts/SlotContext';
 import { modalFooter } from '../../LessonModalsHOC/ModalFooter';
 import { modal } from '../../LessonModalsHOC/Modal';
 import { ButtonVariant } from '../../../assets/theme/themeEnum';
+import { BookedBy } from '../Slot';
+import { ModalContext } from '../contexts/ModalContext';
 
 const onSubmit = async (lessonId: string) => {
   await LessonsAPI.deleteLesson(lessonId);
@@ -13,21 +14,21 @@ const onSubmit = async (lessonId: string) => {
 
 const modalTitle = 'Вы действительно хотите удалить слот?';
 const Body: React.FC = () => {
-  const { timeRange, student, isBooked } = useContext(SlotContext);
+  const { data } = useContext(ModalContext);
   return (
     <VStack align={'start'}>
-      {isBooked && (
+      {data.bookedBy !== BookedBy.nobody && (
         <Alert status="warning">
           <AlertIcon />
           <Text>
-            На данный слот записан ученик <b>{student.name}</b>. Запись будет
-            отменена
+            На данный слот записан ученик <b>{data.studentName}</b>. Запись
+            будет отменена
           </Text>
         </Alert>
       )}
       <VStack align={'start'} pl="16px" spacing="0">
         <Text>Выбранный слот будет удален.</Text>
-        <Text variant="regular.bold">{`Время: ${timeRange}`}</Text>
+        <Text variant="regular.bold">{`Время: ${data.timeRange}`}</Text>
       </VStack>
     </VStack>
   );

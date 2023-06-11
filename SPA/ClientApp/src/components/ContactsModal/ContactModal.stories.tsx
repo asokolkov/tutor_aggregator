@@ -24,17 +24,7 @@ const phoneContact: V1ContactsDto = {
   value: '+79991234567',
 };
 
-const contacts: V1ContactsDto[] = [
-  telegramContact,
-  telegramContact,
-  telegramContact,
-  emailContact,
-  emailContact,
-  emailContact,
-  phoneContact,
-  phoneContact,
-  phoneContact,
-];
+const contacts: V1ContactsDto[] = [telegramContact, emailContact, phoneContact];
 
 const disclosure: DisclosureProps = {
   isOpen: true,

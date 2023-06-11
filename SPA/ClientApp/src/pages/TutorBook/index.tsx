@@ -14,6 +14,10 @@ import './styles.css';
 import { Navigate } from 'react-router-dom';
 import { LOGIN_PAGE } from '../../routes/routePaths';
 import { useTutorId } from '../../routes/params';
+import { ModalContext } from '../../components/Slot/contexts/ModalContext';
+import { useModal } from '../../components/Slot/hooks/useModal';
+import { CancelLessonModal } from '../../components/Slot/modals/CancelLessonModal';
+import { BookLessonModal } from '../../components/Slot/modals/BookLessonModal';
 
 export const TutorBookPage: React.FC = () => {
   const { isAuthorized } = useContext(UserContext);
@@ -58,6 +62,7 @@ export const TutorBookPage: React.FC = () => {
 
   const { queries } = useLessonTab(tutorId, columnCount, todayStartTime);
   const isLoading = queries.some((query) => query.isLoading);
+  const { modalProviderValue } = useModal();
 
   return (
     <VStack spacing="20px" w="100%">
@@ -69,21 +74,25 @@ export const TutorBookPage: React.FC = () => {
       {isLoading ? (
         <LoadBar description={'Загружаем данные ваших уроков'} />
       ) : (
-        <div
-          className="tutor-book-container"
-          style={{ columnRuleColor: 'blue.100' }}
-        >
-          {queries.map((query, i) => {
-            const date = getShiftedDate(todayStartTime, i);
-            return (
-              <DayColumnWithSlots
-                lessons={query.data}
-                date={date}
-                key={date.toString()}
-              />
-            );
-          })}
-        </div>
+        <ModalContext.Provider value={modalProviderValue}>
+          <div
+            className="tutor-book-container"
+            style={{ columnRuleColor: 'blue.100' }}
+          >
+            <CancelLessonModal disclosure={modalProviderValue.cancelDisc} />
+            <BookLessonModal disclosure={modalProviderValue.bookDisc} />
+            {queries.map((query, i) => {
+              const date = getShiftedDate(todayStartTime, i);
+              return (
+                <DayColumnWithSlots
+                  lessons={query.data}
+                  date={date}
+                  key={date.toString()}
+                />
+              );
+            })}
+          </div>
+        </ModalContext.Provider>
       )}
     </VStack>
   );

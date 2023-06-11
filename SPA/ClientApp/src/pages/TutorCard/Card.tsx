@@ -20,6 +20,7 @@ import {
 } from 'react-icons/md';
 import { V1ContactsDto } from '../../api/models';
 import { getAvatarUri } from '../../utils/helper';
+import { ContactModalContext } from '../../components/ContactsModal/contexts/ContactModalContext';
 
 export const Card: React.FC<CardInfoProps> = (props) => {
   const providerValue = useMemo(() => ({ ...props }), [props]);
@@ -105,7 +106,9 @@ export const Card: React.FC<CardInfoProps> = (props) => {
               categoryText={'Требования'}
               text={props.requirements}
             />
-            <ButtonSection />
+            <ContactModalContext.Provider value={{ contacts: props.contacts }}>
+              <ButtonSection />
+            </ContactModalContext.Provider>
           </VStack>
         </VStack>
       </VStack>

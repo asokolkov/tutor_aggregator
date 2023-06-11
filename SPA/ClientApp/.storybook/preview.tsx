@@ -1,7 +1,9 @@
 import type { Preview } from '@storybook/react';
 import theme from '../src/assets/theme/index';
-import { QueryClientProvider, QueryClient } from 'react-query';
 import { withRouter } from 'storybook-addon-react-router-v6';
+import { V1AccountTypeDto } from '../src/api/models';
+import { withQueryClient } from './decorators/withQueryClient';
+import { withUserProvider } from './decorators/withUserProvider';
 
 const preview: Preview = {
   parameters: {
@@ -16,15 +18,16 @@ const preview: Preview = {
       theme,
     },
   },
-};
 
-export const decorators = [
-  (story: any) => (
-    <QueryClientProvider client={new QueryClient()}>
-      {story()}
-    </QueryClientProvider>
-  ),
-  withRouter,
-];
+  args: { accountType: V1AccountTypeDto.tutor },
+  argTypes: {
+    accountType: {
+      control: 'radio',
+      options: Object.values(V1AccountTypeDto),
+    },
+  },
+
+  decorators: [withUserProvider, withQueryClient, withRouter],
+};
 
 export default preview;
