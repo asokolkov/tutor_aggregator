@@ -1,4 +1,4 @@
-import { useLessonsQuery } from '../../query/useLessonsQuery';
+import { useLessonsByDateQuery } from '../../query/useLessonsByDateQuery';
 import { useEffect, useState } from 'react';
 
 function datesForQuery(date: Date, count: number): Date[] {
@@ -17,7 +17,7 @@ export function useLessonTab(
   currentDate: Date
 ) {
   const dates = datesForQuery(currentDate, columnCount);
-  const queries = useLessonsQuery(tutorId, dates);
+  const queries = useLessonsByDateQuery(tutorId, dates);
   return { queries };
 }
 

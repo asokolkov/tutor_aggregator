@@ -1,26 +1,22 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import { Button, HStack, useDisclosure } from '@chakra-ui/react';
 import { ChatIcon, LockIcon } from '@chakra-ui/icons';
-import { useContext } from 'react';
-import { SlotContext } from './contexts/SlotContext';
-import { BookLessonModal } from './modals/BookLessonModal';
-import { UserContext } from '../../layouts/base/contexts/UserContext';
-import { CancelLessonModal } from './modals/CancelLessonModal';
+import { SlotContext } from '../contexts/SlotContext';
+import { BookLessonModal } from '../modals/BookLessonModal';
+import { CancelLessonModal } from '../modals/CancelLessonModal';
+import { BookedBy } from '../Slot';
 
-export const ButtonGroupStudent: React.FC = () => {
-  const { isBooked, student } = useContext(SlotContext);
+export const StudentCalendar: React.FC = () => {
+  const { bookedBy } = useContext(SlotContext);
   const bookDisclosure = useDisclosure();
   const cancelDisclosure = useDisclosure();
-  const { user } = useContext(UserContext);
-
-  const isBookedByCurrent = user?.id === student?.id;
-
   const renderButton = () => {
-    if (isBookedByCurrent)
+    if (bookedBy === BookedBy.current)
       return (
         <Button
           rightIcon={<ChatIcon />}
-          w="100%"
+          flexGrow="1"
           h="30px"
           variant="red"
           onClick={cancelDisclosure.onOpen}
@@ -29,7 +25,7 @@ export const ButtonGroupStudent: React.FC = () => {
         </Button>
       );
 
-    if (isBooked)
+    if (bookedBy != BookedBy.nobody)
       return (
         <Button w="100%" h="30px" variant="blue.200" rightIcon={<LockIcon />}>
           Слот занят

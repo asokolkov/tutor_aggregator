@@ -1,49 +1,72 @@
 import * as React from 'react';
-import { HStack } from '@chakra-ui/react';
+import { HStack, VStack } from '@chakra-ui/react';
 import { TimeBox } from './TimeBox';
 import { SlotContext } from './contexts/SlotContext';
 import { SlotInfo } from './SlotInfo';
 import { useMemo } from 'react';
 import { LessonType } from '../../api/models';
+import { DateBox } from './DateBox';
 
 export const Slot: React.FC<SlotProps> = (props) => {
   const providerValue = useMemo(
     () => ({
       ...props,
-      timeRange: `${props.startTime || '??:??'} - ${props.endTime || '??:??'}`,
+      timeRange: `${props.startDate} - ${props.endDate}`,
       tutorName: props.tutorName || 'Неизвестно',
+      startDate: new Date(props.startDate),
+      endDate: new Date(props.endDate),
     }),
     [props]
+  );
+
+  const isDateBoxVisible = !(
+    props.variant === SlotVariant.tutorCalendar ||
+    props.variant === SlotVariant.studentCalendar
   );
   return (
     <>
       <SlotContext.Provider value={providerValue}>
-        <HStack
+        <VStack
           borderRadius="10px"
           borderWidth="2px"
           borderColor="blue.200"
-          w={props.isForTutor ? '356px' : '260px'}
-          spacing="0"
+          overflow="hidden"
+          width="100%"
         >
-          <TimeBox />
-          <SlotInfo />
-        </HStack>
+          {isDateBoxVisible && <DateBox />}
+          <HStack w="100%" spacing="0">
+            <TimeBox />
+            <SlotInfo />
+          </HStack>
+        </VStack>
       </SlotContext.Provider>
     </>
   );
 };
 
 export type SlotProps = {
-  startTime: string;
-  endTime: string;
+  startDate: Date;
+  endDate: Date;
   lessonId: string;
-  isForTutor: boolean;
-  isBooked: boolean;
+  bookedBy: BookedBy;
   type: LessonType;
   price: number;
   tutorName: string;
-  student?: {
-    name: string;
-    id: string;
-  };
+  studentName: string;
+  variant: SlotVariant;
 };
+
+export enum SlotVariant {
+  tutorCalendar = 'Tutor Calendar',
+  studentCalendar = 'Student Calendar',
+  activeCloseList = 'Active close',
+  activeAllList = 'Active all',
+  pastList = 'Past List',
+  canceledList = 'CanceledList',
+}
+
+export enum BookedBy {
+  nobody = 'Nobody',
+  someone = 'Someone',
+  current = 'Current',
+}

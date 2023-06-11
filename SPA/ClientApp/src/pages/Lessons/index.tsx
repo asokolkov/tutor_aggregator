@@ -7,6 +7,7 @@ import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import { LessonCalendarTab } from './LessonCalendarTab';
 import { V1AccountTypeDto } from '../../api/models';
 import './styles.css';
+import { ActiveListTab } from './ActiveListTab';
 
 export const LessonsPage = () => {
   const { isAuthorized, user } = useContext(UserContext);
@@ -17,7 +18,10 @@ export const LessonsPage = () => {
 
   return (
     <Tabs>
-      <TabList>{isTutor && <Tab>Твое расписание</Tab>}</TabList>
+      <TabList>
+        {isTutor && <Tab>Твое расписание</Tab>}
+        <Tab>Активные</Tab>
+      </TabList>
 
       <TabPanels>
         {isTutor && (
@@ -25,6 +29,9 @@ export const LessonsPage = () => {
             <LessonCalendarTab />
           </TabPanel>
         )}
+        <TabPanel>
+          <ActiveListTab />
+        </TabPanel>
       </TabPanels>
     </Tabs>
   );
