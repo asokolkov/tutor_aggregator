@@ -6,12 +6,15 @@ import { SlotInfo } from './SlotInfo';
 import { useMemo } from 'react';
 import { LessonType } from '../../api/models';
 import { DateBox } from './DateBox';
+import { getTimeFromDate } from '../../utils/datetime';
 
 export const Slot: React.FC<SlotProps> = (props) => {
   const providerValue = useMemo(
     () => ({
       ...props,
-      timeRange: `${props.startDate} - ${props.endDate}`,
+      timeRange: `${getTimeFromDate(props.startDate)} - ${getTimeFromDate(
+        props.endDate
+      )}`,
       tutorName: props.tutorName || 'Неизвестно',
       startDate: new Date(props.startDate),
       endDate: new Date(props.endDate),
