@@ -5,3 +5,6 @@ export const getTutorCardByIdPath = (tutorId: string) =>
 
 export const getTutorBookByIdPath = (tutorId: string) =>
   `${TUTORS_PATH}/${tutorId}/book`;
+
+export const getTutorBookSuccessPath = (tutorId: string) =>
+  `${TUTORS_PATH}/${tutorId}/success`;

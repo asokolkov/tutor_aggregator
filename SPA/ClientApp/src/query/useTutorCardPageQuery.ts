@@ -4,17 +4,23 @@ import TutorsAPI from '../api/tutors';
 import { useTutorId } from '../routes/params';
 
 export function useTutorCardPageQuery() {
-  const tutorId = useTutorId();
+  const tutorQuery = useTutorQuery();
+  const reviewQuery = useReviewQuery();
+  return { tutorQuery, reviewQuery };
+}
 
-  const tutorQuery = useQuery({
+export function useTutorQuery() {
+  const tutorId = useTutorId();
+  return useQuery({
     queryKey: [tutorCardKey],
     queryFn: () => TutorsAPI.getTutorById(tutorId),
   });
+}
 
-  const reviewQuery = useQuery({
+export function useReviewQuery() {
+  const tutorId = useTutorId();
+  return useQuery({
     queryKey: [reviewKey],
     queryFn: () => TutorsAPI.getReviewsByTutorId(tutorId),
   });
-
-  return { tutorQuery, reviewQuery };
 }
