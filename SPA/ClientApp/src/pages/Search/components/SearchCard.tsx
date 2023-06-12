@@ -26,7 +26,7 @@ const SearchCard: React.FC<SearchCardInfoProps> = ({ tutor }) => {
   return (
     <VStack
       borderWidth="2px"
-      borderColor="blue.200"
+      borderColor="custom.blue.200"
       borderRadius="10px"
       padding="20px"
       spacing="20px"
