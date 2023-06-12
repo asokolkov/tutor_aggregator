@@ -15,13 +15,18 @@ export const Title: React.FC<Props> = ({ date, bookedCount, totalCount }) => {
 
   return (
     <Flex justify={'space-between'} align={'center'} w="100%">
-      <VStack spacing="0">
-        <Text variant="big-semibold">{getDayAndMonthFromDate(date)}</Text>
+      <VStack spacing="0" alignItems={'flex-start'}>
+        <Text variant="regular.h3">{getDayAndMonthFromDate(date)}</Text>
         <Text>{dayOfTheWeek()}</Text>
       </VStack>
-      <Text>
-        {totalCount ? `Занято: ${bookedCount} / ${totalCount}` : 'Нет слотов'}
-      </Text>
+      <VStack spacing="0" alignItems={'flex-end'}>
+        <Text variant="regular.h3">
+          {totalCount ? `Свободно:` : 'Нет слотов'}
+        </Text>
+        <Text variant="regular.h3">
+          {totalCount ? `${totalCount - bookedCount} / ${totalCount}` : ''}
+        </Text>
+      </VStack>
     </Flex>
   );
 };

@@ -17,6 +17,7 @@ import { Color } from '../../assets/theme/themeEnum';
 import { SearchStateContext } from '../../layouts/base/contexts/SearchStateContext';
 import { useSearchParams } from './hooks/useSearchParams';
 import { LessonType } from '../../api/models';
+import { EmptySearchList } from './components/EmptySearchList';
 
 export const SearchPage = () => {
   const isLargerThanTablet = useBreakpointValue(
@@ -52,15 +53,19 @@ export const SearchPage = () => {
           </Form>
         </Formik>
       </Flex>
-      <SimpleGrid columns={[1, 1, 2, 3, 4, 5]} spacing="16px">
-        {data.pages.map((x, i) => (
-          <React.Fragment key={+(data.pageParams[i] ?? 0)}>
-            {x.items.map((item) => (
-              <SearchCard tutor={item} key={item.id}></SearchCard>
-            ))}
-          </React.Fragment>
-        ))}
-      </SimpleGrid>
+      {data.pages[0].items.length === 0 ? (
+        <EmptySearchList />
+      ) : (
+        <SimpleGrid columns={[1, 1, 2, 3, 4, 5]} spacing="16px">
+          {data.pages.map((x, i) => (
+            <React.Fragment key={+(data.pageParams[i] ?? 0)}>
+              {x.items.map((item) => (
+                <SearchCard tutor={item} key={item.id}></SearchCard>
+              ))}
+            </React.Fragment>
+          ))}
+        </SimpleGrid>
+      )}
 
       {hasNextPage && (
         <Button

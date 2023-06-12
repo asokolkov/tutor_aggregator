@@ -1,31 +1,29 @@
 import * as React from 'react';
-import { Box, Flex, useMediaQuery } from '@chakra-ui/react';
+import { Flex, useBreakpointValue } from '@chakra-ui/react';
 import { useAllLessonsQuery } from '../../query/useAllLessonsQuery';
 import { LoadBar } from '../../components/LoadBar/LoadBar';
 import { LessonStatus } from '../../api/models';
 import { SlotVariant } from '../../components/Slot/Slot';
-import { Color } from '../../assets/theme/themeEnum';
 import { LessonsList } from './components/LessonList';
+import { EmptyLessonList } from './components/EmptyLessonList';
 
 export const ActiveListTab: React.FC = () => {
   const { query } = useAllLessonsQuery();
-  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)');
+  const isLargerThanTablet = useBreakpointValue(
+    { base: false, lg: true },
+    { ssr: false, fallback: 'lg' }
+  );
 
   if (query.isLoading) return <LoadBar />;
   const data = query.data.filter((x) => x.status === LessonStatus.booked);
   const closeData = data.slice(0, 3);
+  if (data.length === 0) return <EmptyLessonList />;
   return (
-    <Flex gap="30px" direction={!isLargerThan1024 ? 'column' : 'row'}>
+    <Flex gap="40px" direction={isLargerThanTablet ? 'row' : 'column'}>
       <LessonsList
         lessons={closeData}
         slotVariant={SlotVariant.activeCloseList}
         title="Ближайшие занятия"
-      />
-      <Box
-        backgroundColor={Color.blue300}
-        w="1px"
-        flexShrink="0"
-        display={isLargerThan1024 ? 'block' : 'none'}
       />
       <LessonsList
         lessons={data}

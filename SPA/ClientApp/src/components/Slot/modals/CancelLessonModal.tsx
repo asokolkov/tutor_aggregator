@@ -20,7 +20,7 @@ const Body: React.FC = () => {
       <Text>Будет отменена запись к преподвавателю:</Text>
       <Text variant="regular.bold">{data.tutorName}</Text>
       <Text>Время занятия:</Text>
-      <Text variant="regular.bold">{`Время: ${data.timeRange}`}</Text>
+      <Text variant="regular.bold">{`${data.timeRange}`}</Text>
     </>
   );
 };

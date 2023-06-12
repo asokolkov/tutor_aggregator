@@ -54,6 +54,7 @@ export const LessonCalendarTab: React.FC = () => {
         start={todayStartTime}
         end={getShiftedDate(todayStartTime, columnCount - 1)}
         onDateChange={changeDate}
+        inCalendarPage={true}
       />
 
       {isLoading ? (

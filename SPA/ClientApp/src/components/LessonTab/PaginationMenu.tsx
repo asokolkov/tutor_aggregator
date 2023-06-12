@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Button, HStack, Text } from '@chakra-ui/react';
-import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
+import { Button, HStack, Text, useBreakpointValue } from '@chakra-ui/react';
 import { getDayAndMonthFromDate } from '../../utils/datetime';
 import { ButtonVariant } from '../../assets/theme/themeEnum';
 
@@ -8,33 +7,57 @@ type Props = {
   start: Date;
   end: Date;
   onDateChange: (isForward: boolean) => void;
+  inCalendarPage?: boolean;
 };
 export const PaginationMenu: React.FC<Props> = ({
   start,
   end,
   onDateChange,
+  inCalendarPage,
 }) => {
   const isOneDay = start.getDate() === end.getDate();
+  const isLargerThanTablet = useBreakpointValue(
+    { base: false, lg: true },
+    { ssr: false, fallback: 'lg' }
+  );
+
   return (
-    <HStack width="100%" spacing="30px" justify="center" p="8px">
+    <HStack
+      width="100%"
+      spacing="20px"
+      justify={isLargerThanTablet && !inCalendarPage ? 'left' : 'center'}
+      padding="20px 5vw 20px 30px"
+    >
       <Button
-        leftIcon={<ArrowBackIcon />}
         onClick={() => onDateChange(false)}
-        variant={ButtonVariant.blue200}
+        variant={
+          isLargerThanTablet && !inCalendarPage
+            ? ButtonVariant.blue100
+            : ButtonVariant.blue300
+        }
       >
-        {isOneDay ? 'Предыдущий день' : 'Предыдущий период'}
+        {isOneDay ? '←' : '← Предыдущие дни'}
       </Button>
-      <Text variant="big-semibold">
+      <Text
+        variant="regular.h3"
+        align={'center'}
+        color={
+          isLargerThanTablet && !inCalendarPage ? 'white' : 'custom.blue.300'
+        }
+      >
         {isOneDay
           ? getDayAndMonthFromDate(start)
-          : `${getDayAndMonthFromDate(start)} - ${getDayAndMonthFromDate(end)}`}
+          : `${getDayAndMonthFromDate(start)} – ${getDayAndMonthFromDate(end)}`}
       </Text>
       <Button
-        rightIcon={<ArrowForwardIcon />}
         onClick={() => onDateChange(true)}
-        variant={ButtonVariant.blue200}
+        variant={
+          isLargerThanTablet && !inCalendarPage
+            ? ButtonVariant.blue100
+            : ButtonVariant.blue300
+        }
       >
-        {isOneDay ? 'Следующий день' : 'Следующий период'}
+        {isOneDay ? '→' : 'Следующие дни →'}
       </Button>
     </HStack>
   );

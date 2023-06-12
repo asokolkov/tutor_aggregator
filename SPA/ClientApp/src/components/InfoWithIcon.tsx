@@ -16,6 +16,7 @@ const InfoWithIcon: React.FC<SearchCardInfoRowProps> = ({
       gap={isLargerThanMobile ? '8px' : '2px'}
       align={isLargerThanMobile ? 'center' : 'stretch'}
       width={'100%'}
+      overflow={'hidden'}
     >
       <Flex flexShrink="0" gap="8px">
         <Icon size={24} />
@@ -27,10 +28,10 @@ const InfoWithIcon: React.FC<SearchCardInfoRowProps> = ({
       </Flex>
       {link && text ? (
         <Link href={link} isExternal target="_top">
-          <Text>{text}</Text>
+          <Text overflowWrap={'break-word'}>{text}</Text>
         </Link>
       ) : (
-        <Text>{text || 'Не указано'}</Text>
+        <Text overflowWrap={'break-word'}>{text || 'Не указано'}</Text>
       )}
     </Flex>
   );
