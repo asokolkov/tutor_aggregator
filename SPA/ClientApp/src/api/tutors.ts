@@ -1,4 +1,5 @@
 import {
+  LessonType,
   V1LessonDto,
   V1ReviewDtoV1PageDto,
   V1TutorDto,
@@ -12,6 +13,7 @@ export interface TutorSearchParams {
   district: string;
   maxPrice: string;
   rating: string;
+  lessonType: LessonType;
 }
 
 class TutorsAPI {
@@ -22,6 +24,7 @@ class TutorsAPI {
       maxPrice: null,
       rating: null,
       subject: null,
+      lessonType: LessonType.offline,
     },
     page = 1,
     size = 30

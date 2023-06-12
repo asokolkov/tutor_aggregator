@@ -13,8 +13,8 @@ export function useSearchPageQuery(values: SearchValuesProps) {
           maxPrice: values.price || null,
           subject: values.subject || null,
           district: values.district || null,
-
           city: null,
+          lessonType: values.lessonType,
         },
         pageParam,
         30

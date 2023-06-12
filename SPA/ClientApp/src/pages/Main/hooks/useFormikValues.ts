@@ -1,9 +1,11 @@
 import { useContext } from 'react';
 import { SearchStateContext } from '../../../layouts/base/contexts/SearchStateContext';
+import { LessonType } from '../../../api/models';
 
 export type SearchProps = {
   district: string;
   subject: string;
+  lessonType: LessonType;
 };
 
 export function useFormikValues() {
@@ -13,6 +15,7 @@ export function useFormikValues() {
     : {
         district: '',
         subject: '',
+        lessonType: LessonType.offline,
       };
 
   return { initValues };

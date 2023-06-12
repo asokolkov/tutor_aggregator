@@ -1,8 +1,8 @@
 import {
   Button,
   Flex,
-  Text,
   SimpleGrid,
+  Text,
   useBreakpointValue,
 } from '@chakra-ui/react';
 import SearchCard from './components/SearchCard';
@@ -16,6 +16,7 @@ import { MAIN_PAGE } from '../../routes/routePaths';
 import { Color } from '../../assets/theme/themeEnum';
 import { SearchStateContext } from '../../layouts/base/contexts/SearchStateContext';
 import { useSearchParams } from './hooks/useSearchParams';
+import { LessonType } from '../../api/models';
 
 export const SearchPage = () => {
   const isLargerThanTablet = useBreakpointValue(
@@ -46,8 +47,7 @@ export const SearchPage = () => {
             <SearchParamsSection
               subject={values.subject}
               district={values.district}
-              // TODO: передавать реальное значение isOnline
-              isOnline={Math.random() < 0.5}
+              isOnline={values.lessonType === LessonType.online}
             />
           </Form>
         </Formik>
