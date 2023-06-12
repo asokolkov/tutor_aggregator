@@ -22,6 +22,9 @@ export const Slot: React.FC<SlotProps> = (props) => {
     [props]
   );
 
+  const lightBackground = 'linear-gradient(90deg, #7C98AA 65px, #FFFFFF 65px)';
+  const darkBackground = 'linear-gradient(90deg, #2A363D 65px, #FFFFFF 65px)';
+
   const isDateBoxVisible = !(
     props.variant === SlotVariant.tutorCalendar ||
     props.variant === SlotVariant.studentCalendar
@@ -32,12 +35,28 @@ export const Slot: React.FC<SlotProps> = (props) => {
         <VStack
           borderRadius="10px"
           borderWidth="2px"
-          borderColor="blue.200"
+          borderColor={'custom.blue.300'}
           overflow="hidden"
           width="100%"
+          spacing={'0'}
         >
           {isDateBoxVisible && <DateBox />}
-          <HStack w="100%" spacing="0">
+          <HStack
+            w="100%"
+            spacing="0"
+            background={
+              props.variant === SlotVariant.activeCloseList ||
+              props.variant === SlotVariant.activeAllList
+                ? darkBackground
+                : props.variant === SlotVariant.tutorCalendar
+                ? props.bookedBy === BookedBy.someone
+                  ? darkBackground
+                  : lightBackground
+                : props.bookedBy !== BookedBy.someone
+                ? darkBackground
+                : lightBackground
+            }
+          >
             <TimeBox />
             <SlotInfo />
           </HStack>

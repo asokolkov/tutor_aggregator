@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useContext } from 'react';
 import { SlotContext } from './contexts/SlotContext';
-import { VStack, Text } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 import { getTimeFromDate } from '../../utils/datetime';
 
 export const TimeBox: React.FC = () => {
@@ -10,17 +10,22 @@ export const TimeBox: React.FC = () => {
   const endTime = endDate ? getTimeFromDate(endDate) : '??:??';
 
   return (
-    <VStack
-      w="66px"
-      p="0 8px"
-      spacing="0"
+    <Flex
+      w="70px"
+      p="8px"
+      gap="0"
       h="100%"
-      borderRightWidth="2px"
-      borderRightColor="blue.200"
+      minH={'100%'}
+      direction={'column'}
+      align={'center'}
     >
-      <Text variant="semibold">{startTime}</Text>
-      <Text variant="semibold">|</Text>
-      <Text variant="semibold">{endTime}</Text>
-    </VStack>
+      <Text variant="regular.bold" color={'white'}>
+        {startTime}
+      </Text>
+      <Text color={'white'}>|</Text>
+      <Text variant="regular.bold" color={'white'}>
+        {endTime}
+      </Text>
+    </Flex>
   );
 };
