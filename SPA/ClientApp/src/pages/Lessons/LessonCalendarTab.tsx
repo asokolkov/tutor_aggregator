@@ -12,9 +12,6 @@ import { PaginationMenu } from '../../components/LessonTab/PaginationMenu';
 import { getShiftedDate } from '../../utils/datetime';
 
 export const LessonCalendarTab: React.FC = () => {
-  const { user } = useContext(UserContext);
-  const userId = user.id;
-
   const [columnCount, setColumnCount] = useState(1);
   const dimensions = useWindowDimensions();
 
@@ -46,6 +43,8 @@ export const LessonCalendarTab: React.FC = () => {
     });
   };
 
+  const { user } = useContext(UserContext);
+  const userId = user.id;
   const { queries } = useLessonTab(userId, columnCount, todayStartTime);
   const isLoading = queries.some((query) => query.isLoading);
 

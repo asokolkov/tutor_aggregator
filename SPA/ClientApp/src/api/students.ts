@@ -1,5 +1,5 @@
 import axiosInstance from './_share';
-import { V1StudentDto, V1StudentDtoV1PageDto } from './models';
+import { V1LessonDto, V1StudentDto, V1StudentDtoV1PageDto } from './models';
 
 export default class StudentAPI {
   static async getStudents(
@@ -31,5 +31,12 @@ export default class StudentAPI {
 
   static async putCurrentProfileValues(student: V1StudentDto) {
     await axiosInstance.put('api/v1/students', { ...student });
+  }
+
+  static async getAllStudentLessons(): Promise<V1LessonDto[]> {
+    const response = await axiosInstance.get<V1LessonDto[]>(
+      'api/v1/students/current/lessons'
+    );
+    return response.data;
   }
 }

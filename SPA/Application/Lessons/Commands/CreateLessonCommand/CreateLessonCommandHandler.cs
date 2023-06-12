@@ -26,10 +26,9 @@ internal sealed class
     public async Task<Lesson?> Handle(CreateLessonCommand request, CancellationToken cancellationToken)
     {
         var lessons =
-            (await lessonsRepository.GetTutorLessonsAsync(request.TutorId, request.Start))
-            .UnionBy(await lessonsRepository.GetTutorLessonsAsync(request.TutorId, request.End), lesson => lesson.Id);
-        if (lessons.Any(lesson => request.Start <= lesson.Start && request.Start < request.End ||
-                                  request.Start < lesson.End && lesson.End <= request.End))
+            await lessonsRepository.GetTutorLessonsAsync(request.TutorId, request.Start.AddDays(-1),
+                request.End.AddDays(1));
+        if (lessons.Any(lesson => request.Start < lesson.End && request.End > lesson.Start))
         {
             throw new ConflictException("Lesson intersects with other lessons");
         }

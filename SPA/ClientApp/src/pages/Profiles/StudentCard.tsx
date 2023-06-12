@@ -11,8 +11,6 @@ import { TooltipType } from './components/_shared';
 import { SelectOptionsRow } from './components/SelectOptionsRow';
 import { TextAreaRow } from './components/TextAreaRow';
 import { AvatarSection } from './components/AvatarSection';
-import { FileUpload } from './components/FileUpload';
-import AvatarAPI from '../../api/avatars';
 import { StudentInitValues, useStudentForm } from './hooks/useForm';
 
 export const StudentCard: React.FC = () => {

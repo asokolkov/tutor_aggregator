@@ -13,22 +13,31 @@ import {
 import { DisclosureProps } from '../disclosureProps';
 import InfoWithIcon from '../InfoWithIcon';
 import { SiTelegram } from 'react-icons/si';
-import { V1ContactsDto, V1ContactTypeDto } from '../../api/models';
+import { V1ContactTypeDto } from '../../api/models';
 import { MdPhone, MdEmail } from 'react-icons/md';
+import { useContext } from 'react';
+import { ContactModalContext } from './contexts/ContactModalContext';
 
-export const ContactsModal: React.FC<Props> = ({ disclosure, contacts }) => {
+export const ContactsModal: React.FC<Props> = ({ disclosure }) => {
   const { isOpen, onClose } = disclosure;
-  const contactsByType = (type: V1ContactTypeDto) =>
-    contacts
-      .filter((x) => x.type === type)
-      .map((x) => (type === V1ContactTypeDto.telegram ? '@' : '') + x.value)
-      .join(', ');
+  const { contacts } = useContext(ContactModalContext);
+  const contactsByType = (type: V1ContactTypeDto) => {
+    const singleContact = contacts.filter((x) => x.type === type)[0]?.value;
+    if (!singleContact) return undefined;
+    switch (type) {
+      case V1ContactTypeDto.phone:
+        return '+7' + singleContact;
+      case V1ContactTypeDto.telegram:
+        return '@' + singleContact;
+    }
+    return singleContact;
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Контакты преподавателя</ModalHeader>
+        <ModalHeader>Контакты</ModalHeader>
         <ModalCloseButton />
 
         <ModalBody>
@@ -36,17 +45,17 @@ export const ContactsModal: React.FC<Props> = ({ disclosure, contacts }) => {
             <InfoWithIcon
               Icon={SiTelegram}
               categoryText="Телеграм"
-              text={contactsByType(V1ContactTypeDto.telegram)}
+              text={contactsByType(V1ContactTypeDto.telegram) || 'Не указано'}
             />
             <InfoWithIcon
               Icon={MdEmail}
               categoryText="Почта"
-              text={contactsByType(V1ContactTypeDto.email)}
+              text={contactsByType(V1ContactTypeDto.email) || 'Не указано'}
             />
             <InfoWithIcon
               Icon={MdPhone}
               categoryText="Телефон"
-              text={contactsByType(V1ContactTypeDto.phone)}
+              text={contactsByType(V1ContactTypeDto.phone) || 'Не указано'}
             />
           </VStack>
         </ModalBody>
@@ -63,5 +72,4 @@ export const ContactsModal: React.FC<Props> = ({ disclosure, contacts }) => {
 
 type Props = {
   disclosure: DisclosureProps;
-  contacts: V1ContactsDto[];
 };

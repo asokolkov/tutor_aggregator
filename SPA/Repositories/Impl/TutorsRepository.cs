@@ -5,6 +5,8 @@ using EFCore.Postgres.Application.Contexts;
 using EFCore.Postgres.Application.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using SPA.Domain;
+using DomainLessonType = SPA.Domain.LessonType;
+using EntityLessonType = EFCore.Postgres.Application.Models.Entities.LessonType;
 
 namespace SPA.Repositories.Impl;
 
@@ -25,15 +27,17 @@ internal sealed class TutorsRepository : ITutorsRepository
     }
 
     public async Task<Page<Tutor>> GetPageAsync(int page, int size, string? subject, string? city, string? district,
-        int? maxPrice, int? rating)
+        int? maxPrice, int? rating, DomainLessonType? lessonsType)
     {
         var filteredEntities = await context.Tutors
             .OrderBy(x => x.Id)
-            .Where(x => x.Location != null && (city == null || x.Location.City == city))
-            .Where(x => x.Location != null && (district == null || x.Location.District == district))
-            .Where(x => x.Subjects.Count > 0 && (subject == null || x.Subjects.FirstOrDefault(y => y.Description == subject) != null))
-            .Where(x => rating == null || (int)x.Rating == rating)
-            .Where(x => maxPrice == null || (x.Lessons.Any() ? x.Lessons.Max(y => y.Price) : -1) <= maxPrice)
+            .Where(x => x.Subjects.Count > 0)
+            .Where(x => city == null || x.Location == null || x.Location.City == city)
+            .Where(x => district == null || x.Location == null || x.Location.District == district)
+            .Where(x => subject == null || x.Subjects.FirstOrDefault(y => y.Description == subject) != null)
+            .Where(x => rating == null || x.Rating >= rating)
+            .Where(x => maxPrice == null || x.Lessons.Any(y => y.Price <= maxPrice))
+            .Where(x => lessonsType == null || x.Lessons.Any(y => y.Type == (EntityLessonType)lessonsType))
             .ToListAsync();
 
         var entities = mapper.Map<List<Tutor>>(filteredEntities.Skip(page * size).Take(size));
