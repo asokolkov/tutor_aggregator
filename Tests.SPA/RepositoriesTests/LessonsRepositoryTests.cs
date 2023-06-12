@@ -287,4 +287,47 @@ internal sealed class LessonsRepositoryTests
             Assert.That(result, Has.Count.EqualTo(0));
         });
     }
+    
+    [Test]
+    public async Task InsertAsync_ValidTutorId_ReturnsLesson()
+    {
+        var entity = new TutorEntity { Id = Guid.NewGuid(), FirstName = "", LastName = "" };
+        await context.Tutors.AddRangeAsync(entity);
+        await context.SaveChangesAsync();
+
+        var lesson = new Lesson
+        {
+            Id = Guid.NewGuid(),
+            Status = global::SPA.Domain.LessonStatus.Empty,
+            Tutor = null,
+            Student = null
+        };
+        var result = (await repository.InsertAsync(entity.Id, lesson))!;
+        
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.InstanceOf<Lesson>());
+            Assert.That(result.Id, Is.EqualTo(lesson.Id));
+            Assert.That(result.Tutor.Id, Is.EqualTo(entity.Id));
+        });
+    }
+    
+    [Test]
+    public async Task InsertAsync_InvalidTutorId_ReturnsNull()
+    {
+        var entity = new TutorEntity { Id = Guid.NewGuid(), FirstName = "", LastName = "" };
+        await context.Tutors.AddRangeAsync(entity);
+        await context.SaveChangesAsync();
+
+        var lesson = new Lesson
+        {
+            Id = Guid.NewGuid(),
+            Status = global::SPA.Domain.LessonStatus.Empty,
+            Tutor = null,
+            Student = null
+        };
+        var result = await repository.InsertAsync(Guid.NewGuid(), lesson);
+        
+        Assert.That(result, Is.Null);
+    }
 }

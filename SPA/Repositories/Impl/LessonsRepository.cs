@@ -93,11 +93,13 @@ public sealed class LessonsRepository : ILessonsRepository
 
     public async Task<Lesson?> MakeBookedAsync(Guid studentId, Guid lessonId)
     {
+        //note: вообще надо нафиг убрать Make...Async и сделать Update, через который менять статусы
         var student = await context.Students.FindAsync(studentId);
         if (student is null)
             return null;
 
         var lesson = await context.Lessons.FindAsync(lessonId);
+        //note: правую часть не проверяю в тестах, так как она тут не нужна - это бизнес логика
         if (lesson is null || lesson.Status != LessonStatus.Empty)
             return null;
         
@@ -110,7 +112,9 @@ public sealed class LessonsRepository : ILessonsRepository
 
     public async Task<Lesson?> MakeDeletedAsync(Guid id)
     {
+        //note: вообще надо нафиг убрать Make...Async и сделать Update, через который менять статусы
         var lesson = await context.Lessons.FindAsync(id);
+        // note: правую часть не проверяю в тестах, так как она тут не нужна - это бизнес логика
         if (lesson is null || (lesson.Status != LessonStatus.Empty && lesson.Status != LessonStatus.Booked))
             return null;
         //note: не нашел где используется и как это удаление, тут проблема можнет быть в том, что этот фильтр теперь нужно накладывать на все записи
@@ -123,8 +127,10 @@ public sealed class LessonsRepository : ILessonsRepository
     
     public async Task<Lesson?> MakeEmptyAsync(Guid id)
     {
+        //note: вообще надо нафиг убрать Make...Async и сделать Update, через который менять статусы
         var lesson = await context.Lessons.FindAsync(id);
         //note: кажется проверка статуса здесь это доменная логика, а не репозиторная
+        //note: правую часть не проверяю в тестах, так как она тут не нужна - это бизнес логика
         if (lesson is null || lesson.Status != LessonStatus.Booked)
             return null;
         
