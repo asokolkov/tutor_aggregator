@@ -1,16 +1,19 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import { Button, HStack } from '@chakra-ui/react';
 import { ChatIcon, CloseIcon } from '@chakra-ui/icons';
-import { useContext } from 'react';
 import { ModalContext } from '../contexts/ModalContext';
 import { useDataForModal } from '../hooks/useDataForModal';
 import { ContactModalContext } from '../../ContactsModal/contexts/ContactModalContext';
 import { SlotContext } from '../contexts/SlotContext';
+import { UserContext } from '../../../layouts/base/contexts/UserContext';
+import { V1AccountTypeDto } from '../../../api/models';
 
 export const ActiveList: React.FC = () => {
   const { contacts } = useContext(SlotContext);
   const { setData, cancelDisc } = useContext(ModalContext);
   const { setContacts, disclosure } = useContext(ContactModalContext);
+  const { user } = useContext(UserContext);
   const { data } = useDataForModal();
   const onCancelClick = () => {
     setData(data);
@@ -34,14 +37,16 @@ export const ActiveList: React.FC = () => {
         Показать контакты
       </Button>
 
-      <Button
-        rightIcon={<CloseIcon />}
-        h="30px"
-        onClick={onCancelClick}
-        variant="red"
-      >
-        Отменить
-      </Button>
+      {user.accountType === V1AccountTypeDto.student && (
+        <Button
+          rightIcon={<CloseIcon />}
+          h="30px"
+          onClick={onCancelClick}
+          variant="red"
+        >
+          Отменить
+        </Button>
+      )}
     </HStack>
   );
 };

@@ -9,22 +9,23 @@ import { StudentCalendar } from './ButtonGroups/StudentCalendar';
 import { BookedBy, SlotVariant } from './Slot';
 import { ActiveList } from './ButtonGroups/ActiveList';
 import { PastList } from './ButtonGroups/PastList';
+import { UserContext } from '../../layouts/base/contexts/UserContext';
+import { V1AccountTypeDto } from '../../api/models';
 
 const renderButtonSection = (variant: SlotVariant): React.FC => {
-  switch (variant) {
-    case SlotVariant.tutorCalendar:
-      return TutorCalendar;
-    case SlotVariant.studentCalendar:
-      return StudentCalendar;
-    case SlotVariant.activeCloseList:
-      return ActiveList;
-    case SlotVariant.activeAllList:
-      return ActiveList;
-    case SlotVariant.pastList:
-      return PastList;
-    default:
-      return undefined;
-  }
+  const { user } = useContext(UserContext);
+  if (variant === SlotVariant.tutorCalendar) return TutorCalendar;
+  if (variant === SlotVariant.studentCalendar) return StudentCalendar;
+  if (
+    variant === SlotVariant.activeCloseList ||
+    variant === SlotVariant.activeAllList
+  )
+    return ActiveList;
+  if (
+    variant === SlotVariant.pastList &&
+    user.accountType === V1AccountTypeDto.student
+  )
+    return PastList;
 };
 
 export const SlotInfo: React.FC = () => {
