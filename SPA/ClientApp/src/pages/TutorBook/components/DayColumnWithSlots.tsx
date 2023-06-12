@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VStack } from '@chakra-ui/react';
+import { useBreakpointValue, VStack } from '@chakra-ui/react';
 import { Title } from '../../Lessons/components/LessonCalendarTab/Title';
 import { Slot, SlotVariant } from '../../../components/Slot/Slot';
 import { V1LessonDto } from '../../../api/models';
@@ -13,10 +13,14 @@ export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
   if (!lessons) lessons = [];
   const bookedCount = lessons.filter((x) => x.student).length;
   const sortedLessons = lessons.sort((x) => new Date(x.start).getTime());
+  const isLargerThanTablet = useBreakpointValue(
+    { base: false, lg: true },
+    { ssr: false, fallback: 'lg' }
+  );
 
   return (
     <VStack
-      w="260px"
+      w={isLargerThanTablet ? '260px' : '300px'}
       spacing="30px"
       style={{ breakInside: 'avoid' }}
       minH="50vh"

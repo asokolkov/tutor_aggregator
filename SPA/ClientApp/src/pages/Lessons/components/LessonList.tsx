@@ -12,10 +12,12 @@ export const LessonsList: React.FC<Props> = ({
   return (
     <Flex gap="20px" direction="column" w="100%">
       <Text variant="regular.h2">{title}</Text>
-      {lessons.map((lesson) => {
-        const { props } = useSlot(lesson, slotVariant);
-        return <Slot {...props} key={lesson.id} />;
-      })}
+      <Flex width={'100%'} direction={'column'}>
+        {lessons.map((lesson) => {
+          const { props } = useSlot(lesson, slotVariant);
+          return <Slot {...props} key={lesson.id} />;
+        })}
+      </Flex>
     </Flex>
   );
 };
