@@ -14,13 +14,15 @@ import { MdSchool, MdBusinessCenter } from 'react-icons/md';
 import { getTutorCardByIdPath } from '../../../routes/routes';
 import { V1TutorDto } from '../../../api/models';
 import { getFullName } from '../../../utils/names';
-import { getAvatarUri } from '../../../utils/helper';
+import { useAvatarQuery } from '../../../query/useAvatarQuery';
 
 const SearchCard: React.FC<SearchCardInfoProps> = ({ tutor }) => {
   const { firstName, lastName, educations, job, rating, id } = tutor;
   const fullName = getFullName(firstName, lastName);
 
   const navigate = useNavigate();
+  const { avatar } = useAvatarQuery(id);
+
   return (
     <VStack
       borderWidth="2px"
@@ -32,12 +34,7 @@ const SearchCard: React.FC<SearchCardInfoProps> = ({ tutor }) => {
     >
       <VStack spacing="20px" w="100%">
         <VStack spacing="10px" width={'100%'}>
-          <Avatar
-            name={fullName}
-            border="0px"
-            size="2xl"
-            src={getAvatarUri(tutor.id)}
-          />
+          <Avatar name={fullName} border="0px" size="2xl" src={avatar} />
           <VStack spacing="5px" overflow={'hidden'} maxWidth={'100%'}>
             <Heading
               variant="regular.h2"

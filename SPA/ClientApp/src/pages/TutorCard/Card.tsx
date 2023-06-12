@@ -19,8 +19,8 @@ import {
   MdAssignment,
 } from 'react-icons/md';
 import { V1ContactsDto } from '../../api/models';
-import { getAvatarUri } from '../../utils/helper';
 import { ContactModalContext } from '../../components/ContactsModal/contexts/ContactModalContext';
+import { useAvatarQuery } from '../../query/useAvatarQuery';
 
 export const Card: React.FC<CardInfoProps> = (props) => {
   const providerValue = useMemo(() => ({ ...props }), [props]);
@@ -28,6 +28,8 @@ export const Card: React.FC<CardInfoProps> = (props) => {
     { base: false, lg: true },
     { ssr: false, fallback: 'lg' }
   );
+
+  const { avatar } = useAvatarQuery(props.id);
 
   return (
     <CardInfoContext.Provider value={providerValue}>
@@ -46,11 +48,7 @@ export const Card: React.FC<CardInfoProps> = (props) => {
             isLargerThanTablet ? '10px 10px 10px 5vw' : '20px 10px 0 10px'
           }
         >
-          <Avatar
-            name={props.fullName}
-            size={'2xl'}
-            src={getAvatarUri(props.id)}
-          />
+          <Avatar name={props.fullName} size={'2xl'} src={avatar} />
         </Box>
         <VStack
           spacing="8px"
