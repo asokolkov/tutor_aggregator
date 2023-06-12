@@ -1,9 +1,11 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import { SelectOptions } from './SelectOptions';
 import { Button, Grid, GridItem, useBreakpointValue } from '@chakra-ui/react';
-import { useContext } from 'react';
 import { SearchParamsContext } from '../contexts/SearchParamsContext';
 import { LessonType } from '../../../api/models';
+import { useFormikContext } from 'formik';
+import { SearchValuesProps } from '../../Search/hooks/useSearchParams';
 
 export const FormBody: React.FC = () => {
   const { subjectsData, locationsData } = useContext(SearchParamsContext);
@@ -11,6 +13,7 @@ export const FormBody: React.FC = () => {
     { base: false, lg: true },
     { ssr: false, fallback: 'lg' }
   );
+  const { values } = useFormikContext<SearchValuesProps>();
 
   // noinspection NonAsciiCharacters
   return (
@@ -46,8 +49,10 @@ export const FormBody: React.FC = () => {
           name="district"
           placeholder="Любой"
           isDesktop={isLargerThanTablet}
+          isDisabled={values.lessonType === LessonType.online}
         />
       </GridItem>
+
       <GridItem area={'online'}>
         <SelectOptions
           label={'Формат'}

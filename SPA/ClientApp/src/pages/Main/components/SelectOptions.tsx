@@ -9,6 +9,7 @@ export const SelectOptions: React.FC<SelectOptionsProps> = ({
   name,
   placeholder,
   isDesktop,
+  isDisabled,
 }) => {
   const [field] = useField({ name });
 
@@ -32,6 +33,7 @@ export const SelectOptions: React.FC<SelectOptionsProps> = ({
         width={'100%'}
         fontSize={'lg'}
         placeholder={placeholder}
+        isDisabled={isDisabled}
       >
         {options?.map((option) => (
           <option value={optionsMap ? optionsMap[option] : option} key={option}>
@@ -50,4 +52,5 @@ type SelectOptionsProps = {
   name: string;
   placeholder?: string;
   isDesktop: boolean;
+  isDisabled?: boolean;
 };
