@@ -22,15 +22,7 @@ export const ContactsModal: React.FC<Props> = ({ disclosure }) => {
   const { isOpen, onClose } = disclosure;
   const { contacts } = useContext(ContactModalContext);
   const contactsByType = (type: V1ContactTypeDto) => {
-    const singleContact = contacts.filter((x) => x.type === type)[0]?.value;
-    if (!singleContact) return undefined;
-    switch (type) {
-      case V1ContactTypeDto.phone:
-        return '+7' + singleContact;
-      case V1ContactTypeDto.telegram:
-        return '@' + singleContact;
-    }
-    return singleContact;
+    return contacts.filter((x) => x.type === type)[0]?.value;
   };
 
   return (
