@@ -45,7 +45,7 @@ export const SelectOptions: React.FC<SelectOptionsProps> = ({
 
 type SelectOptionsProps = {
   options: string[];
-  optionsMap?: { [index: string]: number };
+  optionsMap?: { [index: string]: any };
   label: string;
   name: string;
   placeholder?: string;

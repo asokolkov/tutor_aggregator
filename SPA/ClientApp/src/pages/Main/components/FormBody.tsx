@@ -3,6 +3,7 @@ import { SelectOptions } from './SelectOptions';
 import { Button, Grid, GridItem, useBreakpointValue } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { SearchParamsContext } from '../contexts/SearchParamsContext';
+import { LessonType } from '../../../api/models';
 
 export const FormBody: React.FC = () => {
   const { subjectsData, locationsData } = useContext(SearchParamsContext);
@@ -11,6 +12,7 @@ export const FormBody: React.FC = () => {
     { ssr: false, fallback: 'lg' }
   );
 
+  // noinspection NonAsciiCharacters
   return (
     <Grid
       templateAreas={
@@ -49,9 +51,9 @@ export const FormBody: React.FC = () => {
       <GridItem area={'online'}>
         <SelectOptions
           label={'Формат'}
-          options={['Онлайн']}
-          name="online"
-          placeholder="Офлайн"
+          options={['Офлайн', 'Онлайн']}
+          optionsMap={{ Офлайн: LessonType.offline, Онлайн: LessonType.online }}
+          name="lessonType"
           isDesktop={isLargerThanTablet}
         />
       </GridItem>
