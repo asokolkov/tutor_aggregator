@@ -51,6 +51,7 @@ export type SlotProps = {
   startDate: Date;
   endDate: Date;
   lessonId: string;
+  tutorId: string;
   bookedBy: BookedBy;
   type: LessonType;
   price: number;

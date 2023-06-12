@@ -13,25 +13,22 @@ import {
 import { DisclosureProps } from '../disclosureProps';
 import InfoWithIcon from '../InfoWithIcon';
 import { SiTelegram } from 'react-icons/si';
-import { V1ContactTypeDto } from '../../api/models';
+import { V1ContactsDto, V1ContactTypeDto } from '../../api/models';
 import { MdPhone, MdEmail } from 'react-icons/md';
 import { useContext } from 'react';
 import { ContactModalContext } from './contexts/ContactModalContext';
 
-export const ContactsModal: React.FC<Props> = ({ disclosure }) => {
-  const { isOpen, onClose } = disclosure;
-  const { contacts } = useContext(ContactModalContext);
+export const ContactsModal: React.FC<Props> = (props) => {
+  const { isOpen, onClose } = props.disclosure;
+  const contactModalContext = useContext(ContactModalContext);
+  const contacts = props.contacts ?? contactModalContext.contacts ?? [];
   const contactsByType = (type: V1ContactTypeDto) => {
-    const singleContact = contacts.filter((x) => x.type === type)[0]?.value;
-    if (!singleContact) return undefined;
-    switch (type) {
-      case V1ContactTypeDto.phone:
-        return '+7' + singleContact;
-      case V1ContactTypeDto.telegram:
-        return '@' + singleContact;
-    }
-    return singleContact;
+    return contacts.filter((x) => x.type === type)[0]?.value;
   };
+
+  const telegram = contactsByType(V1ContactTypeDto.telegram);
+  const phone = contactsByType(V1ContactTypeDto.phone);
+  const mail = contactsByType(V1ContactTypeDto.email);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -45,17 +42,20 @@ export const ContactsModal: React.FC<Props> = ({ disclosure }) => {
             <InfoWithIcon
               Icon={SiTelegram}
               categoryText="Телеграм"
-              text={contactsByType(V1ContactTypeDto.telegram) || 'Не указано'}
+              text={telegram}
+              link={`https://t.me/${telegram}`}
             />
             <InfoWithIcon
               Icon={MdEmail}
               categoryText="Почта"
-              text={contactsByType(V1ContactTypeDto.email) || 'Не указано'}
+              text={mail}
+              link={`mailto://${mail}`}
             />
             <InfoWithIcon
               Icon={MdPhone}
               categoryText="Телефон"
-              text={contactsByType(V1ContactTypeDto.phone) || 'Не указано'}
+              text={phone}
+              link={`tel://${phone}`}
             />
           </VStack>
         </ModalBody>
@@ -72,4 +72,5 @@ export const ContactsModal: React.FC<Props> = ({ disclosure }) => {
 
 type Props = {
   disclosure: DisclosureProps;
+  contacts?: V1ContactsDto[];
 };

@@ -25,7 +25,7 @@ export const FormBody: React.FC = () => {
       }
       gridTemplateRows={isLargerThanTablet ? 'auto' : 'auto auto auto auto'}
       gridTemplateColumns={isLargerThanTablet ? '30% 20% 30% 20%' : '100%'}
-      width={isLargerThanTablet ? '80vw' : '92vw'}
+      width={isLargerThanTablet ? '80vw' : '100%'}
       maxWidth={'1100px'}
       alignItems={'flex-end'}
       gap={'8px'}

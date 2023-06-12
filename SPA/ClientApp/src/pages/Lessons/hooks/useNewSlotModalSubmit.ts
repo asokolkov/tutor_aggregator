@@ -42,7 +42,7 @@ export function useNewSlotModalSubmit(
     } catch (err) {
       if (isAxiosError(err) && err.response.status === 409) {
         setRequestErrorMessage(
-          'На это время уже создан слот. Укажите другое время начала и конца занятия.'
+          'Слот должен быть создан на один день, время конца должно быть позже времени начала.'
         );
       }
       setError(true);

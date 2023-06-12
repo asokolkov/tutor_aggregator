@@ -9,12 +9,21 @@ export const NameSurnameField: React.FC = () => {
     <FormControl>
       <FormLabel htmlFor="email">Имя и фамилия</FormLabel>
       <HStack>
-        <Input id="name" type="text" placeholder="Введите имя" {...nameField} />
+        <Input
+          id="name"
+          type="text"
+          placeholder="Введите имя"
+          {...nameField}
+          maxLength={32}
+          required
+        />
         <Input
           id="surname"
           type="text"
           placeholder="Введите фамилию"
           {...surnameField}
+          maxLength={32}
+          required
         />
       </HStack>
     </FormControl>

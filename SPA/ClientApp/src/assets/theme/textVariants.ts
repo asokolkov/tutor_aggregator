@@ -5,13 +5,14 @@ export const textVariants = {
   baseStyle: {
     fontFamily: "'Inter', sans-serif",
     fontSize: '18px',
-    fontWeight: 'regular',
+    fontWeight: 'normal',
     lineHeight: '130%',
   },
   variants: {
     'regular.bold': {
+      fontSize: '18px',
       fontWeight: 'semibold',
-      lineHeight: '150%',
+      lineHeight: '130%',
     },
     'regular.h1': {
       fontSize: '32px',
@@ -40,8 +41,8 @@ export const textVariants = {
     },
     'misc.button': buttonTextVariant,
     'misc.logo-addition': {
-      fontSize: '16px',
-      lineHeight: '175%',
+      fontSize: '14px',
+      lineHeight: '120%',
       textDecoration: 'underline',
     },
     'misc.small-button': {

@@ -1,29 +1,17 @@
 import { SingleReview } from './components/SingleReview';
-import {
-  Flex,
-  Text,
-  useDisclosure,
-  VStack,
-  IconButton,
-  useBreakpointValue,
-} from '@chakra-ui/react';
-import React, { useContext } from 'react';
+import { Flex, Text, VStack, useBreakpointValue } from '@chakra-ui/react';
+import React from 'react';
 import { MapSingleReview } from './_mapper';
-import NewReviewModal from './modal/NewReviewModal';
-import { UserContext } from '../../layouts/base/contexts/UserContext';
-import { V1AccountTypeDto, V1ReviewDtoV1PageDto } from '../../api/models';
-import { AddIcon } from '@chakra-ui/icons';
+import { V1ReviewDtoV1PageDto } from '../../api/models';
 
 export const ReviewSection: React.FC<Props> = ({ reviews }) => {
-  const { user, isAuthorized } = useContext(UserContext);
-  const disclosure = useDisclosure();
   const isLargerThanTablet = useBreakpointValue(
     { base: false, lg: true },
     { ssr: false, fallback: 'lg' }
   );
 
   return (
-    <VStack w="100%" spacing="20px" align="start" margin={'40px 0 0 0'}>
+    <VStack w="100%" spacing="20px" align="start" marginTop={'30px !important'}>
       <Flex
         gap={isLargerThanTablet ? '30px' : '0'}
         alignItems={'center'}
@@ -36,19 +24,6 @@ export const ReviewSection: React.FC<Props> = ({ reviews }) => {
             Всего отзывов: {reviews.items.length}
           </Text>
         </Flex>
-
-        {isAuthorized && user.accountType === V1AccountTypeDto.student && (
-          <>
-            <IconButton
-              variant="green"
-              aria-label="Добавить отзыв"
-              size="sm"
-              icon={<AddIcon />}
-              onClick={disclosure.onOpen}
-            />
-            <NewReviewModal disclosure={disclosure} />
-          </>
-        )}
       </Flex>
       {reviews.items.map((review) => (
         <SingleReview {...MapSingleReview(review)} key={review.id} />

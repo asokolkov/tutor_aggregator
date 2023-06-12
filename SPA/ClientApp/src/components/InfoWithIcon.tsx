@@ -1,11 +1,12 @@
 import React from 'react';
-import { Flex, Text, useMediaQuery } from '@chakra-ui/react';
+import { Flex, Link, Text, useMediaQuery } from '@chakra-ui/react';
 import { IconType } from 'react-icons';
 
 const InfoWithIcon: React.FC<SearchCardInfoRowProps> = ({
   Icon,
   text,
   categoryText,
+  link,
 }) => {
   const isWithCategoryText = categoryText.length > 0;
   const [isLargerThanMobile] = useMediaQuery('(min-width: 468px)');
@@ -25,7 +26,13 @@ const InfoWithIcon: React.FC<SearchCardInfoRowProps> = ({
           </Text>
         )}
       </Flex>
-      <Text overflowWrap={'break-word'}>{text}</Text>
+      {link && text ? (
+        <Link href={link} isExternal target="_top">
+          <Text overflowWrap={'break-word'}>{text}</Text>
+        </Link>
+      ) : (
+        <Text overflowWrap={'break-word'}>{text || 'Не указано'}</Text>
+      )}
     </Flex>
   );
 };
@@ -36,4 +43,5 @@ interface SearchCardInfoRowProps {
   Icon: IconType;
   categoryText: string;
   text: string;
+  link?: string;
 }
