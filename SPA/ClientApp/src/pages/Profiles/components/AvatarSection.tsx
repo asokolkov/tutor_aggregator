@@ -10,11 +10,16 @@ import { getAvatarUri } from '../../../utils/helper';
 export const AvatarSection: React.FC = () => {
   const { user } = useContext(UserContext);
   const [avatarSrc, setAvatarSrc] = useState<string>(getAvatarUri(user.id));
+  const [isLoading, setLoading] = useState(false);
 
   const onAvatarChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    setLoading(true);
     const avatarFile = event.target.files[0];
-    await AvatarAPI.uploadAvatar(avatarFile);
-    setAvatarSrc(getAvatarUri(`${user.id}?${new Date().getTime()}`));
+    try {
+      await AvatarAPI.uploadAvatar(avatarFile);
+      setAvatarSrc(getAvatarUri(`${user.id}?${new Date().getTime()}`));
+    } catch {}
+    setLoading(false);
   };
 
   const isDesktop = useBreakpointValue({ base: false, lg: true });
@@ -36,6 +41,7 @@ export const AvatarSection: React.FC = () => {
           colorScheme={'blue'}
           margin={isDesktop ? '0 0 0 0' : '0 0 1.5em 0'}
           justifyContent="center"
+          isLoading={isLoading}
         >
           Изменить фото
         </Button>
