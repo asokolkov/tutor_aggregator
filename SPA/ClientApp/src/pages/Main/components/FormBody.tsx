@@ -3,6 +3,7 @@ import { SelectOptions } from './SelectOptions';
 import { Button, Grid, GridItem, useBreakpointValue } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { SearchParamsContext } from '../contexts/SearchParamsContext';
+import { LessonType } from '../../../api/models';
 
 export const FormBody: React.FC = () => {
   const { subjectsData, locationsData } = useContext(SearchParamsContext);
@@ -11,17 +12,19 @@ export const FormBody: React.FC = () => {
     { ssr: false, fallback: 'lg' }
   );
 
+  // noinspection NonAsciiCharacters
   return (
     <Grid
       templateAreas={
         isLargerThanTablet
-          ? `"subject district button"`
+          ? `"subject online district button"`
           : `"subject"
+                  "online"
                   "district"
                   "button"`
       }
-      gridTemplateRows={isLargerThanTablet ? 'auto' : 'auto auto auto'}
-      gridTemplateColumns={isLargerThanTablet ? '40% 40% 20%' : '100%'}
+      gridTemplateRows={isLargerThanTablet ? 'auto' : 'auto auto auto auto'}
+      gridTemplateColumns={isLargerThanTablet ? '30% 20% 30% 20%' : '100%'}
       width={isLargerThanTablet ? '80vw' : '92vw'}
       maxWidth={'1100px'}
       alignItems={'flex-end'}
@@ -42,6 +45,15 @@ export const FormBody: React.FC = () => {
           options={locationsData.map((location) => location.district)}
           name="district"
           placeholder="Любой"
+          isDesktop={isLargerThanTablet}
+        />
+      </GridItem>
+      <GridItem area={'online'}>
+        <SelectOptions
+          label={'Формат'}
+          options={['Офлайн', 'Онлайн']}
+          optionsMap={{ Офлайн: LessonType.offline, Онлайн: LessonType.online }}
+          name="lessonType"
           isDesktop={isLargerThanTablet}
         />
       </GridItem>

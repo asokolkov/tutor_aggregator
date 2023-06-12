@@ -28,7 +28,12 @@ export const MainSearchBox: React.FC = () => {
       backgroundRepeat={'no-repeat'}
       backgroundSize={'14em'}
     >
-      <Text variant={'brand.h1'} color={'custom.blue.300'} align={'center'}>
+      <Text
+        variant={'brand.h1'}
+        color={'custom.blue.300'}
+        align={'center'}
+        marginBottom={isLargerThanTablet ? '0' : '10px'}
+      >
         Найдем репетиторов под&nbsp;твои цели
       </Text>
       <Formik initialValues={initValues} onSubmit={onSubmit}>

@@ -3,6 +3,7 @@ import './styles.css';
 
 export const textVariants = {
   baseStyle: {
+    fontFamily: "'Inter', sans-serif",
     fontSize: '18px',
     fontWeight: 'regular',
     lineHeight: '130%',
@@ -28,7 +29,7 @@ export const textVariants = {
     },
 
     'misc.link': {
-      fontSize: '22px',
+      fontSize: '20px',
       fontWeight: 'medium',
       lineHeight: '150%',
       textDecoration: 'underline',
@@ -51,13 +52,13 @@ export const textVariants = {
 
     'brand.logo': {
       fontFamily: "'PT Sans', sans-serif",
-      fontSize: '32px',
+      fontSize: '28px',
       fontWeight: '700',
       lineHeight: '120%',
     },
     'brand.h1': {
       fontFamily: "'PT Sans', sans-serif",
-      fontSize: '40px',
+      fontSize: '36px',
       fontWeight: '700',
       lineHeight: '110%',
     },

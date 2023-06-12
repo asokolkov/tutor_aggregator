@@ -11,7 +11,11 @@ import { SelectOption } from './components/SelectOption';
 import { useOptionMap } from './hooks/useOptionMap';
 import { CheckIcon } from '@chakra-ui/icons';
 
-export const SearchParamsSection: React.FC<Props> = ({ district, subject }) => {
+export const SearchParamsSection: React.FC<Props> = ({
+  district,
+  subject,
+  isOnline,
+}) => {
   const { ReviewOptions, PriceOptions } = useOptionMap();
   const isLargerThanTablet = useBreakpointValue(
     { base: false, lg: true },
@@ -21,7 +25,7 @@ export const SearchParamsSection: React.FC<Props> = ({ district, subject }) => {
     subject = 'Любой предмет';
   }
   if (!district) {
-    district = 'любой район';
+    district = 'любой';
   }
 
   return (
@@ -48,6 +52,7 @@ export const SearchParamsSection: React.FC<Props> = ({ district, subject }) => {
           variant={'brand.h1'}
           align={isLargerThanTablet ? 'left' : 'center'}
           color={'custom.blue.300'}
+          marginBottom={isLargerThanTablet ? 'auto' : '5px'}
         >
           Результаты поиска
         </Text>
@@ -56,7 +61,7 @@ export const SearchParamsSection: React.FC<Props> = ({ district, subject }) => {
           align={isLargerThanTablet ? 'left' : 'center'}
           color={'custom.blue.300'}
         >
-          {subject}, {district}
+          {subject}, {isOnline ? 'онлайн' : district + ' район'}
         </Text>
       </Flex>
       <Grid
@@ -108,4 +113,5 @@ export const SearchParamsSection: React.FC<Props> = ({ district, subject }) => {
 type Props = {
   district: string;
   subject: string;
+  isOnline: boolean;
 };

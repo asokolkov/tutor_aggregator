@@ -39,7 +39,7 @@ const SearchCard: React.FC<SearchCardInfoProps> = ({ tutor }) => {
             src={getAvatarUri(tutor.id)}
           />
           <VStack spacing="5px">
-            <Heading variant="regular.h2" as="h2">
+            <Heading variant="regular.h2" as="h2" textAlign={'center'}>
               {fullName}
             </Heading>
             <RatingStars rating={rating} />
