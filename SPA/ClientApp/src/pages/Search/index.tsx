@@ -53,8 +53,7 @@ export const SearchPage = () => {
           </Form>
         </Formik>
       </Flex>
-      {/*TODO: прикрутить реальное значение пустой выдачи (и проверить работу с фильтрами)*/}
-      {Math.random() < 0.5 ? (
+      {data.pages[0].items.length === 0 ? (
         <EmptySearchList />
       ) : (
         <SimpleGrid columns={[1, 1, 2, 3, 4, 5]} spacing="16px">

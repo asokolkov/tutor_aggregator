@@ -20,8 +20,8 @@ import { getShiftedDate } from '../../utils/datetime';
 import { LoadBar } from '../../components/LoadBar/LoadBar';
 import { DayColumnWithSlots } from './components/DayColumnWithSlots';
 import './styles.css';
-import { Link, Navigate } from 'react-router-dom';
-import { LOGIN_PAGE, MAIN_PAGE } from '../../routes/routePaths';
+import { Link, Navigate, useSearchParams } from 'react-router-dom';
+import { LOGIN_PAGE } from '../../routes/routePaths';
 import { useTutorId } from '../../routes/params';
 import { ModalContext } from '../../components/Slot/contexts/ModalContext';
 import { useModal } from '../../components/Slot/hooks/useModal';
@@ -30,6 +30,7 @@ import { BookLessonModal } from '../../components/Slot/modals/BookLessonModal';
 import { Color } from '../../assets/theme/themeEnum';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { getAvatarUri } from '../../utils/helper';
+import { getTutorCardByIdPath } from '../../routes/routes';
 
 export const TutorBookPage: React.FC = () => {
   const { isAuthorized } = useContext(UserContext);
@@ -79,14 +80,14 @@ export const TutorBookPage: React.FC = () => {
   const { queries } = useLessonTab(tutorId, columnCount, todayStartTime);
   const isLoading = queries.some((query) => query.isLoading);
   const { modalProviderValue } = useModal();
+  const [search] = useSearchParams();
 
   return (
     <>
-      {/*TODO: Желательно изменить на Link to={страница репетитора}*/}
-      <Link to={MAIN_PAGE}>
+      <Link to={getTutorCardByIdPath(useTutorId())}>
         <Text variant="misc.link" color={Color.blue300} padding={'0 0 10px 0'}>
           <ArrowBackIcon />
-          Вернуться
+          Вернуться к репетитору
         </Text>
       </Link>
       <Flex
@@ -121,9 +122,8 @@ export const TutorBookPage: React.FC = () => {
             width={isLargerThanTablet ? '100%' : 'auto'}
             align={'center'}
           >
-            {/*TODO: Желательно передавать имя и аватарку репетитора. Если не успеешь, то*/}
             <Avatar
-              name={'Имя репетитора'}
+              name={search.get('name')}
               size={'md'}
               src={getAvatarUri(useTutorId())}
             />
@@ -132,7 +132,7 @@ export const TutorBookPage: React.FC = () => {
               textAlign={'left'}
               color={'custom.blue.300'}
             >
-              {'Имя репетитора'}
+              {search.get('name')}
             </Text>
           </HStack>
         </Box>

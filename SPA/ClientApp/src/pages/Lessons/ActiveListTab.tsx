@@ -5,6 +5,7 @@ import { LoadBar } from '../../components/LoadBar/LoadBar';
 import { LessonStatus } from '../../api/models';
 import { SlotVariant } from '../../components/Slot/Slot';
 import { LessonsList } from './components/LessonList';
+import { EmptyLessonList } from './components/EmptyLessonList';
 
 export const ActiveListTab: React.FC = () => {
   const { query } = useAllLessonsQuery();
@@ -16,6 +17,7 @@ export const ActiveListTab: React.FC = () => {
   if (query.isLoading) return <LoadBar />;
   const data = query.data.filter((x) => x.status === LessonStatus.booked);
   const closeData = data.slice(0, 3);
+  if (data.length === 0) return <EmptyLessonList />;
   return (
     <Flex gap="40px" direction={isLargerThanTablet ? 'row' : 'column'}>
       <LessonsList

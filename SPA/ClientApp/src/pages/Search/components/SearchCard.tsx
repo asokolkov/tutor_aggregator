@@ -53,7 +53,7 @@ const SearchCard: React.FC<SearchCardInfoProps> = ({ tutor }) => {
         </VStack>
 
         <VStack align="flex-start" w="100%" spacing={'0'}>
-          {educations.map((e) => e.value).join('').length > 1 && (
+          {educations[0]?.value.trim() && (
             <Tag
               size={'lg'}
               variant="subtle"

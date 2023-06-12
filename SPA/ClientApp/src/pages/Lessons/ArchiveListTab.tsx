@@ -8,6 +8,7 @@ import { SlotVariant } from '../../components/Slot/Slot';
 import { ReviewModalContext } from '../../components/ReviewModal/contexts/ReviewModalContext';
 import { useReviewModal } from '../../components/ReviewModal/hooks/useReviewModal';
 import { ReviewModal } from '../../components/ReviewModal/ReviewModal';
+import { EmptyLessonList } from './components/EmptyLessonList';
 
 export const ArchiveListTab: React.FC = () => {
   const { query } = useAllLessonsQuery();
@@ -15,6 +16,7 @@ export const ArchiveListTab: React.FC = () => {
 
   if (query.isLoading) return <LoadBar />;
   const data = query.data.filter((x) => x.status === LessonStatus.finished);
+  if (data.length === 0) return <EmptyLessonList />;
   return (
     <ReviewModalContext.Provider value={providerValue}>
       <ReviewModal disclosure={providerValue.disclosure} />
