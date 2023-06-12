@@ -19,7 +19,6 @@ import { TooltipType } from './components/_shared';
 import { AvatarSection } from './components/AvatarSection';
 import { TutorInitValues, useTutorForm } from './hooks/useForm';
 import { TutorWarning } from './components/TutorWarning';
-import './styles.css';
 
 export const TutorCard: React.FC = () => {
   const isLargerThanTablet = useBreakpointValue(
@@ -47,7 +46,13 @@ export const TutorCard: React.FC = () => {
       backgroundSize={'14em'}
     >
       <Formik initialValues={mapTutor()} onSubmit={onSubmit}>
-        <Form>
+        <Form
+          style={{
+            display: 'flex',
+            flexDirection: isLargerThanTablet ? 'row' : 'column',
+            width: isLargerThanTablet ? 'auto' : '100%',
+          }}
+        >
           <Box
             bg={isLargerThanTablet ? 'custom.blue.200' : 'custom.blue.100'}
             display={'flex'}

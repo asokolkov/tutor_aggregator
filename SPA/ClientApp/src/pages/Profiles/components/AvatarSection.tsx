@@ -25,11 +25,7 @@ export const AvatarSection: React.FC = () => {
         margin={'0 0 15px 0'}
         colorScheme={'blue'}
       />
-      <FileUpload
-        accept="image/*"
-        onChange={onAvatarChange}
-        justify-content={'center'}
-      >
+      <FileUpload accept="image/*" onChange={onAvatarChange}>
         <Button
           size={'xs'}
           variant="blue.300"

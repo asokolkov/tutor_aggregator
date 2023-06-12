@@ -11,7 +11,6 @@ import { TooltipType } from './components/_shared';
 import { SelectOptionsRow } from './components/SelectOptionsRow';
 import { AvatarSection } from './components/AvatarSection';
 import { StudentInitValues, useStudentForm } from './hooks/useForm';
-import './styles.css';
 
 export const StudentCard: React.FC = () => {
   const isLargerThanTablet = useBreakpointValue(
@@ -40,7 +39,13 @@ export const StudentCard: React.FC = () => {
       backgroundSize={'14em'}
     >
       <Formik initialValues={mapStudent()} onSubmit={onSubmit}>
-        <Form>
+        <Form
+          style={{
+            display: 'flex',
+            flexDirection: isLargerThanTablet ? 'row' : 'column',
+            width: isLargerThanTablet ? 'auto' : '100%',
+          }}
+        >
           <Box
             bg={isLargerThanTablet ? 'custom.blue.200' : 'custom.blue.100'}
             display={'flex'}
