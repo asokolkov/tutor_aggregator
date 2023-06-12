@@ -8,6 +8,7 @@ type Props = ProfilePageProps & {
   placeholder?: string;
   label: string;
   value?: string;
+  maxLength?: number;
 };
 
 export const InputRow: React.FC<Props> = (props) => {
@@ -36,6 +37,7 @@ export const InputRow: React.FC<Props> = (props) => {
           fontSize={'lg'}
           size={'md'}
           isDisabled={props.isDisabled}
+          maxLength={props.maxLength || 256}
           {...field}
         />
         <ProfileTip

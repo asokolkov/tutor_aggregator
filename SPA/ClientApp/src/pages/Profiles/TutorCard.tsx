@@ -133,6 +133,7 @@ export const TutorCard: React.FC = () => {
                     'Укажите номер телефона, по которому с вами будут связываться ученики',
                   type: TooltipType.Info,
                 }}
+                maxLength={64}
               />
               <InputRow
                 label={'Почта'}
@@ -141,6 +142,7 @@ export const TutorCard: React.FC = () => {
                   label: 'Укажите почту, по которой с вами можно связаться',
                   type: TooltipType.Info,
                 }}
+                maxLength={64}
               />
               <InputRow
                 label={'Telegram'}
@@ -149,6 +151,7 @@ export const TutorCard: React.FC = () => {
                   label: 'Укажите id телегам, где вам могут написать ученики',
                   type: TooltipType.Info,
                 }}
+                maxLength={64}
               />
               <Divider color={'gray'} margin={'0 0 10px 0'} />
               <TextAreaRow

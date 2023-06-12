@@ -47,6 +47,7 @@ export const StudentCard: React.FC = () => {
               align={'left'}
               direction={'column'}
               margin={isDesktop ? '0 0 0 3em' : '0 0 0 0'}
+              gap="10px"
             >
               <InputRow
                 label={'ФИО'}
@@ -68,12 +69,6 @@ export const StudentCard: React.FC = () => {
                   label: 'Мы пока работаем только в одном городе',
                   type: TooltipType.Lock,
                 }}
-              />
-              <InputRow
-                label={'Возраст'}
-                placeholder={'23'}
-                name={'age'}
-                tooltip={{ label: 'Укажите возраст', type: TooltipType.Info }}
               />
               <TextAreaRow
                 label={'О себе'}
