@@ -7,7 +7,8 @@ import { modal } from '../../LessonModalsHOC/Modal';
 import { ModalContext } from '../contexts/ModalContext';
 
 const onSubmit = async (lessonId: string) => {
-  await LessonsAPI.bookLesson(lessonId);
+  const lessonDto = await LessonsAPI.bookLesson(lessonId);
+  return lessonDto;
 };
 
 const modalTitle = 'Вы действительно хотите записаться на занятие?';
@@ -25,4 +26,4 @@ const Body: React.FC = () => {
   );
 };
 
-export const BookLessonModal = modal(Body, Footer, onSubmit, modalTitle);
+export const BookLessonModal = modal(Body, Footer, onSubmit, modalTitle, true);

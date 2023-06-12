@@ -8,15 +8,26 @@ import {
   VStack,
   Button,
   Divider,
+  useDisclosure,
 } from '@chakra-ui/react';
 import React from 'react';
-// import ContactsPopoverButton from '../../TutorCard/components/ContactsPopoverButton';
+import { useTutorQuery } from '../../../query/useTutorCardPageQuery';
+import { ContactsModal } from '../../../components/ContactsModal/ContactsModal';
+import { ContactModalContext } from '../../../components/ContactsModal/contexts/ContactModalContext';
+import { useSearchParams } from 'react-router-dom';
+import { getAvatarUri } from '../../../utils/helper';
+import { useTutorId } from '../../../routes/params';
 
 export const SuccessSection: React.FC = () => {
   const isLargerThanTablet = useBreakpointValue(
     { base: false, lg: true },
     { ssr: false, fallback: 'lg' }
   );
+
+  const query = useTutorQuery();
+  const disclosure = useDisclosure();
+
+  const [search] = useSearchParams();
 
   return (
     <Flex
@@ -47,13 +58,17 @@ export const SuccessSection: React.FC = () => {
             width={isLargerThanTablet ? '100%' : 'auto'}
             align={'center'}
           >
-            <Avatar name={'props.fullName'} size={'md'} />
+            <Avatar
+              name={search.get('name')}
+              size={'md'}
+              src={getAvatarUri(useTutorId())}
+            />
             <Text
               variant="regular.h2"
               textAlign={'left'}
               color={isLargerThanTablet ? 'white' : 'custom.blue.300'}
             >
-              {'props.fullName'}
+              {search.get('name')}
             </Text>
           </HStack>
         </VStack>
@@ -63,7 +78,7 @@ export const SuccessSection: React.FC = () => {
         borderColor={'custom.blue.200'}
         display={isLargerThanTablet ? 'none' : 'block'}
         width={'80%'}
-      ></Divider>
+      />
       <VStack
         spacing="8px"
         align={isLargerThanTablet ? 'flex-start' : 'center'}
@@ -75,8 +90,14 @@ export const SuccessSection: React.FC = () => {
         >
           Свяжись с&nbsp;преподавателем и&nbsp;уточни детали
         </Text>
-        <Button variant="blue.300">Показать контакты</Button>
-        {/*<ContactsPopoverButton />*/}
+        <Button variant="blue.300" onClick={disclosure.onOpen}>
+          Показать контакты
+        </Button>
+        <ContactModalContext.Provider
+          value={{ contacts: query.data?.contacts ?? [] }}
+        >
+          <ContactsModal disclosure={disclosure} />
+        </ContactModalContext.Provider>
       </VStack>
     </Flex>
   );

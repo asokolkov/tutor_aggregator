@@ -1,7 +1,10 @@
-import { Text, VStack, HStack } from '@chakra-ui/react';
+import { Text, VStack, HStack, Link } from '@chakra-ui/react';
 import React from 'react';
+import { Link as DomLink, useSearchParams } from 'react-router-dom';
+import { LESSONS_PAGE } from '../../../routes/routePaths';
 
 export const MoreInfoSection: React.FC = () => {
+  const [search] = useSearchParams();
   return (
     <VStack
       width={'100%'}
@@ -11,20 +14,22 @@ export const MoreInfoSection: React.FC = () => {
     >
       <HStack>
         <Text variant={'regular.bold'}>Дата:</Text>
-        <Text> 29.03.2023</Text>
+        <Text>{search.get('date')}</Text>
       </HStack>
       <HStack>
         <Text variant={'regular.bold'}>Время:</Text>
-        <Text> 23:60</Text>
+        <Text>{search.get('time')}</Text>
       </HStack>
       <HStack>
         <Text variant={'regular.bold'}>Стоимость:</Text>
-        <Text> 400 ₽</Text>
+        <Text>{search.get('price')}₽ за час</Text>
       </HStack>
       <HStack>
         <Text marginTop={'20px'}>
-          Посмотреть все свои записи можно в&nbsp;разделе &laquo;Мой
-          профиль&raquo; &rarr; &laquo;Мои записи&raquo;.
+          Посмотреть все свои записи можно в&nbsp;разделе{' '}
+          <Link color="blue.500" as={DomLink} to={LESSONS_PAGE}>
+            &laquo;Мой профиль&raquo; &rarr; &laquo;Мои записи&raquo;.
+          </Link>
         </Text>
       </HStack>
     </VStack>
