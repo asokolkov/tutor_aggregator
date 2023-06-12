@@ -7,7 +7,7 @@ import { LessonsList } from './components/LessonList';
 import { SlotVariant } from '../../components/Slot/Slot';
 import { ReviewModalContext } from '../../components/ReviewModal/contexts/ReviewModalContext';
 import { useReviewModal } from '../../components/ReviewModal/hooks/useReviewModal';
-import ReviewModal from '../../components/ReviewModal/ReviewModal';
+import { ReviewModal } from '../../components/ReviewModal/ReviewModal';
 
 export const ArchiveListTab: React.FC = () => {
   const { query } = useAllLessonsQuery();

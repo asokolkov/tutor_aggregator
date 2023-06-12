@@ -13,7 +13,6 @@ import { useMutation, useQueryClient } from 'react-query';
 import { DisclosureProps } from '../disclosureProps';
 import TutorsAPI from '../../api/tutors';
 import { Formik, FormikValues, Form } from 'formik';
-import { useTutorId } from '../../routes/params';
 import { ReviewModalForm } from '../../pages/TutorCard/components/ReviewModalForm';
 import { reviewKey } from '../../query/queryKeys';
 import { ErrorElement } from '../Errors/ErrorElement';
@@ -23,7 +22,7 @@ interface Props {
   disclosure: DisclosureProps;
 }
 
-const ReviewModal: React.FC<Props> = ({ disclosure }) => {
+export const ReviewModal: React.FC<Props> = ({ disclosure }) => {
   const { isOpen, onClose } = disclosure;
   const [isSubmitLoading, setSubmitLoading] = useState(false);
   const [isError, setError] = useState(false);
@@ -79,5 +78,3 @@ const ReviewModal: React.FC<Props> = ({ disclosure }) => {
     </Modal>
   );
 };
-
-export default ReviewModal;

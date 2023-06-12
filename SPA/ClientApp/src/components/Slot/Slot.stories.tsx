@@ -13,7 +13,7 @@ import { useContactSlotModal } from '../ContactsModal/hooks/useContactSlotModal'
 import { ContactsModal } from '../ContactsModal/ContactsModal';
 import { useReviewModal } from '../ReviewModal/hooks/useReviewModal';
 import { ReviewModalContext } from '../ReviewModal/contexts/ReviewModalContext';
-import ReviewModal from '../ReviewModal/ReviewModal';
+import { ReviewModal } from '../ReviewModal/ReviewModal';
 
 const containerDec: Decorator = (story) => (
   <div style={{ width: '476px' }}>{story()}</div>
