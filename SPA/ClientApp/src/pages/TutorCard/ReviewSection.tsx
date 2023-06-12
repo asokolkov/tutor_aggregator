@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { MapSingleReview } from './_mapper';
-import NewReviewModal from './modal/NewReviewModal';
+import ReviewModal from '../../components/ReviewModal/ReviewModal';
 import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { V1AccountTypeDto, V1ReviewDtoV1PageDto } from '../../api/models';
 import { AddIcon } from '@chakra-ui/icons';
@@ -46,7 +46,7 @@ export const ReviewSection: React.FC<Props> = ({ reviews }) => {
               icon={<AddIcon />}
               onClick={disclosure.onOpen}
             />
-            <NewReviewModal disclosure={disclosure} />
+            <ReviewModal disclosure={disclosure} />
           </>
         )}
       </Flex>

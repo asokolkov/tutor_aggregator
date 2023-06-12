@@ -41,6 +41,7 @@ export function useSlot(
       : undefined,
     type: lesson.type,
     lessonId: lesson.id,
+    tutorId: lesson.tutor.id,
     contacts,
   };
 

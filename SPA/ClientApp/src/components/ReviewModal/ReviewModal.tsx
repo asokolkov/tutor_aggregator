@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -10,25 +10,26 @@ import {
   ModalBody,
 } from '@chakra-ui/react';
 import { useMutation, useQueryClient } from 'react-query';
-import { DisclosureProps } from '../../../components/disclosureProps';
-import TutorsAPI from '../../../api/tutors';
+import { DisclosureProps } from '../disclosureProps';
+import TutorsAPI from '../../api/tutors';
 import { Formik, FormikValues, Form } from 'formik';
-import { useTutorId } from '../../../routes/params';
-import { ReviewModalForm } from '../components/ReviewModalForm';
-import { reviewKey } from '../../../query/queryKeys';
-import { ErrorElement } from '../../../components/Errors/ErrorElement';
+import { useTutorId } from '../../routes/params';
+import { ReviewModalForm } from '../../pages/TutorCard/components/ReviewModalForm';
+import { reviewKey } from '../../query/queryKeys';
+import { ErrorElement } from '../Errors/ErrorElement';
+import { ReviewModalContext } from './contexts/ReviewModalContext';
 
 interface Props {
   disclosure: DisclosureProps;
 }
 
-const NewReviewModal: React.FC<Props> = ({ disclosure }) => {
+const ReviewModal: React.FC<Props> = ({ disclosure }) => {
   const { isOpen, onClose } = disclosure;
   const [isSubmitLoading, setSubmitLoading] = useState(false);
   const [isError, setError] = useState(false);
 
   const queryClient = useQueryClient();
-  const tutorId = useTutorId();
+  const { tutorId } = useContext(ReviewModalContext);
 
   const initValues: FormikValues = {
     rating: 5,
@@ -79,4 +80,4 @@ const NewReviewModal: React.FC<Props> = ({ disclosure }) => {
   );
 };
 
-export default NewReviewModal;
+export default ReviewModal;
