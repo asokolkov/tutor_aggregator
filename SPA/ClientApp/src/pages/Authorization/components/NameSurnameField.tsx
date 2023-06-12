@@ -15,6 +15,7 @@ export const NameSurnameField: React.FC = () => {
           placeholder="Введите имя"
           {...nameField}
           maxLength={32}
+          required
         />
         <Input
           id="surname"
@@ -22,6 +23,7 @@ export const NameSurnameField: React.FC = () => {
           placeholder="Введите фамилию"
           {...surnameField}
           maxLength={32}
+          required
         />
       </HStack>
     </FormControl>
