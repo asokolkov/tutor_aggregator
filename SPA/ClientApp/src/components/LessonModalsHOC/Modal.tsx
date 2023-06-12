@@ -20,6 +20,7 @@ import { useTutorId } from '../../routes/params';
 import { V1LessonDto } from '../../api/models';
 import { getFullTutorName } from '../../utils/names';
 import { getDayAndMonthFromDate, getTimeFromDate } from '../../utils/datetime';
+import { isAxiosError } from 'axios';
 
 type Props = {
   disclosure: DisclosureProps;
@@ -37,6 +38,7 @@ export function modal(
     const { data } = useContext(ModalContext);
     const [isSubmitLoading, setSubmitLoading] = useState(false);
     const [isError, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const tutorId = useTutorId();
 
     const queryClient = useQueryClient();
@@ -61,7 +63,9 @@ export function modal(
         const response = await onSubmit(data.lessonId);
         onClose();
         if (navigateToConfirm) navigateToSuccessPage(response as V1LessonDto);
-      } catch {
+      } catch (err) {
+        if (isAxiosError(err) && err.response.status === 409)
+          setErrorMessage('Занятие уже началось или прошло');
         setError(true);
       }
       setSubmitLoading(false);
@@ -76,8 +80,15 @@ export function modal(
         ]),
     });
 
+    const restoreAndClose = () => {
+      setError(false);
+      setErrorMessage('');
+      setSubmitLoading(false);
+      onClose();
+    };
+
     return (
-      <Modal isOpen={isOpen} onClose={onClose} isCentered size="lg">
+      <Modal isOpen={isOpen} onClose={restoreAndClose} isCentered size="lg">
         <ModalOverlay />
         <ModalContent>
           <ModalBody>
@@ -87,10 +98,10 @@ export function modal(
           </ModalBody>
           <FooterComponent
             isSubmitLoading={isSubmitLoading}
-            onClose={onClose}
+            onClose={restoreAndClose}
             mutateFunction={mutation.mutate}
           />
-          {isError && <ErrorElement />}
+          {isError && <ErrorElement message={errorMessage} />}
         </ModalContent>
       </Modal>
     );
