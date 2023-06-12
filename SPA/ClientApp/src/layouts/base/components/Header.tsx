@@ -31,11 +31,7 @@ const Header: React.FC = () => {
           </Link>
           <VStack spacing="0px" align={'flex-start'}>
             <Link to={MAIN_PAGE}>
-              <Text
-                height={'36px'}
-                variant="brand.logo"
-                color={'custom.blue.300'}
-              >
+              <Text variant="brand.logo" color={'custom.blue.300'}>
                 Репетиторы
               </Text>
             </Link>

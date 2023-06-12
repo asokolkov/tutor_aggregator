@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Flex, Button } from '@chakra-ui/react';
+import { Flex, Button, useBreakpointValue } from '@chakra-ui/react';
 
 type Props = {
   buttonText: string;
@@ -7,16 +7,18 @@ type Props = {
 };
 
 export const SubmitButton: React.FC<Props> = (props) => {
+  const isLargerThanTablet = useBreakpointValue(
+    { base: false, lg: true },
+    { ssr: false, fallback: 'lg' }
+  );
+
   return (
-    <Flex align={'start'} padding={'0 0 0 140px'}>
+    <Flex align={'start'} paddingTop={'10px'}>
       <Button
-        w="240px"
+        width={isLargerThanTablet ? '240px' : '100%'}
         isDisabled={props.isDisabled}
-        bg={'#2D3748'}
-        color={'white'}
+        variant={'blue.300'}
         type="submit"
-        _hover={{ bg: '#65748D' }}
-        _active={{ bg: '#5877AC' }}
       >
         {props.buttonText}
       </Button>

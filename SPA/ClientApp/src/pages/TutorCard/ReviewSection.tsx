@@ -23,7 +23,7 @@ export const ReviewSection: React.FC<Props> = ({ reviews }) => {
   );
 
   return (
-    <VStack w="100%" spacing="20px" align="start" margin={'40px 0 0 0'}>
+    <VStack w="100%" spacing="20px" align="start" marginTop={'30px !important'}>
       <Flex
         gap={isLargerThanTablet ? '30px' : '0'}
         alignItems={'center'}

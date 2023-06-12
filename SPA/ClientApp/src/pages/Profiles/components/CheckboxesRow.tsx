@@ -29,7 +29,7 @@ export const CheckboxesRow: React.FC<Props> = (props) => {
     </Checkbox>
   ));
   return (
-    <Flex width={'100%'}>
+    <Flex width={'100%'} maxWidth={'800px'}>
       <FormControl
         display={'flex'}
         alignItems={'center'}

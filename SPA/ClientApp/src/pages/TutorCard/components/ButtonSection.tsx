@@ -11,7 +11,7 @@ export const ButtonSection: React.FC = () => {
 
   return (
     <Flex
-      margin={'20px 0 0 0'}
+      marginTop={'16px !important'}
       width={isLargerThanTablet ? '70%' : '100%'}
       maxWidth={'1000px'}
       gap="10px"

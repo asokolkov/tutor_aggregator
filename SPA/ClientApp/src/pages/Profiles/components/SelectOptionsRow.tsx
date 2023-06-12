@@ -15,39 +15,41 @@ export const SelectOptionsRow: React.FC<Props> = (props) => {
   const [field] = useField({ name: props.name });
 
   return (
-    <Flex width={'100%'}>
+    <Flex width={'100%'} maxWidth={'800px'}>
       <FormControl
         display={'flex'}
-        alignItems={'center'}
+        flexDirection={'column'}
+        alignItems={'flex-start'}
         isRequired={props.isRequired}
       >
         <FormLabel
-          fontSize={'xl'}
-          margin={'auto 10px auto 0'}
-          flex={'0 0 130px'}
-          textAlign={'right'}
+          variant={'misc.field-title'}
+          margin={'0 0 2px 0'}
+          width={'100%'}
         >
           {props.label}
         </FormLabel>
-        <Select
-          placeholder={props.placeholder}
-          bg="white"
-          color={'#000000'}
-          width={'100%'}
-          fontSize={'lg'}
-          isDisabled={props.isDisabled}
-          {...field}
-        >
-          {props.options.map((option) => (
-            <option value={option} key={option}>
-              {option}
-            </option>
-          ))}
-        </Select>
-        <ProfileTip
-          label={props.tooltip.label}
-          isLockIcon={props.tooltip.type === TooltipType.Lock}
-        />
+        <Flex width={'100%'} align={'center'}>
+          <Select
+            placeholder={props.placeholder}
+            bg="white"
+            color={'black'}
+            width={'100%'}
+            fontSize={'lg'}
+            isDisabled={props.isDisabled}
+            {...field}
+          >
+            {props.options.map((option) => (
+              <option value={option} key={option}>
+                {option}
+              </option>
+            ))}
+          </Select>
+          <ProfileTip
+            label={props.tooltip.label}
+            isLockIcon={props.tooltip.type === TooltipType.Lock}
+          />
+        </Flex>
       </FormControl>
     </Flex>
   );
