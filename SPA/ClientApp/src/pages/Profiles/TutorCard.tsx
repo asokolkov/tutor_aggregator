@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Box, Divider, Flex, useBreakpointValue } from '@chakra-ui/react';
 import { SelectOptionsRow } from './components/SelectOptionsRow';
 import { InputRow } from './components/InputRow';
@@ -18,10 +18,15 @@ export const TutorCard: React.FC = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   const { tutor, locations, subjects } = useContext(ProfileContext);
   const { updateTutor, mapTutor } = useTutorForm(tutor);
+  const [isLoading, setLoading] = useState(false);
 
   const onSubmit = async (values: TutorInitValues) => {
+    setLoading(true);
     const newTutor = updateTutor(values);
-    await TutorsAPI.putCurrentProfileValues(newTutor);
+    try {
+      await TutorsAPI.putCurrentProfileValues(newTutor);
+    } catch {}
+    setLoading(false);
   };
 
   return (
@@ -133,6 +138,7 @@ export const TutorCard: React.FC = () => {
                     'Укажите номер телефона, по которому с вами будут связываться ученики',
                   type: TooltipType.Info,
                 }}
+                maxLength={64}
               />
               <InputRow
                 label={'Почта'}
@@ -141,6 +147,7 @@ export const TutorCard: React.FC = () => {
                   label: 'Укажите почту, по которой с вами можно связаться',
                   type: TooltipType.Info,
                 }}
+                maxLength={64}
               />
               <InputRow
                 label={'Telegram'}
@@ -149,6 +156,7 @@ export const TutorCard: React.FC = () => {
                   label: 'Укажите id телегам, где вам могут написать ученики',
                   type: TooltipType.Info,
                 }}
+                maxLength={64}
               />
               <Divider color={'gray'} margin={'0 0 10px 0'} />
               <TextAreaRow
@@ -164,7 +172,7 @@ export const TutorCard: React.FC = () => {
                   type: TooltipType.Info,
                 }}
               />
-              <SubmitButton buttonText={'Сохранить'} />
+              <SubmitButton buttonText={'Сохранить'} isLoading={isLoading} />
             </Flex>
           </Flex>
         </Form>
