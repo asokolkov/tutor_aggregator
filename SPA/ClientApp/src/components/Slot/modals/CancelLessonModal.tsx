@@ -21,7 +21,7 @@ const Body: React.FC = () => {
       <Text variant="regular.bold">{data.tutorName}</Text>
       <Text>Время занятия:</Text>
       <Text variant="regular.bold">{`${data.timeRange}`}</Text>
-    </>
+    </VStack>
   );
 };
 
