@@ -19,7 +19,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   const handleClick = () => inputRef.current?.click();
 
   return (
-    <InputGroup onClick={handleClick}>
+    <InputGroup onClick={handleClick} justifyContent={'center'}>
       <input
         type={'file'}
         multiple={multiple || false}

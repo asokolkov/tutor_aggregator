@@ -8,23 +8,12 @@ type Props = {
 
 export const TextRow: React.FC<Props> = (props) => {
   return (
-    <Flex>
-      <FormControl display={'flex'}>
-        <FormLabel
-          fontSize={'xl'}
-          margin={'auto 10px auto 0'}
-          flex={'0 0 130px'}
-        >
-          {props.label}
+    <Flex margin={'0 0 10px 0 !important'}>
+      <FormControl display={'flex'} alignItems={'baseline'}>
+        <FormLabel margin={'0 10px 0 0'} width={'auto'}>
+          <Text variant={'regular.bold'}>{props.label}</Text>
         </FormLabel>
-        <Text
-          bg="white"
-          color={'#000000'}
-          width={'50%'}
-          fontSize={'lg'}
-          size={'md'}
-          padding={'0 0 0 1em'}
-        >
+        <Text color={'custom.blue.300'} fontSize={'16px'}>
           {props.text}
         </Text>
       </FormControl>

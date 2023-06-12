@@ -27,18 +27,16 @@ export const AvatarSection: React.FC = () => {
   return (
     <Flex direction={'column'} align={'center'}>
       <Avatar
-        w={'10em'}
-        h={'10em'}
+        size={'2xl'}
         name={getFullName(user.firstName, user.lastName)}
         src={avatarSrc}
-        margin={'0 0 10px 0'}
+        margin={'0 0 15px 0'}
         colorScheme={'blue'}
-        showBorder
       />
       <FileUpload accept="image/*" onChange={onAvatarChange}>
         <Button
           size={'xs'}
-          colorScheme={'blue'}
+          variant="blue.300"
           margin={isDesktop ? '0 0 0 0' : '0 0 1.5em 0'}
           justifyContent="center"
           isLoading={isLoading}
