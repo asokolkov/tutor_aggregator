@@ -35,13 +35,14 @@ export type V1ExternalRegisterDto = {
   phone?: string | null;
   accountType?: AccountType;
 };
-export type LessonStatus =
-  | 'Empty'
-  | 'Booked'
-  | 'Finished'
-  | 'Deleted'
-  | 'ExpiredEmpty'
-  | 'ExpiredBooked';
+export enum LessonStatus {
+  empty = 'Empty',
+  booked = 'Booked',
+  finished = 'Finished',
+  deleted = 'Deleted',
+  expiredEmpty = 'ExpiredEmpty',
+  expiredBooked = 'ExpiredBooked',
+}
 export enum LessonType {
   online = 'Online',
   offline = 'Offline',
@@ -57,11 +58,13 @@ export type V1TutorInfoDto = {
   rating?: number;
   job?: string | null;
   educations?: V1TutorEducationDto[] | null;
+  contacts?: V1TutorContactDto[];
 };
 export type V1StudentInfoDto = {
   id?: string;
   firstName?: string | null;
   lastName?: string | null;
+  contacts?: V1StudentContactDto[];
 };
 export type V1LessonDto = {
   id?: string | null;

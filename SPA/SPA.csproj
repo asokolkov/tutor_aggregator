@@ -33,6 +33,7 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.10" />
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="6.0.0" />
+        <PackageReference Include="NCrontab" Version="3.3.1" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
         <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.4.0" />
         <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.5.0" />

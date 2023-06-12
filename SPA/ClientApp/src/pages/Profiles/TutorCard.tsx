@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import {
   Box,
   Divider,
@@ -27,10 +27,15 @@ export const TutorCard: React.FC = () => {
   );
   const { tutor, locations, subjects } = useContext(ProfileContext);
   const { updateTutor, mapTutor } = useTutorForm(tutor);
+  const [isLoading, setLoading] = useState(false);
 
   const onSubmit = async (values: TutorInitValues) => {
+    setLoading(true);
     const newTutor = updateTutor(values);
-    await TutorsAPI.putCurrentProfileValues(newTutor);
+    try {
+      await TutorsAPI.putCurrentProfileValues(newTutor);
+    } catch {}
+    setLoading(false);
   };
 
   return (
@@ -167,6 +172,7 @@ export const TutorCard: React.FC = () => {
               label={'Телефон для учеников'}
               placeholder={'+79995654815'}
               name={'phone'}
+              maxLength={64}
               tooltip={{
                 label:
                   'Укажи номер телефона, по которому с тобой смогут связаться ученики',
@@ -177,6 +183,7 @@ export const TutorCard: React.FC = () => {
               label={'Почта для учеников'}
               placeholder={'writeme@gmail.com'}
               name={'email'}
+              maxLength={64}
               tooltip={{
                 label:
                   'Укажи почту, по которой с тобой смогут связаться ученики',
@@ -187,6 +194,7 @@ export const TutorCard: React.FC = () => {
               label={'Telegram для учеников'}
               placeholder={'@durov'}
               name={'telegram'}
+              maxLength={64}
               tooltip={{
                 label:
                   'Укажи никнейм в Телеграме, по которому с тобой смогут связаться ученики',
@@ -211,7 +219,7 @@ export const TutorCard: React.FC = () => {
                 type: TooltipType.Info,
               }}
             />
-            <SubmitButton buttonText={'Сохранить'} />
+            <SubmitButton buttonText={'Сохранить'} isLoading={isLoading}/>
           </Flex>
         </Form>
       </Formik>

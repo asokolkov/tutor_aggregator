@@ -1,4 +1,6 @@
 import {
+  LessonType,
+  V1LessonDto,
   V1ReviewDtoV1PageDto,
   V1TutorDto,
   V1TutorDtoV1PageDto,
@@ -11,6 +13,7 @@ export interface TutorSearchParams {
   district: string;
   maxPrice: string;
   rating: string;
+  lessonType: LessonType;
 }
 
 class TutorsAPI {
@@ -21,6 +24,7 @@ class TutorsAPI {
       maxPrice: null,
       rating: null,
       subject: null,
+      lessonType: LessonType.offline,
     },
     page = 1,
     size = 30
@@ -74,6 +78,13 @@ class TutorsAPI {
 
   static async putCurrentProfileValues(tutor: V1TutorDto) {
     await axiosInstance.put('api/v1/tutors', { ...tutor });
+  }
+
+  static async getAllTutorLessons(): Promise<V1LessonDto[]> {
+    const response = await axiosInstance.get<V1LessonDto[]>(
+      'api/v1/tutors/current/lessons'
+    );
+    return response.data;
   }
 }
 

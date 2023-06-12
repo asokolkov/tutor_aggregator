@@ -22,7 +22,7 @@ export function useRegisterButton() {
       firstName: values.name,
       lastName: values.surname,
       password: values.password,
-      phone: values.phoneNumber,
+      phone: '+7' + values.phoneNumber,
     };
 
     UserAPI.register(registerData)

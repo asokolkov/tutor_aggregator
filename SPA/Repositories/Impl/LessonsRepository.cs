@@ -49,7 +49,21 @@ internal sealed class LessonsRepository : ILessonsRepository
 
         return models;
     }
-    
+
+    public async Task<ICollection<Lesson>> GetTutorLessonsAsync(Guid tutorId, DateTimeOffset start, DateTimeOffset end)
+    {
+        var entities = await context.Lessons
+            .Where(e => 
+                e.Tutor.Id == tutorId && 
+                DateTimeOffset.Compare(start, e.Start) < 0 &&
+                DateTimeOffset.Compare(end, e.End) > 0 &&
+                e.Status != LessonStatus.Deleted)
+            .ToListAsync();
+        var models = mapper.Map<ICollection<Lesson>>(entities);
+
+        return models;
+    }
+
     public async Task<ICollection<Lesson>> GetTutorLessonsAsync(Guid tutorId)
     {
         var entities = await context.Lessons

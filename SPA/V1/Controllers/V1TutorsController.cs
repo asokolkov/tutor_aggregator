@@ -49,9 +49,10 @@ public sealed class V1TutorsController : Controller
     [SwaggerResponse(200, "OK", typeof(V1PageDto<V1TutorDto>))]
     public async Task<IActionResult> GetTutorsPageAsync([FromQuery] int page = 0,
         [FromQuery] int size = 30, [FromQuery] string? subject = null, [FromQuery] string? city = null,
-        [FromQuery] string? district = null, [FromQuery] int? maxPrice = null, [FromQuery] int? rating = null)
+        [FromQuery] string? district = null, [FromQuery] int? maxPrice = null, [FromQuery] int? rating = null,
+        [FromQuery] LessonType? lessonsType = null)
     {
-        var query = new GetTutorsQuery(page, size, subject, city, district, maxPrice, rating);
+        var query = new GetTutorsQuery(page, size, subject, city, district, maxPrice, rating, lessonsType);
         var modelsPage = await mediator.Send(query);
         
         var previousPageLink = modelsPage.HasPrevious 

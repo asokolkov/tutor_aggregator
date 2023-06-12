@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useField } from 'formik';
-import { FormLabel, Input, Switch, VStack } from '@chakra-ui/react';
+import { Box, FormLabel, Input, Switch, VStack } from '@chakra-ui/react';
 
 export const InputNumber: React.FC<InputProps> = ({
   label,
@@ -16,8 +16,7 @@ export const InputNumber: React.FC<InputProps> = ({
         required
         placeholder={placeholder}
         type="number"
-        min="0"
-        step="100"
+        min="1"
         {...field}
       />
     </VStack>
@@ -29,7 +28,9 @@ export const InputSwitch: React.FC<InputProps> = ({ name, label }) => {
   return (
     <VStack>
       <FormLabel>{label}</FormLabel>
-      <Switch {...field} />
+      <Box h="40px">
+        <Switch {...field} />
+      </Box>
     </VStack>
   );
 };

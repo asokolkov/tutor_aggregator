@@ -30,6 +30,7 @@ builder.Services.AddSingleton<IActionResultExecutor<ApiErrorResult>, ApiErrorRes
 builder.Services.AddHostedService<DatabaseStartupService<ApplicationIdentityContext>>();
 builder.Services.AddHostedService<DatabaseStartupService<ApplicationContext>>();
 builder.Services.AddHostedService<DatabaseInitializationService>();
+builder.Services.AddHostedService<LessonUpdatorService>();
 
 builder.Services
     .AddSwaggerGen()

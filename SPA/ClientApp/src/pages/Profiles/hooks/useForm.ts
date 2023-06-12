@@ -63,19 +63,17 @@ export function useTutorForm(tutor: V1TutorDto) {
 
 export type StudentInitValues = {
   name: string;
-  age: string;
   about: string;
 };
 
 export function useStudentForm(student: V1StudentDto) {
   const mapStudent = (): StudentInitValues => ({
     name: getFullName(student.firstName, student.lastName),
-    age: student.age.toString(),
     about: student.description,
   });
 
   const updateStudent = (values: StudentInitValues) => {
-    student.age = +values.age ?? 1;
+    student.age = 1;
     student.description = values.about;
     return student;
   };
