@@ -16,6 +16,7 @@ import { useContactSlotModal } from '../../components/ContactsModal/hooks/useCon
 import { ContactModalContext } from '../../components/ContactsModal/contexts/ContactModalContext';
 import { ModalContext } from '../../components/Slot/contexts/ModalContext';
 import { ContactsModal } from '../../components/ContactsModal/ContactsModal';
+import { ArchiveListTab } from './ArchiveListTab';
 
 export const LessonsPage = () => {
   const { isAuthorized, user } = useContext(UserContext);
@@ -31,6 +32,7 @@ export const LessonsPage = () => {
       <TabList>
         {isTutor && <Tab>Твое расписание</Tab>}
         <Tab>Активные</Tab>
+        <Tab>Архивные</Tab>
       </TabList>
       <ContactModalContext.Provider value={contactsProviderValue}>
         <ModalContext.Provider value={modalProviderValue}>
@@ -46,6 +48,9 @@ export const LessonsPage = () => {
             )}
             <TabPanel>
               <ActiveListTab />
+            </TabPanel>
+            <TabPanel>
+              <ArchiveListTab />
             </TabPanel>
           </TabPanels>
         </ModalContext.Provider>
