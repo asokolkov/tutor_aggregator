@@ -15,6 +15,7 @@ const InfoWithIcon: React.FC<SearchCardInfoRowProps> = ({
       gap={isLargerThanMobile ? '8px' : '2px'}
       align={isLargerThanMobile ? 'center' : 'stretch'}
       width={'100%'}
+      overflow={'hidden'}
     >
       <Flex flexShrink="0" gap="8px">
         <Icon size={24} />
@@ -24,7 +25,7 @@ const InfoWithIcon: React.FC<SearchCardInfoRowProps> = ({
           </Text>
         )}
       </Flex>
-      <Text>{text}</Text>
+      <Text overflowWrap={'break-word'}>{text}</Text>
     </Flex>
   );
 };

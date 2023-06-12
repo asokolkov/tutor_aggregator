@@ -56,18 +56,21 @@ export const Card: React.FC<CardInfoProps> = (props) => {
           spacing="8px"
           align="flex-start"
           p={isLargerThanTablet ? '10px 5vw 10px 30px' : '10px 10px 20px 10px'}
+          overflow={'hidden'}
         >
           <Text
             variant="regular.h1"
             textAlign={isLargerThanTablet ? 'left' : 'center'}
-            width={'100%'}
+            width={isLargerThanTablet ? '100%' : '90vw'}
+            overflowWrap={'break-word'}
           >
             {props.fullName}
           </Text>
           <Text
             variant="regular.h3"
             textAlign={isLargerThanTablet ? 'left' : 'center'}
-            width={'100%'}
+            width={isLargerThanTablet ? '100%' : '90vw'}
+            overflowWrap={'break-word'}
           >
             {props.description}
           </Text>

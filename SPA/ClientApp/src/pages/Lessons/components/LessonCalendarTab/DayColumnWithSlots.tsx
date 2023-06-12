@@ -21,7 +21,7 @@ export const DayColumnWithSlots: React.FC<Props> = ({ lessons, date }) => {
   return (
     <>
       <VStack
-        w="356px"
+        w="350px"
         spacing="30px"
         style={{ breakInside: 'avoid' }}
         minH="50vh"

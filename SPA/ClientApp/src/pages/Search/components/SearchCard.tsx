@@ -31,15 +31,21 @@ const SearchCard: React.FC<SearchCardInfoProps> = ({ tutor }) => {
       justify="space-between"
     >
       <VStack spacing="20px" w="100%">
-        <VStack spacing="10px">
+        <VStack spacing="10px" width={'100%'}>
           <Avatar
             name={fullName}
             border="0px"
             size="2xl"
             src={getAvatarUri(tutor.id)}
           />
-          <VStack spacing="5px">
-            <Heading variant="regular.h2" as="h2" textAlign={'center'}>
+          <VStack spacing="5px" overflow={'hidden'} maxWidth={'100%'}>
+            <Heading
+              variant="regular.h2"
+              as="h2"
+              textAlign={'center'}
+              overflowWrap={'break-word'}
+              textOverflow={'ellipsis'}
+            >
               {fullName}
             </Heading>
             <RatingStars rating={rating} />
@@ -47,7 +53,7 @@ const SearchCard: React.FC<SearchCardInfoProps> = ({ tutor }) => {
         </VStack>
 
         <VStack align="flex-start" w="100%" spacing={'0'}>
-          {educations.length >= 1 && (
+          {educations.map((e) => e.value).join('').length > 1 && (
             <Tag
               size={'lg'}
               variant="subtle"

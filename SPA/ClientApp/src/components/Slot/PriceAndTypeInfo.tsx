@@ -13,7 +13,7 @@ export const PriceAndTypeInfo: React.FC = () => {
     <Flex justify={'space-between'} w="100%" p="4px 8px">
       <HStack spacing="5px">
         {isOnline ? <BiDesktop /> : <BiBuildingHouse />}
-        <Text>{isOnline ? 'Онлайн' : 'Оффлайн'}</Text>
+        <Text>{isOnline ? 'Онлайн' : 'Офлайн'}</Text>
       </HStack>
       <Text variant="regular.bold" wordBreak="break-all">
         {price <= 1000 * 1000 ? Math.floor(price) : '>1000000'} ₽

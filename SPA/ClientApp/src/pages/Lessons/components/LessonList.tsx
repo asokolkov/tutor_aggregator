@@ -3,6 +3,7 @@ import { Flex, Text } from '@chakra-ui/react';
 import { Slot, SlotVariant } from '../../../components/Slot/Slot';
 import { V1LessonDto } from '../../../api/models';
 import { useSlot } from '../../../components/Slot/hooks/useSlot';
+import { EmptyLessonList } from './EmptyLessonList';
 
 export const LessonsList: React.FC<Props> = ({
   lessons,
@@ -12,10 +13,17 @@ export const LessonsList: React.FC<Props> = ({
   return (
     <Flex gap="20px" direction="column" w="100%">
       <Text variant="regular.h2">{title}</Text>
-      {lessons.map((lesson) => {
-        const { props } = useSlot(lesson, slotVariant);
-        return <Slot {...props} key={lesson.id} />;
-      })}
+      {/*TODO: Передавать реальное значение пустого списка*/}
+      {Math.random() < 0.5 ? (
+        <EmptyLessonList />
+      ) : (
+        <Flex width={'100%'} direction={'column'}>
+          {lessons.map((lesson) => {
+            const { props } = useSlot(lesson, slotVariant);
+            return <Slot {...props} key={lesson.id} />;
+          })}
+        </Flex>
+      )}
     </Flex>
   );
 };
