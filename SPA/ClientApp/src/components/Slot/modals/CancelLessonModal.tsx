@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useContext } from 'react';
 import LessonsAPI from '../../../api/lessons';
-import { Text } from '@chakra-ui/react';
+import { Text, VStack } from '@chakra-ui/react';
 import { modal } from '../../LessonModalsHOC/Modal';
 import { modalFooter } from '../../LessonModalsHOC/ModalFooter';
 import { ButtonVariant } from '../../../assets/theme/themeEnum';
@@ -16,12 +16,12 @@ const modalTitle = 'Вы действительно хотите отменит�
 const Body: React.FC = () => {
   const { data } = useContext(ModalContext);
   return (
-    <>
-      <Text>Будет отменена запись к преподвавателю:</Text>
+    <VStack spacing={'5px'}>
+      <Text>Будет отменена запись к преподавателю:</Text>
       <Text variant="regular.bold">{data.tutorName}</Text>
       <Text>Время занятия:</Text>
       <Text variant="regular.bold">{`${data.timeRange}`}</Text>
-    </>
+    </VStack>
   );
 };
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { Button, HStack } from '@chakra-ui/react';
-import { ChatIcon, LockIcon } from '@chakra-ui/icons';
+import { Button, HStack, Flex } from '@chakra-ui/react';
+import { CloseIcon, LockIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import { SlotContext } from '../contexts/SlotContext';
 import { BookedBy } from '../Slot';
 import { ModalContext } from '../contexts/ModalContext';
@@ -25,7 +25,7 @@ export const StudentCalendar: React.FC = () => {
     if (bookedBy === BookedBy.current)
       return (
         <Button
-          rightIcon={<ChatIcon />}
+          rightIcon={<CloseIcon />}
           flexGrow="1"
           h="30px"
           variant="red"
@@ -37,14 +37,21 @@ export const StudentCalendar: React.FC = () => {
 
     if (bookedBy != BookedBy.nobody)
       return (
-        <Button w="100%" h="30px" variant="blue.200" rightIcon={<LockIcon />}>
-          Слот занят
-        </Button>
+        <Flex
+          w="100%"
+          h="30px"
+          bg="custom.blue.100"
+          justify={'center'}
+          align={'center'}
+          gap={'8px'}
+        >
+          Слот занят <LockIcon />
+        </Flex>
       );
 
     return (
       <Button
-        rightIcon={<ChatIcon />}
+        rightIcon={<ArrowForwardIcon />}
         w="100%"
         h="30px"
         variant="green"
