@@ -32,8 +32,11 @@ export default class LessonsAPI {
     await axiosInstance.patch(`api/v1/lessons/${lessonId}/delete`);
   }
 
-  static async bookLesson(lessonId: string) {
-    await axiosInstance.patch(`api/v1/lessons/${lessonId}/book`);
+  static async bookLesson(lessonId: string): Promise<V1LessonDto> {
+    const response = await axiosInstance.patch(
+      `api/v1/lessons/${lessonId}/book`
+    );
+    return response.data;
   }
 
   static async cancelLesson(lessonId: string) {

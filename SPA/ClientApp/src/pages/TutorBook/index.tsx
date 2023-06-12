@@ -72,7 +72,7 @@ export const TutorBookPage: React.FC = () => {
         onDateChange={changeDate}
       />
       {isLoading ? (
-        <LoadBar description={'Загружаем данные ваших уроков'} />
+        <LoadBar description={'Загружаем слоты'} />
       ) : (
         <ModalContext.Provider value={modalProviderValue}>
           <div
