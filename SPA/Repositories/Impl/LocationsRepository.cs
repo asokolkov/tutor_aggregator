@@ -8,7 +8,7 @@ using EFCore.Postgres.Application.Contexts;
 using EFCore.Postgres.Application.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-internal sealed class LocationsRepository : ILocationsRepository
+public sealed class LocationsRepository : ILocationsRepository
 {
     private readonly ApplicationContext context;
     private readonly IMapper mapper;
@@ -34,17 +34,31 @@ internal sealed class LocationsRepository : ILocationsRepository
     
     public async Task<Location?> InsertAsync(Location location)
     {
-        var entity = mapper.Map<LocationEntity>(location);
-        var entry = await context.Locations.AddAsync(entity);
-        await context.SaveChangesAsync();
-        return mapper.Map<Location>(entry.Entity);
+        try
+        {
+            var entity = mapper.Map<LocationEntity>(location);
+            var entry = await context.Locations.AddAsync(entity);
+            await context.SaveChangesAsync();
+            return mapper.Map<Location>(entry.Entity);
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
     }
 
     public async Task<Location?> UpdateAsync(Location location)
     {
-        var entity = mapper.Map<LocationEntity>(location);
-        var entry = context.Locations.Update(entity);
-        await context.SaveChangesAsync();
-        return mapper.Map<Location>(entry.Entity);
+        try
+        {
+            var entity = mapper.Map<LocationEntity>(location);
+            var entry = context.Locations.Update(entity);
+            await context.SaveChangesAsync();
+            return mapper.Map<Location>(entry.Entity);
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
     }
 }
