@@ -16,7 +16,7 @@ export const PriceAndTypeInfo: React.FC = () => {
         <Text>{isOnline ? 'Онлайн' : 'Офлайн'}</Text>
       </HStack>
       <Text variant="regular.bold" wordBreak="break-all">
-        {price <= 1000 * 1000 ? Math.floor(price) : '>1000000'} ₽
+        {price <= 100 * 100 ? Math.floor(price) : '>10000'} ₽
       </Text>
     </Flex>
   );

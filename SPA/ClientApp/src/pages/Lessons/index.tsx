@@ -3,7 +3,15 @@ import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import { UserContext } from '../../layouts/base/contexts/UserContext';
 import { LOGIN_PAGE } from '../../routes/routePaths';
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import {
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  VStack,
+  Heading,
+} from '@chakra-ui/react';
 import { LessonCalendarTab } from './LessonCalendarTab';
 import { V1AccountTypeDto } from '../../api/models';
 import './styles.css';
@@ -28,33 +36,38 @@ export const LessonsPage = () => {
   const { contactsProviderValue } = useContactSlotModal();
 
   return (
-    <Tabs>
-      <TabList>
-        {isTutor && <Tab>Твое расписание</Tab>}
-        <Tab>Активные</Tab>
-        <Tab>Архивные</Tab>
-      </TabList>
-      <ContactModalContext.Provider value={contactsProviderValue}>
-        <ModalContext.Provider value={modalProviderValue}>
-          <CancelLessonModal disclosure={modalProviderValue.cancelDisc} />
-          <BookLessonModal disclosure={modalProviderValue.bookDisc} />
-          <DeleteSlotModal disclosure={modalProviderValue.deleteDisc} />
-          <ContactsModal disclosure={contactsProviderValue.disclosure} />
-          <TabPanels>
-            {isTutor && (
+    <VStack width={'100%'}>
+      <Heading variant={'brand.h1'} width={'100%'} color={'custom.blue.300'}>
+        Мои занятия
+      </Heading>
+      <Tabs width={'100%'}>
+        <TabList>
+          {isTutor && <Tab>Расписание</Tab>}
+          <Tab>Активные</Tab>
+          <Tab>Архивные</Tab>
+        </TabList>
+        <ContactModalContext.Provider value={contactsProviderValue}>
+          <ModalContext.Provider value={modalProviderValue}>
+            <CancelLessonModal disclosure={modalProviderValue.cancelDisc} />
+            <BookLessonModal disclosure={modalProviderValue.bookDisc} />
+            <DeleteSlotModal disclosure={modalProviderValue.deleteDisc} />
+            <ContactsModal disclosure={contactsProviderValue.disclosure} />
+            <TabPanels>
+              {isTutor && (
+                <TabPanel>
+                  <LessonCalendarTab />
+                </TabPanel>
+              )}
               <TabPanel>
-                <LessonCalendarTab />
+                <ActiveListTab />
               </TabPanel>
-            )}
-            <TabPanel>
-              <ActiveListTab />
-            </TabPanel>
-            <TabPanel>
-              <ArchiveListTab />
-            </TabPanel>
-          </TabPanels>
-        </ModalContext.Provider>
-      </ContactModalContext.Provider>
-    </Tabs>
+              <TabPanel>
+                <ArchiveListTab />
+              </TabPanel>
+            </TabPanels>
+          </ModalContext.Provider>
+        </ContactModalContext.Provider>
+      </Tabs>
+    </VStack>
   );
 };

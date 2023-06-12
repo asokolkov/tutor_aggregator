@@ -17,8 +17,15 @@ export const Name: React.FC = () => {
   else name = isTutor ? studentName : tutorName;
 
   return (
-    <Stack w="100%" p="4px 8px">
-      <Text variant="regular.bold">{name || 'Неизвестно'}</Text>;
+    <Stack maxW={'100%'} w={'100%'} p="4px 8px">
+      <Text
+        variant="regular.bold"
+        color={'custom.blue.300'}
+        wordBreak={'break-all'}
+      >
+        {name || 'Неизвестно'}
+      </Text>
+      ;
     </Stack>
   );
 };
