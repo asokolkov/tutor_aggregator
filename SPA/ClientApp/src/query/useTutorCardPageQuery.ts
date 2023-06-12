@@ -12,7 +12,7 @@ export function useTutorCardPageQuery() {
 export function useTutorQuery() {
   const tutorId = useTutorId();
   return useQuery({
-    queryKey: [tutorCardKey],
+    queryKey: [tutorCardKey, tutorId],
     queryFn: () => TutorsAPI.getTutorById(tutorId),
   });
 }
