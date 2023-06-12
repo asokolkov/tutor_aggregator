@@ -32,8 +32,8 @@ internal sealed class TutorsRepository : ITutorsRepository
         var filteredEntities = await context.Tutors
             .OrderBy(x => x.Id)
             .Where(x => x.Subjects.Count > 0)
-            .Where(x => city == null || x.Location == null || x.Location.City == city)
-            .Where(x => district == null || x.Location == null || x.Location.District == district)
+            .Where(x => city == null || lessonsType == DomainLessonType.Online || x.Location == null || x.Location.City == city)
+            .Where(x => district == null || lessonsType == DomainLessonType.Online || x.Location == null || x.Location.District == district)
             .Where(x => subject == null || x.Subjects.FirstOrDefault(y => y.Description == subject) != null)
             .Where(x => rating == null || x.Rating >= rating)
             .Where(x => maxPrice == null || x.Lessons.Any(y => y.Price <= maxPrice))
