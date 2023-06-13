@@ -15,6 +15,7 @@ const args: CardInfoProps = {
   location: '',
   requirements: '',
   subjects: '',
+  job: '',
 };
 
 export const Default = {
