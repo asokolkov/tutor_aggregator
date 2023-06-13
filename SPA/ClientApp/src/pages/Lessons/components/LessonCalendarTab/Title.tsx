@@ -21,10 +21,10 @@ export const Title: React.FC<Props> = ({ date, bookedCount, totalCount }) => {
       </VStack>
       <VStack spacing="0" alignItems={'flex-end'}>
         <Text variant="regular.h3">
-          {totalCount ? `Свободно:` : 'Нет слотов'}
+          {totalCount ? `Занято:` : 'Нет слотов'}
         </Text>
         <Text variant="regular.h3">
-          {totalCount ? `${totalCount - bookedCount} / ${totalCount}` : ''}
+          {totalCount ? `${bookedCount} / ${totalCount}` : ''}
         </Text>
       </VStack>
     </Flex>
