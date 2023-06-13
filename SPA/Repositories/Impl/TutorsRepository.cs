@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using SPA.Domain;
 using DomainLessonType = SPA.Domain.LessonType;
 using EntityLessonType = EFCore.Postgres.Application.Models.Entities.LessonType;
+using LessonStatus = EFCore.Postgres.Application.Models.Entities.LessonStatus;
 
 namespace SPA.Repositories.Impl;
 
@@ -36,8 +37,8 @@ internal sealed class TutorsRepository : ITutorsRepository
             .Where(x => district == null || lessonsType == DomainLessonType.Online || x.Location == null || x.Location.District == district)
             .Where(x => subject == null || x.Subjects.FirstOrDefault(y => y.Description == subject) != null)
             .Where(x => rating == null || x.Rating >= rating)
-            .Where(x => maxPrice == null || x.Lessons.Any(y => y.Price <= maxPrice))
-            .Where(x => lessonsType == null || x.Lessons.Any(y => y.Type == (EntityLessonType)lessonsType))
+            .Where(x => maxPrice == null || x.Lessons.Any(y => y.Price <= maxPrice && y.Status != LessonStatus.Deleted))
+            .Where(x => lessonsType == null || x.Lessons.Any(y => y.Type == (EntityLessonType)lessonsType && y.Status != LessonStatus.Deleted))
             .ToListAsync();
 
         var entities = mapper.Map<List<Tutor>>(filteredEntities.Skip(page * size).Take(size));
