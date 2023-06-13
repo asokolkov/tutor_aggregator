@@ -29,8 +29,8 @@ import { CancelLessonModal } from '../../components/Slot/modals/CancelLessonModa
 import { BookLessonModal } from '../../components/Slot/modals/BookLessonModal';
 import { Color } from '../../assets/theme/themeEnum';
 import { ArrowBackIcon } from '@chakra-ui/icons';
+import { getAvatarUri } from '../../utils/helper';
 import { getTutorCardByIdPath } from '../../routes/routes';
-import { useAvatarQuery } from '../../query/useAvatarQuery';
 
 export const TutorBookPage: React.FC = () => {
   const { isAuthorized } = useContext(UserContext);
@@ -81,7 +81,6 @@ export const TutorBookPage: React.FC = () => {
   const isLoading = queries.some((query) => query.isLoading);
   const { modalProviderValue } = useModal();
   const [search] = useSearchParams();
-  const { avatar } = useAvatarQuery(useTutorId());
 
   return (
     <>
@@ -123,7 +122,11 @@ export const TutorBookPage: React.FC = () => {
             width={isLargerThanTablet ? '100%' : 'auto'}
             align={'center'}
           >
-            <Avatar name={search.get('name')} size={'md'} src={avatar} />
+            <Avatar
+              name={search.get('name')}
+              size={'md'}
+              src={getAvatarUri(useTutorId())}
+            />
             <Text
               variant="regular.h2"
               textAlign={'left'}

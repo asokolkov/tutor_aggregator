@@ -22,7 +22,7 @@ import UserAPI from '../../../api/user';
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { getFullName } from '../../../utils/names';
-import {useAvatarQuery} from "../../../query/useAvatarQuery";
+import { getAvatarUri } from '../../../utils/helper';
 
 export const HeaderMenu: React.FC = () => {
   const navigate = useNavigate();
@@ -34,7 +34,6 @@ export const HeaderMenu: React.FC = () => {
     removeUser();
     navigate(LOGIN_PAGE);
   };
-  const { avatar } = useAvatarQuery(user.id);
 
   return (
     <Menu>
@@ -46,7 +45,7 @@ export const HeaderMenu: React.FC = () => {
         <Box display={'flex'} alignItems={'center'}>
           <Avatar
             name={getFullName(user.firstName, user.lastName)}
-            src={avatar}
+            src={getAvatarUri(user.id)}
             size="xs"
             mr="8px"
           />

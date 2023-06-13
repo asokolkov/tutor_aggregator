@@ -5,11 +5,11 @@ import { ChangeEvent, useContext, useState } from 'react';
 import AvatarAPI from '../../../api/avatars';
 import { UserContext } from '../../../layouts/base/contexts/UserContext';
 import { getFullName } from '../../../utils/names';
-import { useAvatarQuery } from '../../../query/useAvatarQuery';
-import { useMutation } from 'react-query';
+import { getAvatarUri } from '../../../utils/helper';
 
 export const AvatarSection: React.FC = () => {
   const { user } = useContext(UserContext);
+  const [avatarSrc, setAvatarSrc] = useState<string>(getAvatarUri(user.id));
   const [isLoading, setLoading] = useState(false);
 
   const onAvatarChange = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -17,28 +17,23 @@ export const AvatarSection: React.FC = () => {
     const avatarFile = event.target.files[0];
     try {
       await AvatarAPI.uploadAvatar(avatarFile);
+      setAvatarSrc(getAvatarUri(`${user.id}?${new Date().getTime()}`));
     } catch {}
     setLoading(false);
   };
 
   const isDesktop = useBreakpointValue({ base: false, lg: true });
-  const { avatar } = useAvatarQuery(user.id);
-
-  const mutation = useMutation({
-    mutationFn: onAvatarChange,
-    onSuccess: () => window.location.reload(),
-  });
 
   return (
     <Flex direction={'column'} align={'center'}>
       <Avatar
         size={'2xl'}
         name={getFullName(user.firstName, user.lastName)}
-        src={avatar}
+        src={avatarSrc}
         margin={'0 0 15px 0'}
         colorScheme={'blue'}
       />
-      <FileUpload accept="image/*" onChange={mutation.mutate}>
+      <FileUpload accept="image/*" onChange={onAvatarChange}>
         <Button
           size={'xs'}
           variant="blue.300"

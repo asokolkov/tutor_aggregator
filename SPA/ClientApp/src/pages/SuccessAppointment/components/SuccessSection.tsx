@@ -15,8 +15,8 @@ import { useTutorQuery } from '../../../query/useTutorCardPageQuery';
 import { ContactsModal } from '../../../components/ContactsModal/ContactsModal';
 import { ContactModalContext } from '../../../components/ContactsModal/contexts/ContactModalContext';
 import { useSearchParams } from 'react-router-dom';
+import { getAvatarUri } from '../../../utils/helper';
 import { useTutorId } from '../../../routes/params';
-import { useAvatarQuery } from '../../../query/useAvatarQuery';
 
 export const SuccessSection: React.FC = () => {
   const isLargerThanTablet = useBreakpointValue(
@@ -28,7 +28,6 @@ export const SuccessSection: React.FC = () => {
   const disclosure = useDisclosure();
 
   const [search] = useSearchParams();
-  const { avatar } = useAvatarQuery(useTutorId());
 
   return (
     <Flex
@@ -59,7 +58,11 @@ export const SuccessSection: React.FC = () => {
             width={isLargerThanTablet ? '100%' : 'auto'}
             align={'center'}
           >
-            <Avatar name={search.get('name')} size={'md'} src={avatar} />
+            <Avatar
+              name={search.get('name')}
+              size={'md'}
+              src={getAvatarUri(useTutorId())}
+            />
             <Text
               variant="regular.h2"
               textAlign={'left'}
