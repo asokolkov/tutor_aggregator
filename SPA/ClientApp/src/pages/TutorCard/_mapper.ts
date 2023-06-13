@@ -11,6 +11,7 @@ export function MapCardInfo(tutor: V1TutorDto): CardInfoProps {
     education:
       mapCollectionToString(tutor.educations?.map((x) => x.value)) ||
       'Не указано',
+    job: tutor.job || 'Не указано',
     fullName: `${tutor.firstName} ${tutor.lastName}`,
     location: tutor.location?.district || 'Не указано',
     requirements:
