@@ -17,7 +17,7 @@ export function useSearchPageQuery(values: SearchValuesProps) {
           lessonType: values.lessonType,
         },
         pageParam,
-        30
+        10
       );
     },
     keepPreviousData: true,
