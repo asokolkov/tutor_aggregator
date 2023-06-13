@@ -35,14 +35,15 @@ export const Card: React.FC<CardInfoProps> = (props) => {
     <CardInfoContext.Provider value={providerValue}>
       <Flex
         direction={isLargerThanTablet ? 'row' : 'column'}
-        align={'center'}
+        align={'stretch'}
         margin={'0 -5vw 0 -5vw'}
         bg={'custom.blue.100'}
         width={'calc(100% + 10vw)'}
       >
         <Box
           bg={isLargerThanTablet ? 'custom.blue.200' : 'custom.blue.100'}
-          height={'100%'}
+          height={'inherit'}
+          display={'flex'}
           alignItems={'center'}
           padding={
             isLargerThanTablet ? '10px 10px 10px 5vw' : '20px 10px 0 10px'
@@ -53,13 +54,14 @@ export const Card: React.FC<CardInfoProps> = (props) => {
         <VStack
           spacing="8px"
           align="flex-start"
+          justify={'center'}
           p={isLargerThanTablet ? '10px 5vw 10px 30px' : '10px 10px 20px 10px'}
           overflow={'hidden'}
         >
           <Text
             variant="regular.h1"
             textAlign={isLargerThanTablet ? 'left' : 'center'}
-            width={isLargerThanTablet ? '100%' : '90vw'}
+            width={'100%'}
             overflowWrap={'break-word'}
           >
             {props.fullName}
@@ -67,7 +69,7 @@ export const Card: React.FC<CardInfoProps> = (props) => {
           <Text
             variant="regular.h3"
             textAlign={isLargerThanTablet ? 'left' : 'center'}
-            width={isLargerThanTablet ? '100%' : '90vw'}
+            width={'100%'}
             overflowWrap={'break-word'}
           >
             {props.description}

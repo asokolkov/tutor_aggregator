@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { Button, HStack, IconButton } from '@chakra-ui/react';
+import { Button, Flex, HStack, IconButton } from '@chakra-ui/react';
 import { SlotContext } from '../contexts/SlotContext';
 import { ChatIcon, DeleteIcon } from '@chakra-ui/icons';
 import { BookedBy } from '../Slot';
@@ -37,9 +37,16 @@ export const TutorCalendar: React.FC = () => {
           Показать контакты
         </Button>
       ) : (
-        <Button w="100%" h="30px" variant="blue.200">
+        <Flex
+          w="100%"
+          h="30px"
+          bg="custom.blue.100"
+          justify={'center'}
+          align={'center'}
+          gap={'8px'}
+        >
           Никто не записан
-        </Button>
+        </Flex>
       )}
       <IconButton
         icon={<DeleteIcon />}
