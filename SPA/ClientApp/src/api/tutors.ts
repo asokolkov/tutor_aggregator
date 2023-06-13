@@ -27,7 +27,7 @@ class TutorsAPI {
       lessonType: LessonType.offline,
     },
     page = 1,
-    size = 30
+    size = 10
   ): Promise<V1TutorDtoV1PageDto> {
     const response = await axiosInstance.get<V1TutorDtoV1PageDto>(
       '/api/v1/tutors',

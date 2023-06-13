@@ -192,7 +192,7 @@ export const TutorCard: React.FC = () => {
             />
             <InputRow
               label={'Telegram для учеников'}
-              placeholder={'@durov'}
+              placeholder={'durov'}
               name={'telegram'}
               maxLength={64}
               tooltip={{
@@ -219,7 +219,7 @@ export const TutorCard: React.FC = () => {
                 type: TooltipType.Info,
               }}
             />
-            <SubmitButton buttonText={'Сохранить'} isLoading={isLoading}/>
+            <SubmitButton buttonText={'Сохранить'} isLoading={isLoading} />
           </Flex>
         </Form>
       </Formik>

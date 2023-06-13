@@ -88,7 +88,11 @@ export const StudentCard: React.FC = () => {
                 type: TooltipType.Lock,
               }}
             />
-            <SubmitButton buttonText={'Сохранить'} isDisabled={true} isLoading={false} />
+            <SubmitButton
+              buttonText={'Сохранить'}
+              isDisabled={true}
+              isLoading={false}
+            />
           </Flex>
         </Form>
       </Formik>
