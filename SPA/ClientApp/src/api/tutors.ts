@@ -65,7 +65,8 @@ class TutorsAPI {
 
   static async addReview(tutorId: string, rating: number, description: string) {
     await axiosInstance.post(`/api/v1/tutors/${tutorId}/reviews`, {
-      params: { rating, description },
+      rating,
+      description,
     });
   }
 

@@ -12,7 +12,7 @@ export const LessonsList: React.FC<Props> = ({
   return (
     <Flex gap="20px" direction="column" w="100%">
       <Text variant="regular.h2">{title}</Text>
-      <Flex width={'100%'} direction={'column'}>
+      <Flex width={'100%'} direction={'column'} gap="20px">
         {lessons.map((lesson) => {
           const { props } = useSlot(lesson, slotVariant);
           return <Slot {...props} key={lesson.id} />;

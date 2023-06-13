@@ -3,16 +3,20 @@ import StudentAPI from '../api/students';
 import { useQuery } from 'react-query';
 import { profileKey, studentKey, tutorKey } from './queryKeys';
 import { V1AccountTypeDto, V1StudentDto, V1TutorDto } from '../api/models';
+import { useContext } from 'react';
+import { UserContext } from '../layouts/base/contexts/UserContext';
 
 function useTutorQuery() {
+  const { user } = useContext(UserContext);
   return useQuery({
-    queryKey: [profileKey, tutorKey],
+    queryKey: [profileKey, tutorKey, user.id],
     queryFn: () => TutorsAPI.getCurrentProfileInfo(),
   });
 }
 function useStudentQuery() {
+  const { user } = useContext(UserContext);
   return useQuery({
-    queryKey: [profileKey, studentKey],
+    queryKey: [profileKey, studentKey, user.id],
     queryFn: () => StudentAPI.getCurrentProfileInfo(),
   });
 }
