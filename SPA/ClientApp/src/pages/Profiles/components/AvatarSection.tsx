@@ -9,7 +9,6 @@ import { getAvatarUri } from '../../../utils/helper';
 
 export const AvatarSection: React.FC = () => {
   const { user } = useContext(UserContext);
-  const [avatarSrc, setAvatarSrc] = useState<string>(getAvatarUri(user.id));
   const [isLoading, setLoading] = useState(false);
 
   const onAvatarChange = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -17,7 +16,7 @@ export const AvatarSection: React.FC = () => {
     const avatarFile = event.target.files[0];
     try {
       await AvatarAPI.uploadAvatar(avatarFile);
-      setAvatarSrc(getAvatarUri(`${user.id}?${new Date().getTime()}`));
+      window.location.reload();
     } catch {}
     setLoading(false);
   };
@@ -29,7 +28,7 @@ export const AvatarSection: React.FC = () => {
       <Avatar
         size={'2xl'}
         name={getFullName(user.firstName, user.lastName)}
-        src={avatarSrc}
+        src={getAvatarUri(user.id)}
         margin={'0 0 15px 0'}
         colorScheme={'blue'}
       />
