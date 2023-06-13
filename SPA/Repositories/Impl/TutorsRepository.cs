@@ -37,8 +37,8 @@ internal sealed class TutorsRepository : ITutorsRepository
             .Where(x => district == null || lessonsType == DomainLessonType.Online || x.Location == null || x.Location.District == district)
             .Where(x => subject == null || x.Subjects.FirstOrDefault(y => y.Description == subject) != null)
             .Where(x => rating == null || x.Rating >= rating)
-            .Where(x => maxPrice == null || x.Lessons.Any(y => y.Price <= maxPrice && y.Status != LessonStatus.Deleted))
-            .Where(x => lessonsType == null || x.Lessons.Any(y => y.Type == (EntityLessonType)lessonsType && y.Status != LessonStatus.Deleted))
+            .Where(x => maxPrice == null || x.Lessons.Any(y => y.Price <= maxPrice && y.Status == LessonStatus.Empty))
+            .Where(x => lessonsType == null || x.Lessons.Any(y => y.Type == (EntityLessonType)lessonsType && y.Status == LessonStatus.Empty))
             .ToListAsync();
 
         var entities = mapper.Map<List<Tutor>>(filteredEntities.Skip(page * size).Take(size));
