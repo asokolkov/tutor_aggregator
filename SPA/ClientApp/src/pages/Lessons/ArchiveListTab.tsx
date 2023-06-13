@@ -15,7 +15,7 @@ export const ArchiveListTab: React.FC = () => {
   const { providerValue } = useReviewModal();
 
   if (query.isLoading) return <LoadBar />;
-  const data = query.data.filter((x) => x.status === LessonStatus.finished);
+  const data = query.data.filter((x) => x.status === LessonStatus.expiredBooked);
   if (data.length === 0) return <EmptyLessonList />;
   return (
     <ReviewModalContext.Provider value={providerValue}>
