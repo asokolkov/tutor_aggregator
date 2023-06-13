@@ -34,7 +34,7 @@ export const AccountInfo = () => {
           text={isTutor ? 'репетитор' : 'ученик'}
         />
         <TextRow label={'Почта: '} text={user.email} />
-        <TextRow label={'Телефон: '} text={'+7' + user.phone} />
+        <TextRow label={'Телефон: '} text={user.phone} />
       </Flex>
       <Button
         onClick={signOut}
