@@ -104,7 +104,7 @@ export const Card: React.FC<CardInfoProps> = (props) => {
             <InfoWithIcon
               Icon={MdWork}
               categoryText={'Работа'}
-              text={props.education}
+              text={props.job}
             />
             <InfoWithIcon
               Icon={MdAssignment}
@@ -130,4 +130,5 @@ export type CardInfoProps = {
   subjects: string;
   education: string;
   requirements: string;
+  job: string;
 };
